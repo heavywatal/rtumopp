@@ -3,8 +3,9 @@
 #include <tumopp/simulation.hpp>
 
 //' Run C++ simulation
-//' @return conf and population as strings
-//' @rdname tumopp
+//' @param args command line arguments as a string vector or list of strings
+//' @param npair number of samples to measure genetic and physical distance
+//' @rdname rcpprun
 // [[Rcpp::export]]
 Rcpp::CharacterVector cpp_tumopp(const std::vector<std::string>& args, unsigned int npair=0) {
     try {
@@ -23,7 +24,8 @@ Rcpp::CharacterVector cpp_tumopp(const std::vector<std::string>& args, unsigned 
     return {};
 }
 
-//' @rdname tumopp
+//' @param nsam number of samples for ms-like output
+//' @rdname rcpprun
 // [[Rcpp::export]]
 Rcpp::CharacterVector cpp_tumopp_ms(unsigned int nsam, const std::vector<std::string>& args) {
     try {
