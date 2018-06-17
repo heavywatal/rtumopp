@@ -2,66 +2,38 @@
 % Please edit documentation in R/coord.R
 \name{max_abs_xyz}
 \alias{max_abs_xyz}
-\alias{trans_coord_hex_xy}
-\alias{trans_coord_hcc}
-\alias{trans_coord_fcc}
-\alias{trans_coord_hex}
-\alias{rotate}
 \alias{dist_euclidean}
-\title{get max value for plot limits}
+\alias{rotate}
+\title{Utilities for coordinate values}
 \usage{
 max_abs_xyz(.tbl)
 
-trans_coord_hex_xy(.tbl)
-
-trans_coord_hcc(.tbl)
-
-trans_coord_fcc(.tbl)
-
-trans_coord_hex(.tbl)
+dist_euclidean(.tbl, point = c(x = 0, y = 0, z = 0))
 
 rotate(.tbl, theta, axis = c("z", "x", "y"))
-
-dist_euclidean(.tbl, point = c(x = 0, y = 0, z = 0))
 }
 \arguments{
 \item{.tbl}{data.frame with (x, y, z) columns}
 
+\item{point}{named vector or tibble}
+
 \item{theta}{radian angle}
 
 \item{axis}{a string}
-
-\item{point}{named vector or tibble}
 }
 \value{
 max(abs(x, y, z))
 
-transformed matrix
-
-transformed matrix
-
-transformed matrix
-
-transformed matrix
+numeric vector
 
 modified data.frame
-
-numeric vector
 }
 \description{
-get max value for plot limits
+\code{max_abs_xyz} extracts max values for plot limits
 
-2D transformation into hexagonal grid
+\code{dist_euclidean} calculates distance from a specified cell
 
-3D transformation (hexagonal close packed)
-
-3D transformation (face centered cubic, cubic close packed)
-
-2D/3D transformation into hexagonal grid
-
-Rotate
-
-Calculate distance from a specified cell
+\code{rotate} modifies coordinates centering on a specified axis
 }
 \examples{
 max_abs_xyz(data.frame(x=2, y=-3, z=4))

@@ -1,4 +1,6 @@
-#' get max value for plot limits
+#' Utilities for coordinate values
+#'
+#' `max_abs_xyz` extracts max values for plot limits
 #' @param .tbl data.frame with (x, y, z) columns
 #' @return max(abs(x, y, z))
 #' @rdname coord
@@ -9,41 +11,16 @@ max_abs_xyz = function(.tbl) {
   max(abs(.tbl[c("x", "y", "z")]))
 }
 
-#' 2D transformation into hexagonal grid
-#' @return transformed matrix
-#' @rdname coord
-trans_coord_hex_xy = function(.tbl) {
-  dplyr::mutate(.tbl, y = .data$y + .data$x * 0.5) %>%
-    dplyr::mutate(x = .data$x * sqrt(3.0 / 4.0))
-}
-
-#' 3D transformation (hexagonal close packed)
-#' @return transformed matrix
-#' @rdname coord
-trans_coord_hcc = function(.tbl) {
-  trans_coord_hex_xy(.tbl) %>%
-    dplyr::mutate(x = .data$x + ifelse(.data$z %% 2L == 1L, sqrt(3) / 3, 0)) %>%
-    dplyr::mutate(z = .data$z * sqrt(2.0 / 3.0))
-}
-
-#' 3D transformation (face centered cubic, cubic close packed)
-#' @return transformed matrix
-#' @rdname coord
-trans_coord_fcc = function(.tbl) {
-  trans_coord_hex_xy(.tbl) %>%
-    dplyr::mutate(x = .data$x + .data$z / sqrt(3.0)) %>%
-    dplyr::mutate(z = .data$z * sqrt(2.0 / 3.0))
-}
-
-#' 2D/3D transformation into hexagonal grid
-#' @return transformed matrix
+#' `dist_euclidean` calculates distance from a specified cell
+#' @param point named vector or tibble
+#' @return numeric vector
 #' @rdname coord
 #' @export
-trans_coord_hex = function(.tbl) {
-  trans_coord_fcc(.tbl)
+dist_euclidean = function(.tbl, point=c(x = 0, y = 0, z = 0)) {
+  sqrt((.tbl[["x"]] - point[["x"]]) ^ 2 + (.tbl[["y"]] - point[["y"]]) ^ 2 + (.tbl[["z"]] - point[["z"]]) ^ 2)
 }
 
-#' Rotate
+#' `rotate` modifies coordinates centering on a specified axis
 #' @param theta radian angle
 #' @param axis a string
 #' @return modified data.frame
@@ -75,13 +52,4 @@ rotate = function(.tbl, theta, axis=c("z", "x", "y")) {
       z = -.x * .sin + .z * .cos
     )
   }
-}
-
-#' Calculate distance from a specified cell
-#' @param point named vector or tibble
-#' @return numeric vector
-#' @rdname coord
-#' @export
-dist_euclidean = function(.tbl, point=c(x = 0, y = 0, z = 0)) {
-  sqrt((.tbl[["x"]] - point[["x"]]) ^ 2 + (.tbl[["y"]] - point[["y"]]) ^ 2 + (.tbl[["z"]] - point[["z"]]) ^ 2)
 }
