@@ -3,20 +3,11 @@
 \name{modify_population}
 \alias{modify_population}
 \alias{filter_extant}
-\alias{set_graph_property}
-\alias{list_clade_founders}
-\alias{extract_demography}
 \title{Modify population table}
 \usage{
 modify_population(population, coord, dimensions, ..., num_clades = 4L)
 
 filter_extant(population)
-
-set_graph_property(population)
-
-list_clade_founders(population, num_clades)
-
-extract_demography(population)
 }
 \arguments{
 \item{population}{tibble}
@@ -29,23 +20,8 @@ extract_demography(population)
 
 \item{num_clades}{integer}
 }
-\value{
-tibble
-
-tibble
-
-tibble
-
-ids of clade founders
-
-tibble
-}
 \description{
 Modify population table
 
 Filter extant cells
-
-Add age and clade column
-
-Extract demography from raw population data
 }

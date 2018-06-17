@@ -3,7 +3,7 @@
 #' @param coord string
 #' @param dimensions integer
 #' @param ... ignored
-#' @return tibble
+#' @param num_clades integer
 #' @rdname population
 modify_population = function(population, coord, dimensions, ..., num_clades=4L) {
   extant = filter_extant(population)
@@ -21,16 +21,13 @@ modify_population = function(population, coord, dimensions, ..., num_clades=4L) 
 }
 
 #' Filter extant cells
-#' @return tibble
 #' @rdname population
 #' @export
 filter_extant = function(population) {
   dplyr::filter(population, .data$death == 0)
 }
 
-#' Add age and clade column
-#' @return tibble
-#' @rdname population
+# Add age and clade column
 set_graph_property = function(population) {
   .graph = make_igraph(population)
   .nodes = as.character(population$id)
@@ -53,30 +50,10 @@ set_graph_property = function(population) {
   dplyr::left_join(.out, clade_data, by = "id")
 }
 
-#' @param num_clades integer
-#' @return ids of clade founders
-#' @rdname population
 list_clade_founders = function(population, num_clades) {
   origin = sum(population$age == 0L)
   stopifnot(num_clades >= origin)
   num_divisions = num_clades - origin
   roots = utils::head(population$id, num_divisions)
   seq_len(num_divisions + num_clades) %>% setdiff(roots)
-}
-
-#' Extract demography from raw population data
-#' @return tibble
-#' @rdname population
-#' @export
-extract_demography = function(population) {
-  population %>%
-    dplyr::select(.data$birth, .data$death) %>%
-    tidyr::gather("event", "time", c("birth", "death")) %>%
-    dplyr::filter(!(.data$time == 0 & .data$event == "death")) %>% # alive
-    dplyr::mutate(event = factor(.data$event, levels = c("death", "birth"))) %>%
-    dplyr::arrange(.data$time, .data$event) %>%
-    dplyr::mutate(dn = ifelse(.data$event == "birth", 1, -1)) %>%
-    dplyr::group_by(.data$time) %>%
-    dplyr::summarise(dn = sum(.data$dn)) %>%
-    dplyr::mutate(size = cumsum(.data$dn))
 }
