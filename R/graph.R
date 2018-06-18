@@ -1,6 +1,8 @@
-#' Make igraph from raw population tbl
+#' Functions depending on igraph
+#'
+#' @description
+#' `make_igraph` converts raw population tbl into graph
 #' @param population tbl
-#' @return tibble
 #' @rdname graph
 #' @export
 make_igraph = function(population) {
@@ -15,20 +17,30 @@ make_igraph = function(population) {
     igraph::graph_from_data_frame()
 }
 
+#' `subtree` extracts subgraph among terminal nodes
+#' @param nodes igraph vertices
+#' @rdname graph
+#' @export
+subtree = function(graph, nodes=character(0L)) {
+  paths_to_origin(graph, nodes) %>%
+    purrr::flatten_chr() %>%
+    unique() %>%
+    {igraph::induced_subgraph(graph, .)}
+}
+
+paths_to_origin = function(graph, nodes=character(0L)) {
+  igraph::ego(graph, order = 1073741824L, nodes = nodes, mode = "in") %>%
+    purrr::map(names)
+}
+
 distances_from_origin = function(graph, nodes=character(0L)) {
   igraph::distances(graph, "1", nodes, mode = "out", weights = NA, algorithm = "unweighted") %>%
     as.integer()
 }
 
-paths_to_origin = function(graph, nodes=character(0L)) {
-  igraph::shortest_paths(graph, from = "1", to = nodes, mode = "out", weights = NA, output = "vpath")$vpath %>%
-    purrr::map(~as.integer(.x$name))
-}
-
-#' Mean branch length within/between sub-graphs
+#' `mean_branch_length` calculates mean branch length within/between sub-graphs
 #' @param graph igraph
 #' @param from,to igraph vertices
-#' @return numeric
 #' @rdname graph
 #' @export
 mean_branch_length = function(graph, from=igraph::V(graph), to=from) {
@@ -37,8 +49,7 @@ mean_branch_length = function(graph, from=igraph::V(graph), to=from) {
   sum(.d) / .n
 }
 
-#' Set coordinates of nodes and edges for plotting
-#' @return tibble
+#' `layout_genealogy` returns coordinates of nodes and edges for plotting
 #' @rdname graph
 #' @export
 layout_genealogy = function(population) {

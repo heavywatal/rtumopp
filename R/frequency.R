@@ -36,7 +36,7 @@ detectable_mutants_all = function(population, threshold) {
 detectable_mutants = function(graph, nodes, threshold) {
   n = length(nodes)
   counts = paths_to_origin(graph, nodes) %>%
-    purrr::flatten_int() %>%
+    purrr::flatten_chr() %>%
     table()
   counts[(counts / n) > threshold] %>% names() %>% as.integer()
 }
