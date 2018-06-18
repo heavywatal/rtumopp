@@ -2,7 +2,7 @@ library(tidyverse)
 library(wtl)
 library(tumopp)
 
-refresh("tumopp/r")
+wtl::refresh("rtumopp")
 
 add_cluster = function(extant, regions) {
   regions %>%
@@ -24,6 +24,35 @@ add_cluster = function(extant, regions) {
   geom_point(data = function(x) {dplyr::filter(x, !is.na(cluster))}, aes(x, y), size = 0.3, alpha = 0.4) +
   scale_colour_brewer(palette = "Spectral", guide = FALSE) +
   theme(axis.title = element_blank())
+
+# #######1#########2#########3#########4#########5#########6#########7#########
+
+.sampled_nodes = purrr::flatten_chr(.regions$samples) %>% print()
+.subgraph = tumopp::subtree(.graph, .sampled_nodes)
+
+.sprinkle_mutations = function(graph, mu=NULL, segsites=NULL) {
+  nodes = names(igraph::V(graph))
+  if (is.null(segsites)) {
+    if (is.null(mu)) stop("specify either mu or segsites")
+    segsites = stats::rpois(1L, length(nodes) * mu)
+  } else if (!is.null(mu)) warning("mu is ignored if segsites is given")
+  mutants = sample(nodes, segsites, replace = TRUE)
+  igraph::ego(graph, order=1073741824L, mutants, mode = "out") %>%
+    purrr::map(names)
+}
+.mutdescendants = .sprinkle_mutations(.subgraph, segsites=80L)
+
+.tidy_vaf = .regions %>%
+  dplyr::transmute(id, vaf = purrr::map(samples, function(nodes) {
+    freq = purrr::map_int(.mutdescendants, ~ sum(nodes %in% .x))
+    tibble::tibble(site = seq_along(freq), vaf = freq / length(nodes))
+  })) %>%
+  tidyr::unnest() %>%
+  print()
+
+ggplot(.tidy_vaf, aes(as.character(id), site)) +
+  geom_tile(aes(fill = vaf)) +
+  viridis::scale_fill_viridis()
 
 # #######1#########2#########3#########4#########5#########6#########7#########
 

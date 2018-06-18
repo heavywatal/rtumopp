@@ -2,7 +2,7 @@ library(tidyverse)
 library(wtl)
 library(tumopp)
 
-refresh("tumopp/r")
+wtl::refresh("rtumopp")
 
 (.result = tumopp(str_split("-N40000 -D3 -Chex -k24 -Lstep", " ")[[1]]))
 (.population = .result$population[[1]])
