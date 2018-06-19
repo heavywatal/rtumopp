@@ -38,19 +38,32 @@ add_region = function(extant, regions) {
   } else if (!is.null(mu)) warning("mu is ignored if segsites is given")
   mutants = sample(nodes, segsites, replace = TRUE)
   igraph::ego(graph, order=1073741824L, mutants, mode = "out") %>%
-    purrr::map(names)
+    purrr::map(~as.integer(names(.x)))
 }
 .mutdescendants = .sprinkle_mutations(.subgraph, segsites=80L)
 
-.tidy_vaf = .regions %>%
-  dplyr::transmute(id = seq_len(nrow(.)), vaf = purrr::map(samples, function(nodes) {
-    freq = purrr::map_int(.mutdescendants, ~ sum(nodes %in% .x))
+.calc_vaf = function(samples, sites) {
+  tibble::tibble(sample = seq_along(samples), vaf = purrr::map(samples, function(nodes) {
+    freq = purrr::map_int(sites, ~ sum(nodes %in% .x))
     tibble::tibble(site = seq_along(freq), vaf = freq / length(nodes))
   })) %>%
-  tidyr::unnest() %>%
-  print()
+  tidyr::unnest()
+}
+.tidy_vaf = .calc_vaf(.regions$samples, .mutdescendants) %>% print()
 
-ggplot(.tidy_vaf, aes(as.character(id), site)) +
+.sort_sites = function(tbl) {
+  wide = tbl %>% tidyr::spread(site, vaf) %>% dplyr::select(-sample)
+  row_order = hclust(dist(wide, method = 'manhattan'))$order
+  col_order = hclust(dist(t(wide), method = 'manhattan'))$order
+  wide[row_order, col_order] %>%
+    rlang::set_names(seq_along(names(.))) %>%
+    dplyr::mutate(sample = seq_len(nrow(.))) %>%
+    tidyr::gather(site, vaf, -sample) %>%
+    dplyr::mutate(site = as.integer(site))
+}
+.sorted_vaf = .sort_sites(.tidy_vaf) %>% print()
+
+ggplot(.sorted_vaf, aes(as.character(sample), site)) +
   geom_tile(aes(fill = vaf)) +
   viridis::scale_fill_viridis()
 
