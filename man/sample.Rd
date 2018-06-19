@@ -6,14 +6,14 @@
 \alias{sample_random_regions}
 \title{Sample cells from a population}
 \usage{
-sample_bulk(extant, center, ncell = 100L)
+sample_bulk(tbl, center = c(x = 0, y = 0, z = 0), ncell = 10L)
 
-sample_uniform_regions(extant, nsam = 2L, ncell = 10L)
+sample_uniform_regions(tbl, nsam = 2L, ncell = 10L)
 
-sample_random_regions(extant, nsam = 2L, ncell = 10L)
+sample_random_regions(tbl, nsam = 2L, ncell = 10L)
 }
 \arguments{
-\item{extant}{tibble of extant cells}
+\item{tbl}{tibble of extant cells with id, x, y, z columns}
 
 \item{center}{named (x, y, z) vector, list, or tibble}
 
@@ -21,11 +21,8 @@ sample_random_regions(extant, nsam = 2L, ncell = 10L)
 
 \item{nsam}{number of regions to sample}
 }
-\value{
-tibble
-}
 \description{
-\code{sample_bulk} samples bulk of cells near the specified coord
+\code{sample_bulk} samples bulk of cells near the specified center
 
 \code{sample_uniform_regions} sample uniformly distributed regions
 

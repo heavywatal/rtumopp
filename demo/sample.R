@@ -4,9 +4,9 @@ library(tumopp)
 
 wtl::refresh("rtumopp")
 
-add_cluster = function(extant, regions) {
+add_region = function(extant, regions) {
   regions %>%
-    dplyr::transmute(cluster = .data$id, id = .data$samples) %>%
+    dplyr::transmute(region = seq_len(nrow(.)), id = .data$samples) %>%
     tidyr::unnest() %>%
     {dplyr::left_join(extant, ., by = "id")}
 }
@@ -16,12 +16,12 @@ add_cluster = function(extant, regions) {
 
 (.extant = .population %>% filter_extant())
 (.regions = sample_uniform_regions(.extant, 8L, 100L))
-(.sampled = add_cluster(.extant, .regions))
+(.sampled = add_region(.extant, .regions))
 (.graph = make_igraph(.population))
 
 .sampled %>%
   plot_lattice2d(size = 0.3) +
-  geom_point(data = function(x) {dplyr::filter(x, !is.na(cluster))}, aes(x, y), size = 0.3, alpha = 0.4) +
+  geom_point(data = function(x) {dplyr::filter(x, !is.na(region))}, aes(x, y), size = 0.3, alpha = 0.4) +
   scale_colour_brewer(palette = "Spectral", guide = FALSE) +
   theme(axis.title = element_blank())
 
@@ -43,7 +43,7 @@ add_cluster = function(extant, regions) {
 .mutdescendants = .sprinkle_mutations(.subgraph, segsites=80L)
 
 .tidy_vaf = .regions %>%
-  dplyr::transmute(id, vaf = purrr::map(samples, function(nodes) {
+  dplyr::transmute(id = seq_len(nrow(.)), vaf = purrr::map(samples, function(nodes) {
     freq = purrr::map_int(.mutdescendants, ~ sum(nodes %in% .x))
     tibble::tibble(site = seq_along(freq), vaf = freq / length(nodes))
   })) %>%
@@ -129,7 +129,7 @@ df_sampled = results %>%
     path = factor(.tr_P[path], levels=.tr_P),
     extant = purrr::map(population, filter_extant),
     regions = purrr::map(extant, sample_uniform_regions, nsam=8L, ncell=100L),
-    extant = purrr::map2(extant, regions, add_cluster),
+    extant = purrr::map2(extant, regions, add_region),
     graph = purrr::map(population, make_igraph)
   ) %>% print()
 
@@ -148,7 +148,7 @@ df_extant = df_sampled %>%
 .p_sampled = df_extant %>%
   sample_n(40000) %>%
   plot_lattice2d(size = 0.3) +
-  geom_point(data = function(x) {dplyr::filter(x, !is.na(cluster))}, aes(x, y), size = 0.3, alpha = 0.4) +
+  geom_point(data = function(x) {dplyr::filter(x, !is.na(region))}, aes(x, y), size = 0.3, alpha = 0.4) +
   scale_colour_brewer(palette = "Spectral", guide = FALSE) +
   facet_grid(local + path ~ shape + replicate) +
   wtl::erase(axis.title, axis.text, axis.ticks) +

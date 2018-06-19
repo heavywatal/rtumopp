@@ -16,12 +16,12 @@ wtl::refresh("rtumopp")
 .specimen2 = sample_bulk(.extant, .o2, .n)
 
 # T_S
-(.ts1 = mean_branch_length(.graph, as.character(.specimen1$id)))
-(.ts2 = mean_branch_length(.graph, as.character(.specimen2$id)))
+(.ts1 = mean_branch_length(.graph, as.character(.specimen1)))
+(.ts2 = mean_branch_length(.graph, as.character(.specimen2)))
 (.ts = mean(c(.ts1, .ts2)))
 
 # T_B
-(.tb = mean_branch_length(.graph, as.character(.specimen1$id), as.character(.specimen2$id)))
+(.tb = mean_branch_length(.graph, as.character(.specimen1), as.character(.specimen2)))
 
 # T_D
 (.td = .tb - .ts)

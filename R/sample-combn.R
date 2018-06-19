@@ -57,8 +57,6 @@ within_between_samples = function(graph, regions) {
       row_i = .x[[1L]]
       row_j = .x[[2L]]
       tibble::tibble(
-        region_i = row_i$id,
-        region_j = row_j$id,
         within_i = row_i$within,
         within_j = row_j$within,
         euclidean = dist_euclidean(row_i, row_j),
