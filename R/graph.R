@@ -22,18 +22,18 @@ make_igraph = function(population) {
 #' @rdname graph
 #' @export
 subtree = function(graph, nodes=character(0L)) {
-  paths_to_origin(graph, nodes) %>%
+  paths_to_source(graph, nodes) %>%
     purrr::flatten_chr() %>%
     unique() %>%
     {igraph::induced_subgraph(graph, .)}
 }
 
-paths_to_leaves = function(graph, nodes) {
+paths_to_sink = function(graph, nodes) {
   igraph::ego(graph, order = 1073741824L, nodes = nodes, mode = "out") %>%
     purrr::map(names)
 }
 
-paths_to_origin = function(graph, nodes=character(0L)) {
+paths_to_source = function(graph, nodes=character(0L)) {
   igraph::ego(graph, order = 1073741824L, nodes = nodes, mode = "in") %>%
     purrr::map(names)
 }

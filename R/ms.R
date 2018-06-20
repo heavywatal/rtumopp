@@ -17,5 +17,5 @@ mutate_clades = function(graph, mu=NULL, segsites=NULL) {
   } else if (!is.null(mu)) warning("mu is ignored if segsites is given")
   mutants = sample(nodes, segsites, replace = TRUE)
   # TODO: remove internal nodes?
-  paths_to_leaves(graph, mutants)
+  paths_to_sink(graph, mutants)
 }
