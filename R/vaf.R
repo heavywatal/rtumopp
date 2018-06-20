@@ -10,7 +10,7 @@ tally_vaf = function(samples, sites) {
   purrr::map_dfc(samples, function(region) {
     purrr::map_int(sites, function(holders) {
       sum(region %in% holders)
-    }) / length(region)
+    })
   })
 }
 
@@ -23,5 +23,6 @@ tidy_vaf = function(tbl) {
     rlang::set_names(seq_len(ncol(.))) %>%
     tibble::rowid_to_column(var = "site") %>%
     tidyr::gather("sample", "frequency", -"site") %>%
+    dplyr::filter(.data$frequency > 0) %>%
     dplyr::mutate(sample = as.integer(.data$sample))
 }
