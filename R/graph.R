@@ -28,6 +28,11 @@ subtree = function(graph, nodes=character(0L)) {
     {igraph::induced_subgraph(graph, .)}
 }
 
+paths_to_leaves = function(graph, nodes) {
+  igraph::ego(graph, order = 1073741824L, nodes = nodes, mode = "out") %>%
+    purrr::map(names)
+}
+
 paths_to_origin = function(graph, nodes=character(0L)) {
   igraph::ego(graph, order = 1073741824L, nodes = nodes, mode = "in") %>%
     purrr::map(names)

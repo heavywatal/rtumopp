@@ -16,7 +16,6 @@ mutate_clades = function(graph, mu=NULL, segsites=NULL) {
     segsites = stats::rpois(1L, length(nodes) * mu)
   } else if (!is.null(mu)) warning("mu is ignored if segsites is given")
   mutants = sample(nodes, segsites, replace = TRUE)
-  igraph::ego(graph, order=1073741824L, mutants, mode = "out") %>%
-    # TODO: remove internal nodes?
-    purrr::map(names)
+  # TODO: remove internal nodes?
+  paths_to_leaves(graph, mutants)
 }
