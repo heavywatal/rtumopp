@@ -13,12 +13,13 @@ add_region = function(extant, regions) {
 
 (.result = tumopp(str_split("-N40000 -D2 -Chex -k24 -Lconst", " ")[[1]]))
 (.population = .result$population[[1]])
-
 (.extant = .population %>% filter_extant())
-(.regions = sample_uniform_regions(.extant, 8L, 100L))
-(.sampled = add_region(.extant, .regions))
 (.graph = make_igraph(.population))
 
+(.regions = sample_uniform_regions(.extant, 8L, 100L))
+(.subgraph = tumopp::subtree(.graph, purrr::flatten_chr(.regions$samples)))
+
+(.sampled = add_region(.extant, .regions))
 .sampled %>%
   plot_lattice2d(size = 0.3) +
   geom_point(data = function(x) {dplyr::filter(x, !is.na(region))}, aes(x, y), size = 0.3, alpha = 0.4) +
@@ -27,45 +28,38 @@ add_region = function(extant, regions) {
 
 # #######1#########2#########3#########4#########5#########6#########7#########
 
-.sampled_nodes = purrr::flatten_chr(.regions$samples) %>% print()
-.subgraph = tumopp::subtree(.graph, .sampled_nodes)
+wtl::refresh("rtumopp")
 
-.sprinkle_mutations = function(graph, mu=NULL, segsites=NULL) {
-  nodes = names(igraph::V(graph))
-  if (is.null(segsites)) {
-    if (is.null(mu)) stop("specify either mu or segsites")
-    segsites = stats::rpois(1L, length(nodes) * mu)
-  } else if (!is.null(mu)) warning("mu is ignored if segsites is given")
-  mutants = sample(nodes, segsites, replace = TRUE)
-  igraph::ego(graph, order=1073741824L, mutants, mode = "out") %>%
-    purrr::map(~as.integer(names(.x)))
+.sort_vaf = function(tbl, method = "complete") {
+  s = rowSums(tbl > 0)
+  b_nonzero = 10
+  b_shared = ifelse(s == 1L, 0, ifelse(s < ncol(tbl), 1000, 1100))
+  weighted = mutate_all(tbl, ~ ifelse(.x > 0, .x + b_nonzero, 0) + b_shared) %>% print()
+  col_order = hclust(dist(t(weighted), method = "euclidean"), method = method)$order
+  d = dist(weighted, method = "euclidean")
+  row_order = hclust(d, method = method)$order
+  tbl[row_order, col_order]
 }
-.mutdescendants = .sprinkle_mutations(.subgraph, segsites=80L)
 
-.calc_vaf = function(samples, sites) {
-  tibble::tibble(sample = seq_along(samples), vaf = purrr::map(samples, function(nodes) {
-    freq = purrr::map_int(sites, ~ sum(nodes %in% .x))
-    tibble::tibble(site = seq_along(freq), vaf = freq / length(nodes))
-  })) %>%
-  tidyr::unnest()
+cluster_method = c("single", "complete", "average", "mcquitty", "median", "centroid", "ward.D2", "ward.D")
+
+.test_cluster = function(method = "complete") {
+  .sorted_vaf = .vaf %>%
+    dplyr::mutate_all(~ ifelse(.x > 1L, .x, 0) / 100) %>% # remove singletons
+    dplyr::filter(rowSums(.) > 0L) %>%
+    .sort_vaf(method = method) %>% tidy_vaf()# %>% print()
+
+  ggplot(.sorted_vaf, aes(sample, site)) +
+    geom_tile(aes(fill = frequency)) +
+    scale_fill_distiller(palette = "Spectral", limit = c(0, 1), guide = FALSE) +
+    labs(title = method) +
+    wtl::erase(axis.title)
 }
-.tidy_vaf = .calc_vaf(.regions$samples, .mutdescendants) %>% print()
 
-.sort_sites = function(tbl) {
-  wide = tbl %>% tidyr::spread(site, vaf) %>% dplyr::select(-sample)
-  row_order = hclust(dist(wide, method = 'manhattan'))$order
-  col_order = hclust(dist(t(wide), method = 'manhattan'))$order
-  wide[row_order, col_order] %>%
-    rlang::set_names(seq_along(names(.))) %>%
-    dplyr::mutate(sample = seq_len(nrow(.))) %>%
-    tidyr::gather(site, vaf, -sample) %>%
-    dplyr::mutate(site = as.integer(site))
-}
-.sorted_vaf = .sort_sites(.tidy_vaf) %>% print()
-
-ggplot(.sorted_vaf, aes(as.character(sample), site)) +
-  geom_tile(aes(fill = vaf)) +
-  viridis::scale_fill_viridis()
+.mutated = mutate_clades(.subgraph, segsites=0L)
+.vaf = tally_vaf(.regions$samples, .mutated %>% purrr::map(as.integer)) %>% print()
+.plt = purrr::map(cluster_method, .test_cluster)
+cowplot::plot_grid(plotlist=.plt, nrow=2)
 
 # #######1#########2#########3#########4#########5#########6#########7#########
 
