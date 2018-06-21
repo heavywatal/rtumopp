@@ -13,9 +13,15 @@ mutate_clades = function(graph, mu=NULL, segsites=NULL) {
   # TODO: remove low-freq variants?
   if (is.null(segsites)) {
     if (is.null(mu)) stop("specify either mu or segsites")
-    segsites = stats::rpois(1L, length(nodes) * mu)
+    if (mu > 0) {
+      segsites = stats::rpois(1L, length(nodes) * mu)
+    }
   } else if (!is.null(mu)) warning("mu is ignored if segsites is given")
-  mutants = sample(nodes, segsites, replace = TRUE)
+  mutants = if (is.null(segsites)) {
+    nodes  # if (mu <= 0)
+  } else {
+    sample(nodes, segsites, replace = TRUE)
+  }
   # TODO: remove internal nodes?
   paths_to_sink(graph, mutants)
 }
