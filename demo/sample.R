@@ -17,7 +17,6 @@ add_region = function(extant, regions) {
 (.graph = make_igraph(.population))
 
 (.regions = sample_uniform_regions(.extant, 8L, 100L))
-(.subgraph = tumopp::subtree(.graph, purrr::flatten_chr(.regions$samples)))
 
 (.sampled = add_region(.extant, .regions))
 .sampled %>%
@@ -28,76 +27,25 @@ add_region = function(extant, regions) {
 
 # #######1#########2#########3#########4#########5#########6#########7#########
 
-wtl::refresh("rtumopp")
+.tidy = make_vaf(.graph, .regions$samples, -1) %>% print()
 
-.sort_vaf = function(tbl, method = "complete") {
-  # weighted = tbl
-  s = rowSums(tbl > 0)
-  b_nonzero = 10
-  # b_shared = ifelse(s == 1L, 0, ifelse(s < ncol(tbl), 1000, 1100))
-  b_shared = ifelse(s == 1L, 0, 10 * s + 1000)
-  weighted = mutate_all(tbl, ~ ifelse(.x > 0, .x + b_nonzero, 0) + b_shared) %>% print()
-  d = dist(t(dplyr::filter(weighted, s > 1L)), method = "euclidean")
-  col_order = hclust(d, method = method)$order
-  d = dist(weighted, method = "euclidean")
-  row_order = hclust(d, method = method)$order
-  tbl[row_order, col_order]
-}
+.subgraph = tumopp::subtree(.graph, purrr::flatten_chr(.regions$samples))
+.mutated = mutate_clades(.subgraph, mu = 1)
+.mutated = mutate_clades(.subgraph, mu = -1)
+.mutated = mutate_clades(.subgraph, segsites=1000L)
 
-cluster_method = c("single", "complete", "average", "ward.D2")
-
-.test_cluster = function(method = "complete") {
-  .sorted_vaf = .vaf %>%
-    dplyr::mutate_all(~ ifelse(.x > 4L, .x, 0) / 100) %>% # remove singletons
-    dplyr::filter(rowSums(.) > 0L) %>%
-    .sort_vaf(method = method) %>%
-    dplyr::filter(rowSums(. > 0L) > 1L) %>%
-    tidy_vaf()# %>% print()
-
-  ggplot(.sorted_vaf, aes(sample, site)) +
-    geom_tile(aes(fill = frequency)) +
-    scale_fill_distiller(palette = "Spectral", limit = c(0, 1), guide = FALSE) +
-    scale_y_continuous(expand = c(0, 1)) +
-    labs(title = method) +
-    wtl::erase(axis.title)
-}
-
-.nodes = names(igraph::V(.subgraph))
-.internal_nodes = .nodes[!(.nodes %in% purrr::flatten_chr(.regions$samples))]
-.mutated = tumopp:::paths_to_sink(.subgraph, .internal_nodes)
-
-.mutated = mutate_clades(.subgraph, segsites=100L)
 .vaf = tally_vaf(.regions$samples, .mutated %>% purrr::map(as.integer)) %>% print()
-.plt = purrr::map(cluster_method, .test_cluster)
-cowplot::plot_grid(plotlist=.plt, nrow=1)
-
-.dmeth = "euclidean"
-.cmeth = "average"
-.sorted_vaf = .vaf %>%
-  dplyr::mutate_all(~ ifelse(.x > 4L, .x, 0) / 100) %>% # remove singletons
-  dplyr::mutate(n = rowSums(. > 0L)) %>%
-  dplyr::filter(n > 0L) %>%
-  tidyr::nest(-n) %>%
-  dplyr::arrange(desc(n)) %>%
-  dplyr::mutate(data = purrr::map(data, ~{
-    row_order = hclust(dist(.x, method = .dmeth), method = .cmeth)$order
-    .x[row_order,]
-  }), n = NULL) %>%
-  tidyr::unnest() %>% {
-    .x = t(dplyr::filter(., rowSums(. > 0L) > 1L))
-    col_order = hclust(dist(.x, method = .dmeth), method = .cmeth)$order
-    .[,col_order]
-  } %>%
+.tidy = .vaf %>%
+  filter_detectable(0.05) %>%
+  sort_vaf() %>%
+  # dplyr::filter(rowSums(. > 0) > 1L) %>%
+  tidy_vaf() %>%
   print()
 
-.sorted_vaf %>%
-  dplyr::filter(rowSums(. > 0L) > 1L) %>%
-  tidy_vaf() %>%
-  ggplot(aes(sample, site)) +
-    geom_tile(aes(fill = frequency)) +
-    scale_fill_distiller(palette = "Spectral", limit = c(0, 1), guide = FALSE) +
-    scale_y_continuous(expand = c(0, 1)) +
-    wtl::erase(axis.title)
+ggplot(.tidy, aes(sample, site)) +
+  geom_tile(aes(fill = frequency)) +
+  scale_fill_distiller(palette = "Spectral", limit = c(0, 1), guide = FALSE) +
+  coord_cartesian(expand = FALSE)
 
 # #######1#########2#########3#########4#########5#########6#########7#########
 
