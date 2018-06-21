@@ -3,12 +3,15 @@
 \name{tally_vaf}
 \alias{tally_vaf}
 \alias{tidy_vaf}
+\alias{filter_detectable}
 \alias{sort_vaf}
 \title{Utilities for variant allele frequency}
 \usage{
 tally_vaf(samples, sites)
 
 tidy_vaf(tbl)
+
+filter_detectable(tbl, threshold)
 
 sort_vaf(tbl, method = c("average", "ward.D2", "complete", "single"))
 }
@@ -19,12 +22,16 @@ sort_vaf(tbl, method = c("average", "ward.D2", "complete", "single"))
 
 \item{tbl}{output of \code{tally_vaf}}
 
+\item{threshold}{minimum detectable frequency}
+
 \item{method}{passed to \code{stats::hclust}}
 }
 \description{
 \code{tally_vaf} evaluates overlap of sampled and mutated cells
 
 \code{tidy_vaf} transforms vaf table
+
+\code{filter_detectable} removes sites where freq < threshold
 
 \code{sort_vaf} reorders rows and columns of VAF table
 }

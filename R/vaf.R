@@ -10,7 +10,7 @@ tally_vaf = function(samples, sites) {
   purrr::map_dfc(samples, function(region) {
     purrr::map_int(sites, function(holders) {
       sum(region %in% holders)
-    })
+    }) / length(region)
   })
 }
 
@@ -25,6 +25,16 @@ tidy_vaf = function(tbl) {
     tidyr::gather("sample", "frequency", -"site") %>%
     dplyr::filter(.data$frequency > 0) %>%
     dplyr::mutate(sample = as.integer(.data$sample))
+}
+
+#' `filter_detectable` removes sites where freq < threshold
+#' @param threshold minimum detectable frequency
+#' @rdname vaf
+#' @export
+filter_detectable = function(tbl, threshold) {
+  tbl %>%
+    {.[. < threshold] = 0; .} %>%
+    dplyr::filter(rowSums(.) > 0)
 }
 
 #' `sort_vaf` reorders rows and columns of VAF table
