@@ -1,6 +1,21 @@
 #' Utilities for variant allele frequency
 #'
 #' @description
+#' `make_vaf` is a shortcut to make neutral VAF pattern
+#' @inheritParams subtree
+#' @inheritParams mutate_clades
+#' @rdname vaf
+#' @export
+make_vaf = function(graph, samples, mu, threshold = 0.05) {
+  mutated = subtree(graph, purrr::flatten_chr(samples)) %>%
+    mutate_clades(mu = mu) %>%
+    purrr::map(as.integer)
+  tally_vaf(samples, mutated) %>%
+    filter_detectable(threshold) %>%
+    sort_vaf() %>%
+    tidy_vaf()
+}
+
 #' `tally_vaf` evaluates overlap of sampled and mutated cells
 #' @param samples list of integer IDs
 #' @param sites list of integer IDs

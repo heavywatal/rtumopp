@@ -1,19 +1,10 @@
 #' Sample cells from a population
 #'
 #' @description
-#' `sample_bulk` samples bulk of cells near the specified center
-#' @param tbl tibble of extant cells with id, x, y, z columns
-#' @param center named (x, y, z) vector, list, or tibble
-#' @param ncell number of cells per specimen
-#' @rdname sample
-#' @export
-sample_bulk = function(tbl, center=c(x=0, y=0, z=0), ncell=10L) {
-  d = dist_euclidean(tbl, center)
-  tbl$id[utils::head(order(d), ncell)]
-}
-
 #' `sample_uniform_regions` sample uniformly distributed regions
+#' @param tbl tibble of extant cells with id, x, y, z columns
 #' @param nsam number of regions to sample
+#' @param ncell number of cells per specimen
 #' @rdname sample
 #' @export
 sample_uniform_regions = function(tbl, nsam=2L, ncell=10L) {
@@ -29,6 +20,15 @@ sample_random_regions = function(tbl, nsam=2L, ncell=10L) {
   tbl %>%
     dplyr::select(.data$id, .data$x, .data$y, .data$z) %>%
     sample_regions(dplyr::sample_n(., nsam), ncell = ncell)
+}
+
+#' `sample_bulk` samples bulk of cells near the specified center
+#' @param center named (x, y, z) vector, list, or tibble
+#' @rdname sample
+#' @export
+sample_bulk = function(tbl, center=c(x=0, y=0, z=0), ncell=10L) {
+  d = dist_euclidean(tbl, center)
+  tbl$id[utils::head(order(d), ncell)]
 }
 
 kmeans_centers = function(tbl, centers, iter.max = 32L) {
