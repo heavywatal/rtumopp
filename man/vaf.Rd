@@ -3,11 +3,14 @@
 \name{tally_vaf}
 \alias{tally_vaf}
 \alias{tidy_vaf}
+\alias{sort_vaf}
 \title{Utilities for variant allele frequency}
 \usage{
 tally_vaf(samples, sites)
 
 tidy_vaf(tbl)
+
+sort_vaf(tbl, method = c("average", "ward.D2", "complete", "single"))
 }
 \arguments{
 \item{samples}{list of integer IDs}
@@ -15,9 +18,13 @@ tidy_vaf(tbl)
 \item{sites}{list of integer IDs}
 
 \item{tbl}{output of \code{tally_vaf}}
+
+\item{method}{passed to \code{stats::hclust}}
 }
 \description{
 \code{tally_vaf} evaluates overlap of sampled and mutated cells
 
 \code{tidy_vaf} transforms vaf table
+
+\code{sort_vaf} reorders rows and columns of VAF table
 }
