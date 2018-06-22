@@ -4,13 +4,6 @@ library(tumopp)
 
 wtl::refresh("rtumopp")
 
-add_region = function(extant, regions) {
-  regions %>%
-    dplyr::transmute(region = seq_len(nrow(.)), id = .data$samples) %>%
-    tidyr::unnest() %>%
-    {dplyr::left_join(extant, ., by = "id")}
-}
-
 (.result = tumopp(str_split("-N40000 -D2 -Chex -k24 -Lconst", " ")[[1]]))
 (.population = .result$population[[1]])
 (.extant = .population %>% filter_extant())
@@ -18,8 +11,8 @@ add_region = function(extant, regions) {
 
 (.regions = sample_uniform_regions(.extant, 8L, 100L))
 
-(.sampled = add_region(.extant, .regions))
-.sampled %>%
+.extant %>%
+  dplyr::left_join(tumopp:::tidy_regions(.regions), by = "id") %>%
   plot_lattice2d(size = 0.3) +
   geom_point(data = function(x) {dplyr::filter(x, !is.na(region))}, aes(x, y), size = 0.3, alpha = 0.4) +
   scale_colour_brewer(palette = "Spectral", guide = FALSE) +
@@ -27,14 +20,14 @@ add_region = function(extant, regions) {
 
 # #######1#########2#########3#########4#########5#########6#########7#########
 
-.tidy = make_vaf(.graph, .regions$samples, -1) %>% print()
+.tidy = make_vaf(.graph, .regions$id, -1) %>% print()
 
-.subgraph = tumopp::subtree(.graph, purrr::flatten_chr(.regions$samples))
+.subgraph = tumopp::subtree(.graph, purrr::flatten_chr(.regions$id))
 .mutated = mutate_clades(.subgraph, mu = 1)
 .mutated = mutate_clades(.subgraph, mu = -1)
 .mutated = mutate_clades(.subgraph, segsites=1000L)
 
-.vaf = tally_vaf(.regions$samples, .mutated %>% purrr::map(as.integer)) %>% print()
+.vaf = tally_vaf(.regions$id, .mutated %>% purrr::map(as.integer)) %>% print()
 .tidy = .vaf %>%
   filter_detectable(0.05) %>%
   sort_vaf() %>%
@@ -50,14 +43,14 @@ ggplot(.tidy, aes(sample, site)) +
 # #######1#########2#########3#########4#########5#########6#########7#########
 
 .threshold = 0.01
-.detectable = .regions$samples %>% purrr::map(~detectable_mutants(.graph, .x, .threshold))
+.detectable = .regions$id %>% purrr::map(~detectable_mutants(.graph, .x, .threshold))
 .combn_biopsy = .detectable %>% combn_sample_ids() %>% print()
 .tbl = summarize_capture_rate(.combn_biopsy, .population, .threshold) %>% print()
 .tbl %>% plot_capture_rate()
 
 .combn_capture_rate = function(population, regions, graph, thr_range = c(0.01, 0.03, 0.05), ...) {
   purrr::map_dfr(thr_range, function(thr) {
-    regions$samples %>%
+    regions$id %>%
       purrr::map(~detectable_mutants(graph, .x, thr)) %>%
       combn_sample_ids() %>%
       summarize_capture_rate(population, thr)
@@ -85,7 +78,7 @@ detectable_mutants_all(.population, .threshold)
 # #######1#########2#########3#########4
 
 Rprof()
-.distances = within_between_samples(.graph, .regions) %>% print()
+.distances = within_between_samples(.subgraph, .regions) %>% print()
 Rprof(NULL)
 summaryRprof()
 
@@ -122,17 +115,18 @@ df_sampled = results %>%
     path = factor(.tr_P[path], levels=.tr_P),
     extant = purrr::map(population, filter_extant),
     regions = purrr::map(extant, sample_uniform_regions, nsam=8L, ncell=100L),
-    extant = purrr::map2(extant, regions, add_region),
     graph = purrr::map(population, make_igraph)
   ) %>% print()
 
 # saveRDS(df_sampled, "df_sampled.rds")
 
 df_extant = df_sampled %>%
-  dplyr::select(local, path, shape, extant) %>%
-  dplyr::mutate(extant = purrr::map(extant, ~{
-      dplyr::mutate(.x, clade = as.factor(as.integer(clade)))
+  dplyr::mutate(extant = purrr::map2(extant, regions, ~{
+    .x %>%
+      dplyr::left_join(tumopp:::tidy_regions(.y), by = "id") %>%
+      dplyr::mutate(clade = as.factor(as.integer(clade)))
   })) %>%
+  dplyr::select(local, path, shape, extant) %>%
   dplyr::group_by(local, path, shape) %>%
   dplyr::mutate(replicate = seq_along(local)) %>%
   tidyr::unnest() %>%
