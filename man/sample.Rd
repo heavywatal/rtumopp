@@ -26,5 +26,5 @@ sample_bulk(tbl, center = c(x = 0, y = 0, z = 0), ncell = 10L)
 
 \code{sample_random_regions} samples multiple regions at random
 
-\code{sample_bulk} samples bulk of cells near the specified center
+\code{sample_bulk} samples a bulk of cells near the specified center
 }

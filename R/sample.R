@@ -17,12 +17,13 @@ sample_uniform_regions = function(tbl, nsam=2L, ncell=10L) {
 #' @rdname sample
 #' @export
 sample_random_regions = function(tbl, nsam=2L, ncell=10L) {
-  tbl %>%
-    dplyr::select(.data$id, .data$x, .data$y, .data$z) %>%
-    sample_regions(dplyr::sample_n(., nsam), ncell = ncell)
+  centers = tbl %>%
+    dplyr::select(.data$x, .data$y, .data$z) %>%
+    dplyr::sample_n(nsam)
+  sample_regions(tbl, centers, ncell = ncell)
 }
 
-#' `sample_bulk` samples bulk of cells near the specified center
+#' `sample_bulk` samples a bulk of cells near the specified center
 #' @param center named (x, y, z) vector, list, or tibble
 #' @rdname sample
 #' @export
@@ -40,7 +41,7 @@ kmeans_centers = function(tbl, centers, iter.max = 32L) {
 
 sample_regions = function(tbl, centers, ncell = 10L) {
   centers %>%
-    dplyr::mutate(samples = purrr::pmap(., function(x, y, z) {
+    dplyr::mutate(id = purrr::pmap(., function(x, y, z) {
       sample_bulk(tbl, center = c(x = x, y = y, z = z), ncell = ncell)
     }))
 }
