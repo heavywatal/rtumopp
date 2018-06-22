@@ -45,3 +45,9 @@ sample_regions = function(tbl, centers, ncell = 10L) {
       sample_bulk(tbl, center = c(x = x, y = y, z = z), ncell = ncell)
     }))
 }
+
+tidy_regions = function(regions) {
+  tibble::tibble(id = regions$id) %>%
+    tibble::rowid_to_column(var = "region") %>%
+    tidyr::unnest()
+}
