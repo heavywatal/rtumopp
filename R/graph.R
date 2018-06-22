@@ -18,6 +18,7 @@ make_igraph = function(population) {
 }
 
 #' `subtree` extracts subgraph among terminal nodes
+#' @param graph igraph
 #' @param nodes igraph vertices
 #' @rdname graph
 #' @export
@@ -41,17 +42,6 @@ paths_to_source = function(graph, nodes=character(0L)) {
 distances_from_origin = function(graph, nodes=character(0L)) {
   igraph::distances(graph, "1", nodes, mode = "out", weights = NA, algorithm = "unweighted") %>%
     as.integer()
-}
-
-#' `mean_branch_length` calculates mean branch length within/between sub-graphs
-#' @param graph igraph
-#' @param from,to igraph vertices
-#' @rdname graph
-#' @export
-mean_branch_length = function(graph, from=igraph::V(graph), to=from) {
-  .d = igraph::distances(graph, from, to, mode = "all", weights = NA, algorithm = "unweighted")
-  .n = length(from) * length(to) - sum(from %in% to)
-  sum(.d) / .n
 }
 
 #' `layout_genealogy` returns coordinates of nodes and edges for plotting

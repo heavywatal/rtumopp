@@ -3,15 +3,12 @@
 \name{make_igraph}
 \alias{make_igraph}
 \alias{subtree}
-\alias{mean_branch_length}
 \alias{layout_genealogy}
 \title{Functions depending on igraph}
 \usage{
 make_igraph(population)
 
 subtree(graph, nodes = character(0L))
-
-mean_branch_length(graph, from = igraph::V(graph), to = from)
 
 layout_genealogy(population)
 }
@@ -21,15 +18,11 @@ layout_genealogy(population)
 \item{graph}{igraph}
 
 \item{nodes}{igraph vertices}
-
-\item{from, to}{igraph vertices}
 }
 \description{
 \code{make_igraph} converts raw population tbl into graph
 
 \code{subtree} extracts subgraph among terminal nodes
-
-\code{mean_branch_length} calculates mean branch length within/between sub-graphs
 
 \code{layout_genealogy} returns coordinates of nodes and edges for plotting
 }

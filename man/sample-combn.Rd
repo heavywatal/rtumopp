@@ -3,14 +3,11 @@
 \name{combn_sample_ids}
 \alias{combn_sample_ids}
 \alias{summarize_capture_rate}
-\alias{within_between_samples}
 \title{Sample cells from a population}
 \usage{
 combn_sample_ids(ids, nsam = seq_along(ids))
 
 summarize_capture_rate(combinations, population, threshold = 0.01)
-
-within_between_samples(graph, regions)
 }
 \arguments{
 \item{ids}{list of ID vectors}
@@ -22,10 +19,6 @@ within_between_samples(graph, regions)
 \item{population}{tibble with descendants and id column}
 
 \item{threshold}{lowerbound of detectable allele frequency}
-
-\item{graph}{igraph}
-
-\item{regions}{output of \code{sample_uniform_regions()}}
 }
 \value{
 tibble
@@ -34,6 +27,4 @@ tibble
 \code{combn_sample_ids} makes combinations of cell IDs for various number of samples
 
 \code{summarize_capture_rate} calculates expected allele capture rate on various combinations of samples
-
-\code{within_between_samples} summarizes branch lengths
 }
