@@ -7,3 +7,8 @@
 
 # to suppress NOTE
 utils::globalVariables(c(".", "n"))
+
+.onUnload = function(libpath) {
+  message("Unloading tumopp")
+  library.dynam.unload("tumopp", libpath)
+}
