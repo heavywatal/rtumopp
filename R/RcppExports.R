@@ -6,12 +6,12 @@
 #' @param npair number of samples to measure genetic and physical distance
 #' @rdname rcpprun
 cpp_tumopp <- function(args, npair = 0L) {
-    .Call('_tumopp_cpp_tumopp', PACKAGE = 'tumopp', args, npair)
+    .Call(`_tumopp_cpp_tumopp`, args, npair)
 }
 
 #' @param nsam number of samples for ms-like output
 #' @rdname rcpprun
 cpp_tumopp_ms <- function(nsam, args) {
-    .Call('_tumopp_cpp_tumopp_ms', PACKAGE = 'tumopp', nsam, args)
+    .Call(`_tumopp_cpp_tumopp_ms`, nsam, args)
 }
 
