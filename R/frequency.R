@@ -9,18 +9,6 @@ math_score = function(x, constant=1.4826, na.rm=FALSE) {
   mad / med
 }
 
-#' Calculate expected allele frequencies in the extant cells
-#' @inheritParams igraph::ego_size
-#' @return integer
-#' @rdname frequency
-#' @export
-allele_freqs = function(graph, nodes) {
-  stopifnot("1" %in% nodes)
-  x = igraph::ego_size(graph, order = 1073741824L, nodes = nodes, mode = "out")
-  x = as.integer(x + 1L) %/% 2L
-  x / max(x)
-}
-
 #' Extract cells whose expected allele frequencies are above threshold
 #' @param population tibble with descendants and id column
 #' @param threshold lowerbound of detectable allele frequency
@@ -31,6 +19,8 @@ detectable_mutants_all = function(population, threshold) {
   population$id[population$allelefreq > threshold]
 }
 
+#' @param graph igraph
+#' @param nodes igraph vertices
 #' @rdname frequency
 #' @export
 detectable_mutants = function(graph, nodes, threshold) {

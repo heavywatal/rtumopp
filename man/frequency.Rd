@@ -2,14 +2,11 @@
 % Please edit documentation in R/frequency.R
 \name{math_score}
 \alias{math_score}
-\alias{allele_freqs}
 \alias{detectable_mutants_all}
 \alias{detectable_mutants}
 \title{Calculate MATH (mutant-allele tumor heterogeneity) score from variant allele frequencies}
 \usage{
 math_score(x, constant = 1.4826, na.rm = FALSE)
-
-allele_freqs(graph, nodes)
 
 detectable_mutants_all(population, threshold)
 
@@ -23,25 +20,21 @@ detectable_mutants(graph, nodes, threshold)
 \item{na.rm}{if \code{TRUE} then \code{NA} values are stripped
     from \code{x} before computation takes place.}
 
-\item{graph}{The input graph.}
-
-\item{nodes}{The vertices for which the calculation is performed.}
-
 \item{population}{tibble with descendants and id column}
 
 \item{threshold}{lowerbound of detectable allele frequency}
+
+\item{graph}{igraph}
+
+\item{nodes}{igraph vertices}
 }
 \value{
 numeric
-
-integer
 
 integer IDs
 }
 \description{
 Calculate MATH (mutant-allele tumor heterogeneity) score from variant allele frequencies
-
-Calculate expected allele frequencies in the extant cells
 
 Extract cells whose expected allele frequencies are above threshold
 }

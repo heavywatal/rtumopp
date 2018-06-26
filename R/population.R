@@ -31,10 +31,11 @@ filter_extant = function(population) {
 set_graph_property = function(population) {
   .graph = make_igraph(population)
   .nodes = as.character(population$id)
+  .size = count_sink(.graph)
   .out = dplyr::mutate(
     population,
     age = distances_from_origin(.graph, .nodes),
-    allelefreq = allele_freqs(.graph, .nodes)
+    allelefreq = count_sink(.graph, .nodes) / .size
   )
   founders = list_clade_founders(.out, 4L)
   clade_data = founders %>%

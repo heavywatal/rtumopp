@@ -44,6 +44,15 @@ distances_from_origin = function(graph, nodes=character(0L)) {
     as.integer()
 }
 
+count_sink = function(graph, nodes=character(0L)) {
+  if (length(nodes) > 0L) {
+    out_ego_size = igraph::ego_size(graph, order = 1073741824L, nodes = nodes, mode = "out")
+    as.integer(out_ego_size + 1L) %/% 2L
+  } else {
+    sum(igraph::degree(graph, mode = "out", loops = FALSE) == 0L)
+  }
+}
+
 #' `layout_genealogy` returns coordinates of nodes and edges for plotting
 #' @rdname graph
 #' @export
