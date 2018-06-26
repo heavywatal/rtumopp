@@ -1,7 +1,7 @@
 #' Functions depending on igraph
 #'
 #' @description
-#' `make_igraph` converts raw population tbl into graph
+#' `make_igraph` converts raw population tbl into graph.
 #' @param population tbl
 #' @rdname graph
 #' @export
@@ -17,7 +17,7 @@ make_igraph = function(population) {
     igraph::graph_from_data_frame()
 }
 
-#' `subtree` extracts subgraph among terminal nodes
+#' `subtree` extracts subgraph among terminal nodes.
 #' @param graph igraph
 #' @param nodes igraph vertices
 #' @rdname graph
@@ -27,6 +27,18 @@ subtree = function(graph, nodes=character(0L)) {
     purrr::flatten_chr() %>%
     unique() %>%
     {igraph::induced_subgraph(graph, .)}
+}
+
+#' `shared_ancestors` selects major common ancestors above threshold.
+#' @inheritParams summarize_capture_rate
+#' @rdname graph
+#' @export
+shared_ancestors = function(graph, nodes, threshold) {
+  n = length(nodes)
+  counts = paths_to_source(graph, nodes) %>%
+    purrr::flatten_chr() %>%
+    table()
+  names(counts)[(counts / n) > threshold]
 }
 
 paths_to_sink = function(graph, nodes) {
@@ -53,7 +65,7 @@ count_sink = function(graph, nodes=character(0L)) {
   }
 }
 
-#' `layout_genealogy` returns coordinates of nodes and edges for plotting
+#' `layout_genealogy` returns coordinates of nodes and edges for plotting.
 #' @rdname graph
 #' @export
 layout_genealogy = function(population) {

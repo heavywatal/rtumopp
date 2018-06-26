@@ -42,24 +42,24 @@ ggplot(.tidy, aes(sample, site)) +
 
 # #######1#########2#########3#########4#########5#########6#########7#########
 
+wtl::refresh("rtumopp")
+
 .threshold = 0.01
-.detectable = .regions$id %>% purrr::map(~detectable_mutants(.graph, .x, .threshold))
-.combn_biopsy = .detectable %>% combn_sample_ids() %>% print()
+.detectable = .regions$id %>% purrr::map(~shared_ancestors(.graph, as.character(.x), .threshold) %>% as.integer())
+.combn_biopsy = .detectable %>% combn_ids() %>% print()
 .tbl = summarize_capture_rate(.combn_biopsy, .population, .threshold) %>% print()
 .tbl %>% plot_capture_rate()
 
 .combn_capture_rate = function(population, regions, graph, thr_range = c(0.01, 0.03, 0.05), ...) {
   purrr::map_dfr(thr_range, function(thr) {
     regions$id %>%
-      purrr::map(~detectable_mutants(graph, .x, thr)) %>%
-      combn_sample_ids() %>%
+      purrr::map(~shared_ancestors(graph, as.character(.x), thr) %>% as.integer()) %>%
+      combn_ids() %>%
       summarize_capture_rate(population, thr)
   })
 }
 .tbl_capture = .combn_capture_rate(.population, .regions, .graph) %>% print()
 .tbl_capture %>% plot_capture_rate() + facet_wrap(~threshold)
-
-detectable_mutants_all(.population, .threshold)
 
 .plot_allelefreq_biopsy = function(population, sample_ancestors, threshold) {
   .df = population %>%
@@ -73,7 +73,7 @@ detectable_mutants_all(.population, .threshold)
     geom_histogram(aes(fill=captured), binwidth=0.02)+
     theme_bw()
 }
-.plot_allelefreq_biopsy(.population, .combn_biopsy$nodes[[3]], .threshold)
+.plot_allelefreq_biopsy(.population, .combn_biopsy$id[[3]], .threshold)
 
 # #######1#########2#########3#########4
 

@@ -3,12 +3,15 @@
 \name{make_igraph}
 \alias{make_igraph}
 \alias{subtree}
+\alias{shared_ancestors}
 \alias{layout_genealogy}
 \title{Functions depending on igraph}
 \usage{
 make_igraph(population)
 
 subtree(graph, nodes = character(0L))
+
+shared_ancestors(graph, nodes, threshold)
 
 layout_genealogy(population)
 }
@@ -18,11 +21,15 @@ layout_genealogy(population)
 \item{graph}{igraph}
 
 \item{nodes}{igraph vertices}
+
+\item{threshold}{minimum frequency of detectable alleles}
 }
 \description{
-\code{make_igraph} converts raw population tbl into graph
+\code{make_igraph} converts raw population tbl into graph.
 
-\code{subtree} extracts subgraph among terminal nodes
+\code{subtree} extracts subgraph among terminal nodes.
 
-\code{layout_genealogy} returns coordinates of nodes and edges for plotting
+\code{shared_ancestors} selects major common ancestors above threshold.
+
+\code{layout_genealogy} returns coordinates of nodes and edges for plotting.
 }

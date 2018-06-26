@@ -1,16 +1,16 @@
 #' Sample cells from a population
 #'
 #' @description
-#' `combn_sample_ids` makes combinations of cell IDs for various number of samples
-#' @param ids list of ID vectors
-#' @param nsam number of regions to sample
+#' `combn_ids` makes combinations of cell IDs for various number of samples.
+#' @param x list of ID vectors
+#' @param m number of regions to sample
 #' @return tibble
 #' @rdname sample-combn
 #' @export
-combn_sample_ids = function(ids, nsam=seq_along(ids)) {
+combn_ids = function(x, m=seq_along(x)) {
   tibble::tibble(
-    nsam = nsam,
-    nodes = purrr::map(nsam, ~combn_int_list(ids, .x))
+    nsam = m,
+    id = purrr::map(m, combn_int_list, x = x)
   ) %>%
     tidyr::unnest()
 }
@@ -25,18 +25,19 @@ combn_int_list = function(x, m, FUN=union_int, simplify=FALSE, ...) {
   utils::combn(x, m, FUN = FUN, simplify = simplify, ...)
 }
 
-#' `summarize_capture_rate` calculates expected allele capture rate on various combinations of samples
-#' @param combinations nested tibble from `combn_sample_ids()`
-#' @inheritParams detectable_mutants_all
+#' `summarize_capture_rate` calculates expected allele capture rate on various combinations of samples.
+#' @param combinations nested tibble from `combn_sample_ids`
+#' @param population tibble
+#' @param threshold minimum frequency of detectable alleles
 #' @rdname sample-combn
 #' @export
 summarize_capture_rate = function(combinations, population, threshold = 0.01) {
-  ids = detectable_mutants_all(population, threshold)
+  ids = population$id[population$allelefreq >= threshold]
   len_ids = length(ids)
   dplyr::transmute(
     combinations,
     threshold,
     .data$nsam,
-    capture_rate = purrr::map_dbl(.data$nodes, ~sum(.x %in% ids)) / len_ids
+    capture_rate = purrr::map_dbl(.data$id, ~sum(.x %in% ids)) / len_ids
   )
 }
