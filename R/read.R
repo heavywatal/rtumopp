@@ -38,11 +38,11 @@ read_results = function(indirs=getwd()) {
 #' @rdname read
 #' @export
 read_snapshots = function(indirs=getwd()) {
-  read_confs(indirs) %>%
-    purrr::pmap_dfr(function(...) {
-      .x = list(...)
-      .d = readr::read_tsv(file.path(.x$directory, "snapshots.tsv.gz"))
-      if (.x$coord == "hex") .d = trans_coord_hex(.d)
-      set_graph_property(.d)
-    }, .to = "snapshots")
+  read_results(indirs) %>%
+    dplyr::mutate(snapshots = purrr::map2(.data$directory, .data$population, ~{
+      meta_info = dplyr::select(.y, .data$id, .data$x, .data$y, .data$z, .data$clade)
+      readr::read_tsv(file.path(.x, "snapshots.tsv.gz")) %>%
+        dplyr::select(-.data$x, -.data$y, -.data$z) %>%
+        dplyr::left_join(meta_info, by = "id")
+    }))
 }
