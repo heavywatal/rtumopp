@@ -45,7 +45,8 @@ mslike = function(nsam=20L, args=character(0L)) {
 #' @rdname tumopp
 #' @export
 make_args = function(alt, const=NULL, nreps=1L) {
-  altered = purrr::invoke(expand.grid, alt, stringsAsFactors = FALSE)
+  altered = purrr::invoke(expand.grid, alt, stringsAsFactors = FALSE) %>%
+    filter_valid_LP()
   prefix = format(Sys.time(), "%Y%m%d_%H%M_")
   paste0(prefix, seq_len(nreps)) %>%
     purrr::map_dfr(~dplyr::mutate(altered, o = .x)) %>%
@@ -56,4 +57,23 @@ make_args = function(alt, const=NULL, nreps=1L) {
       c(const, sprintf(.template, .names, .params))
     }) %>%
     stats::setNames(purrr::map_chr(., paste, collapse = " "))
+}
+
+filter_valid_LP = function(x) {
+  if (all(c("L", "P") %in% names(x))) {
+    nrow_orig = nrow(x)
+    x = dplyr::inner_join(x, valid_LP_combinations(), by = c("L", "P"))
+    num_excluded = nrow_orig - nrow(x)
+    if (num_excluded > 0L) {
+      message(num_excluded, " L-P combinations were invalid and excluded")
+    }
+  }
+  x
+}
+
+valid_LP_combinations = function() {
+  rbind(
+    tidyr::crossing(L = c('const', 'linear', 'step'), P = c('random', 'mindrag')),
+    tidyr::crossing(L = c('const'), P = c('roulette', 'minstraight', 'stroll'))
+  )
 }
