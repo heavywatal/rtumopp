@@ -114,11 +114,53 @@ df_sampled = results %>%
     local = factor(.tr_L[local], levels=.tr_L),
     path = factor(.tr_P[path], levels=.tr_P),
     extant = purrr::map(population, filter_extant),
-    regions = purrr::map(extant, sample_uniform_regions, nsam=8L, ncell=100L),
-    graph = purrr::map(population, make_igraph)
+    regions = purrr::map(extant, sample_uniform_regions, nsam=6L, ncell=100L),
+    graph = purrr::map(population, make_igraph),
+    subgraph = purrr::map2(graph, regions, ~tumopp::subtree(.x, purrr::flatten_chr(.y$id)))
   ) %>% print()
 
 # saveRDS(df_sampled, "df_sampled.rds")
+
+df_distance = df_sampled %>%
+  dplyr::mutate(distance = purrr::map2(subgraph, regions, within_between_samples)) %>%
+  print()
+
+df_distance$distance[[1L]] %>%
+  ggplot(aes(euclidean, fst)) +
+  geom_point() +
+  geom_smooth(method = lm, formula = y ~ 0 + x, se = FALSE)
+
+.p_fst = df_distance %>%
+  dplyr::select(local, path, shape, distance) %>%
+  dplyr::group_by(local, path, shape) %>%
+  dplyr::mutate(replicate = seq_along(local)) %>%
+  tidyr::unnest() %>%
+  ggplot(aes(euclidean, fst)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = lm, formula = y ~ 0 + x, se = FALSE, colour = "#000000", alpha = 0.5) +
+  facet_grid(local + path ~ shape + replicate) +
+  coord_cartesian(ylim = c(0, 1))
+.p_fst
+ggsave('fst-6.png', .p_fst, width = 12, height = 12)
+
+
+df_vaf = df_sampled %>%
+  dplyr::mutate(tidy_vaf = purrr::map2(subgraph, regions, ~make_vaf(.x, .y$id, mu = -1))) %>%
+  print()
+
+.p_vaf = df_vaf %>%
+  dplyr::select(local, path, shape, tidy_vaf) %>%
+  dplyr::group_by(local, path, shape) %>%
+  dplyr::mutate(replicate = seq_along(local)) %>%
+  tidyr::unnest() %>%
+  ggplot(aes(sample, site)) +
+  geom_tile(aes(fill = frequency)) +
+  scale_fill_distiller(palette = "Spectral", limit = c(0, 1), guide = FALSE) +
+  coord_cartesian(expand = FALSE) +
+  facet_grid(local + path ~ shape + replicate, scales = "free_y")
+.p_vaf
+ggsave('vaf-6.png', .p_vaf, width = 12, height = 12)
+
 
 df_extant = df_sampled %>%
   dplyr::mutate(extant = purrr::map2(extant, regions, ~{
@@ -141,11 +183,11 @@ df_extant = df_sampled %>%
   wtl::erase(axis.title, axis.text, axis.ticks) +
   theme(panel.spacing = unit(0, 'mm'))
 .p_sampled
-ggsave('samples.png', .p_sampled, width = 12, height = 12)
+ggsave('samples-6.png', .p_sampled, width = 12, height = 12)
 
 df_capture = df_sampled %>%
   dplyr::mutate(
-    capture_tbl = purrr::pmap(., .combn_capture_rate, thr_range = c(0.01))
+    capture_tbl = purrr::pmap(., .combn_capture_rate, thr_range = c(0.05))
   ) %>% print()
 
 # saveRDS(df_capture, "df_capture.rds")
@@ -175,4 +217,4 @@ df_capture_tidy %>%
   scale_y_continuous(breaks = c(0, 0.5, 1,0)) +
   theme(panel.grid = element_blank())
 .p_capture
-ggsave("capture_rate.png", .p_capture, width=11, height=12)
+ggsave("capture_rate-6.png", .p_capture, width=11, height=12)
