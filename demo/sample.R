@@ -103,19 +103,24 @@ raw_results = tumopp::read_results(result_dirs)
 # saveRDS(raw_results, "raw_results.rds")
 
 results = raw_results %>%
-  select_if(~ n_distinct(.x) > 1L) %>%
+  dplyr::select_if(~ n_distinct(.x) > 1L) %>%
   dplyr::select(-outdir, -seed, -drivers) %>%
+  dplyr::group_by(local, path, shape) %>%
+  dplyr::mutate(replicate = dplyr::row_number()) %>%
+  dplyr::ungroup() %>%
+  dplyr::mutate(
+    local = factor(.tr_L[local], levels=.tr_L),
+    path = factor(.tr_P[path], levels=.tr_P),
+    extant = purrr::map(population, filter_extant),
+    graph = purrr::map(population, make_igraph),
+  ) %>%
   print()
 
 .population = results$population[[1]]
 
 df_sampled = results %>%
   dplyr::mutate(
-    local = factor(.tr_L[local], levels=.tr_L),
-    path = factor(.tr_P[path], levels=.tr_P),
-    extant = purrr::map(population, filter_extant),
     regions = purrr::map(extant, sample_uniform_regions, nsam=6L, ncell=100L),
-    graph = purrr::map(population, make_igraph),
     subgraph = purrr::map2(graph, regions, ~tumopp::subtree(.x, purrr::flatten_chr(.y$id)))
   ) %>% print()
 
@@ -125,15 +130,8 @@ df_distance = df_sampled %>%
   dplyr::mutate(distance = purrr::map2(subgraph, regions, within_between_samples)) %>%
   print()
 
-df_distance$distance[[1L]] %>%
-  ggplot(aes(euclidean, fst)) +
-  geom_point() +
-  geom_smooth(method = lm, formula = y ~ 0 + x, se = FALSE)
-
 .p_fst = df_distance %>%
-  dplyr::select(local, path, shape, distance) %>%
-  dplyr::group_by(local, path, shape) %>%
-  dplyr::mutate(replicate = seq_along(local)) %>%
+  dplyr::select(local, path, shape, replicate, distance) %>%
   tidyr::unnest() %>%
   ggplot(aes(euclidean, fst)) +
   geom_point(alpha = 0.5) +
@@ -149,9 +147,7 @@ df_vaf = df_sampled %>%
   print()
 
 .p_vaf = df_vaf %>%
-  dplyr::select(local, path, shape, tidy_vaf) %>%
-  dplyr::group_by(local, path, shape) %>%
-  dplyr::mutate(replicate = seq_along(local)) %>%
+  dplyr::select(local, path, shape, replicate, tidy_vaf) %>%
   tidyr::unnest() %>%
   ggplot(aes(sample, site)) +
   geom_tile(aes(fill = frequency)) +
@@ -185,17 +181,29 @@ df_extant = df_sampled %>%
 .p_sampled
 ggsave('samples-6.png', .p_sampled, width = 12, height = 12)
 
+# #######1#########2#########3#########4#########5#########6#########7#########
+
+.condition = tidyr::crossing(
+  replicate = seq_len(2L),
+  nsam = seq_len(6L),
+  ncell = c(100L, 200L),
+  threshold = c(0.05)
+) %>% print()
+
+.result = .condition %>%
+  dplyr::mutate(capture_rate = purrr::pmap_dbl(., function(nsam, ncell, threshold, ...) {
+    evaluate_mrs(.population, nsam = nsam, ncell = ncell, threshold = threshold)
+  }))
+
 df_capture = df_sampled %>%
   dplyr::mutate(
-    capture_tbl = purrr::pmap(., .combn_capture_rate, thr_range = c(0.05))
+    capture_tbl = purrr::pmap(., .combn_capture_rate, thr_range = c(0.10))
   ) %>% print()
 
 # saveRDS(df_capture, "df_capture.rds")
 
 df_capture_tidy = df_capture %>%
-  dplyr::select(local, path, shape, capture_tbl) %>%
-  dplyr::group_by(local, path, shape) %>%
-  dplyr::mutate(replicate = seq_along(local)) %>%
+  dplyr::select(local, path, shape, replicate, capture_tbl) %>%
   tidyr::unnest() %>%
   print()
 
