@@ -3,11 +3,14 @@
 \name{modify_population}
 \alias{modify_population}
 \alias{filter_extant}
-\title{Modify population table}
+\alias{filter_common_ancestors}
+\title{Functions to modify population data.frame}
 \usage{
 modify_population(population, coord, dimensions, ..., num_clades = 4L)
 
 filter_extant(population)
+
+filter_common_ancestors(population, threshold = 0.05)
 }
 \arguments{
 \item{population}{tibble}
@@ -19,9 +22,13 @@ filter_extant(population)
 \item{...}{ignored}
 
 \item{num_clades}{integer}
+
+\item{threshold}{minimum frequency of detectable alleles}
 }
 \description{
-Modify population table
+\code{modify_population} add various columns to the raw population data
 
-Filter extant cells
+\code{filter_extant} collects the extant cells at the end of the simulation
+
+\code{filter_common_ancestors} collects major common ancestors
 }

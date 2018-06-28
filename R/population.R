@@ -1,4 +1,6 @@
-#' Modify population table
+#' Functions to modify population data.frame
+#'
+#' `modify_population` add various columns to the raw population data
 #' @param population tibble
 #' @param coord string
 #' @param dimensions integer
@@ -15,20 +17,28 @@ modify_population = function(population, coord, dimensions, ..., num_clades=4L) 
   }
   max_phi = c(hex = 12L, moore = 27L, neumann = 6L)[coord]
   population %>%
-    set_graph_property() %>%
+    set_graph_property(num_clades = num_clades) %>%
     dplyr::mutate(r = dist_euclidean(.), phi = .data$phi / max_phi) %>%
     dplyr::left_join(col_surface, by = "id")
 }
 
-#' Filter extant cells
+#' `filter_extant` collects the extant cells at the end of the simulation
 #' @rdname population
 #' @export
 filter_extant = function(population) {
   dplyr::filter(population, .data$death == 0)
 }
 
+#' `filter_common_ancestors` collects major common ancestors
+#' @param threshold minimum frequency of detectable alleles
+#' @rdname population
+#' @export
+filter_common_ancestors = function(population, threshold = 0.05) {
+  dplyr::filter(population, .data$allelefreq >= threshold)
+}
+
 # Add age and clade column
-set_graph_property = function(population) {
+set_graph_property = function(population, num_clades) {
   .graph = make_igraph(population)
   .nodes = as.character(population$id)
   .size = count_sink(.graph)
@@ -37,7 +47,7 @@ set_graph_property = function(population) {
     age = distances_from_origin(.graph, .nodes),
     allelefreq = count_sink(.graph, .nodes) / .size
   )
-  founders = list_clade_founders(.out, 4L)
+  founders = list_clade_founders(.out, num_clades = num_clades)
   clade_data = founders %>%
     as.character() %>%
     rlang::set_names() %>%
