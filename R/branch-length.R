@@ -33,7 +33,7 @@ within_between_samples = function(graph, regions) {
         within_i = row_i$within,
         within_j = row_j$within,
         euclidean = dist_euclidean(row_i, row_j),
-        between = mean_branch_length(.graph, as.character(row_i$id), as.character(row_j$id))
+        between = mean_branch_length(graph, as.character(row_i$id), as.character(row_j$id))
       )
     }) %>%
     dplyr::mutate(
