@@ -4,6 +4,7 @@
 \alias{sample_uniform_regions}
 \alias{sample_random_regions}
 \alias{sample_bulk}
+\alias{evaluate_mrs}
 \title{Sample cells from a population}
 \usage{
 sample_uniform_regions(tbl, nsam = 2L, ncell = 10L)
@@ -11,6 +12,8 @@ sample_uniform_regions(tbl, nsam = 2L, ncell = 10L)
 sample_random_regions(tbl, nsam = 2L, ncell = 10L)
 
 sample_bulk(tbl, center = c(x = 0, y = 0, z = 0), ncell = 10L)
+
+evaluate_mrs(population, nsam, ncell, threshold = 0.05)
 }
 \arguments{
 \item{tbl}{tibble of extant cells with id, x, y, z columns}
@@ -20,6 +23,10 @@ sample_bulk(tbl, center = c(x = 0, y = 0, z = 0), ncell = 10L)
 \item{ncell}{number of cells per specimen}
 
 \item{center}{named (x, y, z) vector, list, or tibble}
+
+\item{population}{tbl}
+
+\item{threshold}{minimum frequency of detectable alleles}
 }
 \description{
 \code{sample_uniform_regions} sample uniformly distributed regions
@@ -27,4 +34,6 @@ sample_bulk(tbl, center = c(x = 0, y = 0, z = 0), ncell = 10L)
 \code{sample_random_regions} samples multiple regions at random
 
 \code{sample_bulk} samples a bulk of cells near the specified center
+
+\code{evaluate_mrs} is a shortcut to evaluate multi-region sampling
 }

@@ -3,6 +3,7 @@
 export(combn_ids)
 export(detect_surface)
 export(dist_euclidean)
+export(evaluate_mrs)
 export(extract_demography)
 export(filter_common_ancestors)
 export(filter_detectable)
