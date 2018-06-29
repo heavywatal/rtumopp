@@ -11,10 +11,7 @@
 sample_uniform_regions = function(tbl, nsam=2L, ncell=10L, jitter=0) {
   centers = kmeans_centers(tbl, nsam)
   if (jitter > 0) {
-    centers = centers %>% dplyr::mutate(
-      x = .data$x + stats::runif(nsam, -jitter, jitter),
-      y = .data$y + stats::runif(nsam, -jitter, jitter)
-    )
+    centers = wtl::mutate_jitter(centers, .data$x, .data$y, amount = jitter)
   }
   sample_regions(tbl, centers, ncell = ncell)
 }
