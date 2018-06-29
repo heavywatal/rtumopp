@@ -60,15 +60,30 @@ plot_bar_age = function(.tbl, xmax=max(.tbl$ageend), alpha=1.0, ...) {
 # #######1#########2#########3#########4#########5#########6#########7#########
 
 #' Plot capture_rate ~ nsam of biopsy
-#' @param data tbl from summarize_capture_rate()
+#' @param data tbl from `summarize_capture_rate` or `evaluate_mrs`
+#' @param point logical
+#' @param errorbar logical
 #' @rdname plot-biopsy
 #' @export
-plot_capture_rate = function(data) {
-  ggplot2::ggplot(data, ggplot2::aes_(~nsam, ~capture_rate)) +
-    ggplot2::stat_summary(fun.y = mean, geom = "bar", alpha = 0.6) +
-    ggplot2::geom_jitter(size = 2, alpha = 0.3, width = 0.25, height = 0, colour = "dodgerblue") +
-    ggplot2::stat_summary(fun.data = wtl::mean_sd, geom = "errorbar", width = 0.2) +
-    ggplot2::coord_cartesian(ylim = c(0, 1))
+plot_capture_rate = function(data, point = TRUE, errorbar = TRUE) {
+  xmargin = 0.8
+  xlim = c(1 - xmargin, max(data$nsam) + xmargin)
+  p = ggplot2::ggplot(data, ggplot2::aes_(~nsam, ~capture_rate)) +
+    ggplot2::geom_ribbon(data=range_nsam, ymin = 0.9, ymax = 1.0, fill = "dodgerblue", alpha = 0.5) +
+    ggplot2::geom_ribbon(data=range_nsam, ymin = 0.8, ymax = 0.9, fill = "orange", alpha = 0.5) +
+    ggplot2::stat_summary(fun.y = mean, geom = "bar", fill = "#777777") +
+    ggplot2::coord_cartesian(xlim = xlim, ylim = c(0, 1), expand = FALSE)
+  if (point) {
+    p = p + ggplot2::geom_jitter(size = 2, alpha = 0.3, width = 0.25, height = 0)
+  }
+  if (errorbar) {
+    p = p + ggplot2::stat_summary(fun.data = wtl::mean_sd, geom = "errorbar", width = 0.2)
+  }
+  p
+}
+
+range_nsam = function(x) {
+  data.frame(nsam = range(x$nsam) + c(-2, 2), capture_rate = 0.5)
 }
 
 # #######1#########2#########3#########4#########5#########6#########7#########
