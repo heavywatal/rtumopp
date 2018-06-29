@@ -5,12 +5,18 @@
 #' @param tbl tibble of extant cells with id, x, y, z columns
 #' @param nsam number of regions to sample
 #' @param ncell number of cells per specimen
+#' @param jitter amount of random variations on x and y axes
 #' @rdname sample
 #' @export
-sample_uniform_regions = function(tbl, nsam=2L, ncell=10L) {
-  tbl %>%
-    dplyr::select(.data$id, .data$x, .data$y, .data$z) %>%
-    sample_regions(kmeans_centers(., nsam), ncell = ncell)
+sample_uniform_regions = function(tbl, nsam=2L, ncell=10L, jitter=0) {
+  centers = kmeans_centers(tbl, nsam)
+  if (jitter > 0) {
+    centers = centers %>% dplyr::mutate(
+      x = .data$x + stats::runif(nsam, -jitter, jitter),
+      y = .data$y + stats::runif(nsam, -jitter, jitter)
+    )
+  }
+  sample_regions(tbl, centers, ncell = ncell)
 }
 
 #' `sample_random_regions` samples multiple regions at random

@@ -7,7 +7,7 @@
 \alias{evaluate_mrs}
 \title{Sample cells from a population}
 \usage{
-sample_uniform_regions(tbl, nsam = 2L, ncell = 10L)
+sample_uniform_regions(tbl, nsam = 2L, ncell = 10L, jitter = 0)
 
 sample_random_regions(tbl, nsam = 2L, ncell = 10L)
 
@@ -21,6 +21,8 @@ evaluate_mrs(population, nsam, ncell, threshold = 0.05)
 \item{nsam}{number of regions to sample}
 
 \item{ncell}{number of cells per specimen}
+
+\item{jitter}{amount of random variations on x and y axes}
 
 \item{center}{named (x, y, z) vector, list, or tibble}
 
