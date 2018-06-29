@@ -60,15 +60,10 @@ tidy_regions = function(regions) {
 #' @param threshold minimum frequency of detectable alleles
 #' @rdname sample
 #' @export
-evaluate_mrs = function(population, nsam, ncell, threshold = 0.05) {
-  sample_func = if (nsam > 1L) {
-    sample_uniform_regions
-  } else {
-    sample_random_regions
-  }
+evaluate_mrs = function(population, nsam, ncell, threshold = 0.05, jitter = 0) {
   ca = filter_common_ancestors(population, threshold)$id
   sampled = filter_extant(population) %>%
-    sample_uniform_regions(nsam = nsam, ncell = ncell) %>%
+    sample_uniform_regions(nsam = nsam, ncell = ncell, jitter = jitter) %>%
     dplyr::pull("id") %>%
     purrr::flatten_chr()
   detectable = make_igraph(population) %>%

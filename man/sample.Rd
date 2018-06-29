@@ -13,7 +13,7 @@ sample_random_regions(tbl, nsam = 2L, ncell = 10L)
 
 sample_bulk(tbl, center = c(x = 0, y = 0, z = 0), ncell = 10L)
 
-evaluate_mrs(population, nsam, ncell, threshold = 0.05)
+evaluate_mrs(population, nsam, ncell, threshold = 0.05, jitter = 0)
 }
 \arguments{
 \item{tbl}{tibble of extant cells with id, x, y, z columns}
