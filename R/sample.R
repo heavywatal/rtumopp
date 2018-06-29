@@ -57,17 +57,18 @@ tidy_regions = function(regions) {
 
 #' `evaluate_mrs` is a shortcut to evaluate multi-region sampling
 #' @param population tbl
-#' @param threshold minimum frequency of detectable alleles
+#' @inheritParams filter_common_ancestors
+#' @inheritParams internal_nodes
 #' @rdname sample
 #' @export
-evaluate_mrs = function(population, nsam, ncell, threshold = 0.05, jitter = 0) {
-  ca = filter_common_ancestors(population, threshold)$id
+evaluate_mrs = function(population, nsam, ncell, threshold = 0.05, sensitivity = 0.05, jitter = 0) {
+  ca = filter_common_ancestors(population, threshold = threshold)$id
   sampled = filter_extant(population) %>%
     sample_uniform_regions(nsam = nsam, ncell = ncell, jitter = jitter) %>%
     dplyr::pull("id") %>%
     purrr::flatten_chr()
   detectable = make_igraph(population) %>%
-    shared_ancestors(sampled, threshold) %>%
+    internal_nodes(sampled, sensitivity = sensitivity) %>%
     as.integer()
   sum(detectable %in% ca) / length(ca)
 }

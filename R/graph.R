@@ -29,16 +29,16 @@ subtree = function(graph, nodes=character(0L)) {
     {igraph::induced_subgraph(graph, .)}
 }
 
-#' `shared_ancestors` selects major common ancestors above threshold.
-#' @inheritParams summarize_capture_rate
+#' `internal_nodes` selects major common ancestors above threshold.
+#' @param sensitivity minimum allele frequency
 #' @rdname graph
 #' @export
-shared_ancestors = function(graph, nodes, threshold) {
+internal_nodes = function(graph, nodes, sensitivity) {
   n = length(nodes)
   counts = paths_to_source(graph, nodes) %>%
     purrr::flatten_chr() %>%
     table()
-  names(counts)[(counts / n) > threshold]
+  names(counts)[(counts / n) > sensitivity]
 }
 
 paths_to_sink = function(graph, nodes) {

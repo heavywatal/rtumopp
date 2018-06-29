@@ -26,13 +26,13 @@ combn_int_list = function(x, m, FUN=union_int, simplify=FALSE, ...) {
 }
 
 #' `summarize_capture_rate` calculates expected allele capture rate on various combinations of samples.
-#' @param combinations nested tibble from `combn_sample_ids`
+#' @param combinations nested tibble from `combn_ids`
 #' @param population tibble
-#' @param threshold minimum frequency of detectable alleles
+#' @inheritParams filter_common_ancestors
 #' @rdname sample-combn
 #' @export
 summarize_capture_rate = function(combinations, population, threshold = 0.01) {
-  ids = population$id[population$allelefreq >= threshold]
+  ids = filter_common_ancestors(population, threshold = threshold)$id
   len_ids = length(ids)
   dplyr::transmute(
     combinations,
