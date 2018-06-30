@@ -5,7 +5,7 @@
 \alias{read_populations}
 \alias{read_results}
 \alias{read_snapshots}
-\title{Read config files}
+\title{Read TSV files in given directories}
 \usage{
 read_confs(indirs = getwd())
 
@@ -18,21 +18,12 @@ read_snapshots(indirs = getwd())
 \arguments{
 \item{indirs}{a string vector}
 }
-\value{
-tibble
-
-list of tibbles
-
-nested tibble
-
-a grouped data.frame
-}
 \description{
-Read config files
+\code{read_confs} reads config files
 
-Read populations
+\code{read_populations} reads populations
 
-Read confs and populations as a nested tibble
+\code{read_results} reads confs and populations as a nested tibble
 
-read snapshots
+\code{read_snapshots} calls \code{read_results} and reads snapshots
 }

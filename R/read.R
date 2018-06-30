@@ -1,6 +1,7 @@
-#' Read config files
+#' Read TSV files in given directories
+#'
+#' `read_confs` reads config files
 #' @param indirs a string vector
-#' @return tibble
 #' @rdname read
 #' @export
 read_confs = function(indirs=getwd()) {
@@ -9,8 +10,7 @@ read_confs = function(indirs=getwd()) {
     purrr::map_dfr(wtl::read_boost_ini, .id = "directory")
 }
 
-#' Read populations
-#' @return list of tibbles
+#' `read_populations` reads populations
 #' @rdname read
 #' @export
 read_populations = function(indirs=getwd()) {
@@ -22,8 +22,7 @@ read_populations = function(indirs=getwd()) {
     ))
 }
 
-#' Read confs and populations as a nested tibble
-#' @return nested tibble
+#' `read_results` reads confs and populations as a nested tibble
 #' @rdname read
 #' @export
 read_results = function(indirs=getwd()) {
@@ -33,8 +32,7 @@ read_results = function(indirs=getwd()) {
     dplyr::mutate(drivers = purrr::map(file.path(indirs, "drivers.tsv.gz"), readr::read_tsv))
 }
 
-#' read snapshots
-#' @return a grouped data.frame
+#' `read_snapshots` calls `read_results` and reads snapshots
 #' @rdname read
 #' @export
 read_snapshots = function(indirs=getwd()) {

@@ -3,7 +3,7 @@
 \name{plot_tumor3d}
 \alias{plot_tumor3d}
 \alias{snapshot_surface}
-\title{plot tumor in 3d with rgl}
+\title{3D plotting with rgl}
 \usage{
 plot_tumor3d(.tbl, colour = "clade", .palette = "Spectral",
   .reverse = FALSE, .min = NULL)
@@ -25,11 +25,8 @@ snapshot_surface(.tbl, filename = tempfile("rgl_", fileext = ".png"), ...)
 
 \item{...}{passed to plot_tumor3d()}
 }
-\value{
-filename
-}
 \description{
-plot tumor in 3d with rgl
+\code{plot_tumor3d} plots tumor in 3D with rgl
 
-Shortcut of plot_tumor3d() %>% snapshot3d()
+\code{snapshot_surface} is a shortcut of \code{plot_tumor3d} and \code{snapshot3d}
 }
