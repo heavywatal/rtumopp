@@ -5,7 +5,7 @@
 #' @param npair number of samples to measure genetic and physical distance
 #' @param nsam number of samples for ms-like output
 #' @export
-tumopp = function(args=character(0L), npair=0L, nsam=0L) {
+tumopp = function(args = character(0L), npair = 0L, nsam = 0L) {
   if (is.list(args)) {
     purrr::map_dfr(args, tumopp, .id = "args")
   } else {
@@ -34,7 +34,7 @@ tumopp = function(args=character(0L), npair=0L, nsam=0L) {
 #' `mslike()` returns only binary genotypes in ms-like format
 #' @rdname tumopp
 #' @export
-mslike = function(nsam=20L, args=character(0L)) {
+mslike = function(nsam = 20L, args = character(0L)) {
   strsplit(cpp_tumopp_ms(nsam, args), "\n")[[1L]]
 }
 
@@ -44,7 +44,7 @@ mslike = function(nsam=20L, args=character(0L)) {
 #' @param nreps number of repeats
 #' @rdname tumopp
 #' @export
-make_args = function(alt, const=NULL, nreps=1L) {
+make_args = function(alt, const = NULL, nreps = 1L) {
   altered = purrr::invoke(expand.grid, alt, stringsAsFactors = FALSE) %>%
     filter_valid_LP()
   prefix = format(Sys.time(), "%Y%m%d_%H%M_")
@@ -73,7 +73,7 @@ filter_valid_LP = function(x) {
 
 valid_LP_combinations = function() {
   rbind(
-    tidyr::crossing(L = c('const', 'linear', 'step'), P = c('random', 'mindrag')),
-    tidyr::crossing(L = c('const'), P = c('roulette', 'minstraight', 'stroll'))
+    tidyr::crossing(L = c("const", "linear", "step"), P = c("random", "mindrag")),
+    tidyr::crossing(L = c("const"), P = c("roulette", "minstraight", "stroll"))
   )
 }

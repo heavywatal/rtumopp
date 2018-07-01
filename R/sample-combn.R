@@ -7,7 +7,7 @@
 #' @return tibble
 #' @rdname sample-combn
 #' @export
-combn_ids = function(x, m=seq_along(x)) {
+combn_ids = function(x, m = seq_along(x)) {
   tibble::tibble(
     nsam = m,
     id = purrr::map(m, combn_int_list, x = x)
@@ -21,7 +21,7 @@ union_int = function(x) {
 }
 
 # Shortcut with different defaults
-combn_int_list = function(x, m, FUN=union_int, simplify=FALSE, ...) {
+combn_int_list = function(x, m, FUN = union_int, simplify = FALSE, ...) {
   utils::combn(x, m, FUN = FUN, simplify = simplify, ...)
 }
 

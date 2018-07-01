@@ -18,7 +18,7 @@ histogram_freqspec = function(freqs) {
 #' @param limit for value range
 #' @rdname plot
 #' @export
-plot_lattice2d = function(.tbl, colour="clade", alpha=1, size=1, limit=max_abs_xyz(.tbl)) {
+plot_lattice2d = function(.tbl, colour = "clade", alpha = 1, size = 1, limit = max_abs_xyz(.tbl)) {
   size = size * 96 / (limit - 0.5)
   ggplot2::ggplot(.tbl, ggplot2::aes_(~x, ~y)) +
     ggplot2::geom_point(ggplot2::aes_string(colour = colour), alpha = alpha, size = size) +
@@ -34,7 +34,7 @@ plot_lattice2d = function(.tbl, colour="clade", alpha=1, size=1, limit=max_abs_x
 #' @return gg
 #' @rdname plot-igraph
 #' @export
-plot_genealogy = function(.tbl, xmax=max(.tbl$ageend), colour="dodgerblue") {
+plot_genealogy = function(.tbl, xmax = max(.tbl$ageend), colour = "dodgerblue") {
   ggplot2::ggplot(.tbl) +
     ggplot2::geom_segment(ggplot2::aes_(~age, ~pos, xend = ~ageend, yend = ~posend), alpha = 0.3, size = 0.3) +
     ggplot2::geom_point(
@@ -50,7 +50,7 @@ plot_genealogy = function(.tbl, xmax=max(.tbl$ageend), colour="dodgerblue") {
 #' @return gg
 #' @rdname plot-igraph
 #' @export
-plot_bar_age = function(.tbl, xmax=max(.tbl$ageend), alpha=1.0, ...) {
+plot_bar_age = function(.tbl, xmax = max(.tbl$ageend), alpha = 1.0, ...) {
   dplyr::filter(.tbl, .data$extant) %>%
     ggplot2::ggplot(ggplot2::aes_(~ageend, ...)) +
     ggplot2::geom_bar(alpha = alpha) +
@@ -69,8 +69,8 @@ plot_capture_rate = function(data, point = TRUE, errorbar = TRUE) {
   xmargin = 0.8
   xlim = c(1 - xmargin, max(data$nsam) + xmargin)
   p = ggplot2::ggplot(data, ggplot2::aes_(~nsam, ~capture_rate)) +
-    ggplot2::geom_ribbon(data=range_nsam, ymin = 0.9, ymax = 1.0, fill = "dodgerblue", alpha = 0.5) +
-    ggplot2::geom_ribbon(data=range_nsam, ymin = 0.8, ymax = 0.9, fill = "orange", alpha = 0.5) +
+    ggplot2::geom_ribbon(data = range_nsam, ymin = 0.9, ymax = 1.0, fill = "dodgerblue", alpha = 0.5) +
+    ggplot2::geom_ribbon(data = range_nsam, ymin = 0.8, ymax = 0.9, fill = "orange", alpha = 0.5) +
     ggplot2::stat_summary(fun.y = mean, geom = "bar", fill = "#777777") +
     ggplot2::coord_cartesian(xlim = xlim, ylim = c(0, 1), expand = FALSE)
   if (point) {
@@ -94,7 +94,7 @@ range_nsam = function(x) {
 #' @param ... passed to plot_lattice2d
 #' @rdname plot-section
 #' @export
-save_serial_section = function(.tbl, filename="png/section_%03d.png", scale=6, dpi=72, ...) {
+save_serial_section = function(.tbl, filename = "png/section_%03d.png", scale = 6, dpi = 72, ...) {
   .lim = max_abs_xyz(.tbl)
   tidyr::nest(.tbl, -.data$z) %>%
     dplyr::arrange(.data$z) %>%

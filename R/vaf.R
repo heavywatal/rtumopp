@@ -47,9 +47,8 @@ tidy_vaf = function(tbl) {
 #' @rdname vaf
 #' @export
 filter_detectable = function(tbl, threshold) {
-  tbl %>%
-    {.[. < threshold] = 0; .} %>%
-    dplyr::filter(rowSums(.) > 0)
+  tbl[tbl < threshold] = 0
+  tbl %>% dplyr::filter(rowSums(.) > 0)
 }
 
 #' `sort_vaf` reorders rows and columns of VAF table
@@ -73,6 +72,6 @@ sort_vaf = function(tbl, method = c("average", "ward.D2", "complete", "single"))
     order_cols = stats::hclust(d_cols, method = method)$order
     tbl[order_rows, order_cols]
   } else {
-    tbl[order_rows,]
+    tbl[order_rows, ]
   }
 }

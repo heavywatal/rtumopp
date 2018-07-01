@@ -7,7 +7,7 @@
 #' @param ... ignored
 #' @param num_clades integer
 #' @rdname population
-modify_population = function(population, coord, dimensions, ..., num_clades=4L) {
+modify_population = function(population, coord, dimensions, ..., num_clades = 4L) {
   extant = filter_extant(population)
   strelem = get_se(coord, dimensions)
   col_surface = detect_surface(extant, strelem) %>%

@@ -8,7 +8,7 @@
 #' @param jitter amount of random variations on x and y axes
 #' @rdname sample
 #' @export
-sample_uniform_regions = function(tbl, nsam=2L, ncell=10L, jitter=0) {
+sample_uniform_regions = function(tbl, nsam = 2L, ncell = 10L, jitter = 0) {
   centers = kmeans_centers(tbl, nsam)
   if (jitter > 0) {
     centers = wtl::mutate_jitter(centers, .data$x, .data$y, amount = jitter)
@@ -19,7 +19,7 @@ sample_uniform_regions = function(tbl, nsam=2L, ncell=10L, jitter=0) {
 #' `sample_random_regions` samples multiple regions at random
 #' @rdname sample
 #' @export
-sample_random_regions = function(tbl, nsam=2L, ncell=10L) {
+sample_random_regions = function(tbl, nsam = 2L, ncell = 10L) {
   centers = tbl %>%
     dplyr::select(.data$x, .data$y, .data$z) %>%
     dplyr::sample_n(nsam)
@@ -30,7 +30,7 @@ sample_random_regions = function(tbl, nsam=2L, ncell=10L) {
 #' @param center named (x, y, z) vector, list, or tibble
 #' @rdname sample
 #' @export
-sample_bulk = function(tbl, center=c(x=0, y=0, z=0), ncell=10L) {
+sample_bulk = function(tbl, center = c(x = 0, y = 0, z = 0), ncell = 10L) {
   d = dist_euclidean(tbl, center)
   tbl$id[utils::head(order(d), ncell)]
 }
@@ -39,7 +39,8 @@ kmeans_centers = function(tbl, centers, iter.max = 32L) {
   tbl %>%
     dplyr::select(.data$x, .data$y, .data$z) %>%
     stats::kmeans(centers = centers, iter.max = iter.max) %>%
-    {tibble::as_tibble(.$centers)}
+    purrr::pluck("centers") %>%
+    tibble::as_tibble()
 }
 
 sample_regions = function(tbl, centers, ncell = 10L) {

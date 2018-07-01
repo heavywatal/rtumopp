@@ -16,8 +16,8 @@ max_abs_xyz = function(.tbl) {
 #' @return numeric vector
 #' @rdname coord
 #' @export
-dist_euclidean = function(.tbl, point=c(x = 0, y = 0, z = 0)) {
-  sqrt((.tbl[["x"]] - point[["x"]]) ^ 2 + (.tbl[["y"]] - point[["y"]]) ^ 2 + (.tbl[["z"]] - point[["z"]]) ^ 2)
+dist_euclidean = function(.tbl, point = c(x = 0, y = 0, z = 0)) {
+  sqrt((.tbl[["x"]] - point[["x"]])**2 + (.tbl[["y"]] - point[["y"]])**2 + (.tbl[["z"]] - point[["z"]])**2)
 }
 
 #' `rotate` modifies coordinates centering on a specified axis
@@ -26,7 +26,7 @@ dist_euclidean = function(.tbl, point=c(x = 0, y = 0, z = 0)) {
 #' @return modified data.frame
 #' @rdname coord
 #' @export
-rotate = function(.tbl, theta, axis=c("z", "x", "y")) {
+rotate = function(.tbl, theta, axis = c("z", "x", "y")) {
   axis = match.arg(axis)
   .x = .tbl[["x"]]
   .y = .tbl[["y"]]

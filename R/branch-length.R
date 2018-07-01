@@ -6,7 +6,7 @@
 #' @param from,to igraph vertices
 #' @rdname branch-length
 #' @export
-mean_branch_length = function(graph, from=igraph::V(graph), to=from) {
+mean_branch_length = function(graph, from = igraph::V(graph), to = from) {
   .d = igraph::distances(graph, from, to, mode = "all", weights = NA, algorithm = "unweighted")
   .n = length(from) * length(to) - sum(from %in% to)
   sum(.d) / .n

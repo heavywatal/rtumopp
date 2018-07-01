@@ -28,7 +28,7 @@ detect_surface = function(.tbl, se) {
 #' @param dimensions an integer
 #' @rdname morphology
 #' @export
-get_se = function(coord=c("moore", "neumann", "hex"), dimensions=3L) {
+get_se = function(coord = c("moore", "neumann", "hex"), dimensions = 3L) {
   coord = match.arg(coord)
   v = c(-1L, 0L, 1L)
   df = tidyr::crossing(x = v, y = v, z = v)

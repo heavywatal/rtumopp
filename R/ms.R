@@ -6,7 +6,7 @@
 #' @param segsites number of segregating sites
 #' @rdname ms
 #' @export
-mutate_clades = function(graph, mu=NULL, segsites=NULL) {
+mutate_clades = function(graph, mu = NULL, segsites = NULL) {
   nodes = names(igraph::V(graph))
   nodes = nodes[igraph::degree(graph, mode = "out") > 0L]
   # remove singletons
@@ -18,7 +18,7 @@ mutate_clades = function(graph, mu=NULL, segsites=NULL) {
     }
   } else if (!is.null(mu)) warning("mu is ignored if segsites is given")
   mutants = if (is.null(segsites)) {
-    nodes  # if (mu <= 0)
+    nodes # if (mu <= 0)
   } else {
     sample(nodes, segsites, replace = TRUE)
   }

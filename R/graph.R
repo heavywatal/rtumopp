@@ -22,11 +22,13 @@ make_igraph = function(population) {
 #' @param nodes igraph vertices
 #' @rdname graph
 #' @export
-subtree = function(graph, nodes=character(0L)) {
+subtree = function(graph, nodes = character(0L)) {
   paths_to_source(graph, nodes) %>%
     purrr::flatten_chr() %>%
     unique() %>%
-    {igraph::induced_subgraph(graph, .)}
+    {
+      igraph::induced_subgraph(graph, .)
+    }
 }
 
 #' `internal_nodes` selects major common ancestors above threshold.
@@ -46,17 +48,17 @@ paths_to_sink = function(graph, nodes) {
     purrr::map(names)
 }
 
-paths_to_source = function(graph, nodes=character(0L)) {
+paths_to_source = function(graph, nodes = character(0L)) {
   igraph::ego(graph, order = 1073741824L, nodes = nodes, mode = "in") %>%
     purrr::map(names)
 }
 
-distances_from_origin = function(graph, nodes=character(0L)) {
+distances_from_origin = function(graph, nodes = character(0L)) {
   igraph::distances(graph, "1", nodes, mode = "out", weights = NA, algorithm = "unweighted") %>%
     as.integer()
 }
 
-count_sink = function(graph, nodes=character(0L)) {
+count_sink = function(graph, nodes = character(0L)) {
   if (length(nodes) > 0L) {
     out_ego_size = igraph::ego_size(graph, order = 1073741824L, nodes = nodes, mode = "out")
     as.integer(out_ego_size + 1L) %/% 2L

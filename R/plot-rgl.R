@@ -9,7 +9,7 @@
 #' @param .min minimum limit of axes
 #' @rdname plot-rgl
 #' @export
-plot_tumor3d = function(.tbl, colour="clade", .palette="Spectral", .reverse=FALSE, .min=NULL) {
+plot_tumor3d = function(.tbl, colour = "clade", .palette = "Spectral", .reverse = FALSE, .min = NULL) {
   if (!requireNamespace("rgl", quietly = TRUE)) {
     stop("ERROR: rgl is not installed")
   }
@@ -45,7 +45,7 @@ plot_tumor3d = function(.tbl, colour="clade", .palette="Spectral", .reverse=FALS
 #' @param ... passed to plot_tumor3d()
 #' @rdname plot-rgl
 #' @export
-snapshot_surface = function(.tbl, filename=tempfile("rgl_", fileext = ".png"), ...) {
+snapshot_surface = function(.tbl, filename = tempfile("rgl_", fileext = ".png"), ...) {
   on.exit(rgl::rgl.close())
   rgl::open3d(useNULL = FALSE)
   dplyr::filter(.tbl, .data$surface) %>% plot_tumor3d(...)
