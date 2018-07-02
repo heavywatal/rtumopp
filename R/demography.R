@@ -27,9 +27,10 @@ summarise_demography = function(history) {
 list_clade_founders = function(population, num_clades) {
   history = extract_history(population)
   demography = summarise_demography(history)
-  event_idx = which(demography$size == num_clades) %>% utils::tail(1L)
-  history %>%
-    dplyr::filter(.data$time <= demography$time[event_idx], .data$event == "birth") %>%
-    dplyr::pull("id") %>%
-    utils::tail(num_clades)
+  indices = which(demography$size == num_clades)
+  the_time = demography$time[utils::tail(indices, 1L)]
+  history = dplyr::filter(history, .data$time <= the_time)
+  id_born = dplyr::filter(history, .data$event == "birth")$id
+  id_dead = dplyr::filter(history, .data$event == "death")$id
+  setdiff(id_born, id_dead)
 }
