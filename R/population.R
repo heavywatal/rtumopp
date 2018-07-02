@@ -60,11 +60,3 @@ set_graph_property = function(population, num_clades) {
     )
   dplyr::left_join(.out, clade_data, by = "id")
 }
-
-list_clade_founders = function(population, num_clades) {
-  origin = sum(population$age == 0L)
-  stopifnot(num_clades >= origin)
-  num_divisions = num_clades - origin
-  roots = utils::head(population$id, num_divisions)
-  seq_len(num_divisions + num_clades) %>% setdiff(roots)
-}
