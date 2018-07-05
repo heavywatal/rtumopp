@@ -44,13 +44,15 @@ internal_nodes = function(graph, nodes, sensitivity) {
 }
 
 paths_to_sink = function(graph, nodes) {
-  igraph::ego(graph, order = 1073741824L, nodes = nodes, mode = "out") %>%
-    purrr::map(names)
+  purrr::map(nodes, function(v) {
+    igraph::subcomponent(graph, v, mode = "out") %>% igraph::as_ids()
+  })
 }
 
 paths_to_source = function(graph, nodes = character(0L)) {
-  igraph::ego(graph, order = 1073741824L, nodes = nodes, mode = "in") %>%
-    purrr::map(names)
+  purrr::map(nodes, function(v) {
+    igraph::subcomponent(graph, v, mode = "in") %>% igraph::as_ids()
+  })
 }
 
 distances_from_origin = function(graph, nodes = character(0L)) {
