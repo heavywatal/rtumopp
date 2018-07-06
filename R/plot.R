@@ -61,11 +61,11 @@ plot_bar_age = function(.tbl, xmax = max(.tbl$ageend), alpha = 1.0, ...) {
 
 #' Plot capture_rate ~ nsam of biopsy
 #' @param data tbl from `summarize_capture_rate` or `evaluate_mrs`
-#' @param point logical
+#' @param point size of a data point
 #' @param errorbar logical
 #' @rdname plot-biopsy
 #' @export
-plot_capture_rate = function(data, point = TRUE, errorbar = TRUE) {
+plot_capture_rate = function(data, point = 1, errorbar = TRUE) {
   xmargin = 0.8
   xlim = c(1 - xmargin, max(data$nsam) + xmargin)
   p = ggplot2::ggplot(data, ggplot2::aes_(~nsam, ~capture_rate)) +
@@ -73,8 +73,8 @@ plot_capture_rate = function(data, point = TRUE, errorbar = TRUE) {
     ggplot2::geom_ribbon(data = range_nsam, ymin = 0.8, ymax = 0.9, fill = "orange", alpha = 0.5) +
     ggplot2::stat_summary(fun.y = mean, geom = "bar", fill = "#777777") +
     ggplot2::coord_cartesian(xlim = xlim, ylim = c(0, 1), expand = FALSE)
-  if (point) {
-    p = p + ggplot2::geom_jitter(size = 2, alpha = 0.3, width = 0.25, height = 0)
+  if (point > 0) {
+    p = p + ggplot2::geom_jitter(size = point, alpha = 0.3, width = 0.25, height = 0)
   }
   if (errorbar) {
     p = p + ggplot2::stat_summary(fun.data = wtl::mean_sd, geom = "errorbar", width = 0.2)

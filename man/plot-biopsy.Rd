@@ -4,12 +4,12 @@
 \alias{plot_capture_rate}
 \title{Plot capture_rate ~ nsam of biopsy}
 \usage{
-plot_capture_rate(data, point = TRUE, errorbar = TRUE)
+plot_capture_rate(data, point = 1, errorbar = TRUE)
 }
 \arguments{
 \item{data}{tbl from \code{summarize_capture_rate} or \code{evaluate_mrs}}
 
-\item{point}{logical}
+\item{point}{size of a data point}
 
 \item{errorbar}{logical}
 }
