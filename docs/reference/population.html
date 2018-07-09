@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Functions to modify population data.frame — modify_population • tumopp</title>
+<title>Functions to modify population data.frame — filter_extant • tumopp</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,10 +30,9 @@
 
 
 
-<meta property="og:title" content="Functions to modify population data.frame — modify_population" />
+<meta property="og:title" content="Functions to modify population data.frame — filter_extant" />
 
-<meta property="og:description" content="modify_population add various columns to the raw population data
-filter_extant collects the extant cells at the end of the simulation
+<meta property="og:description" content="filter_extant collects the extant cells at the end of the simulation
 filter_common_ancestors collects major common ancestors" />
 <meta name="twitter:card" content="summary" />
 
@@ -109,15 +108,12 @@ filter_common_ancestors collects major common ancestors" />
 
     <div class="ref-description">
     
-    <p><code>modify_population</code> add various columns to the raw population data</p>
-<p><code>filter_extant</code> collects the extant cells at the end of the simulation</p>
+    <p><code>filter_extant</code> collects the extant cells at the end of the simulation</p>
 <p><code>filter_common_ancestors</code> collects major common ancestors</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>modify_population</span>(<span class='no'>population</span>, <span class='no'>coord</span>, <span class='no'>dimensions</span>, <span class='no'>...</span>, <span class='kw'>num_clades</span> <span class='kw'>=</span> <span class='fl'>4L</span>)
-
-<span class='fu'>filter_extant</span>(<span class='no'>population</span>)
+    <pre class="usage"><span class='fu'>filter_extant</span>(<span class='no'>population</span>)
 
 <span class='fu'>filter_common_ancestors</span>(<span class='no'>population</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.05</span>)</pre>
     
@@ -127,22 +123,6 @@ filter_common_ancestors collects major common ancestors" />
     <tr>
       <th>population</th>
       <td><p>tibble</p></td>
-    </tr>
-    <tr>
-      <th>coord</th>
-      <td><p>string</p></td>
-    </tr>
-    <tr>
-      <th>dimensions</th>
-      <td><p>integer</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>ignored</p></td>
-    </tr>
-    <tr>
-      <th>num_clades</th>
-      <td><p>integer</p></td>
     </tr>
     <tr>
       <th>threshold</th>

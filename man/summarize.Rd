@@ -3,7 +3,7 @@
 \name{genetic_stats}
 \alias{genetic_stats}
 \alias{morphological_stats}
-\title{Summary statistics of genealogy}
+\title{Summarizing functions}
 \usage{
 genetic_stats(extant)
 
@@ -18,7 +18,7 @@ tibble
 tibble
 }
 \description{
-Summary statistics of genealogy
+\code{genetic_stats} calculates summary statistics of genealogy
 
-Summary statistics of morphology
+\code{morphological_stats} calculates summary statistics of morphology
 }
