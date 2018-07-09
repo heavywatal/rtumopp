@@ -14,7 +14,8 @@ save_serial_section(.tbl, filename = "png/section_\%03d.png", scale = 6,
 
 \item{scale}{Multiplicative scaling factor.}
 
-\item{dpi}{Plot resolution. Applies only to raster output types.}
+\item{dpi}{Plot resolution. Also accepts a string input: "retina" (320),
+"print" (300), or "screen" (72). Applies only to raster output types.}
 
 \item{...}{passed to plot_lattice2d}
 }
