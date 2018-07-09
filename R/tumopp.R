@@ -18,7 +18,7 @@ tumopp = function(args = character(0L), npair = 0L, nsam = 0L) {
     if (length(result) == 0L) return(invisible(NULL))
     .out = wtl::read_boost_ini(result["config"]) %>%
       dplyr::mutate(population = list(readr::read_tsv(result["specimens"]))) %>%
-      dplyr::mutate(graph = purrr::map(population, make_igraph)) %>%
+      dplyr::mutate(graph = purrr::map(.data$population, make_igraph)) %>%
       dplyr::mutate(population = purrr::pmap(., modify_population)) %>%
       dplyr::mutate(drivers = list(readr::read_tsv(result["drivers"])))
     if (npair > 0L) {
