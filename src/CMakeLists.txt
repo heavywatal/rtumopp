@@ -5,12 +5,11 @@ set(CXX_PROJECT tumopp)
 find_package(${CXX_PROJECT} REQUIRED CONFIG)
 
 include(GNUInstallDirs)
-if(${CMAKE_PREFIX_PATH} MATCHES linuxbrew)
-  set(CMAKE_INSTALL_LIBDIR lib)
-endif()
-
 get_target_property(CXX_INCLUDEDIR ${CXX_PROJECT} INTERFACE_INCLUDE_DIRECTORIES)
 message(STATUS "INCLUDEDIR: ${CXX_INCLUDEDIR}")
+if(${CXX_INCLUDEDIR} MATCHES linuxbrew)
+  set(CMAKE_INSTALL_LIBDIR lib)
+endif()
 get_filename_component(CXX_LIBDIR ${CXX_INCLUDEDIR}/../${CMAKE_INSTALL_LIBDIR} ABSOLUTE)
 message(STATUS "LIBDIR: ${CXX_LIBDIR}")
 
