@@ -1,6 +1,6 @@
-# R interface of tumopp
+# R interface to tumopp
 
-This is an R interface of [tumopp](https://github.com/heavywatal/tumopp),
+This is an R interface to [tumopp](https://github.com/heavywatal/tumopp),
 a tumor growth simulator in C++.
 
 ## Installation

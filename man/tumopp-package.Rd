@@ -3,9 +3,9 @@
 \docType{package}
 \name{tumopp-package}
 \alias{tumopp-package}
-\title{R interface to tumopp, tumor growth simulator in C++}
+\title{tumopp: R interface to tumopp, a tumor growth simulator in C++}
 \description{
-R interface to tumopp, tumor growth simulator in C++
+R interface to tumopp, a tumor growth simulator in C++.
 }
 \seealso{
 Useful links:
