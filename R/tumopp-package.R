@@ -2,6 +2,7 @@
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
 #' @aliases NULL tumopp-package
+#' @keywords internal
 "_PACKAGE"
 
 # to suppress NOTE
