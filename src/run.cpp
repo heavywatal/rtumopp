@@ -1,4 +1,4 @@
-// [[Rcpp::plugins(cpp14)]]
+// [[Rcpp::plugins(cpp11)]]
 #include <Rcpp.h>
 #include <tumopp/simulation.hpp>
 
