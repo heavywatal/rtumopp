@@ -31,7 +31,7 @@ Suggests:
     tidyverse
 URL: https://github.com/heavywatal/tumopp
 BugReports: https://github.com/heavywatal/tumopp/issues
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
 Roxygen: list(markdown = TRUE)
 LinkingTo: Rcpp
 SystemRequirements: C++11

@@ -40,6 +40,7 @@ plot_tumor3d = function(.tbl, colour = "clade", .palette = "Spectral", .reverse 
   rgl::view3d(15, 15, 15, 0.9)
 }
 
+#' @description
 #' `snapshot_surface` is a shortcut of `plot_tumor3d` and `snapshot3d`
 #' @param filename string
 #' @param ... passed to plot_tumor3d()

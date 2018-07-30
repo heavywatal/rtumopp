@@ -10,6 +10,7 @@ read_confs = function(indirs = getwd()) {
     purrr::map_dfr(wtl::read_boost_ini, .id = "directory")
 }
 
+#' @description
 #' `read_populations` reads populations
 #' @rdname read
 #' @export
@@ -22,6 +23,7 @@ read_populations = function(indirs = getwd()) {
     ))
 }
 
+#' @description
 #' `read_results` reads confs and populations as a nested tibble
 #' @rdname read
 #' @export
@@ -33,6 +35,7 @@ read_results = function(indirs = getwd()) {
     dplyr::mutate(drivers = purrr::map(file.path(indirs, "drivers.tsv.gz"), readr::read_tsv))
 }
 
+#' @description
 #' `read_snapshots` calls `read_results` and reads snapshots
 #' @rdname read
 #' @export

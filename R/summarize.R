@@ -14,6 +14,7 @@ genetic_stats = function(extant) {
   )
 }
 
+#' @description
 #' `morphological_stats` calculates summary statistics of morphology
 #' @return tibble
 #' @rdname summarize

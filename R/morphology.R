@@ -23,6 +23,7 @@ detect_surface = function(.tbl, se) {
   dplyr::left_join(.tbl, product, by = axes)
 }
 
+#' @description
 #' `get_se` construct a structuring element (kernel) as a binary array
 #' @param coord a string
 #' @param dimensions an integer

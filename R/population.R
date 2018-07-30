@@ -8,6 +8,7 @@ filter_extant = function(population) {
   dplyr::filter(population, .data$death == 0)
 }
 
+#' @description
 #' `filter_common_ancestors` collects major common ancestors
 #' @param threshold minimum frequency of detectable alleles
 #' @rdname population

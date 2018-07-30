@@ -12,6 +12,7 @@ mean_branch_length = function(graph, from = igraph::V(graph), to = from) {
   sum(.d) / .n
 }
 
+#' @description
 #' `within_between_samples` summarizes branch lengths
 #' @param regions output of `sample_uniform_regions()`
 #' @rdname branch-length

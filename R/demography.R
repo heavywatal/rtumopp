@@ -14,6 +14,7 @@ extract_history = function(population) {
     dplyr::mutate(size = cumsum(ifelse(.data$event == "birth", 1L, -1L)))
 }
 
+#' @description
 #' `summarise_demography` simplifies history
 #' @param history data.frame from `extract_history`
 #' @rdname demography

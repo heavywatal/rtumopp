@@ -17,6 +17,7 @@ make_igraph = function(population) {
     igraph::graph_from_data_frame()
 }
 
+#' @description
 #' `subtree` extracts subgraph among terminal nodes.
 #' @param graph igraph
 #' @param nodes igraph vertices
@@ -31,6 +32,7 @@ subtree = function(graph, nodes = character(0L)) {
     }
 }
 
+#' @description
 #' `internal_nodes` selects major common ancestors above threshold.
 #' @param sensitivity minimum allele frequency
 #' @rdname graph
@@ -69,6 +71,7 @@ count_sink = function(graph, nodes = character(0L)) {
   }
 }
 
+#' @description
 #' `layout_genealogy` returns coordinates of nodes and edges for plotting.
 #' @rdname graph
 #' @export

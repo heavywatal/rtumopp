@@ -32,6 +32,7 @@ tumopp = function(args = character(0L), npair = 0L, nsam = 0L) {
   }
 }
 
+#' @description
 #' `mslike()` returns only binary genotypes in ms-like format
 #' @rdname tumopp
 #' @export
@@ -39,6 +40,7 @@ mslike = function(nsam = 20L, args = character(0L)) {
   strsplit(cpp_tumopp_ms(nsam, args), "\n")[[1L]]
 }
 
+#' @description
 #' `make_args()` returns argument combinations in a list
 #' @param alt named list of altered arguments
 #' @param const unnamed vector of constant arguments
