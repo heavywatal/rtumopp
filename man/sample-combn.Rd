@@ -26,5 +26,6 @@ tibble
 \description{
 \code{combn_ids} makes combinations of cell IDs for various number of samples.
 
-\code{summarize_capture_rate} calculates expected allele capture rate on various combinations of samples.
+\code{summarize_capture_rate} calculates expected allele capture rate
+on various combinations of samples.
 }

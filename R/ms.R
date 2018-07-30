@@ -1,6 +1,6 @@
 #' Sprinkle mutations on genealogy
 #'
-#' `mutate_clades` samples nodes to mutate and returns their descendants
+#' `mutate_clades` samples nodes to mutate and returns their descendants.
 #' @param graph igraph
 #' @param mu mutation rate per cell division (ignored if segsites is given)
 #' @param segsites number of segregating sites

@@ -1,7 +1,7 @@
 #' 3D plotting with rgl
 #'
 #' @description
-#' `plot_tumor3d` plots tumor in 3D with rgl
+#' `plot_tumor3d` plots tumor in 3D with rgl.
 #' @param .tbl data.frame
 #' @param colour column name to colorcode
 #' @param .palette name for RColorBrewer::brewer.pal()
@@ -41,7 +41,7 @@ plot_tumor3d = function(.tbl, colour = "clade", .palette = "Spectral", .reverse 
 }
 
 #' @description
-#' `snapshot_surface` is a shortcut of `plot_tumor3d` and `snapshot3d`
+#' `snapshot_surface` is a shortcut of `plot_tumor3d` and `snapshot3d`.
 #' @param filename string
 #' @param ... passed to plot_tumor3d()
 #' @rdname plot-rgl

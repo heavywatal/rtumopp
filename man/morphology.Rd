@@ -22,7 +22,7 @@ get_se(coord = c("moore", "neumann", "hex"), dimensions = 3L)
 tibble with surface column
 }
 \description{
-\code{detect_surface} adds a binary column
+\code{detect_surface} adds a binary column.
 
-\code{get_se} construct a structuring element (kernel) as a binary array
+\code{get_se} construct a structuring element (kernel) as a binary array.
 }

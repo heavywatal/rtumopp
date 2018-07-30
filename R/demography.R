@@ -1,6 +1,6 @@
 #' Functions for event history
 #'
-#' `extract_history` extracts birth and death events from raw population data
+#' `extract_history` extracts birth and death events from raw population data.
 #' @param population data.frame
 #' @rdname demography
 #' @export
@@ -15,7 +15,7 @@ extract_history = function(population) {
 }
 
 #' @description
-#' `summarise_demography` simplifies history
+#' `summarise_demography` simplifies history.
 #' @param history data.frame from `extract_history`
 #' @rdname demography
 #' @export

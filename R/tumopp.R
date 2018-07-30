@@ -1,6 +1,6 @@
 #' Run tumopp
 #'
-#' `tumopp()` returns full results with config columns in a data.frame
+#' `tumopp()` returns full results with config columns in a data.frame.
 #' @param args command line arguments as a string vector or list of strings
 #' @param npair number of samples to measure genetic and physical distance
 #' @param nsam number of samples for ms-like output
@@ -33,7 +33,7 @@ tumopp = function(args = character(0L), npair = 0L, nsam = 0L) {
 }
 
 #' @description
-#' `mslike()` returns only binary genotypes in ms-like format
+#' `mslike()` returns only binary genotypes in ms-like format.
 #' @rdname tumopp
 #' @export
 mslike = function(nsam = 20L, args = character(0L)) {
@@ -41,7 +41,7 @@ mslike = function(nsam = 20L, args = character(0L)) {
 }
 
 #' @description
-#' `make_args()` returns argument combinations in a list
+#' `make_args()` returns argument combinations in a list.
 #' @param alt named list of altered arguments
 #' @param const unnamed vector of constant arguments
 #' @param nreps number of repeats

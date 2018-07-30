@@ -1,6 +1,6 @@
 #' Summarizing functions
 #'
-#' `genetic_stats` calculates summary statistics of genealogy
+#' `genetic_stats` calculates summary statistics of genealogy.
 #' @param extant tibble
 #' @return tibble
 #' @rdname summarize
@@ -15,7 +15,7 @@ genetic_stats = function(extant) {
 }
 
 #' @description
-#' `morphological_stats` calculates summary statistics of morphology
+#' `morphological_stats` calculates summary statistics of morphology.
 #' @return tibble
 #' @rdname summarize
 #' @export

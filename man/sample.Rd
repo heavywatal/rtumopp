@@ -34,11 +34,11 @@ evaluate_mrs(population, nsam, ncell, threshold = 0.05,
 \item{sensitivity}{minimum allele frequency}
 }
 \description{
-\code{sample_uniform_regions} sample uniformly distributed regions
+\code{sample_uniform_regions} sample uniformly distributed regions.
 
-\code{sample_random_regions} samples multiple regions at random
+\code{sample_random_regions} samples multiple regions at random.
 
-\code{sample_bulk} samples a bulk of cells near the specified center
+\code{sample_bulk} samples a bulk of cells near the specified center.
 
-\code{evaluate_mrs} is a shortcut to evaluate multi-region sampling
+\code{evaluate_mrs} is a shortcut to evaluate multi-region sampling.
 }

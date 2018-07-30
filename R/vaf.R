@@ -1,7 +1,7 @@
 #' Utilities for variant allele frequency
 #'
 #' @description
-#' `make_vaf` is a shortcut to make neutral VAF pattern
+#' `make_vaf` is a shortcut to make neutral VAF pattern.
 #' @inheritParams subtree
 #' @inheritParams mutate_clades
 #' @rdname vaf
@@ -17,7 +17,7 @@ make_vaf = function(graph, samples, mu, threshold = 0.05) {
 }
 
 #' @description
-#' `tally_vaf` evaluates overlap of sampled and mutated cells
+#' `tally_vaf` evaluates overlap of sampled and mutated cells.
 #' @param samples list of integer IDs
 #' @param sites list of integer IDs
 #' @rdname vaf
@@ -31,7 +31,7 @@ tally_vaf = function(samples, sites) {
 }
 
 #' @description
-#' `tidy_vaf` transforms vaf table
+#' `tidy_vaf` transforms vaf table.
 #' @param tbl output of `tally_vaf`
 #' @rdname vaf
 #' @export
@@ -45,7 +45,7 @@ tidy_vaf = function(tbl) {
 }
 
 #' @description
-#' `filter_detectable` removes sites where freq < threshold
+#' `filter_detectable` removes sites where freq < threshold.
 #' @param threshold minimum detectable frequency
 #' @rdname vaf
 #' @export
@@ -55,7 +55,7 @@ filter_detectable = function(tbl, threshold) {
 }
 
 #' @description
-#' `sort_vaf` reorders rows and columns of VAF table
+#' `sort_vaf` reorders rows and columns of VAF table.
 #' @param method passed to `stats::hclust`
 #' @rdname vaf
 #' @export

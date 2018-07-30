@@ -29,11 +29,11 @@ numeric vector
 modified data.frame
 }
 \description{
-\code{max_abs_xyz} extracts max values for plot limits
+\code{max_abs_xyz} extracts max values for plot limits.
 
-\code{dist_euclidean} calculates distance from a specified cell
+\code{dist_euclidean} calculates distance from a specified cell.
 
-\code{rotate} modifies coordinates centering on a specified axis
+\code{rotate} modifies coordinates centering on a specified axis.
 }
 \examples{
 max_abs_xyz(data.frame(x=2, y=-3, z=4))

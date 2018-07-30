@@ -15,7 +15,7 @@ filter_common_ancestors(population, threshold = 0.05)
 \item{threshold}{minimum frequency of detectable alleles}
 }
 \description{
-\code{filter_extant} collects the extant cells at the end of the simulation
+\code{filter_extant} collects the extant cells at the end of the simulation.
 
-\code{filter_common_ancestors} collects major common ancestors
+\code{filter_common_ancestors} collects major common ancestors.
 }

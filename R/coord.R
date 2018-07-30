@@ -1,6 +1,6 @@
 #' Utilities for coordinate values
 #'
-#' `max_abs_xyz` extracts max values for plot limits
+#' `max_abs_xyz` extracts max values for plot limits.
 #' @param .tbl data.frame with (x, y, z) columns
 #' @return max(abs(x, y, z))
 #' @rdname coord
@@ -12,7 +12,7 @@ max_abs_xyz = function(.tbl) {
 }
 
 #' @description
-#' `dist_euclidean` calculates distance from a specified cell
+#' `dist_euclidean` calculates distance from a specified cell.
 #' @param point named vector or tibble
 #' @return numeric vector
 #' @rdname coord
@@ -22,7 +22,7 @@ dist_euclidean = function(.tbl, point = c(x = 0, y = 0, z = 0)) {
 }
 
 #' @description
-#' `rotate` modifies coordinates centering on a specified axis
+#' `rotate` modifies coordinates centering on a specified axis.
 #' @param theta radian angle
 #' @param axis a string
 #' @return modified data.frame

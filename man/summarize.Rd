@@ -18,7 +18,7 @@ tibble
 tibble
 }
 \description{
-\code{genetic_stats} calculates summary statistics of genealogy
+\code{genetic_stats} calculates summary statistics of genealogy.
 
-\code{morphological_stats} calculates summary statistics of morphology
+\code{morphological_stats} calculates summary statistics of morphology.
 }

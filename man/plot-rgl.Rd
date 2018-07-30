@@ -27,7 +27,7 @@ snapshot_surface(.tbl, filename = tempfile("rgl_", fileext = ".png"),
 \item{...}{passed to plot_tumor3d()}
 }
 \description{
-\code{plot_tumor3d} plots tumor in 3D with rgl
+\code{plot_tumor3d} plots tumor in 3D with rgl.
 
-\code{snapshot_surface} is a shortcut of \code{plot_tumor3d} and \code{snapshot3d}
+\code{snapshot_surface} is a shortcut of \code{plot_tumor3d} and \code{snapshot3d}.
 }

@@ -26,9 +26,9 @@ make_args(alt, const = NULL, nreps = 1L)
 \item{nreps}{number of repeats}
 }
 \description{
-\code{tumopp()} returns full results with config columns in a data.frame
+\code{tumopp()} returns full results with config columns in a data.frame.
 
-\code{mslike()} returns only binary genotypes in ms-like format
+\code{mslike()} returns only binary genotypes in ms-like format.
 
-\code{make_args()} returns argument combinations in a list
+\code{make_args()} returns argument combinations in a list.
 }

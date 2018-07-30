@@ -15,7 +15,7 @@ summarise_demography(history)
 \item{history}{data.frame from \code{extract_history}}
 }
 \description{
-\code{extract_history} extracts birth and death events from raw population data
+\code{extract_history} extracts birth and death events from raw population data.
 
-\code{summarise_demography} simplifies history
+\code{summarise_demography} simplifies history.
 }

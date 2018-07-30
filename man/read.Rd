@@ -19,11 +19,11 @@ read_snapshots(indirs = getwd())
 \item{indirs}{a string vector}
 }
 \description{
-\code{read_confs} reads config files
+\code{read_confs} reads config files.
 
-\code{read_populations} reads populations
+\code{read_populations} reads populations.
 
-\code{read_results} reads confs and populations as a nested tibble
+\code{read_results} reads confs and populations as a nested tibble,
 
-\code{read_snapshots} calls \code{read_results} and reads snapshots
+\code{read_snapshots} calls \code{read_results} and reads snapshots.
 }

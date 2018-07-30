@@ -17,7 +17,7 @@ within_between_samples(graph, regions)
 \item{regions}{output of \code{sample_uniform_regions()}}
 }
 \description{
-\code{mean_branch_length} calculates mean branch length within/between sub-graphs
+\code{mean_branch_length} calculates mean branch length within/between sub-graphs.
 
-\code{within_between_samples} summarizes branch lengths
+\code{within_between_samples} summarizes branch lengths.
 }

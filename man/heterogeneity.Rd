@@ -18,5 +18,6 @@ math_score(x, constant = 1.4826, na.rm = FALSE)
 numeric
 }
 \description{
-\code{math_score} calculates MATH (mutant-allele tumor heterogeneity) score from variant allele frequencies.
+\code{math_score} calculates MATH (mutant-allele tumor heterogeneity) score
+from variant allele frequencies.
 }

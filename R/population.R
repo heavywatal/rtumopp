@@ -1,6 +1,6 @@
 #' Functions to modify population data.frame
 #'
-#' `filter_extant` collects the extant cells at the end of the simulation
+#' `filter_extant` collects the extant cells at the end of the simulation.
 #' @param population tibble
 #' @rdname population
 #' @export
@@ -9,7 +9,7 @@ filter_extant = function(population) {
 }
 
 #' @description
-#' `filter_common_ancestors` collects major common ancestors
+#' `filter_common_ancestors` collects major common ancestors.
 #' @param threshold minimum frequency of detectable alleles
 #' @rdname population
 #' @export

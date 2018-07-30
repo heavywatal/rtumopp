@@ -26,7 +26,8 @@ combn_int_list = function(x, m, FUN = union_int, simplify = FALSE, ...) {
 }
 
 #' @description
-#' `summarize_capture_rate` calculates expected allele capture rate on various combinations of samples.
+#' `summarize_capture_rate` calculates expected allele capture rate
+#' on various combinations of samples.
 #' @param combinations nested tibble from `combn_ids`
 #' @param population tibble
 #' @inheritParams filter_common_ancestors

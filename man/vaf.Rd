@@ -34,13 +34,13 @@ sort_vaf(tbl, method = c("average", "ward.D2", "complete", "single"))
 \item{method}{passed to \code{stats::hclust}}
 }
 \description{
-\code{make_vaf} is a shortcut to make neutral VAF pattern
+\code{make_vaf} is a shortcut to make neutral VAF pattern.
 
-\code{tally_vaf} evaluates overlap of sampled and mutated cells
+\code{tally_vaf} evaluates overlap of sampled and mutated cells.
 
-\code{tidy_vaf} transforms vaf table
+\code{tidy_vaf} transforms vaf table.
 
-\code{filter_detectable} removes sites where freq < threshold
+\code{filter_detectable} removes sites where freq < threshold.
 
-\code{sort_vaf} reorders rows and columns of VAF table
+\code{sort_vaf} reorders rows and columns of VAF table.
 }

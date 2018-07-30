@@ -1,6 +1,6 @@
 #' Read TSV files in given directories
 #'
-#' `read_confs` reads config files
+#' `read_confs` reads config files.
 #' @param indirs a string vector
 #' @rdname read
 #' @export
@@ -11,7 +11,7 @@ read_confs = function(indirs = getwd()) {
 }
 
 #' @description
-#' `read_populations` reads populations
+#' `read_populations` reads populations.
 #' @rdname read
 #' @export
 read_populations = function(indirs = getwd()) {
@@ -24,7 +24,7 @@ read_populations = function(indirs = getwd()) {
 }
 
 #' @description
-#' `read_results` reads confs and populations as a nested tibble
+#' `read_results` reads confs and populations as a nested tibble,
 #' @rdname read
 #' @export
 read_results = function(indirs = getwd()) {
@@ -36,7 +36,7 @@ read_results = function(indirs = getwd()) {
 }
 
 #' @description
-#' `read_snapshots` calls `read_results` and reads snapshots
+#' `read_snapshots` calls `read_results` and reads snapshots.
 #' @rdname read
 #' @export
 read_snapshots = function(indirs = getwd()) {

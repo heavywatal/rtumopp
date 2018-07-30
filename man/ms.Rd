@@ -14,5 +14,5 @@ mutate_clades(graph, mu = NULL, segsites = NULL)
 \item{segsites}{number of segregating sites}
 }
 \description{
-\code{mutate_clades} samples nodes to mutate and returns their descendants
+\code{mutate_clades} samples nodes to mutate and returns their descendants.
 }

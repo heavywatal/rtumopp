@@ -1,6 +1,7 @@
 #' Evaluate heterogeneity
 #'
-#' `math_score` calculates MATH (mutant-allele tumor heterogeneity) score from variant allele frequencies.
+#' `math_score` calculates MATH (mutant-allele tumor heterogeneity) score
+#' from variant allele frequencies.
 #' @inheritParams stats::mad
 #' @return numeric
 #' @rdname heterogeneity

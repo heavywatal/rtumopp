@@ -1,7 +1,7 @@
 #' Extract surface cells with mathematical morphology
 #'
 #' @description
-#' `detect_surface` adds a binary column
+#' `detect_surface` adds a binary column.
 #' @param .tbl a data.frame with (x, y, z) columns
 #' @param se structuring element as a binary array
 #' @return tibble with surface column
@@ -24,7 +24,7 @@ detect_surface = function(.tbl, se) {
 }
 
 #' @description
-#' `get_se` construct a structuring element (kernel) as a binary array
+#' `get_se` construct a structuring element (kernel) as a binary array.
 #' @param coord a string
 #' @param dimensions an integer
 #' @rdname morphology
