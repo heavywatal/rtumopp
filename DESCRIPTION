@@ -30,8 +30,8 @@ Suggests:
     rgl,
     rmarkdown,
     tidyverse
-URL: https://github.com/heavywatal/tumopp
-BugReports: https://github.com/heavywatal/tumopp/issues
+URL: https://github.com/heavywatal/rtumopp
+BugReports: https://github.com/heavywatal/rtumopp/issues
 RoxygenNote: 6.1.0
 Roxygen: list(markdown = TRUE)
 LinkingTo: Rcpp

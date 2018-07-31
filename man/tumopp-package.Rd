@@ -10,8 +10,8 @@ R interface to tumopp, a tumor growth simulator in C++.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/heavywatal/tumopp}
-  \item Report bugs at \url{https://github.com/heavywatal/tumopp/issues}
+  \item \url{https://github.com/heavywatal/rtumopp}
+  \item Report bugs at \url{https://github.com/heavywatal/rtumopp/issues}
 }
 
 }
