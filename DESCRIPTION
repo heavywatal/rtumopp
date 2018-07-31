@@ -6,6 +6,7 @@ Description: R interface to tumopp, a tumor growth simulator in C++.
 Depends:
     R (>= 3.4.0)
 License: MIT + file LICENSE
+Encoding: UTF-8
 LazyData: true
 Imports:
     dplyr (>= 0.7.5),
