@@ -1,12 +1,21 @@
 #' Extract surface cells with mathematical morphology
 #'
 #' @description
-#' `detect_surface` adds a binary column.
-#' @param .tbl a data.frame with (x, y, z) columns
-#' @param se structuring element as a binary array
-#' @return tibble with surface column
+#' `add_surface` adds a binary column to the data.frame
+#' @param population a data.frame with (x, y, z) before hex transformation
+#' @param coord a string
+#' @param dimensions an integer
 #' @rdname morphology
 #' @export
+add_surface = function(population, coord, dimensions) {
+  extant = filter_extant(population)
+  strelem = get_se(coord, dimensions)
+  col_surface = detect_surface(extant, strelem) %>%
+    dplyr::select(.data$id, .data$surface)
+  population %>%
+    dplyr::left_join(col_surface, by = "id")
+}
+
 detect_surface = function(.tbl, se) {
   if (nrow(.tbl) == 0L) {
     return(dplyr::mutate(.tbl, surface = logical(0L)))
@@ -23,12 +32,7 @@ detect_surface = function(.tbl, se) {
   dplyr::left_join(.tbl, product, by = axes)
 }
 
-#' @description
-#' `get_se` construct a structuring element (kernel) as a binary array.
-#' @param coord a string
-#' @param dimensions an integer
-#' @rdname morphology
-#' @export
+# Construct a structuring element (kernel) as a binary array.
 get_se = function(coord = c("moore", "neumann", "hex"), dimensions = 3L) {
   coord = match.arg(coord)
   v = c(-1L, 0L, 1L)

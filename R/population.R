@@ -18,19 +18,14 @@ filter_common_ancestors = function(population, threshold = 0.05) {
 }
 
 # Add various columns to the raw population data
-modify_population = function(population, graph, coord, dimensions, ..., num_clades = 4L) {
-  extant = filter_extant(population)
-  strelem = get_se(coord, dimensions)
-  col_surface = detect_surface(extant, strelem) %>%
-    dplyr::select(.data$id, .data$surface)
+modify_population = function(population, graph, coord, ..., num_clades = 4L) {
   if (coord == "hex") {
     population = trans_coord_hex(population)
   }
   max_phi = c(hex = 12L, moore = 27L, neumann = 6L)[coord]
   population %>%
     add_node_property(graph, num_clades) %>%
-    dplyr::mutate(r = dist_euclidean(.), phi = .data$phi / max_phi) %>%
-    dplyr::left_join(col_surface, by = "id")
+    dplyr::mutate(r = dist_euclidean(.), phi = .data$phi / max_phi)
 }
 
 # Add graph-related columns
