@@ -28,10 +28,12 @@ read_populations = function(indirs = getwd()) {
 #' @rdname read
 #' @export
 read_results = function(indirs = getwd()) {
-  read_confs(indirs) %>%
-    dplyr::mutate(population = read_populations(indirs)) %>%
-    dplyr::mutate(graph = purrr::map(.data$population, make_igraph)) %>%
-    dplyr::mutate(population = purrr::pmap(., modify_population))
+  autohex = getOption("tumopp.autohex", TRUE)
+  read_confs(indirs) %>% dplyr::mutate(
+    population = read_populations(indirs) %>%
+      purrr::map_if((.data$coord == "hex") & autohex, trans_coord_hex),
+    graph = purrr::map(.data$population, make_igraph)
+  )
 }
 
 #' @description

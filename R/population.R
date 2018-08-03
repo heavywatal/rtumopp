@@ -17,19 +17,8 @@ filter_common_ancestors = function(population, threshold = 0.05) {
   dplyr::filter(population, .data$allelefreq >= threshold)
 }
 
-# Add various columns to the raw population data
-modify_population = function(population, graph, coord, ..., num_clades = 4L) {
-  if (coord == "hex") {
-    population = trans_coord_hex(population)
-  }
-  max_phi = c(hex = 12L, moore = 27L, neumann = 6L)[coord]
-  population %>%
-    add_node_property(graph, num_clades) %>%
-    dplyr::mutate(r = dist_euclidean(.), phi = .data$phi / max_phi)
-}
-
 # Add graph-related columns
-add_node_property = function(population, graph, num_clades) {
+add_node_property = function(population, graph, num_clades = 4L) {
   .nodes = as.character(population$id)
   .order = length(population$death == 0)
   founders = list_clade_founders(population, num_clades = num_clades)

@@ -1,8 +1,7 @@
 #' Summarizing functions
 #'
 #' `genetic_stats` calculates summary statistics of genealogy.
-#' @param extant tibble
-#' @return tibble
+#' @param extant a data.frame of extant cells
 #' @rdname summarize
 #' @export
 genetic_stats = function(extant) {
@@ -16,15 +15,19 @@ genetic_stats = function(extant) {
 
 #' @description
 #' `morphological_stats` calculates summary statistics of morphology.
-#' @return tibble
+#' @param coord switch to normalize phi
 #' @rdname summarize
 #' @export
-morphological_stats = function(extant) {
+morphological_stats = function(extant, coord="") {
+  max_phi = switch(coord, hex = 12, moore = 27, neumann = 6, 1)
   extant %>%
-    dplyr::filter(.data$surface)
-  dplyr::summarise(
-    phi_mean = mean(.data$phi), phi_sd = stats::sd(.data$phi),
-    r_mean = mean(.data$r), r_sd = stats::sd(.data$r)
-  )
-  dplyr::mutate(surface = sum(extant$surface) / nrow(extant))
+    dplyr::filter(.data$surface) %>%
+    dplyr::mutate(
+      r = dist_euclidean(.),
+      phi = .data$phi / max_phi) %>%
+    dplyr::summarise(
+      phi_mean = mean(.data$phi), phi_sd = stats::sd(.data$phi),
+      r_mean = mean(.data$r), r_sd = stats::sd(.data$r)
+    ) %>%
+    dplyr::mutate(surface = sum(extant$surface) / nrow(extant))
 }

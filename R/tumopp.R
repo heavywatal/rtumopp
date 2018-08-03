@@ -16,11 +16,19 @@ tumopp = function(args = character(0L), npair = 0L, nsam = 0L) {
     nrep = as.integer(nsam > 0L)
     result = cpp_tumopp(c(nsam, nrep, args), npair = npair)
     if (length(result) == 0L) return(invisible(NULL))
-    .out = wtl::read_boost_ini(result["config"]) %>%
-      dplyr::mutate(population = list(readr::read_tsv(result["specimens"]))) %>%
-      dplyr::mutate(graph = purrr::map(.data$population, make_igraph)) %>%
-      dplyr::mutate(population = purrr::pmap(., modify_population)) %>%
-      dplyr::mutate(drivers = list(readr::read_tsv(result["drivers"])))
+    .out = wtl::read_boost_ini(result["config"])
+    .pop = readr::read_tsv(result["specimens"])
+    if ((.out$coord == "hex") && getOption("tumopp.autohex", TRUE)) {
+      .pop = trans_coord_hex(.pop)
+    }
+    .out = .out %>% dplyr::mutate(
+      population = list(.pop),
+      graph = list(make_igraph(.pop))
+    )
+    .drivers = readr::read_tsv(result["drivers"])
+    if (nrow(.drivers) > 0L) {
+      .out = .out %>% dplyr::mutate(drivers = .drivers)
+    }
     if (npair > 0L) {
       .dist = readr::read_tsv(result["distances"])
       .out = .out %>% dplyr::mutate(distances = list(.dist))

@@ -7,15 +7,12 @@
 \usage{
 genetic_stats(extant)
 
-morphological_stats(extant)
+morphological_stats(extant, coord = "")
 }
 \arguments{
-\item{extant}{tibble}
-}
-\value{
-tibble
+\item{extant}{a data.frame of extant cells}
 
-tibble
+\item{coord}{switch to normalize phi}
 }
 \description{
 \code{genetic_stats} calculates summary statistics of genealogy.
