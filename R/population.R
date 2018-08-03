@@ -31,7 +31,7 @@ modify_population = function(population, graph, coord, ..., num_clades = 4L) {
 # Add graph-related columns
 add_node_property = function(population, graph, num_clades) {
   .nodes = as.character(population$id)
-  .size = count_sink(graph)
+  .order = length(population$death == 0)
   founders = list_clade_founders(population, num_clades = num_clades)
   clade_data = tibble::tibble(
     clade = factor(founders),
@@ -40,7 +40,7 @@ add_node_property = function(population, graph, num_clades) {
   population %>%
     dplyr::mutate(
       age = distances_from_origin(graph, .nodes),
-      allelefreq = count_sink(graph, .nodes) / .size
+      allelefreq = count_sink(graph, .nodes) / .order
     ) %>%
     dplyr::left_join(clade_data, by = "id")
 }
