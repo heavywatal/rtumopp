@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract surface cells with mathematical morphology — detect_surface • tumopp</title>
+<title>Extract surface cells with mathematical morphology — add_surface • tumopp</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,10 +30,9 @@
 
 
 
-<meta property="og:title" content="Extract surface cells with mathematical morphology — detect_surface" />
+<meta property="og:title" content="Extract surface cells with mathematical morphology — add_surface" />
 
-<meta property="og:description" content="detect_surface adds a binary column.
-get_se construct a structuring element (kernel) as a binary array." />
+<meta property="og:description" content="add_surface adds a binary column to the data.frame" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -120,25 +119,18 @@ get_se construct a structuring element (kernel) as a binary array." />
 
     <div class="ref-description">
     
-    <p><code>detect_surface</code> adds a binary column.</p>
-<p><code>get_se</code> construct a structuring element (kernel) as a binary array.</p>
+    <p><code>add_surface</code> adds a binary column to the data.frame</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>detect_surface</span>(<span class='no'>.tbl</span>, <span class='no'>se</span>)
-
-<span class='fu'>get_se</span>(<span class='kw'>coord</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"moore"</span>, <span class='st'>"neumann"</span>, <span class='st'>"hex"</span>), <span class='kw'>dimensions</span> <span class='kw'>=</span> <span class='fl'>3L</span>)</pre>
+    <pre class="usage"><span class='fu'>add_surface</span>(<span class='no'>population</span>, <span class='no'>coord</span>, <span class='no'>dimensions</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>.tbl</th>
-      <td><p>a data.frame with (x, y, z) columns</p></td>
-    </tr>
-    <tr>
-      <th>se</th>
-      <td><p>structuring element as a binary array</p></td>
+      <th>population</th>
+      <td><p>a data.frame with (x, y, z) before hex transformation</p></td>
     </tr>
     <tr>
       <th>coord</th>
@@ -150,19 +142,13 @@ get_se construct a structuring element (kernel) as a binary array." />
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>tibble with surface column</p>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-          </ul>
+                </ul>
 
   </div>
 </div>
