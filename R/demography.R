@@ -22,7 +22,7 @@ extract_history = function(population) {
 summarise_demography = function(history) {
   history %>%
     dplyr::group_by(.data$time) %>%
-    dplyr::summarise(size = utils::tail(.data$size, 1L))
+    dplyr::summarise(size = max(!!as.name("size")))
 }
 
 list_clade_founders = function(population, num_clades) {
