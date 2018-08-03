@@ -31,8 +31,7 @@ read_results = function(indirs = getwd()) {
   read_confs(indirs) %>%
     dplyr::mutate(population = read_populations(indirs)) %>%
     dplyr::mutate(graph = purrr::map(.data$population, make_igraph)) %>%
-    dplyr::mutate(population = purrr::pmap(., modify_population)) %>%
-    dplyr::mutate(drivers = purrr::map(file.path(indirs, "drivers.tsv.gz"), readr::read_tsv))
+    dplyr::mutate(population = purrr::pmap(., modify_population))
 }
 
 #' @description
