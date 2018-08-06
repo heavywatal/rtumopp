@@ -14,6 +14,7 @@ Rcpp::CharacterVector cpp_tumopp(const std::vector<std::string>& args, unsigned 
         return Rcpp::CharacterVector::create(
             Rcpp::Named("config", simulation.config_string()),
             Rcpp::Named("specimens", simulation.specimens()),
+            Rcpp::Named("snapshots", simulation.snapshots()),
             Rcpp::Named("drivers", simulation.drivers()),
             Rcpp::Named("distances", simulation.pairwise_distance(npair)),
             Rcpp::Named("ms", simulation.ms())

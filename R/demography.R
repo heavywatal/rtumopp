@@ -26,7 +26,8 @@ summarise_demography = function(history) {
 }
 
 list_clade_founders = function(population, num_clades) {
-  history = extract_history(population)
+  stopifnot(num_clades < 16L)
+  history = extract_history(population) %>% utils::head(10000L)
   demography = summarise_demography(history)
   indices = which(demography$size == num_clades)
   the_time = demography$time[utils::tail(indices, 1L)]

@@ -27,7 +27,11 @@ tumopp = function(args = character(0L), npair = 0L, nsam = 0L) {
     )
     .drivers = readr::read_tsv(result["drivers"])
     if (nrow(.drivers) > 0L) {
-      .out = .out %>% dplyr::mutate(drivers = .drivers)
+      .out = .out %>% dplyr::mutate(drivers = list(.drivers))
+    }
+    .snapshots = readr::read_tsv(result["snapshots"])
+    if (nrow(.snapshots) > 0L) {
+      .out = .out %>% dplyr::mutate(snapshots = list(.snapshots))
     }
     if (npair > 0L) {
       .dist = readr::read_tsv(result["distances"])
