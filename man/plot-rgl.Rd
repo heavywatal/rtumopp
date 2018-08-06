@@ -3,31 +3,36 @@
 \name{plot_tumor3d}
 \alias{plot_tumor3d}
 \alias{snapshot_surface}
+\alias{add_col}
 \title{3D plotting with rgl}
 \usage{
-plot_tumor3d(.tbl, colour = "clade", .palette = "Spectral",
-  .reverse = FALSE, .min = NULL)
+plot_tumor3d(.tbl, .min = NULL)
 
 snapshot_surface(.tbl, filename = tempfile("rgl_", fileext = ".png"),
   ...)
+
+add_col(.tbl, column = "clade", palette = "Spectral",
+  reverse = FALSE)
 }
 \arguments{
-\item{.tbl}{data.frame}
-
-\item{colour}{column name to colorcode}
-
-\item{.palette}{name for RColorBrewer::brewer.pal()}
-
-\item{.reverse}{logical for order of color vector}
+\item{.tbl}{data.frame with (x, y, z, col)}
 
 \item{.min}{minimum limit of axes}
 
 \item{filename}{string}
 
-\item{...}{passed to plot_tumor3d()}
+\item{...}{passed to \code{plot_tumor3d()}}
+
+\item{column}{column name to colorcode}
+
+\item{palette}{name for RColorBrewer::brewer.pal()}
+
+\item{reverse}{logical for order of color vector}
 }
 \description{
 \code{plot_tumor3d} plots tumor in 3D with rgl.
 
-\code{snapshot_surface} is a shortcut of \code{plot_tumor3d} and \code{snapshot3d}.
+\code{snapshot_surface} is a shortcut of \code{plot_tumor3d()} and \code{rgl::snapshot3d()}.
+
+\code{add_col} adds a column for color in \code{plot_tumor3d()}.
 }
