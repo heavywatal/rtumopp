@@ -17,7 +17,7 @@ tumopp = function(args = character(0L), npair = 0L, nsam = 0L) {
     result = cpp_tumopp(c(nsam, nrep, args), npair = npair)
     if (length(result) == 0L) return(invisible(NULL))
     .out = wtl::read_boost_ini(result["config"])
-    .pop = readr::read_tsv(result["specimens"])
+    .pop = read_tumopp(result["specimens"])
     if ((.out$coord == "hex") && getOption("tumopp.autohex", TRUE)) {
       .pop = trans_coord_hex(.pop)
     }
@@ -25,13 +25,13 @@ tumopp = function(args = character(0L), npair = 0L, nsam = 0L) {
       population = list(.pop),
       graph = list(make_igraph(.pop))
     )
+    .snapshots = read_tumopp(result["snapshots"])
+    if (nrow(.snapshots) > 0L) {
+      .out = .out %>% dplyr::mutate(snapshots = list(.snapshots))
+    }
     .drivers = readr::read_tsv(result["drivers"])
     if (nrow(.drivers) > 0L) {
       .out = .out %>% dplyr::mutate(drivers = list(.drivers))
-    }
-    .snapshots = readr::read_tsv(result["snapshots"])
-    if (nrow(.snapshots) > 0L) {
-      .out = .out %>% dplyr::mutate(snapshots = list(.snapshots))
     }
     if (npair > 0L) {
       .dist = readr::read_tsv(result["distances"])

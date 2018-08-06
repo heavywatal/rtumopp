@@ -16,11 +16,7 @@ read_confs = function(indirs = getwd()) {
 #' @export
 read_populations = function(indirs = getwd()) {
   file.path(indirs, "population.tsv.gz") %>%
-    purrr::map(readr::read_tsv, col_types = readr::cols(
-      beta = readr::col_double(),
-      delta = readr::col_double(),
-      rho = readr::col_double()
-    ))
+    purrr::map(read_tumopp)
 }
 
 #' @description
@@ -42,10 +38,18 @@ read_results = function(indirs = getwd()) {
 #' @export
 read_snapshots = function(indirs = getwd()) {
   read_results(indirs) %>%
-    dplyr::mutate(snapshots = purrr::map2(.data$directory, .data$population, ~{
-      meta_info = dplyr::select(.y, .data$id, .data$x, .data$y, .data$z, .data$clade)
-      readr::read_tsv(file.path(.x, "snapshots.tsv.gz")) %>%
-        dplyr::select(-.data$x, -.data$y, -.data$z) %>%
+    dplyr::mutate(snapshots = purrr::map2(indirs, .data$population, ~{
+      meta_info = dplyr::select(.y, .data$id, .data$clade)
+      read_tumopp(file.path(.x, "snapshots.tsv.gz")) %>%
         dplyr::left_join(meta_info, by = "id")
     }))
+}
+
+read_tumopp = function(file) {
+  readr::read_tsv(file, col_types = readr::cols(
+    beta = readr::col_double(),
+    delta = readr::col_double(),
+    alpha = readr::col_double(),
+    rho = readr::col_double()
+  ))
 }
