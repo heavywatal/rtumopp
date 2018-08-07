@@ -6,7 +6,7 @@
 \alias{add_col}
 \title{3D plotting with rgl}
 \usage{
-plot_tumor3d(.tbl, .min = NULL)
+plot_tumor3d(.tbl = NULL, limits = NULL)
 
 snapshot_surface(.tbl, filename = tempfile("rgl_", fileext = ".png"),
   ...)
@@ -17,7 +17,7 @@ add_col(.tbl, column = "clade", palette = "Spectral",
 \arguments{
 \item{.tbl}{data.frame with (x, y, z, col)}
 
-\item{.min}{minimum limit of axes}
+\item{limits}{passed to xlim, ylim, zlim of \code{rgl::plot3d()}}
 
 \item{filename}{string}
 

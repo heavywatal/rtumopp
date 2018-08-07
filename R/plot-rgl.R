@@ -3,30 +3,25 @@
 #' @description
 #' `plot_tumor3d` plots tumor in 3D with rgl.
 #' @param .tbl data.frame with (x, y, z, col)
-#' @param .min minimum limit of axes
+#' @param limits passed to xlim, ylim, zlim of `rgl::plot3d()`
 #' @rdname plot-rgl
 #' @export
-plot_tumor3d = function(.tbl, .min = NULL) {
+plot_tumor3d = function(.tbl = NULL, limits = NULL) {
   if (!requireNamespace("rgl", quietly = TRUE)) {
     stop("ERROR: rgl is not installed")
   }
-  .lim = if (is.null(.min)) {
-    NULL
-  } else {
-    max(max_abs_xyz(.tbl), .min) %>% {
-      c(-., .)
-    }
-  }
-  with(.tbl, {
-    rgl::plot3d(
-      x, y, z,
-      xlab = "", ylab = "", zlab = "", axes = FALSE,
-      type = "s", col = col, alpha = 1, radius = 1,
-      aspect = TRUE, xlim = .lim, ylim = .lim, zlim = .lim
-    )
+  on.exit({
+    rgl::box3d()
+    rgl::view3d(15, 15, 15, 0.9)
   })
-  rgl::box3d()
-  rgl::view3d(15, 15, 15, 0.9)
+  if (NROW(.tbl) == 0L) return(invisible(.tbl))
+  col = purrr::pluck(.tbl, "col", .default = "#333333")
+  rgl::plot3d(
+    .tbl$x, .tbl$y, .tbl$z,
+    xlab = "", ylab = "", zlab = "", axes = FALSE,
+    type = "s", col = col, alpha = 1, radius = 1, aspect = TRUE,
+    xlim = limits, ylim = limits, zlim = limits
+  )
 }
 
 #' @description
