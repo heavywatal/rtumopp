@@ -18,14 +18,15 @@ tumopp = function(args = character(0L), npair = 0L, nsam = 0L) {
     if (length(result) == 0L) return(invisible(NULL))
     .out = wtl::read_boost_ini(result["config"])
     .pop = read_tumopp(result["specimens"])
+    .snapshots = read_tumopp(result["snapshots"])
     if ((.out$coord == "hex") && getOption("tumopp.autohex", TRUE)) {
       .pop = trans_coord_hex(.pop)
+      .snapshots = trans_coord_hex(.snapshots)
     }
     .out = .out %>% dplyr::mutate(
       population = list(.pop),
       graph = list(make_igraph(.pop))
     )
-    .snapshots = read_tumopp(result["snapshots"])
     if (nrow(.snapshots) > 0L) {
       .out = .out %>% dplyr::mutate(snapshots = list(.snapshots))
     }
