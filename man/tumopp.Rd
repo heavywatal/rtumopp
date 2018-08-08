@@ -2,26 +2,36 @@
 % Please edit documentation in R/tumopp.R
 \name{tumopp}
 \alias{tumopp}
+\alias{tumopp.default}
+\alias{tumopp.list}
 \alias{mslike}
 \alias{make_args}
 \title{Run tumopp}
 \usage{
-tumopp(args = character(0L), nsam = 0L)
+tumopp(args, ...)
+
+\method{tumopp}{default}(args = character(0L), nsam = 0L, ...)
+
+\method{tumopp}{list}(args, nsam = 0L, ..., mc.cores = 1L)
 
 mslike(nsam = 20L, args = character(0L))
 
 make_args(alt, const = NULL, nreps = 1L)
 }
 \arguments{
-\item{args}{command line arguments as a string vector or list of strings}
+\item{args}{command line arguments as a string vector or list of strings.}
 
-\item{nsam}{number of samples for ms-like output}
+\item{...}{not used.}
 
-\item{alt}{named list of altered arguments}
+\item{nsam}{number of samples for ms-like output.}
 
-\item{const}{unnamed vector of constant arguments}
+\item{mc.cores}{The number of cores to use for concurrent execution.}
 
-\item{nreps}{number of repeats}
+\item{alt}{named list of altered arguments.}
+
+\item{const}{unnamed vector of constant arguments.}
+
+\item{nreps}{number of repeats.}
 }
 \description{
 \code{tumopp()} returns full results with config columns in a data.frame.
