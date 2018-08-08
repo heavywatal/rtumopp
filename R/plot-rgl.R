@@ -15,7 +15,7 @@ plot_tumor3d = function(.tbl = NULL, limits = NULL) {
     rgl::view3d(15, 15, 15, 0.9)
   })
   if (NROW(.tbl) == 0L) return(invisible(.tbl))
-  col = purrr::pluck(.tbl, "col", .default = "#333333")
+  col = purrr::pluck(.tbl, "col", .default = getOption("tumopp.default_color", "#666666"))
   rgl::plot3d(
     .tbl$x, .tbl$y, .tbl$z,
     xlab = "", ylab = "", zlab = "", axes = FALSE,
@@ -49,7 +49,12 @@ add_col = function(.tbl, column="clade", palette="Spectral", reverse=FALSE) {
   .column = .tbl[[column]]
   if (!is.factor(.column)) .column = as.factor(.column)
   .levels = levels(.column)
-  .map = wtl::brewer_palette(palette, length(.levels))
+  n = length(.levels)
+  .map = if (n > 1L) {
+      wtl::brewer_palette(palette, n)
+  } else {
+      getOption("tumopp.default_color", "#666666")
+  }
   if (reverse) .map = reverse(.map)
   dplyr::mutate(.tbl, col = .map[.column])
 }
