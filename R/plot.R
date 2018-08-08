@@ -77,9 +77,16 @@ plot_capture_rate = function(data, point = 1, errorbar = TRUE) {
     p = p + ggplot2::geom_jitter(size = point, alpha = 0.3, width = 0.25, height = 0)
   }
   if (errorbar) {
-    p = p + ggplot2::stat_summary(fun.data = wtl::mean_sd, geom = "errorbar", width = 0.2)
+    p = p + ggplot2::stat_summary(fun.data = mean_sd, geom = "errorbar", width = 0.2)
   }
   p
+}
+
+mean_sd = function(x, mult = 1.96) {
+  x = stats::na.omit(x)
+  div = mult * stats::sd(x)
+  mu = mean(x)
+  data.frame(y = mu, ymin = mu - div, ymax = mu + div)
 }
 
 range_nsam = function(x) {

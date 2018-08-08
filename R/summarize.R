@@ -9,7 +9,7 @@ genetic_stats = function(extant) {
     extant,
     mean_age = mean(.data$age), sd_age = stats::sd(.data$age),
     max_age = max(.data$age), min_age = min(.data$age),
-    evenness = wtl::evenness(.data$clade)
+    evenness = evenness(.data$clade)
   )
 }
 
@@ -30,4 +30,15 @@ morphological_stats = function(extant, coord="") {
       r_mean = mean(.data$r), r_sd = stats::sd(.data$r)
     ) %>%
     dplyr::mutate(surface = sum(extant$surface) / nrow(extant))
+}
+
+# H / H_max
+evenness = function(species) {
+  freqs = table(species)
+  shannon_index(freqs) / log(length(freqs))
+}
+
+shannon_index = function(freqs, base=exp(1)) {
+  freqs = freqs / sum(freqs)
+  -sum(freqs * log(freqs, base))
 }

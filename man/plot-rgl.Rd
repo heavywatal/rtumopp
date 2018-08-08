@@ -11,8 +11,7 @@ plot_tumor3d(.tbl = NULL, limits = NULL)
 snapshot_surface(.tbl, filename = tempfile("rgl_", fileext = ".png"),
   ...)
 
-add_col(.tbl, column = "clade", palette = "Spectral",
-  reverse = FALSE)
+add_col(.tbl, column = "clade", palette = "Spectral", direction = 1)
 }
 \arguments{
 \item{.tbl}{data.frame with (x, y, z, col)}
@@ -25,9 +24,9 @@ add_col(.tbl, column = "clade", palette = "Spectral",
 
 \item{column}{column name to colorcode}
 
-\item{palette}{name for RColorBrewer::brewer.pal()}
+\item{palette}{name of ColorBrewer palette}
 
-\item{reverse}{logical for order of color vector}
+\item{direction}{-1 to reverse color scale}
 }
 \description{
 \code{plot_tumor3d} plots tumor in 3D with rgl.

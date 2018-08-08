@@ -41,20 +41,19 @@ snapshot_surface = function(.tbl, filename = tempfile("rgl_", fileext = ".png"),
 #' @description
 #' `add_col` adds a column for color in `plot_tumor3d()`.
 #' @param column column name to colorcode
-#' @param palette name for RColorBrewer::brewer.pal()
-#' @param reverse logical for order of color vector
+#' @param palette name of ColorBrewer palette
+#' @param direction -1 to reverse color scale
 #' @rdname plot-rgl
 #' @export
-add_col = function(.tbl, column="clade", palette="Spectral", reverse=FALSE) {
+add_col = function(.tbl, column="clade", palette="Spectral", direction = 1) {
   .column = .tbl[[column]]
   if (!is.factor(.column)) .column = as.factor(.column)
   .levels = levels(.column)
   n = length(.levels)
   .map = if (n > 1L) {
-      wtl::brewer_palette(palette, n)
+      scales::brewer_pal(palette = palette, direction = direction)(n)
   } else {
       getOption("tumopp.default_color", "#666666")
   }
-  if (reverse) .map = reverse(.map)
   dplyr::mutate(.tbl, col = .map[.column])
 }

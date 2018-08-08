@@ -21,8 +21,8 @@ Imports:
     stringr (>= 1.3.1),
     tibble (>= 1.4.2),
     tidyr (>= 0.8.1),
-    RColorBrewer,
     Rcpp (>= 0.12.16),
+    scales,
     wtl
 Suggests:
     cowplot,

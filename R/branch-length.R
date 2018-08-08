@@ -39,6 +39,11 @@ within_between_samples = function(graph, regions) {
     }) %>%
     dplyr::mutate(
       within = 0.5 * (.data$within_i + .data$within_j),
-      fst = wtl::fst_HBK(.data$within, .data$between)
+      fst = fst_HBK(.data$within, .data$between)
     )
+}
+
+# Kst by Hudson, Boos, and Kaplan (1992).
+fst_HBK = function(within, between, n=2) {
+  (between - within) / (between + within / (n - 1))
 }
