@@ -12,7 +12,8 @@ tumopp(args, ...)
 
 \method{tumopp}{default}(args = character(0L), nsam = 0L, ...)
 
-\method{tumopp}{list}(args, nsam = 0L, ..., mc.cores = 1L)
+\method{tumopp}{list}(args, nsam = 0L, ...,
+  mc.cores = getOption("mc.cores", 1L))
 
 mslike(nsam = 20L, args = character(0L))
 

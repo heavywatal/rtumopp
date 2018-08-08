@@ -48,8 +48,8 @@ tumopp.default = function(args = character(0L), nsam = 0L, ...) {
 #' @param mc.cores The number of cores to use for concurrent execution.
 #' @rdname tumopp
 #' @export
-tumopp.list = function(args, nsam = 0L, ..., mc.cores = 1L) {
-  parallel::mclapply(args, tumopp, nsam = nsam) %>%
+tumopp.list = function(args, nsam = 0L, ..., mc.cores = getOption("mc.cores", 1L)) {
+  parallel::mclapply(args, tumopp, nsam = nsam, mc.cores = mc.cores) %>%
     dplyr::bind_rows(.id = "args")
 }
 
