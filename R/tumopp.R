@@ -2,10 +2,9 @@
 #'
 #' `tumopp()` returns full results with config columns in a data.frame.
 #' @param args command line arguments as a string vector or list of strings
-#' @param npair number of samples to measure genetic and physical distance
 #' @param nsam number of samples for ms-like output
 #' @export
-tumopp = function(args = character(0L), npair = 0L, nsam = 0L) {
+tumopp = function(args = character(0L), nsam = 0L) {
   if (is.list(args)) {
     purrr::map_dfr(args, tumopp, .id = "args")
   } else {
@@ -14,7 +13,7 @@ tumopp = function(args = character(0L), npair = 0L, nsam = 0L) {
     }
     message(paste(args, collapse = " "))
     nrep = as.integer(nsam > 0L)
-    result = cpp_tumopp(c(nsam, nrep, args), npair = npair)
+    result = cpp_tumopp(c(nsam, nrep, args))
     if (length(result) == 0L) return(invisible(NULL))
     .out = wtl::read_boost_ini(result["config"])
     .pop = read_tumopp(result["specimens"])
@@ -34,8 +33,8 @@ tumopp = function(args = character(0L), npair = 0L, nsam = 0L) {
     if (nrow(.drivers) > 0L) {
       .out = .out %>% dplyr::mutate(drivers = list(.drivers))
     }
-    if (npair > 0L) {
-      .dist = readr::read_tsv(result["distances"])
+    .dist = readr::read_tsv(result["distances"])
+    if (nrow(.dist) > 0L) {
       .out = .out %>% dplyr::mutate(distances = list(.dist))
     }
     if (nsam > 0L) {

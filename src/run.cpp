@@ -3,11 +3,10 @@
 #include <tumopp/simulation.hpp>
 
 //' Run C++ simulation
-//' @param args command line arguments as a string vector or list of strings
-//' @param npair number of samples to measure genetic and physical distance
+//' @param args command line arguments as a string vector
 //' @rdname rcpprun
 // [[Rcpp::export]]
-Rcpp::CharacterVector cpp_tumopp(const std::vector<std::string>& args, unsigned int npair=0) {
+Rcpp::CharacterVector cpp_tumopp(const std::vector<std::string>& args) {
     try {
         tumopp::Simulation simulation(args);
         simulation.run();
@@ -16,7 +15,7 @@ Rcpp::CharacterVector cpp_tumopp(const std::vector<std::string>& args, unsigned 
             Rcpp::Named("specimens", simulation.specimens()),
             Rcpp::Named("snapshots", simulation.snapshots()),
             Rcpp::Named("drivers", simulation.drivers()),
-            Rcpp::Named("distances", simulation.pairwise_distance(npair)),
+            Rcpp::Named("distances", simulation.pairwise_distance()),
             Rcpp::Named("ms", simulation.ms())
         );
     } catch (const std::runtime_error& e) {

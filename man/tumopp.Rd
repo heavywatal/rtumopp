@@ -6,7 +6,7 @@
 \alias{make_args}
 \title{Run tumopp}
 \usage{
-tumopp(args = character(0L), npair = 0L, nsam = 0L)
+tumopp(args = character(0L), nsam = 0L)
 
 mslike(nsam = 20L, args = character(0L))
 
@@ -14,8 +14,6 @@ make_args(alt, const = NULL, nreps = 1L)
 }
 \arguments{
 \item{args}{command line arguments as a string vector or list of strings}
-
-\item{npair}{number of samples to measure genetic and physical distance}
 
 \item{nsam}{number of samples for ms-like output}
 

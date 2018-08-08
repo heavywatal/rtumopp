@@ -6,14 +6,13 @@
 using namespace Rcpp;
 
 // cpp_tumopp
-Rcpp::CharacterVector cpp_tumopp(const std::vector<std::string>& args, unsigned int npair);
-RcppExport SEXP _tumopp_cpp_tumopp(SEXP argsSEXP, SEXP npairSEXP) {
+Rcpp::CharacterVector cpp_tumopp(const std::vector<std::string>& args);
+RcppExport SEXP _tumopp_cpp_tumopp(SEXP argsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const std::vector<std::string>& >::type args(argsSEXP);
-    Rcpp::traits::input_parameter< unsigned int >::type npair(npairSEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_tumopp(args, npair));
+    rcpp_result_gen = Rcpp::wrap(cpp_tumopp(args));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -31,7 +30,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_tumopp_cpp_tumopp", (DL_FUNC) &_tumopp_cpp_tumopp, 2},
+    {"_tumopp_cpp_tumopp", (DL_FUNC) &_tumopp_cpp_tumopp, 1},
     {"_tumopp_cpp_tumopp_ms", (DL_FUNC) &_tumopp_cpp_tumopp_ms, 2},
     {NULL, NULL, 0}
 };

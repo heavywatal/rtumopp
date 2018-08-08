@@ -5,14 +5,12 @@
 \alias{cpp_tumopp_ms}
 \title{Run C++ simulation}
 \usage{
-cpp_tumopp(args, npair = 0L)
+cpp_tumopp(args)
 
 cpp_tumopp_ms(nsam, args)
 }
 \arguments{
-\item{args}{command line arguments as a string vector or list of strings}
-
-\item{npair}{number of samples to measure genetic and physical distance}
+\item{args}{command line arguments as a string vector}
 
 \item{nsam}{number of samples for ms-like output}
 }

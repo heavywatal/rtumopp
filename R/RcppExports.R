@@ -2,11 +2,10 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 #' Run C++ simulation
-#' @param args command line arguments as a string vector or list of strings
-#' @param npair number of samples to measure genetic and physical distance
+#' @param args command line arguments as a string vector
 #' @rdname rcpprun
-cpp_tumopp <- function(args, npair = 0L) {
-    .Call(`_tumopp_cpp_tumopp`, args, npair)
+cpp_tumopp <- function(args) {
+    .Call(`_tumopp_cpp_tumopp`, args)
 }
 
 #' @param nsam number of samples for ms-like output
