@@ -21,7 +21,8 @@ within_between_samples = function(graph, regions) {
   regions %>%
     tibble::rowid_to_column() %>%
     dplyr::mutate(
-      within = purrr::map_dbl(.data$id, ~mean_branch_length(graph, as.character(.x)))
+      id = lapply(.data$id, as_idx, vs = igraph::V(graph)),
+      within = purrr::map_dbl(.data$id, ~mean_branch_length(graph, .x))
     ) %>%
     purrr::transpose() %>%
     purrr::cross2(., ., .filter = ~.x$rowid >= .y$rowid) %>%
@@ -34,13 +35,18 @@ within_between_samples = function(graph, regions) {
         within_i = row_i$within,
         within_j = row_j$within,
         euclidean = dist_euclidean(row_i, row_j),
-        between = mean_branch_length(graph, as.character(row_i$id), as.character(row_j$id))
+        between = mean_branch_length(graph, row_i$id, row_j$id)
       )
     }) %>%
     dplyr::mutate(
       within = 0.5 * (.data$within_i + .data$within_j),
       fst = fst_HBK(.data$within, .data$between)
     )
+}
+
+# Translate cell ID to igraph vertex index
+as_idx = function(cell_id, vs) {
+  match(cell_id, as.integer(as_ids(vs)))
 }
 
 # Kst by Hudson, Boos, and Kaplan (1992).

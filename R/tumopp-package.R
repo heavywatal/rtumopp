@@ -10,7 +10,10 @@
 utils::globalVariables(c(".", "n"))
 
 .onLoad = function(libname, pkgname) {
-  igraph::igraph_options(return.vs.es = FALSE)
+  igraph::igraph_options(
+    add.vertex.names = FALSE,
+    return.vs.es = FALSE
+  )
 }
 
 .onUnload = function(libpath) {
