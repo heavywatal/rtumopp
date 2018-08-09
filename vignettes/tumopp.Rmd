@@ -18,10 +18,11 @@ knitr::opts_chunk$set(
 
 This is an R interface of [tumopp](https://github.com/heavywatal/tumopp),
 a tumor growth simulator in C++.
+Results are stored in a nested data.frame.
 
 ```{r run}
 library(tumopp)
-result = tumopp("-D2 -Chex -k100")
+results = tumopp("-D3 -Cmoore -k10 -N1000")
 ```
 
 ## Explore parameter space
@@ -31,6 +32,7 @@ See `tumopp -h` or
 for available parameters.
 
 ```{r dontrun, eval=FALSE}
+.const = c('-D3', '-Chex', '-N1000')
 .alt = list(
   # D = c('2', '3'),
   # C = c('hex', 'moore', 'neumann'),
@@ -40,12 +42,7 @@ for available parameters.
   d = c('0.0', '0.2'),
   m = c('0.0', '2.0')
 )
-.const = c('-D2', '-Chex', '-N128')
 
-refresh('rtumopp')
 argslist = make_args(alt = .alt, const = .const, nreps = 2L)
-print(names(argslist))
-(label = paste(c('tumopp', .const, '-alt_', names(.alt)), collapse=''))
-
 results = tumopp(argslist)
 ```

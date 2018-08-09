@@ -127,7 +127,14 @@ make_args() returns argument combinations in a list." />
     
     </div>
 
-    <pre class="usage"><span class='fu'>tumopp</span>(<span class='kw'>args</span> <span class='kw'>=</span> <span class='fu'>character</span>(<span class='fl'>0L</span>), <span class='kw'>npair</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>nsam</span> <span class='kw'>=</span> <span class='fl'>0L</span>)
+    <pre class="usage"><span class='fu'>tumopp</span>(<span class='no'>args</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for default</span>
+<span class='fu'>tumopp</span>(<span class='kw'>args</span> <span class='kw'>=</span> <span class='fu'>character</span>(<span class='fl'>0L</span>), <span class='kw'>nsam</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for list</span>
+<span class='fu'>tumopp</span>(<span class='no'>args</span>, <span class='kw'>nsam</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='no'>...</span>,
+  <span class='kw'>mc.cores</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"mc.cores"</span>, <span class='fl'>1L</span>))
 
 <span class='fu'>mslike</span>(<span class='kw'>nsam</span> <span class='kw'>=</span> <span class='fl'>20L</span>, <span class='kw'>args</span> <span class='kw'>=</span> <span class='fu'>character</span>(<span class='fl'>0L</span>))
 
@@ -138,27 +145,31 @@ make_args() returns argument combinations in a list." />
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>args</th>
-      <td><p>command line arguments as a string vector or list of strings</p></td>
+      <td><p>command line arguments as a string vector or list of strings.</p></td>
     </tr>
     <tr>
-      <th>npair</th>
-      <td><p>number of samples to measure genetic and physical distance</p></td>
+      <th>...</th>
+      <td><p>not used.</p></td>
     </tr>
     <tr>
       <th>nsam</th>
-      <td><p>number of samples for ms-like output</p></td>
+      <td><p>number of samples for ms-like output.</p></td>
+    </tr>
+    <tr>
+      <th>mc.cores</th>
+      <td><p>The number of cores to use for concurrent execution.</p></td>
     </tr>
     <tr>
       <th>alt</th>
-      <td><p>named list of altered arguments</p></td>
+      <td><p>named list of altered arguments.</p></td>
     </tr>
     <tr>
       <th>const</th>
-      <td><p>unnamed vector of constant arguments</p></td>
+      <td><p>unnamed vector of constant arguments.</p></td>
     </tr>
     <tr>
       <th>nreps</th>
-      <td><p>number of repeats</p></td>
+      <td><p>number of repeats.</p></td>
     </tr>
     </table>
     

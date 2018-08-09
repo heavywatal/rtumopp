@@ -33,7 +33,8 @@
 <meta property="og:title" content="3D plotting with rgl — plot_tumor3d" />
 
 <meta property="og:description" content="plot_tumor3d plots tumor in 3D with rgl.
-snapshot_surface is a shortcut of plot_tumor3d and snapshot3d." />
+snapshot_surface is a shortcut of plot_tumor3d() and rgl::snapshot3d().
+add_col adds a column for color in plot_tumor3d()." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -121,38 +122,28 @@ snapshot_surface is a shortcut of plot_tumor3d and snapshot3d." />
     <div class="ref-description">
     
     <p><code>plot_tumor3d</code> plots tumor in 3D with rgl.</p>
-<p><code>snapshot_surface</code> is a shortcut of <code>plot_tumor3d</code> and <code>snapshot3d</code>.</p>
+<p><code>snapshot_surface</code> is a shortcut of <code>plot_tumor3d()</code> and <code><a href='http://www.rdocumentation.org/packages/rgl/topics/snapshot'>rgl::snapshot3d()</a></code>.</p>
+<p><code>add_col</code> adds a column for color in <code>plot_tumor3d()</code>.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>plot_tumor3d</span>(<span class='no'>.tbl</span>, <span class='kw'>colour</span> <span class='kw'>=</span> <span class='st'>"clade"</span>, <span class='kw'>.palette</span> <span class='kw'>=</span> <span class='st'>"Spectral"</span>,
-  <span class='kw'>.reverse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>.min</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>plot_tumor3d</span>(<span class='kw'>.tbl</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>limits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='fu'>snapshot_surface</span>(<span class='no'>.tbl</span>, <span class='kw'>filename</span> <span class='kw'>=</span> <span class='fu'>tempfile</span>(<span class='st'>"rgl_"</span>, <span class='kw'>fileext</span> <span class='kw'>=</span> <span class='st'>".png"</span>),
-  <span class='no'>...</span>)</pre>
+  <span class='no'>...</span>)
+
+<span class='fu'>add_col</span>(<span class='no'>.tbl</span>, <span class='kw'>column</span> <span class='kw'>=</span> <span class='st'>"clade"</span>, <span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"Spectral"</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>.tbl</th>
-      <td><p>data.frame</p></td>
+      <td><p>data.frame with (x, y, z, col)</p></td>
     </tr>
     <tr>
-      <th>colour</th>
-      <td><p>column name to colorcode</p></td>
-    </tr>
-    <tr>
-      <th>.palette</th>
-      <td><p>name for RColorBrewer::brewer.pal()</p></td>
-    </tr>
-    <tr>
-      <th>.reverse</th>
-      <td><p>logical for order of color vector</p></td>
-    </tr>
-    <tr>
-      <th>.min</th>
-      <td><p>minimum limit of axes</p></td>
+      <th>limits</th>
+      <td><p>passed to xlim, ylim, zlim of <code><a href='http://www.rdocumentation.org/packages/rgl/topics/plot3d'>rgl::plot3d()</a></code></p></td>
     </tr>
     <tr>
       <th>filename</th>
@@ -160,7 +151,19 @@ snapshot_surface is a shortcut of plot_tumor3d and snapshot3d." />
     </tr>
     <tr>
       <th>...</th>
-      <td><p>passed to plot_tumor3d()</p></td>
+      <td><p>passed to <code>plot_tumor3d()</code></p></td>
+    </tr>
+    <tr>
+      <th>column</th>
+      <td><p>column name to colorcode</p></td>
+    </tr>
+    <tr>
+      <th>palette</th>
+      <td><p>name of ColorBrewer palette</p></td>
+    </tr>
+    <tr>
+      <th>direction</th>
+      <td><p>-1 to reverse color scale</p></td>
     </tr>
     </table>
     
