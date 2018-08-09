@@ -54,7 +54,6 @@ as_idx = function(nodes, vs) {
   match(as.character(nodes), names(vs))
 }
 
-# NOTE: sink vertices can be dead cells
 paths_to_sink = function(graph, nodes) {
   vs = igraph::V(graph)
   idx = as_idx(nodes, vs)
@@ -76,6 +75,14 @@ distances_from_origin = function(graph, nodes = integer(0L)) {
   idx = as_idx(nodes, vs)
   igraph::distances(graph, 1, idx, mode = "out", weights = NA, algorithm = "unweighted") %>%
     as.integer()
+}
+
+accumulate_paths_to_source = function(graph, nodes) {
+  paths_to_source(graph, nodes) %>%
+    purrr::flatten_int() %>%
+    table(dnn = "id") %>%
+    tibble::as_tibble() %>%
+    dplyr::mutate(id = as.integer(.data$id))
 }
 
 # NOTE: sink vertices can be dead cells

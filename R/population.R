@@ -19,13 +19,13 @@ filter_common_ancestors = function(population, threshold = 0.05) {
 
 # Add graph-related columns
 add_node_property = function(population, graph, num_clades = 4L) {
-  .order = length(population$death == 0)
+  extant = filter_extant(population)
   clade_data = sort_clades(population, graph, n = num_clades)
+  freq_data = accumulate_paths_to_source(graph, extant$id) %>%
+    dplyr::transmute(.data$id, allelefreq = .data$n / nrow(extant))
   population %>%
-    dplyr::mutate(
-      age = distances_from_origin(graph, .data$id),
-      allelefreq = count_sink(graph, .data$id) / .order
-    ) %>%
+    dplyr::mutate(age = distances_from_origin(graph, .data$id)) %>%
+    dplyr::left_join(freq_data, by = "id") %>%
     dplyr::left_join(clade_data, by = "id")
 }
 
