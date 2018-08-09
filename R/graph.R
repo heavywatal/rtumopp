@@ -24,12 +24,10 @@ make_igraph = function(population) {
 #' @rdname graph
 #' @export
 subtree = function(graph, nodes = character(0L)) {
-  paths_to_source(graph, nodes) %>%
+  nodes = paths_to_source(graph, nodes) %>%
     purrr::flatten_chr() %>%
-    unique() %>%
-    {
-      igraph::induced_subgraph(graph, .)
-    }
+    unique()
+  igraph::induced_subgraph(graph, nodes)
 }
 
 #' @description
@@ -45,14 +43,21 @@ internal_nodes = function(graph, nodes, sensitivity) {
   names(counts)[(counts / n) > sensitivity]
 }
 
+as_ids = function(vs) {
+  ns = names(vs)
+  if (is.null(ns)) as.vector(vs) else ns
+}
+
 paths_to_sink = function(graph, nodes) {
+  ids = as_ids(igraph::V(graph))
   igraph::ego(graph, order = 1073741824L, nodes = nodes, mode = "out") %>%
-    lapply(igraph::as_ids)
+    lapply(function(x) ids[x])
 }
 
 paths_to_source = function(graph, nodes = character(0L)) {
+  ids = as_ids(igraph::V(graph))
   igraph::ego(graph, order = 1073741824L, nodes = nodes, mode = "in") %>%
-    lapply(igraph::as_ids)
+    lapply(function(x) ids[x])
 }
 
 distances_from_origin = function(graph, nodes = character(0L)) {
