@@ -25,11 +25,11 @@ summarise_demography = function(history) {
     dplyr::summarise(size = max(!!as.name("size")))
 }
 
-list_clade_founders = function(population, num_clades) {
-  stopifnot(num_clades < 16L)
+list_clade_founders = function(population, n) {
+  stopifnot(n < 16L)
   history = extract_history(population) %>% utils::head(10000L)
   demography = summarise_demography(history)
-  indices = which(demography$size == num_clades)
+  indices = which(demography$size == n)
   the_time = demography$time[utils::tail(indices, 1L)]
   history = dplyr::filter(history, .data$time <= the_time)
   id_born = dplyr::filter(history, .data$event == "birth")$id

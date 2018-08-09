@@ -3,7 +3,7 @@
 #' @description
 #' `mean_branch_length` calculates mean branch length within/between sub-graphs.
 #' @param graph igraph
-#' @param from,to igraph vertices
+#' @param from,to igraph vertices (not cell ID)
 #' @rdname branch-length
 #' @export
 mean_branch_length = function(graph, from = igraph::V(graph), to = from) {
@@ -42,11 +42,6 @@ within_between_samples = function(graph, regions) {
       within = 0.5 * (.data$within_i + .data$within_j),
       fst = fst_HBK(.data$within, .data$between)
     )
-}
-
-# Translate cell ID to igraph vertex index
-as_idx = function(cell_id, vs) {
-  match(cell_id, as.integer(as_ids(vs)))
 }
 
 # Kst by Hudson, Boos, and Kaplan (1992).

@@ -20,14 +20,16 @@ make_igraph = function(population) {
 #' @description
 #' `subtree` extracts subgraph among terminal nodes.
 #' @param graph igraph
-#' @param nodes igraph vertices
+#' @param nodes integer cell IDs
 #' @rdname graph
 #' @export
-subtree = function(graph, nodes = character(0L)) {
-  nodes = paths_to_source(graph, nodes) %>%
-    purrr::flatten_chr() %>%
+subtree = function(graph, nodes = integer(0L)) {
+  vs = igraph::V(graph)
+  idx = as_idx(nodes, vs)
+  idx = igraph::ego(graph, order = 1073741824L, nodes = idx, mode = "in") %>%
+    purrr::flatten_dbl() %>%
     unique()
-  igraph::induced_subgraph(graph, nodes)
+  igraph::induced_subgraph(graph, idx)
 }
 
 #' @description
@@ -38,36 +40,50 @@ subtree = function(graph, nodes = character(0L)) {
 internal_nodes = function(graph, nodes, sensitivity) {
   n = length(nodes)
   counts = paths_to_source(graph, nodes) %>%
-    purrr::flatten_chr() %>%
+    purrr::flatten_int() %>%
     table()
-  names(counts)[(counts / n) > sensitivity]
+  as.integer(names(counts)[(counts / n) > sensitivity])
 }
 
 as_ids = function(vs) {
   ns = names(vs)
-  if (is.null(ns)) as.vector(vs) else ns
+  if (is.null(ns)) as.vector(vs) else as.integer(ns)
 }
 
+as_idx = function(nodes, vs) {
+  match(as.character(nodes), names(vs))
+}
+
+# NOTE: sink vertices can be dead cells
 paths_to_sink = function(graph, nodes) {
-  ids = as_ids(igraph::V(graph))
-  igraph::ego(graph, order = 1073741824L, nodes = nodes, mode = "out") %>%
+  vs = igraph::V(graph)
+  idx = as_idx(nodes, vs)
+  ids = as_ids(vs)
+  igraph::ego(graph, order = 1073741824L, nodes = idx, mode = "out") %>%
     lapply(function(x) ids[x])
 }
 
-paths_to_source = function(graph, nodes = character(0L)) {
-  ids = as_ids(igraph::V(graph))
-  igraph::ego(graph, order = 1073741824L, nodes = nodes, mode = "in") %>%
+paths_to_source = function(graph, nodes = integer(0L)) {
+  vs = igraph::V(graph)
+  idx = as_idx(nodes, vs)
+  ids = as_ids(vs)
+  igraph::ego(graph, order = 1073741824L, nodes = idx, mode = "in") %>%
     lapply(function(x) ids[x])
 }
 
-distances_from_origin = function(graph, nodes = character(0L)) {
-  igraph::distances(graph, "1", nodes, mode = "out", weights = NA, algorithm = "unweighted") %>%
+distances_from_origin = function(graph, nodes = integer(0L)) {
+  vs = igraph::V(graph)
+  idx = as_idx(nodes, vs)
+  igraph::distances(graph, 1, idx, mode = "out", weights = NA, algorithm = "unweighted") %>%
     as.integer()
 }
 
-count_sink = function(graph, nodes = character(0L)) {
+# NOTE: sink vertices can be dead cells
+count_sink = function(graph, nodes = integer(0L)) {
   if (length(nodes) > 0L) {
-    out_ego_size = igraph::ego_size(graph, order = 1073741824L, nodes = nodes, mode = "out")
+    vs = igraph::V(graph)
+    idx = as_idx(nodes, vs)
+    out_ego_size = igraph::ego_size(graph, order = 1073741824L, nodes = idx, mode = "out")
     as.integer(out_ego_size + 1L) %/% 2L
   } else {
     sum(igraph::degree(graph, mode = "out", loops = FALSE) == 0L)

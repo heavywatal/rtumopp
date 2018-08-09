@@ -12,7 +12,7 @@ within_between_samples(graph, regions)
 \arguments{
 \item{graph}{igraph}
 
-\item{from, to}{igraph vertices}
+\item{from, to}{igraph vertices (not cell ID)}
 
 \item{regions}{output of \code{sample_uniform_regions()}}
 }

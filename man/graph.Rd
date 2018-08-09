@@ -9,7 +9,7 @@
 \usage{
 make_igraph(population)
 
-subtree(graph, nodes = character(0L))
+subtree(graph, nodes = integer(0L))
 
 internal_nodes(graph, nodes, sensitivity)
 
@@ -20,7 +20,7 @@ layout_genealogy(population)
 
 \item{graph}{igraph}
 
-\item{nodes}{igraph vertices}
+\item{nodes}{integer cell IDs}
 
 \item{sensitivity}{minimum allele frequency}
 }

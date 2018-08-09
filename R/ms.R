@@ -7,7 +7,7 @@
 #' @rdname ms
 #' @export
 mutate_clades = function(graph, mu = NULL, segsites = NULL) {
-  nodes = igraph::as_ids(igraph::V(graph))
+  nodes = as_ids(igraph::V(graph))
   nodes = nodes[igraph::degree(graph, mode = "out") > 0L]
   # remove singletons
   # TODO: remove low-freq variants?
