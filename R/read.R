@@ -16,7 +16,7 @@ read_confs = function(indirs = getwd()) {
 #' @export
 read_populations = function(indirs = getwd()) {
   file.path(indirs, "population.tsv.gz") %>%
-    purrr::map(read_tumopp)
+    parallel::mclapply(read_tumopp, mc.cores = getOption("mc.cores", 1L))
 }
 
 #' @description
@@ -28,7 +28,7 @@ read_results = function(indirs = getwd()) {
   read_confs(indirs) %>% dplyr::mutate(
     population = read_populations(indirs) %>%
       purrr::map_if((.data$coord == "hex") & autohex, trans_coord_hex),
-    graph = purrr::map(.data$population, make_igraph)
+    graph = parallel::mclapply(.data$population, make_igraph, mc.cores = getOption("mc.cores", 1L))
   )
 }
 
