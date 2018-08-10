@@ -7,7 +7,8 @@
 read_confs = function(indirs = getwd()) {
   file.path(indirs, "program_options.conf") %>%
     stats::setNames(indirs) %>%
-    purrr::map_dfr(wtl::read_boost_ini, .id = "directory")
+    parallel::mclapply(wtl::read_boost_ini) %>%
+    dplyr::bind_rows(.id = "directory")
 }
 
 #' @description
@@ -16,7 +17,7 @@ read_confs = function(indirs = getwd()) {
 #' @export
 read_populations = function(indirs = getwd()) {
   file.path(indirs, "population.tsv.gz") %>%
-    parallel::mclapply(read_tumopp, mc.cores = getOption("mc.cores", 1L))
+    parallel::mclapply(read_tumopp)
 }
 
 #' @description
@@ -28,7 +29,7 @@ read_results = function(indirs = getwd()) {
   read_confs(indirs) %>% dplyr::mutate(
     population = read_populations(indirs) %>%
       purrr::map_if((.data$coord == "hex") & autohex, trans_coord_hex),
-    graph = parallel::mclapply(.data$population, make_igraph, mc.cores = getOption("mc.cores", 1L))
+    graph = parallel::mclapply(.data$population, make_igraph)
   )
 }
 
@@ -51,5 +52,5 @@ read_tumopp = function(file) {
     delta = readr::col_double(),
     alpha = readr::col_double(),
     rho = readr::col_double()
-  ))
+  ), progress = FALSE)
 }
