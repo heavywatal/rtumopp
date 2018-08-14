@@ -5,10 +5,18 @@
 #' @rdname read
 #' @export
 read_confs = function(indirs = getwd()) {
-  file.path(indirs, "program_options.conf") %>%
-    stats::setNames(indirs) %>%
-    parallel::mclapply(wtl::read_boost_ini) %>%
+  stats::setNames(indirs, indirs) %>%
+    parallel::mclapply(.read_conf) %>%
     dplyr::bind_rows(.id = "directory")
+}
+
+.read_conf = function(indir) {
+  tsv = file.path(indir, "program_options.tsv.gz")
+  if (file.exists(tsv)) {
+    readr::read_tsv(tsv)
+  } else {
+    wtl::read_boost_ini(file.path(indir, "program_options.conf"))
+  }
 }
 
 #' @description
