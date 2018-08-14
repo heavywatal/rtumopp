@@ -69,11 +69,10 @@ mslike = function(nsam = 20L, args = character(0L)) {
 #' @rdname tumopp
 #' @export
 make_args = function(alt, const = NULL, nreps = 1L) {
-  altered = purrr::invoke(expand.grid, alt, stringsAsFactors = FALSE) %>%
-    filter_valid_LP()
-  prefix = format(Sys.time(), "%Y%m%d_%H%M_")
-  paste0(prefix, seq_len(nreps)) %>%
-    purrr::map_dfr(~dplyr::mutate(altered, o = .x)) %>%
+  prefix = format(Sys.time(), "%Y%m%d_%H%M%S_")
+  purrr::invoke(expand.grid, alt, stringsAsFactors = FALSE) %>%
+    filter_valid_LP() %>%
+    dplyr::mutate(o=paste0(prefix, dplyr::row_number())) %>%
     purrr::pmap(function(...) {
       .params = c(...)
       .names = names(.params)
