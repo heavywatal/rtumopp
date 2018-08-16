@@ -69,17 +69,45 @@ mslike = function(nsam = 20L, args = character(0L)) {
 #' @rdname tumopp
 #' @export
 make_args = function(alt, const = NULL, nreps = 1L) {
-  prefix = format(Sys.time(), "%Y%m%d_%H%M%S_")
   purrr::invoke(expand.grid, alt, stringsAsFactors = FALSE) %>%
     filter_valid_LP() %>%
-    dplyr::mutate(o=paste0(prefix, dplyr::row_number())) %>%
-    purrr::pmap(function(...) {
-      .params = c(...)
-      .names = names(.params)
-      .template = ifelse(nchar(.names) > 1L, "--%s=%s", "-%s%s")
-      c(const, sprintf(.template, .names, .params))
-    }) %>%
-    stats::setNames(purrr::map_chr(., paste, collapse = " "))
+    vectorize_args() %>%
+    append_o() %>%
+    purrr::map(~c(const, .x))
+}
+
+vectorize_args = function(.tbl) {
+  purrr::pmap(.tbl, function(...) {
+    .params = c(...)
+    .names = names(.params)
+    .template = ifelse(nchar(.names) > 1L, "--%s=%s", "-%s%s")
+    sprintf(.template, .names, .params)
+  })
+}
+
+append_o = function(args, fmt = "%Y%m%d_%H%M%S_") {
+  prefix = format(Sys.time(), fmt)
+  o = paste0("-o", prefix, seq_along(args))
+  purrr::map2(args, o, c)
+}
+
+# prior is a named list of generating functions
+generate_args = function(prior, const = NULL, n = 1L) {
+  generate_valid(prior, n = n) %>%
+    vectorize_args() %>%
+    purrr::map(~c(const, .x))
+}
+
+generate_valid = function(prior, n = 1L) {
+  output = NULL
+  k = 0L
+  while (k < n) {
+    generated = purrr::map_dfc(prior, function(f, x) {f(x)}, x = n - k)
+    generated = suppressMessages(filter_valid_LP(generated))
+    output = dplyr::bind_rows(output, generated)
+    k = NROW(output)
+  }
+  output
 }
 
 filter_valid_LP = function(x) {
