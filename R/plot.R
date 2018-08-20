@@ -18,7 +18,7 @@ histogram_freqspec = function(freqs) {
 #' @param limit for value range
 #' @rdname plot
 #' @export
-plot_lattice2d = function(.tbl, colour = "clade", alpha = 1, size = 1, limit = max_abs_xyz(.tbl)) {
+plot_lattice2d = function(.tbl, colour = "z", alpha = 1, size = 1, limit = max_abs_xyz(.tbl)) {
   size = size * 96 / (limit - 0.5)
   ggplot2::ggplot(.tbl, ggplot2::aes_(~x, ~y)) +
     ggplot2::geom_point(ggplot2::aes_string(colour = colour), alpha = alpha, size = size) +
