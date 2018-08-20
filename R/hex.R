@@ -43,15 +43,15 @@ revert_coord_hex = function(.tbl) {
 revert_coord_fcc = function(.tbl) {
   dplyr::mutate(
     .tbl,
-    z = round(.data$z * sqrt(3 / 2)),
-    x = round(.data$x - .data$z / sqrt(3))
+    z = as.integer(round(.data$z * sqrt(3 / 2))),
+    x = .data$x - .data$z / sqrt(3)
   ) %>% revert_coord_hex_xy()
 }
 
 revert_coord_hex_xy = function(.tbl) {
   dplyr::mutate(
     .tbl,
-    x = round(.data$x * sqrt(4 / 3)),
-    y = round(.data$y - .data$x * 0.5)
+    x = as.integer(round(.data$x * sqrt(4 / 3))),
+    y = as.integer(round(.data$y - .data$x * 0.5))
   )
 }
