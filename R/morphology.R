@@ -2,7 +2,7 @@
 #'
 #' @description
 #' `add_surface` adds a binary column to the data.frame
-#' @param population a data.frame with (x, y, z) before hex transformation
+#' @param population a data.frame with (x, y, z)
 #' @param coord a string
 #' @param dimensions an integer
 #' @rdname morphology
@@ -20,6 +20,7 @@ detect_surface = function(.tbl, se) {
   if (nrow(.tbl) == 0L) {
     return(dplyr::mutate(.tbl, surface = logical(0L)))
   }
+  if (!is.integer(.tbl$x)) .tbl = revert_coord_hex(.tbl)
   axes = c("x", "y", "z")
   mins = dplyr::summarise_at(.tbl, axes, dplyr::funs(min))
   img = df2img(.tbl) %>% filter_surface(se)

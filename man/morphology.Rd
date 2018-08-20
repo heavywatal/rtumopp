@@ -7,7 +7,7 @@
 add_surface(population, coord, dimensions)
 }
 \arguments{
-\item{population}{a data.frame with (x, y, z) before hex transformation}
+\item{population}{a data.frame with (x, y, z)}
 
 \item{coord}{a string}
 
