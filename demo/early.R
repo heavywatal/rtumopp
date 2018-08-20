@@ -1,51 +1,53 @@
 library(tidyverse)
-library(wtl)
 library(tumopp)
-refresh('rtumopp')
 
-# tumopp -D2 -k100 -Cmoore -Lconst -O4 -R256 -N256 0 0 -o Cmoore_Lconst
-# tumopp -D2 -k100 -Cmoore -Lstep -O4 -R256 -N256 0 0 -o Cmoore_Lstep
-# tumopp -D2 -k100 -Cmoore -Llinear -O4 -R256 -N256 0 0 -o Cmoore_Llinear
-# tumopp -D2 -k100 -Chex -Lconst -O4 -R256 -N256 0 0 -o Chex_Lconst
-# tumopp -D2 -k100 -Chex -Lstep -O4 -R256 -N256 0 0 -o Chex_Lstep
-# tumopp -D2 -k100 -Chex -Llinear -O4 -R256 -N256 0 0 -o Chex_Llinear
+.args = list(
+  "-D2 -k100 -Cmoore -Lconst -R256 -N256 -o Cmoore_Lconst",
+  "-D2 -k100 -Cmoore -Lstep -R256 -N256 -o Cmoore_Lstep",
+  "-D2 -k100 -Cmoore -Llinear -R256 -N256 -o Cmoore_Llinear",
+  "-D2 -k100 -Chex -Lconst -R256 -N256 -o Chex_Lconst",
+  "-D2 -k100 -Chex -Lstep -R256 -N256 -o Chex_Lstep",
+  "-D2 -k100 -Chex -Llinear -R256 -N256 -o Chex_Llinear"
+)
+results = tumopp(.args)
+write_results(results)
 
-(.args = wtl::command_args())
-indir = .args$args[1]
-if (!is.na(indir)) {
-  setwd(indir)
+.add_clade_to_snapshots = function(population, graph, snapshots, ...) {
+  clade_info = tumopp:::sort_clades(population, graph, 4L)
+  dplyr::left_join(snapshots, clade_info, by = "id")
 }
-setwd("Cmoore_Lconst")
-results = tumopp::read_snapshots() %>% print()
-.tbl = results$snapshots[[1L]]
-.lim = tumopp::max_abs_xyz(.tbl)
+# .tbl = (dplyr::slice(results, 1L) %>% purrr::pmap(.add_clade_to_snapshots))[[1L]]
 
-plot_snapshot = function(data, time) {
-  .N = nrow(data)
+.plot_snapshot = function(data) {
   tumopp::plot_lattice2d(data, "clade", alpha = 1.0, limit = .lim) +
-    scale_color_brewer(palette = "Spectral", guide = FALSE) +
-    # labs(title=sprintf('t = %.5f, N =%4d', time, .N))+
-    theme_bw()+
-    wtl::erase(axis.title, axis.text, axis.ticks)
+    scale_colour_brewer(palette = "Spectral", na.value="grey50", guide = FALSE) +
+    theme_void()
 }
 
-.out = .tbl %>%
-  tidyr::nest(-time) %>%
-  dplyr::mutate(plt = purrr::pmap(., plot_snapshot)) %>%
-  print()
-
-dir.create("png", mode = "0755")
-purrr::iwalk(.out$plt, ~{
-  .outfile = sprintf("png/snapshot_%d.png", .y)
-  message(.outfile)
-  ggsave(.outfile, .x, width = 1, height = 1, scale = 6, dpi = 72)
-})
-
-# magick -loop 1 -delay 8 png/*.png snapshot-noloop.gif
-# magick -loop 1 snapshot-noloop.gif -layers Optimize snapshot-noloop-opt.gif
-
-if (FALSE) {
-  # tiled-png for CSS sprite
-  grob = cowplot::plot_grid(plotlist = .out$plt, nrow = 1)
-  ggsave("earlysteps.png", grob, width = 54, height = 1, scale = 3, limitsize = FALSE)
+.plot_snapshots = function(.tbl) {
+  tidyr::nest(.tbl, -time)$data %>%
+    parallel::mclapply(.plot_snapshot)
 }
+
+magick_gif_animation = function(infiles, outfile="animation.gif", delay = 15, loop = 1) {
+  args = c("-loop", loop, "-delay", delay,
+           infiles, "-layers", "Optimize", outfile)
+  message(paste(args, collapse = " "))
+  system2("magick", args)
+}
+
+.do = function(population, graph, snapshots, outdir, ...) {
+  .tbl = .add_clade_to_snapshots(population, graph, snapshots)
+  .lim = tumopp::max_abs_xyz(.tbl)
+  .plt = .plot_snapshots(.tbl)
+  .pngdir = file.path(outdir, "png")
+  dir.create(.pngdir, mode = "0755")
+  purrr::iwalk(.plt, ~{
+    .outfile = file.path(.pngdir, sprintf("snapshot_%03d.png", .y))
+    message(.outfile)
+    ggsave(.outfile, .x, width = 1, height = 1, scale = 6, dpi = 72)
+  })
+  .infiles = file.path(.pngdir, "snapshot_*.png")
+  magick_gif_animation(.infiles, sprintf("%s/%s.gif", outdir, outdir, delay=8))
+}
+dplyr::slice(results, 1L) %>% purrr::pmap(.do)

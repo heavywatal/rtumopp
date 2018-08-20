@@ -1,13 +1,10 @@
 library(tidyverse)
-library(wtl)
 library(tumopp)
 
-wtl::refresh("rtumopp")
-
-(.result = tumopp(str_split("-N40000 -D2 -Chex -k24 -Lconst", " ")[[1]]))
-(.population = .result$population[[1]])
+(.result = tumopp("-N40000 -D2 -Chex -k24 -Lconst"))
+(.population = .result$population[[1L]])
+(.graph = .result$graph[[1L]])
 (.extant = .population %>% filter_extant())
-(.graph = make_igraph(.population))
 
 (.regions = sample_uniform_regions(.extant, 8L, 100L))
 
@@ -15,7 +12,6 @@ wtl::refresh("rtumopp")
   dplyr::left_join(tumopp:::tidy_regions(.regions), by = "id") %>%
   plot_lattice2d(size = 0.3) +
   geom_point(data = function(x) {dplyr::filter(x, !is.na(region))}, aes(x, y), size = 0.3, alpha = 0.4) +
-  scale_colour_brewer(palette = "Spectral", guide = FALSE) +
   theme(axis.title = element_blank())
 
 # #######1#########2#########3#########4#########5#########6#########7#########
@@ -50,5 +46,4 @@ ggplot(.tidy, aes(sample, site)) +
   ggplot(aes(euclidean, fst)) +
   geom_point() +
   stat_smooth(method = lm, formula = y ~ x + 0) +
-  coord_cartesian(xlim = c(0, .xmax), ylim = c(0, .ymax)) +
-  theme_wtl()
+  coord_cartesian(xlim = c(0, .xmax), ylim = c(0, .ymax))
