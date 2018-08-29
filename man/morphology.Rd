@@ -2,9 +2,12 @@
 % Please edit documentation in R/morphology.R
 \name{add_surface}
 \alias{add_surface}
+\alias{add_phi}
 \title{Extract surface cells with mathematical morphology}
 \usage{
 add_surface(population, coord, dimensions)
+
+add_phi(population, coord, dimensions)
 }
 \arguments{
 \item{population}{a data.frame with (x, y, z)}
@@ -15,4 +18,6 @@ add_surface(population, coord, dimensions)
 }
 \description{
 \code{add_surface} adds a binary column to the data.frame
+
+\code{add_phi} counts empty neighbors of each cell and adds an integer column
 }

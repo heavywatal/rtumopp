@@ -9,11 +9,30 @@
 #' @export
 add_surface = function(population, coord, dimensions) {
   extant = filter_extant(population)
-  strelem = get_se(coord, dimensions)
+  strelem = get_se(coord, dimensions) %>% df2img()
   col_surface = detect_surface(extant, strelem) %>%
     dplyr::select(.data$id, .data$surface)
   population %>%
     dplyr::left_join(col_surface, by = "id")
+}
+
+#' @description
+#' `add_phi` counts empty neighbors of each cell and adds an integer column
+#' @rdname morphology
+#' @export
+add_phi = function(population, coord, dimensions) {
+  extant = filter_extant(population)
+  coords = extant[c("x", "y", "z", "id")]
+  kernel = get_se(coord, dimensions)
+  counts = purrr::pmap_dfr(kernel, ~{
+      dplyr::mutate(coords, x = .data$x + ..1, y = .data$y + ..2, z = .data$z + ..3)
+    }) %>%
+    dplyr::count(.data$x, .data$y, .data$z)
+  info = coords %>%
+    dplyr::left_join(counts, by = c("x", "y", "z")) %>%
+    dplyr::transmute(.data$id, phi = nrow(kernel) - .data$n)
+  population %>%
+    dplyr::left_join(info, by = c("id"))
 }
 
 detect_surface = function(.tbl, se) {
@@ -33,7 +52,7 @@ detect_surface = function(.tbl, se) {
   dplyr::left_join(.tbl, product, by = axes)
 }
 
-# Construct a structuring element (kernel) as a binary array.
+# Construct a structuring element (kernel)
 get_se = function(coord = c("moore", "neumann", "hex"), dimensions = 3L) {
   coord = match.arg(coord)
   v = c(-1L, 0L, 1L)
@@ -46,7 +65,7 @@ get_se = function(coord = c("moore", "neumann", "hex"), dimensions = 3L) {
   if (dimensions < 3L) {
     df = dplyr::filter(df, .data$z == 0L)
   }
-  df2img(df)
+  df
 }
 
 # Filter img by surface
