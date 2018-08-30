@@ -56,9 +56,13 @@ read_snapshots = function(indirs = getwd()) {
 
 read_tumopp = function(file) {
   readr::read_tsv(file, col_types = readr::cols(
-    beta = readr::col_double(),
-    delta = readr::col_double(),
-    alpha = readr::col_double(),
-    rho = readr::col_double()
+    x = readr::col_integer(),
+    y = readr::col_integer(),
+    z = readr::col_integer(),
+    id = readr::col_integer(),
+    ancestor = readr::col_integer(),
+    birth = readr::col_double(),
+    death = readr::col_double(),
+    omega = readr::col_integer()
   ), progress = FALSE)
 }
