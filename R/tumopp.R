@@ -18,7 +18,7 @@ tumopp.default = function(args = character(0L), nsam = 0L, ...) {
   result = cpp_tumopp(c(nsam, nrep, args))
   if (length(result) == 0L) return(invisible(NULL))
   .out = wtl::read_boost_ini(result["config"])
-  .pop = read_tumopp(result["specimens"])
+  .pop = read_tumopp(result["population"])
   .snapshots = read_tumopp(result["snapshots"])
   if ((.out$coord == "hex") && getOption("tumopp.autohex", TRUE)) {
     .pop = trans_coord_hex(.pop)
