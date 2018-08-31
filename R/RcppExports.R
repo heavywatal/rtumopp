@@ -8,9 +8,3 @@ cpp_tumopp <- function(args) {
     .Call(`_tumopp_cpp_tumopp`, args)
 }
 
-#' @param nsam number of samples for ms-like output
-#' @rdname rcpprun
-cpp_tumopp_ms <- function(nsam, args) {
-    .Call(`_tumopp_cpp_tumopp_ms`, nsam, args)
-}
-

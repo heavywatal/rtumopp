@@ -6,16 +6,14 @@
 #' @export
 tumopp = function(args, ...) UseMethod("tumopp")
 
-#' @param nsam number of samples for ms-like output.
 #' @rdname tumopp
 #' @export
-tumopp.default = function(args = character(0L), nsam = 0L, ...) {
+tumopp.default = function(args = character(0L), ...) {
   if (length(args) == 1L) {
     args = stringr::str_split(args, "\\s+") %>% purrr::flatten_chr()
   }
   message(paste(args, collapse = " "))
-  nrep = as.integer(nsam > 0L)
-  result = cpp_tumopp(c(nsam, nrep, args))
+  result = cpp_tumopp(args)
   if (length(result) == 0L) return(invisible(NULL))
   .out = wtl::read_boost_ini(result["config"])
   .pop = read_tumopp(result["population"])
@@ -35,30 +33,15 @@ tumopp.default = function(args = character(0L), nsam = 0L, ...) {
   if (nrow(.drivers) > 0L) {
     .out = .out %>% dplyr::mutate(drivers = list(.drivers))
   }
-  .dist = readr::read_tsv(result["distances"])
-  if (nrow(.dist) > 0L) {
-    .out = .out %>% dplyr::mutate(distances = list(.dist))
-  }
-  if (nsam > 0L) {
-    .out$ms = wtl::parse_ms(strsplit(result["ms"], "\n")[[1L]])
-  }
   .out
 }
 
 #' @param mc.cores The number of cores to use for concurrent execution.
 #' @rdname tumopp
 #' @export
-tumopp.list = function(args, nsam = 0L, ..., mc.cores = getOption("mc.cores", 1L)) {
-  parallel::mclapply(args, tumopp, nsam = nsam, mc.cores = mc.cores) %>%
+tumopp.list = function(args, ..., mc.cores = getOption("mc.cores", 1L)) {
+  parallel::mclapply(args, tumopp, ..., mc.cores = mc.cores) %>%
     dplyr::bind_rows(.id = "args")
-}
-
-#' @description
-#' `mslike()` returns only binary genotypes in ms-like format.
-#' @rdname tumopp
-#' @export
-mslike = function(nsam = 20L, args = character(0L)) {
-  strsplit(cpp_tumopp_ms(nsam, args), "\n")[[1L]]
 }
 
 #' @description

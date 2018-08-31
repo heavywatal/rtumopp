@@ -2,17 +2,12 @@
 % Please edit documentation in R/RcppExports.R
 \name{cpp_tumopp}
 \alias{cpp_tumopp}
-\alias{cpp_tumopp_ms}
 \title{Run C++ simulation}
 \usage{
 cpp_tumopp(args)
-
-cpp_tumopp_ms(nsam, args)
 }
 \arguments{
 \item{args}{command line arguments as a string vector}
-
-\item{nsam}{number of samples for ms-like output}
 }
 \description{
 Run C++ simulation

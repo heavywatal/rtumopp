@@ -4,18 +4,14 @@
 \alias{tumopp}
 \alias{tumopp.default}
 \alias{tumopp.list}
-\alias{mslike}
 \alias{make_args}
 \title{Run tumopp}
 \usage{
 tumopp(args, ...)
 
-\method{tumopp}{default}(args = character(0L), nsam = 0L, ...)
+\method{tumopp}{default}(args = character(0L), ...)
 
-\method{tumopp}{list}(args, nsam = 0L, ...,
-  mc.cores = getOption("mc.cores", 1L))
-
-mslike(nsam = 20L, args = character(0L))
+\method{tumopp}{list}(args, ..., mc.cores = getOption("mc.cores", 1L))
 
 make_args(alt, const = NULL, nreps = 1L)
 }
@@ -23,8 +19,6 @@ make_args(alt, const = NULL, nreps = 1L)
 \item{args}{command line arguments as a string vector or list of strings.}
 
 \item{...}{not used.}
-
-\item{nsam}{number of samples for ms-like output.}
 
 \item{mc.cores}{The number of cores to use for concurrent execution.}
 
@@ -36,8 +30,6 @@ make_args(alt, const = NULL, nreps = 1L)
 }
 \description{
 \code{tumopp()} returns full results with config columns in a data.frame.
-
-\code{mslike()} returns only binary genotypes in ms-like format.
 
 \code{make_args()} returns argument combinations in a list.
 }

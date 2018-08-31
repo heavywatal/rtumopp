@@ -16,22 +16,9 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// cpp_tumopp_ms
-Rcpp::CharacterVector cpp_tumopp_ms(unsigned int nsam, const std::vector<std::string>& args);
-RcppExport SEXP _tumopp_cpp_tumopp_ms(SEXP nsamSEXP, SEXP argsSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< unsigned int >::type nsam(nsamSEXP);
-    Rcpp::traits::input_parameter< const std::vector<std::string>& >::type args(argsSEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_tumopp_ms(nsam, args));
-    return rcpp_result_gen;
-END_RCPP
-}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_tumopp_cpp_tumopp", (DL_FUNC) &_tumopp_cpp_tumopp, 1},
-    {"_tumopp_cpp_tumopp_ms", (DL_FUNC) &_tumopp_cpp_tumopp_ms, 2},
     {NULL, NULL, 0}
 };
 
