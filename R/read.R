@@ -15,8 +15,15 @@ read_confs = function(indirs = getwd()) {
   if (file.exists(tsv)) {
     readr::read_tsv(tsv)
   } else {
-    wtl::read_boost_ini(file.path(indir, "program_options.conf"))
+    read_boost_ini(file.path(indir, "program_options.conf"))
   }
+}
+
+read_boost_ini = function(file) {
+  readr::read_delim(file, "=", col_names = c("key", "val"), comment = "#", trim_ws = TRUE) %>%
+    dplyr::summarise_all(function(x) paste0(x, collapse = "\t")) %>%
+    paste0(collapse="\n") %>%
+    readr::read_tsv()
 }
 
 #' @description

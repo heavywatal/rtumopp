@@ -22,8 +22,7 @@ Imports:
     tibble (>= 1.4.2),
     tidyr (>= 0.8.1),
     Rcpp (>= 0.12.16),
-    scales,
-    wtl
+    scales
 Suggests:
     cowplot,
     knitr,
@@ -36,6 +35,4 @@ RoxygenNote: 6.1.0
 Roxygen: list(markdown = TRUE)
 LinkingTo: Rcpp
 SystemRequirements: C++11
-Remotes:
-    heavywatal/rwtl
 VignetteBuilder: knitr

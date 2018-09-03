@@ -11,7 +11,7 @@
 sample_uniform_regions = function(tbl, nsam = 2L, ncell = 10L, jitter = 0) {
   centers = kmeans_centers(tbl, nsam)
   if (jitter > 0) {
-    centers = wtl::mutate_jitter(centers, .data$x, .data$y, amount = jitter)
+    centers = mutate_jitter(centers, .data$x, .data$y, amount = jitter)
   }
   sample_regions(tbl, centers, ncell = ncell)
 }
@@ -56,6 +56,13 @@ tidy_regions = function(regions) {
   tibble::tibble(id = regions$id) %>%
     tibble::rowid_to_column(var = "region") %>%
     tidyr::unnest()
+}
+
+mutate_jitter = function(.data, ..., amount) {
+  #TODO receive values from ... instead of amount
+  dplyr::mutate_at(.data, dplyr::vars(...), function(x) {
+    x + stats::runif(length(x), -amount, amount)
+  })
 }
 
 #' @description

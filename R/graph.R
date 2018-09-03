@@ -96,16 +96,3 @@ count_sink = function(graph, nodes = integer(0L)) {
     sum(igraph::degree(graph, mode = "out", loops = FALSE) == 0L)
   }
 }
-
-#' @description
-#' `layout_genealogy` returns coordinates of nodes and edges for plotting.
-#' @rdname graph
-#' @export
-layout_genealogy = function(population) {
-  extra_cols = population %>%
-    dplyr::transmute(name = as.character(.data$id), extant = .data$death == 0, .data$clade)
-  make_igraph(population) %>%
-    wtl::igraph_layout(igraph::as_tree(flip.y = FALSE)) %>%
-    dplyr::rename(pos = "x", age = "y", posend = "xend", ageend = "yend") %>%
-    dplyr::left_join(extra_cols, by = c(to = "name"))
-}

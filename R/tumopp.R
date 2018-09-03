@@ -15,7 +15,7 @@ tumopp.default = function(args = character(0L), ...) {
   message(paste(args, collapse = " "))
   result = cpp_tumopp(args)
   if (length(result) == 0L) return(invisible(NULL))
-  .out = wtl::read_boost_ini(result["config"])
+  .out = read_boost_ini(result["config"])
   .pop = read_tumopp(result["population"])
   .snapshots = read_tumopp(result["snapshots"])
   if ((.out$coord == "hex") && getOption("tumopp.autohex", TRUE)) {

@@ -4,7 +4,6 @@
 \alias{make_igraph}
 \alias{subtree}
 \alias{internal_nodes}
-\alias{layout_genealogy}
 \title{Functions depending on igraph}
 \usage{
 make_igraph(population)
@@ -12,8 +11,6 @@ make_igraph(population)
 subtree(graph, nodes = integer(0L))
 
 internal_nodes(graph, nodes, sensitivity)
-
-layout_genealogy(population)
 }
 \arguments{
 \item{population}{tbl}
@@ -30,6 +27,4 @@ layout_genealogy(population)
 \code{subtree} extracts subgraph among terminal nodes.
 
 \code{internal_nodes} selects major common ancestors above threshold.
-
-\code{layout_genealogy} returns coordinates of nodes and edges for plotting.
 }
