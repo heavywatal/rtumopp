@@ -20,10 +20,10 @@ genetic_stats = function(extant) {
 #' @export
 morphological_stats = function(extant, coord="") {
   max_phi = switch(coord, hex = 12, moore = 27, neumann = 6, 1)
-  extant %>%
-    dplyr::filter(.data$surface) %>%
+  extant_surface = dplyr::filter(extant, .data$surface)
+  extant_surface %>%
     dplyr::mutate(
-      r = dist_euclidean(.),
+      r = dist_euclidean(extant_surface),
       phi = .data$phi / max_phi) %>%
     dplyr::summarise(
       phi_mean = mean(.data$phi), phi_sd = stats::sd(.data$phi),

@@ -36,8 +36,9 @@ tally_vaf = function(samples, sites) {
 #' @rdname vaf
 #' @export
 tidy_vaf = function(tbl) {
+  col_names = seq_len(ncol(tbl))
   tbl %>%
-    rlang::set_names(seq_len(ncol(.))) %>%
+    rlang::set_names(col_names) %>%
     tibble::rowid_to_column(var = "site") %>%
     tidyr::gather("sample", "frequency", -"site") %>%
     dplyr::filter(.data$frequency > 0) %>%
@@ -51,7 +52,7 @@ tidy_vaf = function(tbl) {
 #' @export
 filter_detectable = function(tbl, threshold) {
   tbl[tbl < threshold] = 0
-  tbl %>% dplyr::filter(rowSums(.) > 0)
+  dplyr::filter(tbl, rowSums(tbl) > 0)
 }
 
 #' @description

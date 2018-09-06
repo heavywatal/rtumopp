@@ -77,13 +77,12 @@ filter_surface = function(img, se) {
 df2img = function(.tbl) {
   vars = c("x", "y", "z")
   .tbl = .tbl[vars]
-  .grid = dplyr::summarise_at(.tbl, vars, dplyr::funs(min, max)) %>% {
-    expand.grid(
-      x = seq(.$x_min, .$x_max),
-      y = seq(.$y_min, .$y_max),
-      z = seq(.$z_min, .$z_max)
-    )
-  } %>% tibble::as_tibble()
+  .summary = dplyr::summarise_at(.tbl, vars, dplyr::funs(min, max))
+  .grid = expand.grid(
+    x = seq(.summary$x_min, .summary$x_max),
+    y = seq(.summary$y_min, .summary$y_max),
+    z = seq(.summary$z_min, .summary$z_max)
+  ) %>% tibble::as_tibble()
   joined = dplyr::left_join(.grid, dplyr::mutate(.tbl, v = 1L), by = vars)
   joined = tidyr::replace_na(joined, list(v = 0L))
   arr = reshape2::acast(joined, x ~ y ~ z, `[`, 1L, value.var = "v", fill = 0L)
@@ -93,11 +92,8 @@ df2img = function(.tbl) {
 
 # Convert binary array to data.frame with (x, y, z) columns
 img2df = function(img) {
+  dim(img) = utils::head(dim(img), 3L)
   img %>%
-    {
-      dim(.) = utils::head(dim(.), 3L)
-      .
-    } %>%
     reshape2::melt(c("x", "y", "z")) %>%
     tibble::as_tibble()
 }

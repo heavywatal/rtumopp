@@ -105,7 +105,7 @@ save_serial_section = function(.tbl, filename = "png/section_%03d.png", scale = 
   .lim = max_abs_xyz(.tbl)
   tidyr::nest(.tbl, -.data$z) %>%
     dplyr::arrange(.data$z) %>%
-    dplyr::mutate(i = seq_len(nrow(.))) %>%
+    dplyr::mutate(i = dplyr::row_number()) %>%
     purrr::pwalk(function(z, data, i) {
       .outfile = sprintf(filename, i)
       # TODO: fix color for each lineage

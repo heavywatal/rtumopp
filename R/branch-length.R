@@ -18,14 +18,14 @@ mean_branch_length = function(graph, from = igraph::V(graph), to = from) {
 #' @rdname branch-length
 #' @export
 within_between_samples = function(graph, regions) {
-  regions %>%
+  rows = regions %>%
     tibble::rowid_to_column() %>%
     dplyr::mutate(
       id = lapply(.data$id, as_idx, vs = igraph::V(graph)),
       within = purrr::map_dbl(.data$id, ~mean_branch_length(graph, .x))
     ) %>%
-    purrr::transpose() %>%
-    purrr::cross2(., ., .filter = ~.x$rowid >= .y$rowid) %>%
+    purrr::transpose()
+  purrr::cross2(rows, rows, .filter = ~.x$rowid >= .y$rowid) %>%
     purrr::map_dfr(~{
       row_i = .x[[1L]]
       row_j = .x[[2L]]
