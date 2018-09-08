@@ -1,11 +1,10 @@
 cmake_minimum_required(VERSION 3.1)
 project(tumoppr CXX)
 
-set(CXX_PROJECT tumopp)
-find_package(${CXX_PROJECT} REQUIRED CONFIG)
+find_package(tumopp 0.5.0 REQUIRED CONFIG)
 
 include(GNUInstallDirs)
-get_target_property(CXX_INCLUDEDIR ${CXX_PROJECT} INTERFACE_INCLUDE_DIRECTORIES)
+get_target_property(CXX_INCLUDEDIR tumopp INTERFACE_INCLUDE_DIRECTORIES)
 message(STATUS "INCLUDEDIR: ${CXX_INCLUDEDIR}")
 if(${CXX_INCLUDEDIR} MATCHES linuxbrew)
   set(CMAKE_INSTALL_LIBDIR lib)
@@ -16,7 +15,7 @@ message(STATUS "LIBDIR: ${CXX_LIBDIR}")
 message(STATUS "Configure Makevars")
 set(CPPFLAGS "-I${CXX_INCLUDEDIR}")
 set(LDFLAGS "-L${CXX_LIBDIR} -Wl,-rpath,${CXX_LIBDIR}")
-set(LDLIBS "-l${CXX_PROJECT}")
+set(LDLIBS "-ltumopp")
 configure_file(
   ${CMAKE_CURRENT_SOURCE_DIR}/Makevars.in
   ${CMAKE_CURRENT_SOURCE_DIR}/Makevars @ONLY
