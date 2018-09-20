@@ -11,7 +11,7 @@ Rcpp::CharacterVector cpp_tumopp(const std::vector<std::string>& args) {
         tumopp::Simulation simulation(args);
         simulation.run();
         return Rcpp::CharacterVector::create(
-            Rcpp::Named("config", simulation.config_string()),
+            Rcpp::Named("config", simulation.config()),
             Rcpp::Named("population", simulation.history()),
             Rcpp::Named("snapshots", simulation.snapshots()),
             Rcpp::Named("drivers", simulation.drivers())

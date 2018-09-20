@@ -15,7 +15,7 @@ tumopp.default = function(args = character(0L), ...) {
   message(paste(args, collapse = " "))
   result = cpp_tumopp(args)
   if (length(result) == 0L) return(invisible(NULL))
-  .out = read_boost_ini(result["config"])
+  .out = from_json(result["config"])
   .pop = read_tumopp(result["population"])
   .snapshots = read_tumopp(result["snapshots"])
   if ((.out$coord == "hex") && getOption("tumopp.autohex", TRUE)) {

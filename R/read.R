@@ -11,12 +11,19 @@ read_confs = function(indirs = getwd()) {
 }
 
 .read_conf = function(indir) {
+  json = file.path(indir, "config.json")
+  if (file.exists(json)) return(read_json(json))
   tsv = file.path(indir, "program_options.tsv.gz")
-  if (file.exists(tsv)) {
-    readr::read_tsv(tsv)
-  } else {
-    read_boost_ini(file.path(indir, "program_options.conf"))
-  }
+  if (file.exists(tsv)) return(readr::read_tsv(tsv))
+  read_boost_ini(file.path(indir, "program_options.conf"))
+}
+
+read_json = function(file) {
+  jsonlite::read_json(file) %>% from_json()
+}
+
+from_json = function(conf) {
+  jsonlite::fromJSON(conf) %>% tibble::as_tibble()
 }
 
 read_boost_ini = function(file) {

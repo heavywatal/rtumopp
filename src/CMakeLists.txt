@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.1)
 project(tumoppr CXX)
 
-find_package(tumopp 0.5.0 REQUIRED CONFIG)
+find_package(tumopp 0.6.0 REQUIRED CONFIG)
 
 include(GNUInstallDirs)
-get_target_property(CXX_INCLUDEDIR tumopp INTERFACE_INCLUDE_DIRECTORIES)
+get_target_property(CXX_INCLUDEDIR tumopp::tumopp INTERFACE_INCLUDE_DIRECTORIES)
 message(STATUS "INCLUDEDIR: ${CXX_INCLUDEDIR}")
 if(${CXX_INCLUDEDIR} MATCHES linuxbrew)
   set(CMAKE_INSTALL_LIBDIR lib)

@@ -11,17 +11,17 @@ write_results = function(results) {
   }
 }
 
-.write_result = function(results, outdir = NULL, force = FALSE) {
-  if (is.null(outdir)) outdir = results$outdir
+.write_result = function(result, outdir = NULL, force = FALSE) {
+  if (is.null(outdir)) outdir = result$outdir
   message("outdir: ", outdir)
   stopifnot(dir.create(outdir, mode = "0755") || force)
-  cols = names(results)
+  cols = names(result)
   dfs = c("population", "snapshots", "drivers", "distances")
   purrr::walk(dfs, ~{
     if (.x %in% cols) {
-      content = results[[.x]][[1L]]
+      content = result[[.x]][[1L]]
       if (.x %in% c("population", "snapshots") &&
-          results$coord == "hex" &&
+          result$coord == "hex" &&
           !is.integer(content$x)) {
         content = revert_coord_hex(content)
       }
@@ -29,7 +29,8 @@ write_results = function(results) {
       readr::write_tsv(content, outfile)
     }
   })
-  conf = suppressWarnings(dplyr::select(results, -dplyr::one_of(c(dfs, "graph"))))
-  readr::write_tsv(conf, file.path(outdir, "program_options.tsv.gz"))
-  invisible(results)
+  conf = suppressWarnings(dplyr::select(result, -dplyr::one_of(c(dfs, "graph"))))
+  outfile = file.path(outdir, "config.json")
+  jsonlite::write_json(as.list(conf), outfile, auto_unbox = TRUE, pretty = 2L, always_decimal = TRUE)
+  invisible(result)
 }

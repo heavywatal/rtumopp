@@ -1,6 +1,6 @@
 Package: tumopp
 Title: R interface to tumopp, a tumor growth simulator in C++
-Version: 0.5.0.9000
+Version: 0.6.0.9000
 Authors@R: person('Watal M.', 'Iwasaki', email='heavy.watal@gmail.com', role=c('aut', 'cre'))
 Description: R interface to tumopp, a tumor growth simulator in C++.
 Depends:
@@ -12,6 +12,7 @@ Imports:
     dplyr (>= 0.7.5),
     ggplot2 (>= 3.0.0),
     igraph (>= 1.1.2),
+    jsonlite (>= 1.5),
     magrittr,
     mmand,
     purrr (>= 0.2.5),
