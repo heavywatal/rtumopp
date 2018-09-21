@@ -30,7 +30,11 @@ write_results = function(results) {
     }
   })
   conf = suppressWarnings(dplyr::select(result, -dplyr::one_of(c(dfs, "graph"))))
-  outfile = file.path(outdir, "config.json")
-  jsonlite::write_json(as.list(conf), outfile, auto_unbox = TRUE, pretty = 2L, always_decimal = TRUE)
+  json = to_json(as.list(conf))
+  cat(json, file = file.path(outdir, "config.json"))
   invisible(result)
+}
+
+to_json = function(x, ...) {
+  jsonlite::toJSON(x, auto_unbox = TRUE, digits = I(15), pretty = 2L, always_decimal = TRUE, ...)
 }

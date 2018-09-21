@@ -19,7 +19,7 @@ read_confs = function(indirs = getwd()) {
 }
 
 read_json = function(file) {
-  jsonlite::read_json(file) %>% from_json()
+  jsonlite::read_json(file) %>% tibble::as_tibble()
 }
 
 from_json = function(conf) {
