@@ -32,7 +32,8 @@
 
 <meta property="og:title" content="Extract surface cells with mathematical morphology — add_surface" />
 
-<meta property="og:description" content="add_surface adds a binary column to the data.frame" />
+<meta property="og:description" content="add_surface adds a binary column to the data.frame
+add_phi counts empty neighbors of each cell and adds an integer column" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -61,7 +62,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tumopp</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.0.0.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.6.0.9000</span>
       </span>
     </div>
 
@@ -120,17 +121,20 @@
     <div class="ref-description">
     
     <p><code>add_surface</code> adds a binary column to the data.frame</p>
+<p><code>add_phi</code> counts empty neighbors of each cell and adds an integer column</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>add_surface</span>(<span class='no'>population</span>, <span class='no'>coord</span>, <span class='no'>dimensions</span>)</pre>
+    <pre class="usage"><span class='fu'>add_surface</span>(<span class='no'>population</span>, <span class='no'>coord</span>, <span class='no'>dimensions</span>)
+
+<span class='fu'>add_phi</span>(<span class='no'>population</span>, <span class='no'>coord</span>, <span class='no'>dimensions</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>population</th>
-      <td><p>a data.frame with (x, y, z) before hex transformation</p></td>
+      <td><p>a data.frame with (x, y, z)</p></td>
     </tr>
     <tr>
       <th>coord</th>

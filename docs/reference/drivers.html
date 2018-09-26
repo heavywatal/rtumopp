@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Utilities for variant allele frequency — make_vaf • tumopp</title>
+<title>Functions to deal with driver mutations — propagate_drivers • tumopp</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,13 +30,9 @@
 
 
 
-<meta property="og:title" content="Utilities for variant allele frequency — make_vaf" />
+<meta property="og:title" content="Functions to deal with driver mutations — propagate_drivers" />
 
-<meta property="og:description" content="make_vaf is a shortcut to make neutral VAF pattern.
-tally_vaf evaluates overlap of sampled and mutated cells.
-tidy_vaf transforms vaf table.
-filter_detectable removes sites where freq &amp;lt; threshold.
-sort_vaf reorders rows and columns of VAF table." />
+<meta property="og:description" content="propagate_drivers calculates the effect of drivers in descendant cells" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -116,61 +112,29 @@ sort_vaf reorders rows and columns of VAF table." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Utilities for variant allele frequency</h1>
-    <small class="dont-index">Source: <a href='https://github.com/heavywatal/rtumopp/blob/master/R/vaf.R'><code>R/vaf.R</code></a></small>
-    <div class="hidden name"><code>vaf.Rd</code></div>
+    <h1>Functions to deal with driver mutations</h1>
+    <small class="dont-index">Source: <a href='https://github.com/heavywatal/rtumopp/blob/master/R/driver.R'><code>R/driver.R</code></a></small>
+    <div class="hidden name"><code>drivers.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><code>make_vaf</code> is a shortcut to make neutral VAF pattern.</p>
-<p><code>tally_vaf</code> evaluates overlap of sampled and mutated cells.</p>
-<p><code>tidy_vaf</code> transforms vaf table.</p>
-<p><code>filter_detectable</code> removes sites where freq &lt; threshold.</p>
-<p><code>sort_vaf</code> reorders rows and columns of VAF table.</p>
+    <p><code>propagate_drivers</code> calculates the effect of drivers in descendant cells</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>make_vaf</span>(<span class='no'>graph</span>, <span class='no'>samples</span>, <span class='no'>mu</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.05</span>)
-
-<span class='fu'>tally_vaf</span>(<span class='no'>samples</span>, <span class='no'>sites</span>)
-
-<span class='fu'>tidy_vaf</span>(<span class='no'>tbl</span>)
-
-<span class='fu'>filter_detectable</span>(<span class='no'>tbl</span>, <span class='no'>threshold</span>)
-
-<span class='fu'>sort_vaf</span>(<span class='no'>tbl</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"average"</span>, <span class='st'>"ward.D2"</span>, <span class='st'>"complete"</span>, <span class='st'>"single"</span>))</pre>
+    <pre class="usage"><span class='fu'>propagate_drivers</span>(<span class='no'>drivers</span>, <span class='no'>graph</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>drivers</th>
+      <td><p>data.frame</p></td>
+    </tr>
+    <tr>
       <th>graph</th>
       <td><p>igraph</p></td>
-    </tr>
-    <tr>
-      <th>samples</th>
-      <td><p>list of integer IDs</p></td>
-    </tr>
-    <tr>
-      <th>mu</th>
-      <td><p>mutation rate per cell division (ignored if segsites is given)</p></td>
-    </tr>
-    <tr>
-      <th>threshold</th>
-      <td><p>minimum detectable frequency</p></td>
-    </tr>
-    <tr>
-      <th>sites</th>
-      <td><p>list of integer IDs</p></td>
-    </tr>
-    <tr>
-      <th>tbl</th>
-      <td><p>output of <code>tally_vaf</code></p></td>
-    </tr>
-    <tr>
-      <th>method</th>
-      <td><p>passed to <code><a href='http://www.rdocumentation.org/packages/stats/topics/hclust'>stats::hclust</a></code></p></td>
     </tr>
     </table>
     

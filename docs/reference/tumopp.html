@@ -33,7 +33,6 @@
 <meta property="og:title" content="Run tumopp — tumopp" />
 
 <meta property="og:description" content="tumopp() returns full results with config columns in a data.frame.
-mslike() returns only binary genotypes in ms-like format.
 make_args() returns argument combinations in a list." />
 <meta name="twitter:card" content="summary" />
 
@@ -63,7 +62,7 @@ make_args() returns argument combinations in a list." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tumopp</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.0.0.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.6.0.9000</span>
       </span>
     </div>
 
@@ -122,7 +121,6 @@ make_args() returns argument combinations in a list." />
     <div class="ref-description">
     
     <p><code>tumopp()</code> returns full results with config columns in a data.frame.</p>
-<p><code>mslike()</code> returns only binary genotypes in ms-like format.</p>
 <p><code>make_args()</code> returns argument combinations in a list.</p>
     
     </div>
@@ -130,13 +128,10 @@ make_args() returns argument combinations in a list." />
     <pre class="usage"><span class='fu'>tumopp</span>(<span class='no'>args</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>tumopp</span>(<span class='kw'>args</span> <span class='kw'>=</span> <span class='fu'>character</span>(<span class='fl'>0L</span>), <span class='kw'>nsam</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='no'>...</span>)
+<span class='fu'>tumopp</span>(<span class='kw'>args</span> <span class='kw'>=</span> <span class='fu'>character</span>(<span class='fl'>0L</span>), <span class='no'>...</span>)
 
 <span class='co'># S3 method for list</span>
-<span class='fu'>tumopp</span>(<span class='no'>args</span>, <span class='kw'>nsam</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='no'>...</span>,
-  <span class='kw'>mc.cores</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"mc.cores"</span>, <span class='fl'>1L</span>))
-
-<span class='fu'>mslike</span>(<span class='kw'>nsam</span> <span class='kw'>=</span> <span class='fl'>20L</span>, <span class='kw'>args</span> <span class='kw'>=</span> <span class='fu'>character</span>(<span class='fl'>0L</span>))
+<span class='fu'>tumopp</span>(<span class='no'>args</span>, <span class='no'>...</span>, <span class='kw'>mc.cores</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"mc.cores"</span>, <span class='fl'>1L</span>))
 
 <span class='fu'>make_args</span>(<span class='no'>alt</span>, <span class='kw'>const</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>nreps</span> <span class='kw'>=</span> <span class='fl'>1L</span>)</pre>
     
@@ -150,10 +145,6 @@ make_args() returns argument combinations in a list." />
     <tr>
       <th>...</th>
       <td><p>not used.</p></td>
-    </tr>
-    <tr>
-      <th>nsam</th>
-      <td><p>number of samples for ms-like output.</p></td>
     </tr>
     <tr>
       <th>mc.cores</th>
