@@ -5,10 +5,11 @@ a tumor growth simulator in C++.
 
 ## Installation
 
-1.  Build and install [tumopp](https://github.com/heavywatal/tumopp) with Homebrew/Linuxbrew or CMake.
+```r
+install.packages("devtools")
+devtools::install_github("heavywatal/rtumopp")
+```
 
-1.  Install [devtools](https://github.com/hadley/devtools) in R:
-    `install.packages('devtools')`
+## Basic usage
 
-1.  Execute `devtools::install_github('heavywatal/rtumopp')` in R.
-    You may need `Sys.setenv(CMAKE_PREFIX_PATH='/prefix/to/tumopp')` to tell R the location of tumopp installation.
+See "Get started" page on http://heavywatal.github.io/rtumopp/
