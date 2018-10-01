@@ -31,7 +31,6 @@ else()
     )
   endif()
   message(STATUS "add_subdirectory(${subdir})")
-  set(CMAKE_BUILD_TYPE Release)
   add_subdirectory(${subdir})
 endif()
 
