@@ -32,7 +32,8 @@
 
 <meta property="og:title" content="Sprinkle mutations on genealogy — mutate_clades" />
 
-<meta property="og:description" content="mutate_clades samples nodes to mutate and returns their descendants." />
+<meta property="og:description" content="mutate_clades samples nodes to mutate and returns their descendants.
+ms makes a sample and its genotype matrix from a given genealogy tree." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -120,10 +121,13 @@
     <div class="ref-description">
     
     <p><code>mutate_clades</code> samples nodes to mutate and returns their descendants.</p>
+<p><code>ms</code> makes a sample and its genotype matrix from a given genealogy tree.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>mutate_clades</span>(<span class='no'>graph</span>, <span class='kw'>mu</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>segsites</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>mutate_clades</span>(<span class='no'>graph</span>, <span class='kw'>mu</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>segsites</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>ms</span>(<span class='no'>graph</span>, <span class='kw'>nsam</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>mu</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>segsites</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -139,6 +143,10 @@
     <tr>
       <th>segsites</th>
       <td><p>number of segregating sites</p></td>
+    </tr>
+    <tr>
+      <th>nsam</th>
+      <td><p>number of cells to sample</p></td>
     </tr>
     </table>
     
