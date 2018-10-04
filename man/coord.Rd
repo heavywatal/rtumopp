@@ -3,14 +3,14 @@
 \name{max_abs_xyz}
 \alias{max_abs_xyz}
 \alias{dist_euclidean}
-\alias{rotate}
+\alias{transform_rotate}
 \title{Utilities for coordinate values}
 \usage{
 max_abs_xyz(.tbl)
 
 dist_euclidean(.tbl, point = c(x = 0, y = 0, z = 0))
 
-rotate(.tbl, theta, axis = c("z", "x", "y"))
+transform_rotate(.tbl, theta, axis = c("z", "x", "y"))
 }
 \arguments{
 \item{.tbl}{data.frame with (x, y, z) columns}
@@ -20,13 +20,6 @@ rotate(.tbl, theta, axis = c("z", "x", "y"))
 \item{theta}{radian angle}
 
 \item{axis}{a string}
-}
-\value{
-max(abs(x, y, z))
-
-numeric vector
-
-modified data.frame
 }
 \description{
 \code{max_abs_xyz} extracts max values for plot limits.

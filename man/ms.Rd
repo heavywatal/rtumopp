@@ -2,12 +2,12 @@
 % Please edit documentation in R/ms.R
 \name{mutate_clades}
 \alias{mutate_clades}
-\alias{ms}
+\alias{make_sample}
 \title{Sprinkle mutations on genealogy}
 \usage{
 mutate_clades(graph, mu = NULL, segsites = NULL)
 
-ms(graph, nsam = 0L, mu = NULL, segsites = NULL)
+make_sample(graph, nsam = 0L, mu = NULL, segsites = NULL)
 }
 \arguments{
 \item{graph}{igraph}
@@ -21,5 +21,5 @@ ms(graph, nsam = 0L, mu = NULL, segsites = NULL)
 \description{
 \code{mutate_clades} samples nodes to mutate and returns their descendants.
 
-\code{ms} makes a sample and its genotype matrix from a given genealogy tree.
+\code{make_sample} creates a genotype matrix from a given genealogy tree.
 }

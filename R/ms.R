@@ -27,11 +27,11 @@ mutate_clades = function(graph, mu = NULL, segsites = NULL) {
 }
 
 #' @description
-#' `ms` makes a sample and its genotype matrix from a given genealogy tree.
+#' `make_sample` creates a genotype matrix from a given genealogy tree.
 #' @param nsam number of cells to sample
 #' @rdname ms
 #' @export
-ms = function(graph, nsam = 0L, mu = NULL, segsites = NULL) {
+make_sample = function(graph, nsam = 0L, mu = NULL, segsites = NULL) {
   vs = igraph::V(graph)
   outdegree = igraph::degree(graph, vs, mode = "out", loops = FALSE)
   nodes = as_ids(vs)[outdegree == 0L]

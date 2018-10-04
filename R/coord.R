@@ -2,7 +2,6 @@
 #'
 #' `max_abs_xyz` extracts max values for plot limits.
 #' @param .tbl data.frame with (x, y, z) columns
-#' @return max(abs(x, y, z))
 #' @rdname coord
 #' @export
 #' @examples
@@ -14,7 +13,6 @@ max_abs_xyz = function(.tbl) {
 #' @description
 #' `dist_euclidean` calculates distance from a specified cell.
 #' @param point named vector or tibble
-#' @return numeric vector
 #' @rdname coord
 #' @export
 dist_euclidean = function(.tbl, point = c(x = 0, y = 0, z = 0)) {
@@ -25,33 +23,19 @@ dist_euclidean = function(.tbl, point = c(x = 0, y = 0, z = 0)) {
 #' `rotate` modifies coordinates centering on a specified axis.
 #' @param theta radian angle
 #' @param axis a string
-#' @return modified data.frame
 #' @rdname coord
 #' @export
-rotate = function(.tbl, theta, axis = c("z", "x", "y")) {
+transform_rotate = function(.tbl, theta, axis = c("z", "x", "y")) {
   axis = match.arg(axis)
-  .x = .tbl[["x"]]
-  .y = .tbl[["y"]]
-  .z = .tbl[["z"]]
-  .sin = sin(theta)
-  .cos = cos(theta)
-  if (axis == "z") {
-    dplyr::mutate(
-      .tbl,
-      x = .x * .cos - .y * .sin,
-      y = .x * .sin + .y * .cos
-    )
-  } else if (axis == "x") {
-    dplyr::mutate(
-      .tbl,
-      y = .y * .cos - .z * .sin,
-      z = .y * .sin + .z * .cos
-    )
-  } else { # y
-    dplyr::mutate(
-      .tbl,
-      x = .x * .cos + .z * .sin,
-      z = -.x * .sin + .z * .cos
-    )
-  }
+  name1 = switch(axis, x = "y", y = "z", z = "x")
+  name2 = switch(axis, x = "z", y = "x", z = "y")
+  v1 = .tbl[[name1]]
+  v2 = .tbl[[name2]]
+  sin_theta = sin(theta)
+  cos_theta = cos(theta)
+  dplyr::mutate(
+    .tbl,
+    !!name1 := v1 * cos_theta - v2 * sin_theta,
+    !!name2 := v1 * sin_theta + v2 * cos_theta
+  )
 }
