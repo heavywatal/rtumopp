@@ -87,12 +87,13 @@ accumulate_paths_to_source = function(graph, nodes) {
 
 # NOTE: sink vertices can be dead cells
 count_sink = function(graph, nodes = integer(0L)) {
+  vs = igraph::V(graph)
   if (length(nodes) > 0L) {
-    vs = igraph::V(graph)
     idx = as_idx(nodes, vs)
     out_ego_size = igraph::ego_size(graph, order = 1073741824L, nodes = idx, mode = "out")
     as.integer(out_ego_size + 1L) %/% 2L
   } else {
-    sum(igraph::degree(graph, mode = "out", loops = FALSE) == 0L)
+    outdegree = igraph::degree(graph, vs, mode = "out", loops = FALSE)
+    sum(outdegree == 0L)
   }
 }

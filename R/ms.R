@@ -7,9 +7,9 @@
 #' @rdname ms
 #' @export
 mutate_clades = function(graph, mu = NULL, segsites = NULL) {
-  nodes = as_ids(igraph::V(graph))
-  nodes = nodes[igraph::degree(graph, mode = "out") > 0L]
-  # remove singletons
+  vs = igraph::V(graph)
+  indegree = igraph::degree(graph, vs, mode = "in", loops = FALSE)
+  nodes = as_ids(vs)[indegree > 0L]
   # TODO: remove low-freq variants?
   if (is.null(segsites)) {
     if (is.null(mu)) stop("specify either mu or segsites")
@@ -24,4 +24,22 @@ mutate_clades = function(graph, mu = NULL, segsites = NULL) {
   }
   # TODO: remove internal nodes?
   paths_to_sink(graph, mutants)
+}
+
+#' @description
+#' `ms` makes a sample and its genotype matrix from a given genealogy tree.
+#' @param nsam number of cells to sample
+#' @rdname ms
+#' @export
+ms = function(graph, nsam = 0L, mu = NULL, segsites = NULL) {
+  vs = igraph::V(graph)
+  outdegree = igraph::degree(graph, vs, mode = "out", loops = FALSE)
+  nodes = as_ids(vs)[outdegree == 0L]
+  if (nsam > 0L) {
+    nodes = sample(nodes, nsam, replace = FALSE)
+  }
+  subgraph = subtree(graph, nodes)
+  segsites = mutate_clades(subgraph, mu = mu, segsites = segsites)
+  cols = purrr::map(segsites, ~as.integer(nodes %in% .x))
+  do.call(cbind, cols)
 }

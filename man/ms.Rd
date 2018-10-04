@@ -2,9 +2,12 @@
 % Please edit documentation in R/ms.R
 \name{mutate_clades}
 \alias{mutate_clades}
+\alias{ms}
 \title{Sprinkle mutations on genealogy}
 \usage{
 mutate_clades(graph, mu = NULL, segsites = NULL)
+
+ms(graph, nsam = 0L, mu = NULL, segsites = NULL)
 }
 \arguments{
 \item{graph}{igraph}
@@ -12,7 +15,11 @@ mutate_clades(graph, mu = NULL, segsites = NULL)
 \item{mu}{mutation rate per cell division (ignored if segsites is given)}
 
 \item{segsites}{number of segregating sites}
+
+\item{nsam}{number of cells to sample}
 }
 \description{
 \code{mutate_clades} samples nodes to mutate and returns their descendants.
+
+\code{ms} makes a sample and its genotype matrix from a given genealogy tree.
 }
