@@ -11,5 +11,6 @@ addons:
     - ubuntu-toolchain-r-test
     packages:
     - g++-8
-before_install:
-- CXX=g++-8
+env:
+  global:
+  - CXX=g++-8
