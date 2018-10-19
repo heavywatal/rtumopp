@@ -25,11 +25,8 @@ Imports:
     Rcpp (>= 0.12.16),
     scales
 Suggests:
-    cowplot,
     knitr,
-    rgl,
-    rmarkdown,
-    tidyverse
+    rgl
 URL: https://github.com/heavywatal/rtumopp
 BugReports: https://github.com/heavywatal/rtumopp/issues
 RoxygenNote: 6.1.0
