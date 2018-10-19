@@ -1,1 +1,2 @@
-rm -r src/Makevars src/external/ build/
+#!/bin/sh
+rm -rf src/Makevars src/external/ build/

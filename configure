@@ -1,3 +1,4 @@
+#!/bin/sh
 which cmake
 rm -r build
 mkdir -p build
