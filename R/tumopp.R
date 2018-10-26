@@ -33,6 +33,10 @@ tumopp.default = function(args = character(0L), ...) {
   if (nrow(.drivers) > 0L) {
     .out = .out %>% dplyr::mutate(drivers = list(.drivers))
   }
+  .benchmark = readr::read_tsv(result["benchmark"])
+  if (nrow(.benchmark) > 0L) {
+    .out = .out %>% dplyr::mutate(benchmark = list(.benchmark))
+  }
   .out
 }
 
