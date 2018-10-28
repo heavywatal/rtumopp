@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1)
 project(rtumopp
-  VERSION 0.6.4
+  VERSION 0.6.5
   LANGUAGES CXX)
 
 message(STATUS "CMAKE_CURRENT_SOURCE_DIR: ${CMAKE_CURRENT_SOURCE_DIR}")
@@ -23,7 +23,7 @@ else()
     set(version ${PROJECT_VERSION})
     set(branch v${version})
   endif()
-  set(subdir external/${package}-${version})
+  set(subdir ${PROJECT_BINARY_DIR}/${package}-${version})
   if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${subdir}/.git)
     execute_process(COMMAND
       ${GIT_EXECUTABLE} clone --recursive --depth=1 --branch=${branch} https://github.com/${repo}.git ${subdir}
@@ -31,7 +31,7 @@ else()
     )
   endif()
   message(STATUS "add_subdirectory(${subdir})")
-  add_subdirectory(${subdir})
+  add_subdirectory(${subdir} ${subdir}/build)
 endif()
 
 if(${CMAKE_INSTALL_PREFIX} MATCHES linuxbrew)
