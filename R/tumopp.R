@@ -52,13 +52,14 @@ tumopp.list = function(args, ..., mc.cores = getOption("mc.cores", 1L)) {
 #' `make_args()` returns argument combinations in a list.
 #' @param alt named list of altered arguments.
 #' @param const unnamed vector of constant arguments.
-#' @param nreps number of repeats.
+#' @param times,each passed to `rep()`
 #' @rdname tumopp
 #' @export
-make_args = function(alt, const = NULL, nreps = 1L) {
+make_args = function(alt, const = NULL, times = 1L, each = 1L) {
   purrr::invoke(expand.grid, alt, stringsAsFactors = FALSE) %>%
     filter_valid_LP() %>%
     vectorize_args() %>%
+    rep(times = times, each = each) %>%
     append_o() %>%
     purrr::map(~c(const, .x))
 }

@@ -13,7 +13,7 @@ tumopp(args, ...)
 
 \method{tumopp}{list}(args, ..., mc.cores = getOption("mc.cores", 1L))
 
-make_args(alt, const = NULL, nreps = 1L)
+make_args(alt, const = NULL, times = 1L, each = 1L)
 }
 \arguments{
 \item{args}{command line arguments as a string vector or list of strings.}
@@ -26,7 +26,7 @@ make_args(alt, const = NULL, nreps = 1L)
 
 \item{const}{unnamed vector of constant arguments.}
 
-\item{nreps}{number of repeats.}
+\item{times, each}{passed to \code{rep()}}
 }
 \description{
 \code{tumopp()} returns full results with config columns in a data.frame.
