@@ -76,10 +76,24 @@ evaluate_mrs = function(population, nsam, ncell, threshold = 0.05, sensitivity =
   regions = filter_extant(population) %>%
     sample_uniform_regions(nsam = nsam, ncell = ncell, jitter = jitter)
   sampled = purrr::flatten_int(regions$id)
-  detectable = internal_nodes(graph, sampled, sensitivity = sensitivity)
+  subgraph = subtree(graph, sampled)
+  detectable = internal_nodes(subgraph, sampled, sensitivity = sensitivity)
   major_ca = population %>%
     add_node_property(graph) %>%
     filter_common_ancestors(threshold = threshold) %>%
     dplyr::pull("id")
   sum(detectable %in% major_ca) / length(major_ca)
+}
+
+#' @description
+#' `distances_mrs` is a shortcut for sampling and calculation
+#' @rdname sample
+#' @export
+distances_mrs = function(population, nsam, ncell, jitter = 0) {
+  graph = make_igraph(population)
+  regions = filter_extant(population) %>%
+    sample_uniform_regions(nsam = nsam, ncell = ncell, jitter = jitter)
+  sampled = purrr::flatten_int(regions$id)
+  subgraph = subtree(graph, sampled)
+  within_between_samples(subgraph, regions)
 }

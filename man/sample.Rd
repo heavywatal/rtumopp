@@ -5,6 +5,7 @@
 \alias{sample_random_regions}
 \alias{sample_bulk}
 \alias{evaluate_mrs}
+\alias{distances_mrs}
 \title{Sample cells from a population}
 \usage{
 sample_uniform_regions(tbl, nsam = 2L, ncell = 10L, jitter = 0)
@@ -15,6 +16,8 @@ sample_bulk(tbl, center = c(x = 0, y = 0, z = 0), ncell = 10L)
 
 evaluate_mrs(population, nsam, ncell, threshold = 0.05,
   sensitivity = 0.05, jitter = 0)
+
+distances_mrs(population, nsam, ncell, jitter = 0)
 }
 \arguments{
 \item{tbl}{tibble of extant cells with id, x, y, z columns}
@@ -41,4 +44,6 @@ evaluate_mrs(population, nsam, ncell, threshold = 0.05,
 \code{sample_bulk} samples a bulk of cells near the specified center.
 
 \code{evaluate_mrs} is a shortcut to evaluate multi-region sampling.
+
+\code{distances_mrs} is a shortcut for sampling and calculation
 }
