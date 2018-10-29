@@ -133,7 +133,7 @@ make_args() returns argument combinations in a list." />
 <span class='co'># S3 method for list</span>
 <span class='fu'>tumopp</span>(<span class='no'>args</span>, <span class='no'>...</span>, <span class='kw'>mc.cores</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"mc.cores"</span>, <span class='fl'>1L</span>))
 
-<span class='fu'>make_args</span>(<span class='no'>alt</span>, <span class='kw'>const</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>nreps</span> <span class='kw'>=</span> <span class='fl'>1L</span>)</pre>
+<span class='fu'>make_args</span>(<span class='no'>alt</span>, <span class='kw'>const</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>each</span> <span class='kw'>=</span> <span class='fl'>1L</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -159,8 +159,8 @@ make_args() returns argument combinations in a list." />
       <td><p>unnamed vector of constant arguments.</p></td>
     </tr>
     <tr>
-      <th>nreps</th>
-      <td><p>number of repeats.</p></td>
+      <th>times, each</th>
+      <td><p>passed to <code>rep()</code></p></td>
     </tr>
     </table>
     

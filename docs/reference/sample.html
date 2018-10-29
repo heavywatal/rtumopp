@@ -35,7 +35,8 @@
 <meta property="og:description" content="sample_uniform_regions sample uniformly distributed regions.
 sample_random_regions samples multiple regions at random.
 sample_bulk samples a bulk of cells near the specified center.
-evaluate_mrs is a shortcut to evaluate multi-region sampling." />
+evaluate_mrs is a shortcut to evaluate multi-region sampling.
+distances_mrs is a shortcut for sampling and calculation" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -126,6 +127,7 @@ evaluate_mrs is a shortcut to evaluate multi-region sampling." />
 <p><code>sample_random_regions</code> samples multiple regions at random.</p>
 <p><code>sample_bulk</code> samples a bulk of cells near the specified center.</p>
 <p><code>evaluate_mrs</code> is a shortcut to evaluate multi-region sampling.</p>
+<p><code>distances_mrs</code> is a shortcut for sampling and calculation</p>
     
     </div>
 
@@ -136,7 +138,9 @@ evaluate_mrs is a shortcut to evaluate multi-region sampling." />
 <span class='fu'>sample_bulk</span>(<span class='no'>tbl</span>, <span class='kw'>center</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>0</span>), <span class='kw'>ncell</span> <span class='kw'>=</span> <span class='fl'>10L</span>)
 
 <span class='fu'>evaluate_mrs</span>(<span class='no'>population</span>, <span class='no'>nsam</span>, <span class='no'>ncell</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
-  <span class='kw'>sensitivity</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>jitter</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
+  <span class='kw'>sensitivity</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>jitter</span> <span class='kw'>=</span> <span class='fl'>0</span>)
+
+<span class='fu'>distances_mrs</span>(<span class='no'>population</span>, <span class='no'>nsam</span>, <span class='no'>ncell</span>, <span class='kw'>jitter</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
