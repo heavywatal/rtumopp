@@ -20,4 +20,7 @@ devtools::install_github("heavywatal/rtumopp")
 
 ## Basic usage
 
-See "Get started" page on http://heavywatal.github.io/rtumopp/
+See ["Get started" page](http://heavywatal.github.io/rtumopp/).
+
+Available parameters are listed in
+[the API document of C++ tumopp](https://heavywatal.github.io/tumopp/group__params.html).
