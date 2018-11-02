@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1)
 project(rtumopp
-  VERSION 0.6.5
+  VERSION 0.7.0
   LANGUAGES CXX)
 
 message(STATUS "CMAKE_CURRENT_SOURCE_DIR: ${CMAKE_CURRENT_SOURCE_DIR}")

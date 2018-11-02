@@ -17,25 +17,23 @@ tumopp.default = function(args = character(0L), ...) {
   if (length(result) == 0L) return(invisible(NULL))
   .out = from_json(result["config"])
   .pop = read_tumopp(result["population"])
-  .snapshots = read_tumopp(result["snapshots"])
-  if ((.out$coord == "hex") && getOption("tumopp.autohex", TRUE)) {
-    .pop = trans_coord_hex(.pop)
-    .snapshots = trans_coord_hex(.snapshots)
+  transforming = ((.out$coord == "hex") && getOption("tumopp.autohex", TRUE))
+  if (transforming) {.pop = trans_coord_hex(.pop)}
+  .out$population = list(.pop)
+  .out$graph = list(make_igraph(.pop))
+  .snapshots = result["snapshots"]
+  if (nzchar(.snapshots)) {
+    .snapshots = read_tumopp(.snapshots)
+    if (transforming) {.snapshots = trans_coord_hex(.snapshots)}
+    .out$snapshots = list(.snapshots)
   }
-  .out = .out %>% dplyr::mutate(
-    population = list(.pop),
-    graph = list(make_igraph(.pop))
-  )
-  if (nrow(.snapshots) > 0L) {
-    .out = .out %>% dplyr::mutate(snapshots = list(.snapshots))
+  .drivers = result["drivers"]
+  if (nzchar(.drivers)) {
+    .out$drivers = list(readr::read_tsv(.drivers))
   }
-  .drivers = readr::read_tsv(result["drivers"])
-  if (nrow(.drivers) > 0L) {
-    .out = .out %>% dplyr::mutate(drivers = list(.drivers))
-  }
-  .benchmark = readr::read_tsv(result["benchmark"])
-  if (nrow(.benchmark) > 0L) {
-    .out = .out %>% dplyr::mutate(benchmark = list(.benchmark))
+  .benchmark = result["benchmark"]
+  if (nzchar(.benchmark)) {
+    .out$benchmark = list(readr::read_tsv(.benchmark))
   }
   .out
 }
