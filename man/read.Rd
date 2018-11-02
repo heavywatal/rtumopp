@@ -2,28 +2,39 @@
 % Please edit documentation in R/read.R
 \name{read_confs}
 \alias{read_confs}
-\alias{read_populations}
 \alias{read_results}
+\alias{read_populations}
 \alias{read_snapshots}
+\alias{read_tumopp}
 \title{Read TSV files in given directories}
 \usage{
-read_confs(indirs = getwd())
+read_confs(indirs = getwd(), mc.cores = getOption("mc.cores", 1L))
 
-read_populations(indirs = getwd())
+read_results(indirs = getwd(), mc.cores = getOption("mc.cores", 1L))
 
-read_results(indirs = getwd())
+read_populations(indirs = getwd(), mc.cores = getOption("mc.cores",
+  1L))
 
-read_snapshots(indirs = getwd())
+read_snapshots(indirs = getwd(), mc.cores = getOption("mc.cores", 1L))
+
+read_tumopp(file)
 }
 \arguments{
 \item{indirs}{a string vector}
+
+\item{mc.cores}{The number of cores to use for concurrent execution.}
+
+\item{file}{passed as the first argument of \code{readr::read_tsv()}}
 }
 \description{
 \code{read_confs} reads config files.
 
-\code{read_populations} reads populations.
-
 \code{read_results} reads confs and populations as a nested tibble,
 
+\code{read_populations} reads populations.
+
 \code{read_snapshots} calls \code{read_results} and reads snapshots.
+
+\code{read_tumopp} is an alias of \code{readr::read_tsv()} with some options
+to read result files: \code{population.tsv.gz} and \code{snapshots.tsv.gz}.
 }

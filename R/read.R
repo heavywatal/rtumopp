@@ -2,11 +2,12 @@
 #'
 #' `read_confs` reads config files.
 #' @param indirs a string vector
+#' @param mc.cores The number of cores to use for concurrent execution.
 #' @rdname read
 #' @export
-read_confs = function(indirs = getwd()) {
+read_confs = function(indirs = getwd(), mc.cores = getOption("mc.cores", 1L)) {
   stats::setNames(indirs, indirs) %>%
-    parallel::mclapply(.read_conf) %>%
+    parallel::mclapply(.read_conf, mc.cores = mc.cores) %>%
     dplyr::bind_rows(.id = "directory")
 }
 
@@ -34,33 +35,33 @@ read_boost_ini = function(file) {
 }
 
 #' @description
-#' `read_populations` reads populations.
-#' @rdname read
-#' @export
-read_populations = function(indirs = getwd()) {
-  file.path(indirs, "population.tsv.gz") %>%
-    parallel::mclapply(read_tumopp)
-}
-
-#' @description
 #' `read_results` reads confs and populations as a nested tibble,
 #' @rdname read
 #' @export
-read_results = function(indirs = getwd()) {
+read_results = function(indirs = getwd(), mc.cores = getOption("mc.cores", 1L)) {
   autohex = getOption("tumopp.autohex", TRUE)
   read_confs(indirs) %>% dplyr::mutate(
-    population = read_populations(indirs) %>%
+    population = read_populations(indirs, mc.cores = mc.cores) %>%
       purrr::map_if((.data$coord == "hex") & autohex, trans_coord_hex),
-    graph = parallel::mclapply(.data$population, make_igraph)
+    graph = parallel::mclapply(.data$population, make_igraph, mc.cores = mc.cores)
   )
+}
+
+#' @description
+#' `read_populations` reads populations.
+#' @rdname read
+#' @export
+read_populations = function(indirs = getwd(), mc.cores = getOption("mc.cores", 1L)) {
+  file.path(indirs, "population.tsv.gz") %>%
+    parallel::mclapply(read_tumopp, mc.cores = mc.cores)
 }
 
 #' @description
 #' `read_snapshots` calls `read_results` and reads snapshots.
 #' @rdname read
 #' @export
-read_snapshots = function(indirs = getwd()) {
-  read_results(indirs) %>%
+read_snapshots = function(indirs = getwd(), mc.cores = getOption("mc.cores", 1L)) {
+  read_results(indirs, mc.cores = mc.cores) %>%
     dplyr::mutate(snapshots = purrr::map2(indirs, .data$population, ~{
       meta_info = dplyr::select(.y, .data$id, .data$clade)
       read_tumopp(file.path(.x, "snapshots.tsv.gz")) %>%
@@ -68,6 +69,12 @@ read_snapshots = function(indirs = getwd()) {
     }))
 }
 
+#' @description
+#' `read_tumopp` is an alias of `readr::read_tsv()` with some options
+#' to read result files: `population.tsv.gz` and `snapshots.tsv.gz`.
+#' @param file passed as the first argument of `readr::read_tsv()`
+#' @rdname read
+#' @export
 read_tumopp = function(file) {
   readr::read_tsv(file, col_types = readr::cols(
     x = readr::col_integer(),
