@@ -33,9 +33,11 @@
 <meta property="og:title" content="Read TSV files in given directories — read_confs" />
 
 <meta property="og:description" content="read_confs reads config files.
-read_populations reads populations.
 read_results reads confs and populations as a nested tibble,
-read_snapshots calls read_results and reads snapshots." />
+read_populations reads populations.
+read_snapshots calls read_results and reads snapshots.
+read_tumopp is an alias of readr::read_tsv() with some options
+to read result files: population.tsv.gz and snapshots.tsv.gz." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -64,7 +66,7 @@ read_snapshots calls read_results and reads snapshots." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tumopp</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.6.5</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.7.0</span>
       </span>
     </div>
 
@@ -123,19 +125,24 @@ read_snapshots calls read_results and reads snapshots." />
     <div class="ref-description">
     
     <p><code>read_confs</code> reads config files.</p>
-<p><code>read_populations</code> reads populations.</p>
 <p><code>read_results</code> reads confs and populations as a nested tibble,</p>
+<p><code>read_populations</code> reads populations.</p>
 <p><code>read_snapshots</code> calls <code>read_results</code> and reads snapshots.</p>
+<p><code>read_tumopp</code> is an alias of <code><a href='http://www.rdocumentation.org/packages/readr/topics/read_delim'>readr::read_tsv()</a></code> with some options
+to read result files: <code>population.tsv.gz</code> and <code>snapshots.tsv.gz</code>.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>read_confs</span>(<span class='kw'>indirs</span> <span class='kw'>=</span> <span class='fu'>getwd</span>())
+    <pre class="usage"><span class='fu'>read_confs</span>(<span class='kw'>indirs</span> <span class='kw'>=</span> <span class='fu'>getwd</span>(), <span class='kw'>mc.cores</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"mc.cores"</span>, <span class='fl'>1L</span>))
 
-<span class='fu'>read_populations</span>(<span class='kw'>indirs</span> <span class='kw'>=</span> <span class='fu'>getwd</span>())
+<span class='fu'>read_results</span>(<span class='kw'>indirs</span> <span class='kw'>=</span> <span class='fu'>getwd</span>(), <span class='kw'>mc.cores</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"mc.cores"</span>, <span class='fl'>1L</span>))
 
-<span class='fu'>read_results</span>(<span class='kw'>indirs</span> <span class='kw'>=</span> <span class='fu'>getwd</span>())
+<span class='fu'>read_populations</span>(<span class='kw'>indirs</span> <span class='kw'>=</span> <span class='fu'>getwd</span>(), <span class='kw'>mc.cores</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"mc.cores"</span>,
+  <span class='fl'>1L</span>))
 
-<span class='fu'>read_snapshots</span>(<span class='kw'>indirs</span> <span class='kw'>=</span> <span class='fu'>getwd</span>())</pre>
+<span class='fu'>read_snapshots</span>(<span class='kw'>indirs</span> <span class='kw'>=</span> <span class='fu'>getwd</span>(), <span class='kw'>mc.cores</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"mc.cores"</span>, <span class='fl'>1L</span>))
+
+<span class='fu'>read_tumopp</span>(<span class='no'>file</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -143,6 +150,14 @@ read_snapshots calls read_results and reads snapshots." />
     <tr>
       <th>indirs</th>
       <td><p>a string vector</p></td>
+    </tr>
+    <tr>
+      <th>mc.cores</th>
+      <td><p>The number of cores to use for concurrent execution.</p></td>
+    </tr>
+    <tr>
+      <th>file</th>
+      <td><p>passed as the first argument of <code><a href='http://www.rdocumentation.org/packages/readr/topics/read_delim'>readr::read_tsv()</a></code></p></td>
     </tr>
     </table>
     
