@@ -10,7 +10,8 @@
 \usage{
 read_confs(indirs = getwd(), mc.cores = getOption("mc.cores", 1L))
 
-read_results(indirs = getwd(), mc.cores = getOption("mc.cores", 1L))
+read_results(indirs = getwd(), mc.cores = getOption("mc.cores", 1L),
+  graph = TRUE)
 
 read_populations(indirs = getwd(), mc.cores = getOption("mc.cores",
   1L))
@@ -24,12 +25,14 @@ read_tumopp(file)
 
 \item{mc.cores}{The number of cores to use for concurrent execution.}
 
+\item{graph}{add graph column if TRUE}
+
 \item{file}{passed as the first argument of \code{readr::read_tsv()}}
 }
 \description{
 \code{read_confs} reads config files.
 
-\code{read_results} reads confs and populations as a nested tibble,
+\code{read_results} reads confs and populations as a nested tibble.
 
 \code{read_populations} reads populations.
 

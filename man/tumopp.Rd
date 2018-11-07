@@ -9,7 +9,7 @@
 \usage{
 tumopp(args, ...)
 
-\method{tumopp}{default}(args = character(0L), ...)
+\method{tumopp}{default}(args = character(0L), ..., graph = TRUE)
 
 \method{tumopp}{list}(args, ..., mc.cores = getOption("mc.cores", 1L))
 
@@ -19,6 +19,8 @@ make_args(alt, const = NULL, times = 1L, each = 1L)
 \item{args}{command line arguments as a string vector or list of strings.}
 
 \item{...}{not used.}
+
+\item{graph}{add graph column if TRUE}
 
 \item{mc.cores}{The number of cores to use for concurrent execution.}
 

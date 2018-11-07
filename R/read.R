@@ -35,16 +35,20 @@ read_boost_ini = function(file) {
 }
 
 #' @description
-#' `read_results` reads confs and populations as a nested tibble,
+#' `read_results` reads confs and populations as a nested tibble.
+#' @param graph add graph column if TRUE
 #' @rdname read
 #' @export
-read_results = function(indirs = getwd(), mc.cores = getOption("mc.cores", 1L)) {
+read_results = function(indirs = getwd(), mc.cores = getOption("mc.cores", 1L), graph = TRUE) {
   autohex = getOption("tumopp.autohex", TRUE)
-  read_confs(indirs) %>% dplyr::mutate(
-    population = read_populations(indirs, mc.cores = mc.cores) %>%
-      purrr::map_if((.data$coord == "hex") & autohex, trans_coord_hex),
-    graph = parallel::mclapply(.data$population, make_igraph, mc.cores = mc.cores)
+  pop = read_populations(indirs, mc.cores = mc.cores)
+  results = read_confs(indirs) %>% dplyr::mutate(
+    population = purrr::map_if(pop, (.data$coord == "hex") & autohex, trans_coord_hex)
   )
+  if (graph) {
+    results = dplyr::mutate(results, graph = parallel::mclapply(results$population, make_igraph, mc.cores = mc.cores))
+  }
+  results
 }
 
 #' @description

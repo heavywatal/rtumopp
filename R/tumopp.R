@@ -6,9 +6,10 @@
 #' @export
 tumopp = function(args, ...) UseMethod("tumopp")
 
+#' @param graph add graph column if TRUE
 #' @rdname tumopp
 #' @export
-tumopp.default = function(args = character(0L), ...) {
+tumopp.default = function(args = character(0L), ..., graph = TRUE) {
   if (length(args) == 1L) {
     args = stringr::str_split(args, "\\s+") %>% purrr::flatten_chr()
   }
@@ -20,7 +21,9 @@ tumopp.default = function(args = character(0L), ...) {
   transforming = ((.out$coord == "hex") && getOption("tumopp.autohex", TRUE))
   if (transforming) {.pop = trans_coord_hex(.pop)}
   .out$population = list(.pop)
-  .out$graph = list(make_igraph(.pop))
+  if (graph) {
+    .out$graph = list(make_igraph(.pop))
+  }
   .snapshots = result["snapshots"]
   if (nzchar(.snapshots)) {
     .snapshots = read_tumopp(.snapshots)
