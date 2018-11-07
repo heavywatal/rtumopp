@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tumopp</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.7.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.8.0</span>
       </span>
     </div>
 
@@ -93,27 +93,27 @@
 <h2 class="hasAnchor">
 <a href="#workflow" class="anchor"></a>Workflow</h2>
 <p>Perform simulation and extract population data:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(tumopp)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">result =<span class="st"> </span><span class="kw"><a href="../reference/tumopp.html">tumopp</a></span>(<span class="st">"-N20000 -D3 -Chex -k10 -Lconst"</span>)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">population =<span class="st"> </span>result<span class="op">$</span>population[[<span class="dv">1</span>]]</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">extant =<span class="st"> </span>population <span class="op">%&gt;%</span><span class="st"> </span>tumopp<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tumopp/topics/population">filter_extant</a></span>()</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">graph =<span class="st"> </span>tumopp<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tumopp/topics/graph">make_igraph</a></span>(population)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(tumopp)</a>
+<a class="sourceLine" id="cb1-2" title="2">result =<span class="st"> </span><span class="kw"><a href="../reference/tumopp.html">tumopp</a></span>(<span class="st">"-N20000 -D3 -Chex -k10 -Lconst"</span>)</a>
+<a class="sourceLine" id="cb1-3" title="3">population =<span class="st"> </span>result<span class="op">$</span>population[[<span class="dv">1</span>]]</a>
+<a class="sourceLine" id="cb1-4" title="4">extant =<span class="st"> </span>population <span class="op">%&gt;%</span><span class="st"> </span>tumopp<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tumopp/topics/population">filter_extant</a></span>()</a>
+<a class="sourceLine" id="cb1-5" title="5">graph =<span class="st"> </span>tumopp<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tumopp/topics/graph">make_igraph</a></span>(population)</a></code></pre></div>
 <p>Sample cells and put neutral mutations on the lineages:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">regions =<span class="st"> </span>tumopp<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tumopp/topics/sample">sample_uniform_regions</a></span>(extant, <span class="dt">nsam =</span> 8L, <span class="dt">ncell =</span> 100L)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">subgraph =<span class="st"> </span>tumopp<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tumopp/topics/graph">subtree</a></span>(graph, purrr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/flatten">flatten_int</a></span>(regions<span class="op">$</span>id))</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">mutated =<span class="st"> </span>tumopp<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tumopp/topics/ms">mutate_clades</a></span>(subgraph, <span class="dt">mu =</span> <span class="dv">1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">regions =<span class="st"> </span>tumopp<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tumopp/topics/sample">sample_uniform_regions</a></span>(extant, <span class="dt">nsam =</span> 8L, <span class="dt">ncell =</span> 100L)</a>
+<a class="sourceLine" id="cb2-2" title="2">subgraph =<span class="st"> </span>tumopp<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tumopp/topics/graph">subtree</a></span>(graph, purrr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/purrr/topics/flatten">flatten_int</a></span>(regions<span class="op">$</span>id))</a>
+<a class="sourceLine" id="cb2-3" title="3">mutated =<span class="st"> </span>tumopp<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tumopp/topics/ms">mutate_clades</a></span>(subgraph, <span class="dt">mu =</span> <span class="dv">1</span>)</a></code></pre></div>
 <p>Summarize and visualize VAF:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">vaf =<span class="st"> </span><span class="kw"><a href="../reference/vaf.html">tally_vaf</a></span>(regions<span class="op">$</span>id, mutated) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">print</span>()</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">vaf_tidy =<span class="st"> </span>vaf <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="st">  </span>tumopp<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tumopp/topics/vaf">filter_detectable</a></span>(<span class="fl">0.05</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="st">  </span>tumopp<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tumopp/topics/vaf">sort_vaf</a></span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="st">  </span>tumopp<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tumopp/topics/vaf">tidy_vaf</a></span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="st">  </span><span class="kw">print</span>()</a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="kw">ggplot</span>(vaf_tidy, <span class="kw">aes</span>(sample, site)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="st">  </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> frequency)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="st">  </span><span class="kw">scale_fill_distiller</span>(<span class="dt">palette =</span> <span class="st">"Spectral"</span>, <span class="dt">limit =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">guide =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">expand =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">vaf =<span class="st"> </span><span class="kw"><a href="../reference/vaf.html">tally_vaf</a></span>(regions<span class="op">$</span>id, mutated) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">print</span>()</a>
+<a class="sourceLine" id="cb3-2" title="2">vaf_tidy =<span class="st"> </span>vaf <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="st">  </span>tumopp<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tumopp/topics/vaf">filter_detectable</a></span>(<span class="fl">0.05</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="st">  </span>tumopp<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tumopp/topics/vaf">sort_vaf</a></span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="st">  </span>tumopp<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tumopp/topics/vaf">tidy_vaf</a></span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="st">  </span><span class="kw">print</span>()</a>
+<a class="sourceLine" id="cb3-7" title="7"></a>
+<a class="sourceLine" id="cb3-8" title="8"><span class="kw">ggplot</span>(vaf_tidy, <span class="kw">aes</span>(sample, site)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-9" title="9"><span class="st">  </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> frequency)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-10" title="10"><span class="st">  </span><span class="kw">scale_fill_distiller</span>(<span class="dt">palette =</span> <span class="st">"Spectral"</span>, <span class="dt">limit =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">guide =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-11" title="11"><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">expand =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 </div>
   </div>
 
