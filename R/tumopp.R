@@ -13,7 +13,6 @@ tumopp.default = function(args = character(0L), ..., graph = TRUE) {
   if (length(args) == 1L) {
     args = stringr::str_split(args, "\\s+") %>% purrr::flatten_chr()
   }
-  message(paste(args, collapse = " "))
   result = cpp_tumopp(args)
   if (length(result) == 0L) return(invisible(NULL))
   .out = from_json(result["config"])
