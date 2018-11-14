@@ -9,6 +9,14 @@ filter_extant = function(population) {
 }
 
 #' @description
+#' `count_extant` counts the number of extant cells
+#' @rdname population
+#' @export
+count_extant = function(population) {
+  sum(population$death == 0)
+}
+
+#' @description
 #' `filter_common_ancestors` collects major common ancestors.
 #' @param threshold minimum frequency of detectable alleles
 #' @rdname population

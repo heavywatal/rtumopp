@@ -2,10 +2,13 @@
 % Please edit documentation in R/population.R
 \name{filter_extant}
 \alias{filter_extant}
+\alias{count_extant}
 \alias{filter_common_ancestors}
 \title{Functions to modify population data.frame}
 \usage{
 filter_extant(population)
+
+count_extant(population)
 
 filter_common_ancestors(population, threshold = 0.05)
 }
@@ -16,6 +19,8 @@ filter_common_ancestors(population, threshold = 0.05)
 }
 \description{
 \code{filter_extant} collects the extant cells at the end of the simulation.
+
+\code{count_extant} counts the number of extant cells
 
 \code{filter_common_ancestors} collects major common ancestors.
 }
