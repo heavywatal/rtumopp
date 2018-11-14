@@ -21,7 +21,7 @@ within_between_samples = function(graph, regions) {
   rows = regions %>%
     tibble::rowid_to_column() %>%
     dplyr::mutate(
-      id = lapply(.data$id, as_idx, vs = igraph::V(graph)),
+      id = lapply(.data$id, as_idx, ids = as_ids(igraph::V(graph))),
       within = purrr::map_dbl(.data$id, ~mean_branch_length(graph, .x))
     ) %>%
     purrr::transpose()

@@ -25,7 +25,7 @@ make_igraph = function(population) {
 #' @export
 subtree = function(graph, nodes = integer(0L)) {
   vs = igraph::V(graph)
-  idx = as_idx(nodes, vs)
+  idx = as_idx(nodes, as_ids(vs))
   idx = igraph::ego(graph, order = 1073741824L, nodes = idx, mode = "in") %>%
     purrr::flatten_dbl() %>%
     unique()
@@ -50,29 +50,35 @@ as_ids = function(vs) {
   if (is.null(ns)) as.vector(vs) else as.integer(ns)
 }
 
-as_idx = function(nodes, vs) {
-  match(as.character(nodes), names(vs))
+as_idx = function(nodes, ids) {
+  idx = match(nodes, ids)
+  is_na = is.na(idx)
+  if (any(is_na)) {
+    warning("Node not found: ", paste(nodes[is_na], collapse = ", "))
+    idx = idx[!is_na]
+  }
+  idx
 }
 
 paths_to_sink = function(graph, nodes) {
   vs = igraph::V(graph)
-  idx = as_idx(nodes, vs)
   ids = as_ids(vs)
+  idx = as_idx(nodes, ids)
   igraph::ego(graph, order = 1073741824L, nodes = idx, mode = "out") %>%
     lapply(function(x) ids[x])
 }
 
 paths_to_source = function(graph, nodes = integer(0L)) {
   vs = igraph::V(graph)
-  idx = as_idx(nodes, vs)
   ids = as_ids(vs)
+  idx = as_idx(nodes, ids)
   igraph::ego(graph, order = 1073741824L, nodes = idx, mode = "in") %>%
     lapply(function(x) ids[x])
 }
 
 distances_from_origin = function(graph, nodes = integer(0L)) {
   vs = igraph::V(graph)
-  idx = as_idx(nodes, vs)
+  idx = as_idx(nodes, as_ids(vs))
   igraph::distances(graph, 1, idx, mode = "out", weights = NA, algorithm = "unweighted") %>%
     as.integer()
 }
@@ -89,7 +95,7 @@ accumulate_paths_to_source = function(graph, nodes) {
 count_sink = function(graph, nodes = integer(0L)) {
   vs = igraph::V(graph)
   if (length(nodes) > 0L) {
-    idx = as_idx(nodes, vs)
+    idx = as_idx(nodes, as_ids(vs))
     out_ego_size = igraph::ego_size(graph, order = 1073741824L, nodes = idx, mode = "out")
     as.integer(out_ego_size + 1L) %/% 2L
   } else {
