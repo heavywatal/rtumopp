@@ -29,7 +29,7 @@ Suggests:
     rgl
 URL: https://github.com/heavywatal/rtumopp
 BugReports: https://github.com/heavywatal/rtumopp/issues
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
 LinkingTo: Rcpp
 SystemRequirements: C++11, CMake (>= 3.1.0)
