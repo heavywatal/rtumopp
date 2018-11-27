@@ -20,11 +20,6 @@ plot_bar_age(.tbl, xmax = max(.tbl$ageend), alpha = 1, ...)
 
 \item{...}{passed to aes_()}
 }
-\value{
-gg
-
-gg
-}
 \description{
 Plot genealogy
 

@@ -31,7 +31,6 @@ plot_lattice2d = function(.tbl, colour = "z", alpha = 1, size = 1, limit = max_a
 #' @param .tbl tbl from layout_genealogy()
 #' @param xmax numeric
 #' @param colour character
-#' @return gg
 #' @rdname plot-igraph
 #' @export
 plot_genealogy = function(.tbl, xmax = max(.tbl$ageend), colour = "dodgerblue") {
@@ -47,7 +46,6 @@ plot_genealogy = function(.tbl, xmax = max(.tbl$ageend), colour = "dodgerblue") 
 #' Plot age histogram
 #' @param alpha opacity `[0, 1]`
 #' @param ... passed to aes_()
-#' @return gg
 #' @rdname plot-igraph
 #' @export
 plot_bar_age = function(.tbl, xmax = max(.tbl$ageend), alpha = 1.0, ...) {

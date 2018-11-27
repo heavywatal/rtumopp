@@ -20,9 +20,6 @@ summarize_capture_rate(combinations, population, threshold = 0.01)
 
 \item{threshold}{minimum frequency of detectable alleles}
 }
-\value{
-tibble
-}
 \description{
 \code{combn_ids} makes combinations of cell IDs for various number of samples.
 

@@ -14,9 +14,6 @@ math_score(x, constant = 1.4826, na.rm = FALSE)
 \item{na.rm}{if \code{TRUE} then \code{NA} values are stripped
     from \code{x} before computation takes place.}
 }
-\value{
-numeric
-}
 \description{
 \code{math_score} calculates MATH (mutant-allele tumor heterogeneity) score
 from variant allele frequencies.

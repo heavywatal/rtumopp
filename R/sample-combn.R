@@ -4,7 +4,6 @@
 #' `combn_ids` makes combinations of cell IDs for various number of samples.
 #' @param x list of ID vectors
 #' @param m number of regions to sample
-#' @return tibble
 #' @rdname sample-combn
 #' @export
 combn_ids = function(x, m = seq_along(x)) {
