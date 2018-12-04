@@ -25,7 +25,7 @@ igraph_layout = function(graph, layout = igraph::nicely(), ...) {
 
 igraph_layout_nodes = function(graph, layout = igraph::nicely(), ...) {
   igraph::layout_(graph, layout, ...) %>%
+    magrittr::set_colnames(c("x", "y")) %>%
     tibble::as_tibble() %>%
-    stats::setNames(c("x", "y")) %>%
     dplyr::mutate(name = igraph::V(graph)$name)
 }
