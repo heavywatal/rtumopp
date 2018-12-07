@@ -83,14 +83,6 @@ distances_from_origin = function(graph, nodes = integer(0L)) {
     as.integer()
 }
 
-accumulate_paths_to_source = function(graph, nodes) {
-  paths_to_source(graph, nodes) %>%
-    purrr::flatten_int() %>%
-    table(dnn = "id") %>%
-    tibble::as_tibble() %>%
-    dplyr::mutate(id = as.integer(.data$id))
-}
-
 # NOTE: sink vertices can be dead cells
 count_sink = function(graph, nodes = integer(0L)) {
   vs = igraph::V(graph)
