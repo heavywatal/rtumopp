@@ -30,7 +30,7 @@ from_json = function(conf) {
 read_boost_ini = function(file) {
   readr::read_delim(file, "=", col_names = c("key", "val"), comment = "#", trim_ws = TRUE) %>%
     dplyr::summarise_all(function(x) paste0(x, collapse = "\t")) %>%
-    paste0(collapse="\n") %>%
+    paste0(collapse = "\n") %>%
     readr::read_tsv()
 }
 
@@ -66,7 +66,7 @@ read_populations = function(indirs = getwd(), mc.cores = getOption("mc.cores", 1
 #' @export
 read_snapshots = function(indirs = getwd(), mc.cores = getOption("mc.cores", 1L)) {
   read_results(indirs, mc.cores = mc.cores) %>%
-    dplyr::mutate(snapshots = purrr::map2(indirs, .data$population, ~{
+    dplyr::mutate(snapshots = purrr::map2(indirs, .data$population, ~ {
       meta_info = dplyr::select(.y, .data$id, .data$clade)
       read_tumopp(file.path(.x, "snapshots.tsv.gz")) %>%
         dplyr::left_join(meta_info, by = "id")

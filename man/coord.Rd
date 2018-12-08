@@ -29,5 +29,5 @@ transform_rotate(.tbl, theta, axis = c("z", "x", "y"))
 \code{rotate} modifies coordinates centering on a specified axis.
 }
 \examples{
-max_abs_xyz(data.frame(x=2, y=-3, z=4))
+max_abs_xyz(data.frame(x = 2, y = -3, z = 4))
 }

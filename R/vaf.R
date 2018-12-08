@@ -66,7 +66,7 @@ sort_vaf = function(tbl, method = c("average", "ward.D2", "complete", "single"))
   rsums = rowSums(tbl > 0)
   w_nonzero = 10
   w_shared = ifelse(rsums < 2L, 0, 1000)
-  tbl_weighted = dplyr::mutate_all(tbl, ~{
+  tbl_weighted = dplyr::mutate_all(tbl, ~ {
     ifelse(.x > 0, w_nonzero, 0) + w_shared + .x
   })
   d_rows = stats::dist(tbl_weighted, method = "euclidean")

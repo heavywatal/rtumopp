@@ -18,7 +18,9 @@ tumopp.default = function(args = character(0L), ..., graph = TRUE) {
   .out = from_json(result["config"])
   .pop = read_tumopp(result["population"])
   transforming = ((.out$coord == "hex") && getOption("tumopp.autohex", TRUE))
-  if (transforming) {.pop = trans_coord_hex(.pop)}
+  if (transforming) {
+    .pop = trans_coord_hex(.pop)
+  }
   .out$population = list(.pop)
   if (graph) {
     .out$graph = list(make_igraph(.pop))
@@ -26,7 +28,9 @@ tumopp.default = function(args = character(0L), ..., graph = TRUE) {
   .snapshots = result["snapshots"]
   if (nzchar(.snapshots)) {
     .snapshots = read_tumopp(.snapshots)
-    if (transforming) {.snapshots = trans_coord_hex(.snapshots)}
+    if (transforming) {
+      .snapshots = trans_coord_hex(.snapshots)
+    }
     .out$snapshots = list(.snapshots)
   }
   .drivers = result["drivers"]
@@ -61,7 +65,7 @@ make_args = function(alt, const = NULL, times = 1L, each = 1L) {
     vectorize_args() %>%
     rep(times = times, each = each) %>%
     append_o() %>%
-    purrr::map(~c(const, .x))
+    purrr::map(~ c(const, .x))
 }
 
 vectorize_args = function(.tbl) {
@@ -83,14 +87,16 @@ append_o = function(args, fmt = "%Y%m%d_%H%M%S_") {
 generate_args = function(prior, const = NULL, n = 1L) {
   generate_valid(prior, n = n) %>%
     vectorize_args() %>%
-    purrr::map(~c(const, .x))
+    purrr::map(~ c(const, .x))
 }
 
 generate_valid = function(prior, n = 1L) {
   output = NULL
   k = 0L
   while (k < n) {
-    generated = purrr::map_dfc(prior, function(f, x) {f(x)}, x = n - k)
+    generated = purrr::map_dfc(prior, function(f, x) {
+      f(x)
+    }, x = n - k)
     generated = suppressMessages(filter_valid_LP(generated))
     output = dplyr::bind_rows(output, generated)
     k = NROW(output)

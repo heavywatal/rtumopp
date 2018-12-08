@@ -22,11 +22,11 @@ within_between_samples = function(graph, regions) {
     tibble::rowid_to_column() %>%
     dplyr::mutate(
       id = lapply(.data$id, as_idx, ids = as_ids(igraph::V(graph))),
-      within = purrr::map_dbl(.data$id, ~mean_branch_length(graph, .x))
+      within = purrr::map_dbl(.data$id, ~ mean_branch_length(graph, .x))
     ) %>%
     purrr::transpose()
-  purrr::cross2(rows, rows, .filter = ~.x$rowid >= .y$rowid) %>%
-    purrr::map_dfr(~{
+  purrr::cross2(rows, rows, .filter = ~ .x$rowid >= .y$rowid) %>%
+    purrr::map_dfr(~ {
       row_i = .x[[1L]]
       row_j = .x[[2L]]
       tibble::tibble(
@@ -45,6 +45,6 @@ within_between_samples = function(graph, regions) {
 }
 
 # Kst by Hudson, Boos, and Kaplan (1992).
-fst_HBK = function(within, between, n=2) {
+fst_HBK = function(within, between, n = 2) {
   (between - within) / (between + within / (n - 1))
 }

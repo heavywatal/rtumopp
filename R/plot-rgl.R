@@ -45,15 +45,15 @@ snapshot_surface = function(.tbl, filename = tempfile("rgl_", fileext = ".png"),
 #' @param direction -1 to reverse color scale
 #' @rdname plot-rgl
 #' @export
-add_col = function(.tbl, column="clade", palette="Spectral", direction = 1) {
+add_col = function(.tbl, column = "clade", palette = "Spectral", direction = 1) {
   .column = .tbl[[column]]
   if (!is.factor(.column)) .column = as.factor(.column)
   .levels = levels(.column)
   n = length(.levels)
   .map = if (n > 1L) {
-      scales::brewer_pal(palette = palette, direction = direction)(n)
+    scales::brewer_pal(palette = palette, direction = direction)(n)
   } else {
-      getOption("tumopp.default_color", "#666666")
+    getOption("tumopp.default_color", "#666666")
   }
   dplyr::mutate(.tbl, col = .map[.column])
 }

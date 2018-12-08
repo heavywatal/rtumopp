@@ -5,7 +5,7 @@
 #' @rdname coord
 #' @export
 #' @examples
-#' max_abs_xyz(data.frame(x=2, y=-3, z=4))
+#' max_abs_xyz(data.frame(x = 2, y = -3, z = 4))
 max_abs_xyz = function(.tbl) {
   max(abs(.tbl[c("x", "y", "z")]))
 }

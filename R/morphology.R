@@ -24,9 +24,9 @@ add_phi = function(population, coord, dimensions) {
   extant = filter_extant(population)
   coords = extant[c("x", "y", "z", "id")]
   kernel = get_se(coord, dimensions)
-  counts = purrr::pmap_dfr(kernel, ~{
-      dplyr::mutate(coords, x = .data$x + ..1, y = .data$y + ..2, z = .data$z + ..3)
-    }) %>%
+  counts = purrr::pmap_dfr(kernel, ~ {
+    dplyr::mutate(coords, x = .data$x + ..1, y = .data$y + ..2, z = .data$z + ..3)
+  }) %>%
     dplyr::count(.data$x, .data$y, .data$z)
   info = coords %>%
     dplyr::left_join(counts, by = c("x", "y", "z")) %>%

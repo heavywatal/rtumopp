@@ -40,7 +40,7 @@ make_sample = function(graph, nsam = 0L, mu = NULL, segsites = NULL) {
   }
   subgraph = subtree(graph, nodes)
   segsites = mutate_clades(subgraph, mu = mu, segsites = segsites)
-  cols = purrr::map(segsites, ~as.integer(nodes %in% .x))
+  cols = purrr::map(segsites, ~ as.integer(nodes %in% .x))
   m = do.call(cbind, cols)
   rownames(m) = nodes
   m

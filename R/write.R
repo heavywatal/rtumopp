@@ -17,12 +17,12 @@ write_results = function(results) {
   stopifnot(dir.create(outdir, mode = "0755") || force)
   cols = names(result)
   dfs = c("population", "snapshots", "drivers", "distances")
-  purrr::walk(dfs, ~{
+  purrr::walk(dfs, ~ {
     if (.x %in% cols) {
       content = result[[.x]][[1L]]
       if (.x %in% c("population", "snapshots") &&
-          result$coord == "hex" &&
-          !is.integer(content$x)) {
+        result$coord == "hex" &&
+        !is.integer(content$x)) {
         content = revert_coord_hex(content)
       }
       outfile = file.path(outdir, paste0(.x, ".tsv.gz"))

@@ -58,7 +58,7 @@ tidy_regions = function(regions) {
 }
 
 mutate_jitter = function(.data, ..., amount) {
-  #TODO receive values from ... instead of amount
+  # TODO receive values from ... instead of amount
   dplyr::mutate_at(.data, dplyr::vars(...), function(x) {
     x + stats::runif(length(x), -amount, amount)
   })
