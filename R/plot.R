@@ -60,24 +60,25 @@ plot_bar_age = function(.tbl, xmax = max(.tbl$ageend), alpha = 1.0, ...) {
 #' Plot capture_rate ~ nsam of biopsy
 #' @param data tbl from `summarize_capture_rate` or `evaluate_mrs`
 #' @param point size of a data point
+#' @param alpha opacity of a data point
 #' @param errorbar logical
 #' @rdname plot-biopsy
 #' @export
-plot_capture_rate = function(data, point = 1, errorbar = TRUE) {
-  xmargin = 0.8
-  xlim = c(1 - xmargin, max(data$nsam) + xmargin)
+plot_capture_rate = function(data, point = 1, alpha = 0.3, errorbar = TRUE) {
+  # scales::viridis_pal()(5L) %>% str_replace('FF$', '') %>% tail(2L)
   p = ggplot2::ggplot(data, ggplot2::aes_(~nsam, ~capture_rate)) +
-    ggplot2::geom_ribbon(data = range_nsam, ymin = 0.9, ymax = 1.0, fill = "dodgerblue", alpha = 0.5) +
-    ggplot2::geom_ribbon(data = range_nsam, ymin = 0.8, ymax = 0.9, fill = "orange", alpha = 0.5) +
+    ggplot2::annotate("rect", xmin = -Inf, xmax = Inf, ymin = 0.9, ymax = 1.0, fill = "#5DC863", alpha = 0.8) +
+    ggplot2::annotate("rect", xmin = -Inf, xmax = Inf, ymin = 0.8, ymax = 0.9, fill = "#FDE725", alpha = 0.8) +
     ggplot2::stat_summary(fun.y = mean, geom = "bar", fill = "#777777") +
-    ggplot2::coord_cartesian(xlim = xlim, ylim = c(0, 1), expand = FALSE)
-  if (point > 0) {
-    p = p + ggplot2::geom_jitter(size = point, alpha = 0.3, width = 0.25, height = 0)
+    ggplot2::scale_y_continuous(expand = c(0, 0), breaks = c(0, 0.5, 0.8, 0.9, 1)) +
+    ggplot2::coord_cartesian(ylim = c(0, 1))
+  if (point > 0 && alpha > 0) {
+    p = p + ggplot2::geom_jitter(size = point, alpha = alpha, width = 0.23, height = 0)
   }
   if (errorbar) {
     p = p + ggplot2::stat_summary(fun.data = mean_sd, geom = "errorbar", width = 0.2)
   }
-  p
+  p + ggplot2::labs(x = "# of samples", y = "Capture rate")
 }
 
 mean_sd = function(x, mult = 1.96) {
@@ -85,10 +86,6 @@ mean_sd = function(x, mult = 1.96) {
   div = mult * stats::sd(x)
   mu = mean(x)
   data.frame(y = mu, ymin = mu - div, ymax = mu + div)
-}
-
-range_nsam = function(x) {
-  data.frame(nsam = range(x$nsam) + c(-2, 2), capture_rate = 0.5)
 }
 
 # #######1#########2#########3#########4#########5#########6#########7#########
