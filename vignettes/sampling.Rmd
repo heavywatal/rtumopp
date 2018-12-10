@@ -21,7 +21,7 @@ Perform simulation and extract population data:
 ```{r prepare, eval=FALSE}
 library(tumopp)
 result = tumopp("-N20000 -D3 -Chex -k10 -Lconst")
-population = result$population[[1]]
+population = result$population[[1L]]
 extant = population %>% tumopp::filter_extant()
 graph = tumopp::make_igraph(population)
 ```
