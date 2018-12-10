@@ -110,7 +110,7 @@ filter_valid_LP = function(x) {
     x = dplyr::inner_join(x, valid_LP_combinations(), by = c("L", "P"))
     num_excluded = nrow_orig - nrow(x)
     if (num_excluded > 0L) {
-      message(num_excluded, " L-P combinations were invalid and excluded")
+      message("Note: ", num_excluded, " L-P combinations were invalid and excluded")
     }
   }
   x
