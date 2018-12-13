@@ -22,6 +22,9 @@ internal_nodes(graph, nodes, sensitivity)
 \item{sensitivity}{minimum allele frequency}
 }
 \description{
+Functions depending on igraph
+}
+\details{
 \code{make_igraph} converts raw population tbl into graph.
 
 \code{subtree} extracts subgraph among terminal nodes.

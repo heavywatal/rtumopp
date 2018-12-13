@@ -32,6 +32,7 @@ make_args(alt, const = NULL, times = 1L, each = 1L)
 }
 \description{
 \code{tumopp()} returns full results with config columns in a data.frame.
-
+}
+\details{
 \code{make_args()} returns argument combinations in a list.
 }

@@ -20,6 +20,7 @@ make_sample(graph, nsam = 0L, mu = NULL, segsites = NULL)
 }
 \description{
 \code{mutate_clades} samples nodes to mutate and returns their descendants.
-
+}
+\details{
 \code{make_sample} creates a genotype matrix from a given genealogy tree.
 }

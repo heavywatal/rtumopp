@@ -37,6 +37,9 @@ distances_mrs(population, nsam, ncell, jitter = 0)
 \item{sensitivity}{minimum allele frequency}
 }
 \description{
+Sample cells from a population
+}
+\details{
 \code{sample_uniform_regions} sample uniformly distributed regions.
 
 \code{sample_random_regions} samples multiple regions at random.

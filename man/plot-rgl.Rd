@@ -29,6 +29,9 @@ add_col(.tbl, column = "clade", palette = "Spectral", direction = 1)
 \item{direction}{-1 to reverse color scale}
 }
 \description{
+3D plotting with rgl
+}
+\details{
 \code{plot_tumor3d} plots tumor in 3D with rgl.
 
 \code{snapshot_surface} is a shortcut of \code{plot_tumor3d()} and \code{rgl::snapshot3d()}.

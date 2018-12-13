@@ -17,6 +17,9 @@ within_between_samples(graph, regions)
 \item{regions}{output of \code{sample_uniform_regions()}}
 }
 \description{
+Calculate genetic distance with igraph
+}
+\details{
 \code{mean_branch_length} calculates mean branch length within/between sub-graphs.
 
 \code{within_between_samples} summarizes branch lengths.

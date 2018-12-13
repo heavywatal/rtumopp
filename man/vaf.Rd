@@ -34,6 +34,9 @@ sort_vaf(tbl, method = c("average", "ward.D2", "complete", "single"))
 \item{method}{passed to \code{stats::hclust}}
 }
 \description{
+Utilities for variant allele frequency
+}
+\details{
 \code{make_vaf} is a shortcut to make neutral VAF pattern.
 
 \code{tally_vaf} evaluates overlap of sampled and mutated cells.

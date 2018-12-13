@@ -19,7 +19,8 @@ filter_common_ancestors(population, threshold = 0.05)
 }
 \description{
 \code{filter_extant} collects the extant cells at the end of the simulation.
-
+}
+\details{
 \code{count_extant} counts the number of extant cells
 
 \code{filter_common_ancestors} collects major common ancestors.

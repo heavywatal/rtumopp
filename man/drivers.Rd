@@ -12,5 +12,8 @@ propagate_drivers(drivers, graph)
 \item{graph}{igraph}
 }
 \description{
+Functions to deal with driver mutations
+}
+\details{
 \code{propagate_drivers} calculates the effect of drivers in descendant cells
 }

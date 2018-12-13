@@ -16,6 +16,7 @@ summarise_demography(history)
 }
 \description{
 \code{extract_history} extracts birth and death events from raw population data.
-
+}
+\details{
 \code{summarise_demography} simplifies history.
 }

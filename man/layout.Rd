@@ -10,5 +10,8 @@ layout_genealogy(population)
 \item{population}{tbl}
 }
 \description{
+Layout cell genealogy
+}
+\details{
 \code{layout_genealogy} returns coordinates of nodes and edges for plotting.
 }

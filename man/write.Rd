@@ -10,5 +10,8 @@ write_results(results)
 \item{results}{data.frame returned from tumopp()}
 }
 \description{
+Utilities for writing files
+}
+\details{
 \code{write_results} writes nested data.frame to files
 }

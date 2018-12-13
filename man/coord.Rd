@@ -23,7 +23,8 @@ transform_rotate(.tbl, theta, axis = c("z", "x", "y"))
 }
 \description{
 \code{max_abs_xyz} extracts max values for plot limits.
-
+}
+\details{
 \code{dist_euclidean} calculates distance from a specified cell.
 
 \code{rotate} modifies coordinates centering on a specified axis.

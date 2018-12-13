@@ -16,6 +16,7 @@ morphological_stats(extant, coord = "")
 }
 \description{
 \code{genetic_stats} calculates summary statistics of genealogy.
-
+}
+\details{
 \code{morphological_stats} calculates summary statistics of morphology.
 }
