@@ -52,7 +52,7 @@ tumopp.list = function(args, ..., mc.cores = getOption("mc.cores", 1L)) {
     dplyr::bind_rows(.id = "args")
 }
 
-#' @description
+#' @details
 #' `make_args()` returns argument combinations in a list.
 #' @param alt named list of altered arguments.
 #' @param const unnamed vector of constant arguments.

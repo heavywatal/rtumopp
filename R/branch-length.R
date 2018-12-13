@@ -1,6 +1,6 @@
 #' Calculate genetic distance with igraph
 #'
-#' @description
+#' @details
 #' `mean_branch_length` calculates mean branch length within/between sub-graphs.
 #' @param graph igraph
 #' @param from,to igraph vertices (not cell ID)
@@ -12,7 +12,7 @@ mean_branch_length = function(graph, from = igraph::V(graph), to = from) {
   sum(.d) / .n
 }
 
-#' @description
+#' @details
 #' `within_between_samples` summarizes branch lengths.
 #' @param regions output of `sample_uniform_regions()`
 #' @rdname branch-length

@@ -1,6 +1,6 @@
 #' Functions depending on igraph
 #'
-#' @description
+#' @details
 #' `make_igraph` converts raw population tbl into graph.
 #' @param population tbl
 #' @rdname graph
@@ -17,7 +17,7 @@ make_igraph = function(population) {
     igraph::graph_from_data_frame()
 }
 
-#' @description
+#' @details
 #' `subtree` extracts subgraph among terminal nodes.
 #' @param graph igraph
 #' @param nodes integer cell IDs
@@ -32,7 +32,7 @@ subtree = function(graph, nodes = integer(0L)) {
   igraph::induced_subgraph(graph, idx)
 }
 
-#' @description
+#' @details
 #' `internal_nodes` selects major common ancestors above threshold.
 #' @param sensitivity minimum allele frequency
 #' @rdname graph

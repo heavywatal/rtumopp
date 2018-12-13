@@ -10,7 +10,7 @@ max_abs_xyz = function(.tbl) {
   max(abs(.tbl[c("x", "y", "z")]))
 }
 
-#' @description
+#' @details
 #' `dist_euclidean` calculates distance from a specified cell.
 #' @param point named vector or tibble
 #' @rdname coord
@@ -19,7 +19,7 @@ dist_euclidean = function(.tbl, point = c(x = 0, y = 0, z = 0)) {
   sqrt((.tbl[["x"]] - point[["x"]])**2 + (.tbl[["y"]] - point[["y"]])**2 + (.tbl[["z"]] - point[["z"]])**2)
 }
 
-#' @description
+#' @details
 #' `rotate` modifies coordinates centering on a specified axis.
 #' @param theta radian angle
 #' @param axis a string

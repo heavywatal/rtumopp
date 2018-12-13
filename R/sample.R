@@ -1,6 +1,6 @@
 #' Sample cells from a population
 #'
-#' @description
+#' @details
 #' `sample_uniform_regions` sample uniformly distributed regions.
 #' @param tbl tibble of extant cells with id, x, y, z columns
 #' @param nsam number of regions to sample
@@ -16,7 +16,7 @@ sample_uniform_regions = function(tbl, nsam = 2L, ncell = 10L, jitter = 0) {
   sample_regions(tbl, centers, ncell = ncell)
 }
 
-#' @description
+#' @details
 #' `sample_random_regions` samples multiple regions at random.
 #' @rdname sample
 #' @export
@@ -27,7 +27,7 @@ sample_random_regions = function(tbl, nsam = 2L, ncell = 10L) {
   sample_regions(tbl, centers, ncell = ncell)
 }
 
-#' @description
+#' @details
 #' `sample_bulk` samples a bulk of cells near the specified center.
 #' @param center named (x, y, z) vector, list, or tibble
 #' @rdname sample
@@ -64,7 +64,7 @@ mutate_jitter = function(.data, ..., amount) {
   })
 }
 
-#' @description
+#' @details
 #' `evaluate_mrs` is a shortcut to evaluate multi-region sampling.
 #' @param population tbl
 #' @inheritParams filter_common_ancestors
@@ -85,7 +85,7 @@ evaluate_mrs = function(population, nsam, ncell, threshold = 0.05, sensitivity =
   sum(detectable %in% major_ca) / length(major_ca)
 }
 
-#' @description
+#' @details
 #' `distances_mrs` is a shortcut for sampling and calculation
 #' @rdname sample
 #' @export

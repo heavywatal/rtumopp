@@ -26,7 +26,7 @@ mutate_clades = function(graph, mu = NULL, segsites = NULL) {
   paths_to_sink(graph, mutants)
 }
 
-#' @description
+#' @details
 #' `make_sample` creates a genotype matrix from a given genealogy tree.
 #' @param nsam number of cells to sample
 #' @rdname ms

@@ -8,7 +8,7 @@ filter_extant = function(population) {
   dplyr::filter(population, .data$death == 0)
 }
 
-#' @description
+#' @details
 #' `count_extant` counts the number of extant cells
 #' @rdname population
 #' @export
@@ -16,7 +16,7 @@ count_extant = function(population) {
   sum(population$death == 0)
 }
 
-#' @description
+#' @details
 #' `filter_common_ancestors` collects major common ancestors.
 #' @param threshold minimum frequency of detectable alleles
 #' @rdname population

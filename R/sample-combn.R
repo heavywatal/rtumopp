@@ -1,6 +1,6 @@
 #' Sample cells from a population
 #'
-#' @description
+#' @details
 #' `combn_ids` makes combinations of cell IDs for various number of samples.
 #' @param x list of ID vectors
 #' @param m number of regions to sample
@@ -24,7 +24,7 @@ combn_int_list = function(x, m, FUN = union_int, simplify = FALSE, ...) {
   utils::combn(x, m, FUN = FUN, simplify = simplify, ...)
 }
 
-#' @description
+#' @details
 #' `summarize_capture_rate` calculates expected allele capture rate
 #' on various combinations of samples.
 #' @param combinations nested tibble from `combn_ids`

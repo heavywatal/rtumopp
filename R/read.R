@@ -34,7 +34,7 @@ read_boost_ini = function(file) {
     readr::read_tsv()
 }
 
-#' @description
+#' @details
 #' `read_results` reads confs and populations as a nested tibble.
 #' @param graph add graph column if TRUE
 #' @rdname read
@@ -51,7 +51,7 @@ read_results = function(indirs = getwd(), mc.cores = getOption("mc.cores", 1L), 
   results
 }
 
-#' @description
+#' @details
 #' `read_populations` reads populations.
 #' @rdname read
 #' @export
@@ -60,7 +60,7 @@ read_populations = function(indirs = getwd(), mc.cores = getOption("mc.cores", 1
     parallel::mclapply(read_tumopp, mc.cores = mc.cores)
 }
 
-#' @description
+#' @details
 #' `read_snapshots` calls `read_results` and reads snapshots.
 #' @rdname read
 #' @export
@@ -73,7 +73,7 @@ read_snapshots = function(indirs = getwd(), mc.cores = getOption("mc.cores", 1L)
     }))
 }
 
-#' @description
+#' @details
 #' `read_tumopp` is an alias of `readr::read_tsv()` with some options
 #' to read result files: `population.tsv.gz` and `snapshots.tsv.gz`.
 #' @param file passed as the first argument of `readr::read_tsv()`

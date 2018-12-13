@@ -1,6 +1,6 @@
 #' Layout cell genealogy
 #'
-#' @description
+#' @details
 #' `layout_genealogy` returns coordinates of nodes and edges for plotting.
 #' @param population tbl
 #' @rdname layout

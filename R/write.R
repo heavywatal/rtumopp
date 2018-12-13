@@ -1,6 +1,6 @@
 #' Utilities for writing files
 #'
-#' @description
+#' @details
 #' `write_results` writes nested data.frame to files
 #' @param results data.frame returned from tumopp()
 #' @rdname write

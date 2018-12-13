@@ -1,6 +1,6 @@
 #' Functions to deal with driver mutations
 #'
-#' @description
+#' @details
 #' `propagate_drivers` calculates the effect of drivers in descendant cells
 #' @param drivers data.frame
 #' @param graph igraph

@@ -13,7 +13,7 @@ genetic_stats = function(extant) {
   )
 }
 
-#' @description
+#' @details
 #' `morphological_stats` calculates summary statistics of morphology.
 #' @param coord switch to normalize phi
 #' @rdname summarize

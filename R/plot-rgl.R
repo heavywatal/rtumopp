@@ -1,6 +1,6 @@
 #' 3D plotting with rgl
 #'
-#' @description
+#' @details
 #' `plot_tumor3d` plots tumor in 3D with rgl.
 #' @param .tbl data.frame with (x, y, z, col)
 #' @param limits passed to xlim, ylim, zlim of `rgl::plot3d()`
@@ -24,7 +24,7 @@ plot_tumor3d = function(.tbl = NULL, limits = NULL) {
   )
 }
 
-#' @description
+#' @details
 #' `snapshot_surface` is a shortcut of `plot_tumor3d()` and `rgl::snapshot3d()`.
 #' @param filename string
 #' @param ... passed to `plot_tumor3d()`
@@ -38,7 +38,7 @@ snapshot_surface = function(.tbl, filename = tempfile("rgl_", fileext = ".png"),
   filename
 }
 
-#' @description
+#' @details
 #' `add_col` adds a column for color in `plot_tumor3d()`.
 #' @param column column name to colorcode
 #' @param palette name of ColorBrewer palette

@@ -1,6 +1,6 @@
 #' Extract surface cells with mathematical morphology
 #'
-#' @description
+#' @details
 #' `add_surface` adds a binary column to the data.frame
 #' @param population a data.frame with (x, y, z)
 #' @param coord a string
@@ -16,7 +16,7 @@ add_surface = function(population, coord, dimensions) {
     dplyr::left_join(col_surface, by = "id")
 }
 
-#' @description
+#' @details
 #' `add_phi` counts empty neighbors of each cell and adds an integer column
 #' @rdname morphology
 #' @export
