@@ -83,15 +83,16 @@ distances_from_origin = function(graph, nodes = integer(0L)) {
     as.integer()
 }
 
-# NOTE: sink vertices can be dead cells
+# NOTE: (vcount + 1) / 2 cannot be used if death rate > 0
 count_sink = function(graph, nodes = integer(0L)) {
-  vs = igraph::V(graph)
+  edges = igraph::as_edgelist(graph, names = FALSE)
   if (length(nodes) > 0L) {
+    vs = igraph::V(graph)
     idx = as_idx(nodes, as_ids(vs))
-    out_ego_size = igraph::ego_size(graph, order = 1073741824L, nodes = idx, mode = "out")
-    as.integer(out_ego_size + 1L) %/% 2L
+    egos = igraph::ego(graph, order = 1073741824L, nodes = idx, mode = "out")
+    sink = edges[!edges[,2L] %in% edges[,1L], 2L]
+    vapply(egos, function(x) {sum(x %in% sink)}, integer(1L), USE.NAMES = FALSE)
   } else {
-    outdegree = igraph::degree(graph, vs, mode = "out", loops = FALSE)
-    sum(outdegree == 0L)
+    NROW(edges) - sum(edges[,2L] %in% edges[,1L])
   }
 }
