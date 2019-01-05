@@ -2,7 +2,7 @@
 title: "Visualize population growth"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction to tumopp}
+  %\VignetteIndexEntry{Visualize population growth}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

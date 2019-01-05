@@ -2,7 +2,7 @@
 title: "Multi-region sampling"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction to tumopp}
+  %\VignetteIndexEntry{Multi-region sampling}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
