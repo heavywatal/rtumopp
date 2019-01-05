@@ -1,0 +1,62 @@
+---
+title: "Visualize population growth"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to tumopp}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Following code extracts demographic history from population table, and draws the right panel of Fig. 5.
+
+```{r run, eval = TRUE}
+library(magrittr)
+library(ggplot2)
+library(tumopp)
+
+.alt = list(k = c(1, 8, 2^30))
+.const = c("-D3", "-Chex", "-N16384", "-Lconst")
+argslist = tumopp::make_args(alt = .alt, const = .const, each = 1L)
+results = tumopp::tumopp(argslist)
+
+df = results %>%
+  dplyr::mutate(demography = purrr::map(population, ~{
+    tumopp::extract_history(.x) %>% tumopp::summarise_demography()
+  })) %>%
+  dplyr::select(shape, demography) %>%
+  tidyr::unnest()
+
+.breaks = .alt[["k"]]
+.labels = ifelse(.breaks < 1e6, .breaks, expression(infinity))
+.values = setNames(grey(c(0.666, 0.4, 0)), .breaks)
+
+labels_log10 = function (breaks) {
+  parse(text = paste0("10^", log10(breaks)))
+}
+
+fig5b = ggplot(df, aes(time, size, group = shape)) +
+  geom_line(aes(colour = as.factor(shape)), size = 1, alpha = 0.8) +
+  scale_y_log10(breaks = 10 ** seq_len(4L), labels = labels_log10) +
+  scale_colour_manual(
+    name = expression(italic(k)),
+    labels = .labels, values = .values,
+    guide = guide_legend(reverse = TRUE, override.aes = list(size=3))
+  ) +
+  labs(x = expression(Time~(italic(t))), y = "# of tumor cells") +
+  theme_bw() +
+  theme(
+    panel.grid = element_blank(),
+    axis.ticks = element_blank(),
+    legend.key.height = unit(0.7, "lines"),
+    legend.position = c(0.98, 0.02), legend.justification = c(1, 0)
+  )
+
+# ggsave("fig5b.png", fig5b, width = 3, height = 3)
+```
