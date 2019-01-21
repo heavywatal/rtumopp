@@ -11,19 +11,18 @@ mutate_clades = function(graph, mu = NULL, segsites = NULL) {
   indegree = igraph::degree(graph, vs, mode = "in", loops = FALSE)
   nodes = as_ids(vs)[indegree > 0L]
   # TODO: remove low-freq variants?
-  if (is.null(segsites)) {
-    if (is.null(mu)) stop("specify either mu or segsites")
-    if (mu > 0) {
-      segsites = stats::rpois(1L, length(nodes) * mu)
-    }
-  } else if (!is.null(mu)) warning("mu is ignored if segsites is given")
-  mutants = if (is.null(segsites)) {
-    nodes # if (mu <= 0)
+  number = if (is.null(mu)) {
+    if (is.null(segsites)) stop("specify either mu or segsites")
+    stats::rmultinom(1L, segsites, rep(1, length(nodes))) %>% as.vector()
+  } else if (mu > 0) {
+    if (!is.null(segsites)) stop("segsites is ignored if mu is given")
+    stats::rpois(length(nodes), mu)
   } else {
-    sample(nodes, segsites, replace = TRUE)
+    rep(1L, length(nodes))
   }
-  # TODO: remove internal nodes?
-  paths_to_sink(graph, mutants)
+  tibble::tibble(origin = nodes, number = number) %>%
+    dplyr::filter(.data$number > 0) %>%
+    dplyr::mutate(carriers = paths_to_sink(graph, .data$origin))
 }
 
 #' @details
@@ -39,9 +38,10 @@ make_sample = function(graph, nsam = 0L, mu = NULL, segsites = NULL) {
     nodes = sample(nodes, nsam, replace = FALSE)
     graph = subtree(graph, nodes)
   }
-  segsites = mutate_clades(graph, mu = mu, segsites = segsites)
-  cols = purrr::map(segsites, ~ as.integer(nodes %in% .x))
-  m = do.call(cbind, cols)
+  mutations = mutate_clades(graph, mu = mu, segsites = segsites)
+  origins = purrr::map(mutations$carriers, ~ as.integer(nodes %in% .x))
+  m = t(do.call(rbind, origins) * mutations$number)
   rownames(m) = nodes
+  colnames(m) = mutations$origin
   m
 }
