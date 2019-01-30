@@ -6,16 +6,19 @@
 #' @rdname graph
 #' @export
 make_igraph = function(population) {
-  population %>%
-    dplyr::transmute(
-      from = .data$ancestor,
-      to = .data$id
-    ) %>%
-    dplyr::filter(.data$from > 0L) %>%
-    as.matrix() %>%
+  as_symbolic_edgelist(population) %>%
     graph_from_symbolic_edgelist()
 }
 
+as_symbolic_edgelist = function(population) {
+  is_not_origin = (population$ancestor > 0L)
+  cbind(
+    population[is_not_origin, "ancestor"],
+    population[is_not_origin, "id"]
+  )
+}
+
+# simpler version of igraph::graph_from_edgelist
 graph_from_symbolic_edgelist = function(el, directed = TRUE) {
   edges = as.character(t(el))
   labels = unique(edges)
