@@ -6,15 +6,24 @@
 #' @rdname graph
 #' @export
 make_igraph = function(population) {
-  el = population %>%
+  population %>%
     dplyr::transmute(
       from = .data$ancestor,
       to = .data$id
     ) %>%
     dplyr::filter(.data$from > 0L) %>%
-    as.matrix()
-  class(el) = "character"
-  igraph::graph_from_edgelist(el)
+    as.matrix() %>%
+    graph_from_symbolic_edgelist()
+}
+
+graph_from_symbolic_edgelist = function(el, directed = TRUE) {
+  edges = as.character(t(el))
+  labels = unique(edges)
+  ids = seq_along(labels)
+  names(ids) = labels
+  g = igraph::make_graph(ids[edges], directed = directed)
+  igraph::V(g)$name = labels
+  g
 }
 
 #' @details
