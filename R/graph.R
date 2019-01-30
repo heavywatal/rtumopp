@@ -6,15 +6,15 @@
 #' @rdname graph
 #' @export
 make_igraph = function(population) {
-  population %>%
+  el = population %>%
     dplyr::transmute(
       from = .data$ancestor,
       to = .data$id
     ) %>%
     dplyr::filter(.data$from > 0L) %>%
-    dplyr::arrange(.data$to) %>%
-    dplyr::mutate_all(as.character) %>%
-    igraph::graph_from_data_frame()
+    as.matrix()
+  class(el) = "character"
+  igraph::graph_from_edgelist(el)
 }
 
 #' @details
