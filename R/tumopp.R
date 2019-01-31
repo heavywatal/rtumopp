@@ -99,7 +99,7 @@ generate_valid = function(prior, n = 1L) {
     }, x = n - k)
     generated = suppressMessages(filter_valid_LP(generated))
     output = dplyr::bind_rows(output, generated)
-    k = NROW(output)
+    k = nrow(output)
   }
   output
 }

@@ -14,7 +14,7 @@ plot_tumor3d = function(.tbl = NULL, limits = NULL) {
     rgl::box3d()
     rgl::view3d(15, 15, 15, 0.9)
   })
-  if (NROW(.tbl) == 0L) return(invisible(.tbl))
+  if (nrow(.tbl) == 0L) return(invisible(.tbl))
   col = purrr::pluck(.tbl, "col", .default = getOption("tumopp.default_color", "#666666"))
   rgl::plot3d(
     .tbl$x, .tbl$y, .tbl$z,

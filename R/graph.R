@@ -105,6 +105,6 @@ count_sink = function(graph, nodes = integer(0L)) {
     sink = edges[!edges[,2L] %in% edges[,1L], 2L]
     vapply(egos, function(x) {sum(x %in% sink)}, integer(1L), USE.NAMES = FALSE)
   } else {
-    NROW(edges) - sum(edges[,2L] %in% edges[,1L])
+    nrow(edges) - sum(edges[,2L] %in% edges[,1L])
   }
 }
