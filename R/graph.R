@@ -95,6 +95,18 @@ distances_from_origin = function(graph, nodes = integer(0L)) {
     as.integer()
 }
 
+sink_nodes = function(graph) {
+  vs = igraph::V(graph)
+  deg = igraph::degree(graph, vs, mode = "out", loops = FALSE)
+  as_ids(vs)[deg == 0L]
+}
+
+sinks = function(graph, nodes) {
+  .sink = sink_nodes(graph)
+  paths = paths_to_sink(graph, nodes)
+  lapply(paths, function(x) x[x %in% .sink])
+}
+
 # NOTE: (vcount + 1) / 2 cannot be used if death rate > 0
 count_sink = function(graph, nodes = integer(0L)) {
   edges = igraph::as_edgelist(graph, names = FALSE)
