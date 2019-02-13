@@ -90,8 +90,9 @@ paths_to_source = function(graph, nodes = integer(0L)) {
 
 distances_from_origin = function(graph, nodes = integer(0L)) {
   vs = igraph::V(graph)
+  origin = vs[igraph::degree(graph, mode = "in") == 0L]
   idx = as_idx(nodes, as_ids(vs))
-  igraph::distances(graph, 1, idx, mode = "out", weights = NA, algorithm = "unweighted") %>%
+  igraph::distances(graph, origin, idx, mode = "out", weights = NA, algorithm = "unweighted") %>%
     as.integer()
 }
 
