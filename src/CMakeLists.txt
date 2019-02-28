@@ -1,12 +1,13 @@
 cmake_minimum_required(VERSION 3.1)
 project(rtumopp
-  VERSION 0.8.0
+  VERSION 0.8.1
   LANGUAGES CXX)
 
 message(STATUS "CMAKE_CURRENT_SOURCE_DIR: ${CMAKE_CURRENT_SOURCE_DIR}")
 include(GNUInstallDirs)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
+set(BUILD_TESTING OFF)
 find_package(tumopp ${PROJECT_VERSION} QUIET)
 if(tumopp_FOUND)
   get_target_property(INCLUDEDIR tumopp::tumopp INTERFACE_INCLUDE_DIRECTORIES)
