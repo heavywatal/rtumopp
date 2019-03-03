@@ -115,9 +115,11 @@ count_sink = function(graph, nodes = integer(0L)) {
     vs = igraph::V(graph)
     idx = as_idx(nodes, as_ids(vs))
     egos = igraph::ego(graph, order = 1073741824L, nodes = idx, mode = "out")
-    sink = edges[!edges[,2L] %in% edges[,1L], 2L]
-    vapply(egos, function(x) {sum(x %in% sink)}, integer(1L), USE.NAMES = FALSE)
+    sink = edges[!edges[, 2L] %in% edges[, 1L], 2L]
+    vapply(egos, function(x) {
+      sum(x %in% sink)
+    }, integer(1L), USE.NAMES = FALSE)
   } else {
-    nrow(edges) - sum(edges[,2L] %in% edges[,1L])
+    nrow(edges) - sum(edges[, 2L] %in% edges[, 1L])
   }
 }
