@@ -14,8 +14,8 @@ a tumor growth simulator in C++.
 ## Installation
 
 ```r
-install.packages("devtools")
-devtools::install_github("heavywatal/rtumopp")
+# install.packages("remotes")
+remotes::install_github("heavywatal/rtumopp")
 ```
 
 ## Basic usage
