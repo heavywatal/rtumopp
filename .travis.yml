@@ -16,6 +16,11 @@ env:
   - _R_CHECK_FORCE_SUGGESTS_=FALSE
   - _R_CHECK_SYSTEM_CLOCK_=FALSE
   - MAKEFLAGS="-j 2"
+before_install:
+- mkdir -p ~/.R
+- echo "CXX = $CXX" > ~/.R/Makevars
+- echo "CXX14 = $CXX" >> ~/.R/Makevars
+- echo "CXX14FLAGS = $(R CMD config CXXFLAGS) -fPIC" >> ~/.R/Makevars
 branches:
   except:
   - /^v?\d+\.\d+/
