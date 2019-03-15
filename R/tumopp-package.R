@@ -7,13 +7,6 @@
 #' @keywords internal
 "_PACKAGE"
 
-.onLoad = function(libname, pkgname) {
-  igraph::igraph_options(
-    add.vertex.names = FALSE,
-    return.vs.es = FALSE
-  )
-}
-
 .onUnload = function(libpath) {
   message("Unloading tumopp in ", libpath)
   library.dynam.unload("tumopp", libpath)

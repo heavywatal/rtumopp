@@ -7,26 +7,15 @@
 #' @export
 make_igraph = function(population) {
   as_symbolic_edgelist(population) %>%
-    graph_from_symbolic_edgelist()
+    igraphlite::graph_from_data_frame()
 }
 
 as_symbolic_edgelist = function(population) {
-  is_not_origin = (population$ancestor > 0L)
+  is_not_origin = (population[["ancestor"]] > 0L)
   cbind(
     population[is_not_origin, "ancestor"],
     population[is_not_origin, "id"]
   )
-}
-
-# simpler version of igraph::graph_from_edgelist
-graph_from_symbolic_edgelist = function(el, directed = TRUE) {
-  edges = as.character(t(el))
-  labels = unique(edges)
-  ids = seq_along(labels)
-  names(ids) = labels
-  g = igraph::make_graph(ids[edges], directed = directed)
-  igraph::V(g)$name = labels
-  g
 }
 
 #' @details
@@ -36,12 +25,12 @@ graph_from_symbolic_edgelist = function(el, directed = TRUE) {
 #' @rdname graph
 #' @export
 subtree = function(graph, nodes = integer(0L)) {
-  vs = igraph::V(graph)
-  idx = as_idx(nodes, as_ids(vs))
-  idx = igraph::ego(graph, order = 1073741824L, nodes = idx, mode = "in") %>%
+  vids = igraphlite::as_vids(graph, nodes)
+  vnames = igraphlite::Vnames(graph)
+  idx = igraphlite::neighborhood(graph, vids, order = 1073741824L, mode = 2L) %>%
     purrr::flatten_dbl() %>%
     unique()
-  igraph::induced_subgraph(graph, idx)
+  igraphlite::induced_subgraph(graph, idx)
 }
 
 #' @details
@@ -57,49 +46,29 @@ internal_nodes = function(graph, nodes, sensitivity) {
   as.integer(names(counts)[(counts / n) > sensitivity])
 }
 
-as_ids = function(vs) {
-  ns = names(vs)
-  if (is.null(ns)) as.vector(vs) else as.integer(ns)
-}
-
-as_idx = function(nodes, ids) {
-  idx = match(nodes, ids)
-  is_na = is.na(idx)
-  if (any(is_na)) {
-    warning("Node not found: ", paste(nodes[is_na], collapse = ", "))
-    idx = idx[!is_na]
-  }
-  idx
-}
-
 paths_to_sink = function(graph, nodes) {
-  vs = igraph::V(graph)
-  ids = as_ids(vs)
-  idx = as_idx(nodes, ids)
-  igraph::ego(graph, order = 1073741824L, nodes = idx, mode = "out") %>%
-    lapply(function(x) ids[x])
+  vids = igraphlite::as_vids(graph, nodes)
+  vnames = igraphlite::Vnames(graph)
+  igraphlite::neighborhood(graph, vids, order = 1073741824L, mode = 1L) %>%
+    lapply(function(x) vnames[x])
 }
 
 paths_to_source = function(graph, nodes = integer(0L)) {
-  vs = igraph::V(graph)
-  ids = as_ids(vs)
-  idx = as_idx(nodes, ids)
-  igraph::ego(graph, order = 1073741824L, nodes = idx, mode = "in") %>%
-    lapply(function(x) ids[x])
+  vids = igraphlite::as_vids(graph, nodes)
+  vnames = igraphlite::Vnames(graph)
+  igraphlite::neighborhood(graph, vids, order = 1073741824L, mode = 2L) %>%
+    lapply(function(x) vnames[x])
 }
 
 distances_from_origin = function(graph, nodes = integer(0L)) {
-  vs = igraph::V(graph)
-  origin = vs[igraph::degree(graph, mode = "in") == 0L]
-  idx = as_idx(nodes, as_ids(vs))
-  igraph::distances(graph, origin, idx, mode = "out", weights = NA, algorithm = "unweighted") %>%
+  vids = igraphlite::as_vids(graph, nodes)
+  origin = graph$source
+  igraphlite::shortest_paths(graph, origin, vids, mode = 1L, algorithm = "unweighted") %>%
     as.integer()
 }
 
 sink_nodes = function(graph) {
-  vs = igraph::V(graph)
-  deg = igraph::degree(graph, vs, mode = "out", loops = FALSE)
-  as_ids(vs)[deg == 0L]
+  igraphlite::Vnames(graph)[graph$is_sink]
 }
 
 sinks = function(graph, nodes) {
@@ -110,16 +79,12 @@ sinks = function(graph, nodes) {
 
 # NOTE: (vcount + 1) / 2 cannot be used if death rate > 0
 count_sink = function(graph, nodes = integer(0L)) {
-  edges = igraph::as_edgelist(graph, names = FALSE)
   if (length(nodes) > 0L) {
-    vs = igraph::V(graph)
-    idx = as_idx(nodes, as_ids(vs))
-    egos = igraph::ego(graph, order = 1073741824L, nodes = idx, mode = "out")
-    sink = edges[!edges[, 2L] %in% edges[, 1L], 2L]
-    vapply(egos, function(x) {
-      sum(x %in% sink)
-    }, integer(1L), USE.NAMES = FALSE)
+    vids = igraphlite::as_vids(graph, nodes)
+    egos = igraphlite::neighborhood(graph, vids, order = 1073741824L, mode = 1L)
+    sink = graph$sink
+    vapply(egos, function(x) sum(x %in% sink), integer(1L), USE.NAMES = FALSE)
   } else {
-    nrow(edges) - sum(edges[, 2L] %in% edges[, 1L])
+    sum(graph$is_sink)
   }
 }

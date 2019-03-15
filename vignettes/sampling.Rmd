@@ -37,7 +37,7 @@ mutated = tumopp::mutate_clades(subgraph, mu = 1)
 Summarize and visualize VAF:
 
 ```{r visualize, eval=FALSE}
-vaf = tally_vaf(regions$id, mutated) %>% print()
+vaf = tally_vaf(regions$id, mutated$carriers) %>% print()
 vaf_tidy = vaf %>%
   tumopp::filter_detectable(0.05) %>%
   tumopp::sort_vaf() %>%

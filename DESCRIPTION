@@ -11,7 +11,7 @@ LazyData: true
 Imports:
     dplyr (>= 0.7.5),
     ggplot2 (>= 3.0.0),
-    igraph (>= 1.1.2),
+    igraphlite,
     jsonlite (>= 1.5),
     magrittr,
     mmand,
@@ -28,6 +28,8 @@ Suggests:
     knitr,
     rgl,
     rmarkdown
+Remotes:
+    github::heavywatal/rigraphlite
 URL: https://github.com/heavywatal/rtumopp
 BugReports: https://github.com/heavywatal/rtumopp/issues
 RoxygenNote: 6.1.1
