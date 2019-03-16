@@ -27,7 +27,8 @@ Imports:
 Suggests:
     knitr,
     rgl,
-    rmarkdown
+    rmarkdown,
+    testthat
 Remotes:
     github::heavywatal/rigraphlite
 URL: https://github.com/heavywatal/rtumopp
