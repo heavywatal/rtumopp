@@ -1,9 +1,5 @@
 language: r
 cache: packages
-r:
-- oldrel
-- release
-- devel
 addons:
   apt:
     sources:
@@ -21,6 +17,13 @@ before_install:
 - echo "CXX = $CXX" > ~/.R/Makevars
 - echo "CXX14 = $CXX" >> ~/.R/Makevars
 - echo "CXX14FLAGS = $(R CMD config CXXFLAGS) -fPIC" >> ~/.R/Makevars
+matrix:
+  include:
+  - r: devel
+  - r: release
+    after_success:
+    - Rscript -e 'covr::codecov()'
+  - r: oldrel
 branches:
   except:
   - /^v?\d+\.\d+/

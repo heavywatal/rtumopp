@@ -25,6 +25,7 @@ Imports:
     Rcpp (>= 0.12.16),
     scales
 Suggests:
+    covr,
     knitr,
     rgl,
     rmarkdown,

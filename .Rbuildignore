@@ -1,7 +1,8 @@
 ^Meta$
+^codecov\.yml$
 ^doc$
+^docs$
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.travis\.yml$
 ^\.vscode$
-^docs$
