@@ -65,7 +65,7 @@ plot_bar_age = function(.tbl, xmax = max(.tbl$ageend), alpha = 1.0, ...) {
 #' @rdname plot-biopsy
 #' @export
 plot_capture_rate = function(data, point = 1, alpha = 0.3, errorbar = TRUE) {
-  # scales::viridis_pal()(5L) %>% str_replace('FF$', '') %>% tail(2L)
+  # scales::viridis_pal()(5L) %>% str_replace("FF$", "") %>% tail(2L)
   p = ggplot2::ggplot(data, ggplot2::aes_(~nsam, ~capture_rate)) +
     ggplot2::annotate("rect", xmin = -Inf, xmax = Inf, ymin = 0.9, ymax = 1.0, fill = "#5DC863", alpha = 0.8) +
     ggplot2::annotate("rect", xmin = -Inf, xmax = Inf, ymin = 0.8, ymax = 0.9, fill = "#FDE725", alpha = 0.8) +

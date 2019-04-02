@@ -34,15 +34,15 @@ See `tumopp -h` or
 for available parameters.
 
 ```{r dontrun, eval=FALSE}
-.const = c('-D3', '-Chex', '-N1000')
+.const = c("-D3", "-Chex", "-N1000")
 .alt = list(
-  # D = c('2', '3'),
-  # C = c('hex', 'moore', 'neumann'),
-  k = c('1', '1e6'),
-  L = c('const', 'linear', 'step'),
-  P = c('random', 'mindrag', 'roulette'),
-  d = c('0.0', '0.2'),
-  m = c('0.0', '2.0')
+  # D = c("2", "3"),
+  # C = c("hex", "moore", "neumann"),
+  k = c("1", "1e6"),
+  L = c("const", "linear", "step"),
+  P = c("random", "mindrag", "roulette"),
+  d = c("0.0", "0.2"),
+  m = c("0.0", "2.0")
 )
 
 argslist = make_args(alt = .alt, const = .const, each = 2L)
