@@ -47,9 +47,13 @@ tumopp.default = function(args = character(0L), ..., graph = TRUE) {
 #' @param mc.cores The number of cores to use for concurrent execution.
 #' @rdname tumopp
 #' @export
-tumopp.list = function(args, ..., mc.cores = getOption("mc.cores", 1L)) {
-  parallel::mclapply(args, tumopp, ..., mc.cores = mc.cores) %>%
+tumopp.list = function(args, ..., graph = TRUE, mc.cores = getOption("mc.cores", 1L)) {
+  out = parallel::mclapply(args, tumopp, ..., graph = FALSE, mc.cores = mc.cores) %>%
     dplyr::bind_rows(.id = "args")
+  if (graph) {
+    out$graph = lapply(out[["population"]], make_igraph)
+  }
+  out
 }
 
 #' @details
