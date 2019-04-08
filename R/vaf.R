@@ -7,10 +7,9 @@
 #' @rdname vaf
 #' @export
 make_vaf = function(graph, samples, mu, threshold = 0.05) {
-  mutated = subtree(graph, purrr::flatten_chr(samples)) %>%
-    mutate_clades(mu = mu) %>%
-    purrr::map(as.integer)
-  tally_vaf(samples, mutated) %>%
+  mutated = subtree(graph, purrr::flatten_int(samples)) %>%
+    mutate_clades(mu = mu)
+  tally_vaf(samples, mutated$carriers) %>%
     filter_detectable(threshold) %>%
     sort_vaf() %>%
     tidy_vaf()
