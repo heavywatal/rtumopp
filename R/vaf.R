@@ -24,9 +24,9 @@ make_vaf = function(graph, samples, mu, threshold = 0.05) {
 #' @export
 tally_vaf = function(samples, sites) {
   purrr::map_dfc(samples, function(region) {
-    purrr::map_int(sites, function(holders) {
+    vapply(sites, function(holders) {
       sum(region %in% holders)
-    }) / length(region)
+    }, integer(1), USE.NAMES = FALSE) / length(region)
   })
 }
 
