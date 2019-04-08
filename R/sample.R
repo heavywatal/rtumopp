@@ -34,7 +34,7 @@ sample_random_regions = function(tbl, nsam = 2L, ncell = 10L) {
 #' @export
 sample_bulk = function(tbl, center = c(x = 0, y = 0, z = 0), ncell = 10L) {
   d = dist_euclidean(tbl, center)
-  tbl$id[utils::head(order(d), ncell)]
+  tbl$id[d < nth_element(d, ncell)]
 }
 
 kmeans_centers = function(tbl, centers, iter.max = 32L) {
