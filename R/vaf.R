@@ -52,7 +52,7 @@ tidy_vaf = function(tbl) {
 #' @export
 filter_detectable = function(tbl, threshold) {
   tbl[tbl < threshold] = 0
-  dplyr::filter(tbl, rowSums(tbl) > 0)
+  dplyr::filter(tbl, Reduce(`+`, tbl) > 0)
 }
 
 #' @details
@@ -63,7 +63,7 @@ filter_detectable = function(tbl, threshold) {
 sort_vaf = function(tbl, method = c("average", "ward.D2", "complete", "single")) {
   method = match.arg(method)
   if (nrow(tbl) < 2L) return(tbl)
-  rsums = rowSums(tbl > 0)
+  rsums = Reduce(`+`, tbl > 0)
   w_nonzero = 10
   w_shared = ifelse(rsums < 2L, 0, 1000)
   tbl_weighted = dplyr::mutate_all(tbl, ~ {

@@ -27,7 +27,7 @@ library(tumopp)
 .tidy = .vaf %>%
   filter_detectable(0.05) %>%
   sort_vaf() %>%
-  # dplyr::filter(rowSums(. > 0) > 1L) %>%
+  # dplyr::filter(Reduce(`+`, . > 0) > 1L) %>%
   tidy_vaf() %>%
   print()
 
