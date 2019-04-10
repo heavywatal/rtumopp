@@ -7,7 +7,9 @@ test_that("tumopp runs", {
     L = c("const", "step"),
     P = c("random", "mindrag", "roulette")
   )
-  expect_message({argslist = make_args(alt = .alt, const = .const, each = 2L)}, "invalid and excluded")
+  expect_message({
+    argslist = make_args(alt = .alt, const = .const, each = 2L)
+  }, "invalid and excluded")
   expect_length(argslist, 2L * prod(lengths(.alt)) - 2L)
   expect_s3_class(tumopp(argslist[1:2], mc.cores = 1L), "data.frame")
 })
