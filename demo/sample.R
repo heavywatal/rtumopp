@@ -21,9 +21,9 @@ library(tumopp)
 .subgraph = tumopp::subtree(.graph, purrr::flatten_chr(.regions$id))
 .mutated = mutate_clades(.subgraph, mu = 1)
 .mutated = mutate_clades(.subgraph, mu = -1)
-.mutated = mutate_clades(.subgraph, segsites=1000L)
+.mutated = mutate_clades(.subgraph, segsites = 1000L)
 
-.vaf = tally_vaf(.regions$id, .mutated %>% purrr::map(as.integer)) %>% print()
+.vaf = tally_vaf(.regions$id, .mutated$carriers) %>% print()
 .tidy = .vaf %>%
   filter_detectable(0.05) %>%
   sort_vaf() %>%
