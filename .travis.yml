@@ -22,7 +22,7 @@ matrix:
   - r: devel
   - r: release
     after_success:
-    - Rscript -e 'covr::codecov()'
+    - Rscript -e 'covr::codecov(type = "all")'
   - r: oldrel
 branches:
   except:
