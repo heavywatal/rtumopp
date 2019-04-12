@@ -6,3 +6,5 @@
 ^\.Rproj\.user$
 ^\.travis\.yml$
 ^\.vscode$
+^_pkgdown\.yml$
+^pkgdown$

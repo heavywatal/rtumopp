@@ -1,0 +1,43 @@
+destination: docs
+reference:
+- title: "Run simulation"
+  contents:
+  - tumopp
+  - cpp_tumopp
+- title: "Phylogeny"
+  contents:
+  - make_igraph
+  - propagate_drivers
+- title: "Sampling"
+  contents:
+  - sample_uniform_regions
+  - mean_branch_length
+  - make_vaf
+  - mutate_clades
+  - combn_ids
+- title: "Demography"
+  contents:
+  - extract_history
+  - filter_extant
+- title: "Summary stats"
+  contents:
+  - math_score
+  - genetic_stats
+- title: "Coordinate system"
+  contents:
+  - max_abs_xyz
+  - trans_coord_hex
+  - add_surface
+- title: "Visualization"
+  contents:
+  - layout_genealogy
+  - plot_capture_rate
+  - plot_genealogy
+  - plot_tumor3d
+  - histogram_freqspec
+  - save_serial_section
+- title: "Read and Write"
+  contents:
+  - read_confs
+  - read_results
+  - write_results

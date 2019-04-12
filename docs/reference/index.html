@@ -128,35 +128,31 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
+          <h2 id="section-run-simulation" class="hasAnchor"><a href="#section-run-simulation" class="anchor"></a>Run simulation</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
       <tr>
         
         <td>
-          <p><code><a href="branch-length.html">mean_branch_length()</a></code> <code><a href="branch-length.html">within_between_samples()</a></code> </p>
+          <p><code><a href="tumopp.html">tumopp()</a></code> <code><a href="tumopp.html">make_args()</a></code> </p>
         </td>
-        <td><p>Calculate genetic distance with igraph</p></td>
+        <td><p>Run tumopp</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="coord.html">max_abs_xyz()</a></code> <code><a href="coord.html">dist_euclidean()</a></code> <code><a href="coord.html">transform_rotate()</a></code> </p>
+          <p><code><a href="rcpprun.html">cpp_tumopp()</a></code> </p>
         </td>
-        <td><p>Utilities for coordinate values</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="demography.html">extract_history()</a></code> <code><a href="demography.html">summarise_demography()</a></code> </p>
-        </td>
-        <td><p>Functions for event history</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="drivers.html">propagate_drivers()</a></code> </p>
-        </td>
-        <td><p>Functions to deal with driver mutations</p></td>
-      </tr><tr>
+        <td><p>Run C++ simulation</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-phylogeny" class="hasAnchor"><a href="#section-phylogeny" class="anchor"></a>Phylogeny</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
         
         <td>
           <p><code><a href="graph.html">make_igraph()</a></code> <code><a href="graph.html">subtree()</a></code> <code><a href="graph.html">internal_nodes()</a></code> </p>
@@ -165,9 +161,101 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="drivers.html">propagate_drivers()</a></code> </p>
+        </td>
+        <td><p>Functions to deal with driver mutations</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-sampling" class="hasAnchor"><a href="#section-sampling" class="anchor"></a>Sampling</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="sample.html">sample_uniform_regions()</a></code> <code><a href="sample.html">sample_random_regions()</a></code> <code><a href="sample.html">sample_bulk()</a></code> <code><a href="sample.html">evaluate_mrs()</a></code> <code><a href="sample.html">distances_mrs()</a></code> </p>
+        </td>
+        <td><p>Sample cells from a population</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="branch-length.html">mean_branch_length()</a></code> <code><a href="branch-length.html">within_between_samples()</a></code> </p>
+        </td>
+        <td><p>Calculate genetic distance with igraph</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="vaf.html">make_vaf()</a></code> <code><a href="vaf.html">tally_vaf()</a></code> <code><a href="vaf.html">tidy_vaf()</a></code> <code><a href="vaf.html">filter_detectable()</a></code> <code><a href="vaf.html">sort_vaf()</a></code> </p>
+        </td>
+        <td><p>Utilities for variant allele frequency</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ms.html">mutate_clades()</a></code> <code><a href="ms.html">make_sample()</a></code> </p>
+        </td>
+        <td><p>Sprinkle mutations on genealogy</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="sample-combn.html">combn_ids()</a></code> <code><a href="sample-combn.html">summarize_capture_rate()</a></code> </p>
+        </td>
+        <td><p>Sample cells from a population</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-demography" class="hasAnchor"><a href="#section-demography" class="anchor"></a>Demography</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="demography.html">extract_history()</a></code> <code><a href="demography.html">summarise_demography()</a></code> </p>
+        </td>
+        <td><p>Functions for event history</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="population.html">filter_extant()</a></code> <code><a href="population.html">count_extant()</a></code> <code><a href="population.html">filter_common_ancestors()</a></code> </p>
+        </td>
+        <td><p>Functions to modify population data.frame</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-summary-stats" class="hasAnchor"><a href="#section-summary-stats" class="anchor"></a>Summary stats</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
           <p><code><a href="heterogeneity.html">math_score()</a></code> </p>
         </td>
         <td><p>Evaluate heterogeneity</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="summarize.html">genetic_stats()</a></code> <code><a href="summarize.html">morphological_stats()</a></code> </p>
+        </td>
+        <td><p>Summarizing functions</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-coordinate-system" class="hasAnchor"><a href="#section-coordinate-system" class="anchor"></a>Coordinate system</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="coord.html">max_abs_xyz()</a></code> <code><a href="coord.html">dist_euclidean()</a></code> <code><a href="coord.html">transform_rotate()</a></code> </p>
+        </td>
+        <td><p>Utilities for coordinate values</p></td>
       </tr><tr>
         
         <td>
@@ -177,21 +265,23 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="layout.html">layout_genealogy()</a></code> </p>
-        </td>
-        <td><p>Layout cell genealogy</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="morphology.html">add_surface()</a></code> <code><a href="morphology.html">add_phi()</a></code> </p>
         </td>
         <td><p>Extract surface cells with mathematical morphology</p></td>
-      </tr><tr>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-visualization" class="hasAnchor"><a href="#section-visualization" class="anchor"></a>Visualization</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
         
         <td>
-          <p><code><a href="ms.html">mutate_clades()</a></code> <code><a href="ms.html">make_sample()</a></code> </p>
+          <p><code><a href="layout.html">layout_genealogy()</a></code> </p>
         </td>
-        <td><p>Sprinkle mutations on genealogy</p></td>
+        <td><p>Layout cell genealogy</p></td>
       </tr><tr>
         
         <td>
@@ -213,63 +303,29 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="plot-section.html">save_serial_section()</a></code> </p>
-        </td>
-        <td><p>Plot serial sections of 3D tumor</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="plot.html">histogram_freqspec()</a></code> <code><a href="plot.html">plot_lattice2d()</a></code> </p>
         </td>
         <td><p>ggplot for frequency spectrum</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="population.html">filter_extant()</a></code> <code><a href="population.html">count_extant()</a></code> <code><a href="population.html">filter_common_ancestors()</a></code> </p>
+          <p><code><a href="plot-section.html">save_serial_section()</a></code> </p>
         </td>
-        <td><p>Functions to modify population data.frame</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="rcpprun.html">cpp_tumopp()</a></code> </p>
-        </td>
-        <td><p>Run C++ simulation</p></td>
-      </tr><tr>
+        <td><p>Plot serial sections of 3D tumor</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-read-and-write" class="hasAnchor"><a href="#section-read-and-write" class="anchor"></a>Read and Write</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
         
         <td>
           <p><code><a href="read.html">read_confs()</a></code> <code><a href="read.html">read_results()</a></code> <code><a href="read.html">read_populations()</a></code> <code><a href="read.html">read_snapshots()</a></code> <code><a href="read.html">read_tumopp()</a></code> </p>
         </td>
         <td><p>Read TSV files in given directories</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="sample-combn.html">combn_ids()</a></code> <code><a href="sample-combn.html">summarize_capture_rate()</a></code> </p>
-        </td>
-        <td><p>Sample cells from a population</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="sample.html">sample_uniform_regions()</a></code> <code><a href="sample.html">sample_random_regions()</a></code> <code><a href="sample.html">sample_bulk()</a></code> <code><a href="sample.html">evaluate_mrs()</a></code> <code><a href="sample.html">distances_mrs()</a></code> </p>
-        </td>
-        <td><p>Sample cells from a population</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="summarize.html">genetic_stats()</a></code> <code><a href="summarize.html">morphological_stats()</a></code> </p>
-        </td>
-        <td><p>Summarizing functions</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="tumopp.html">tumopp()</a></code> <code><a href="tumopp.html">make_args()</a></code> </p>
-        </td>
-        <td><p>Run tumopp</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="vaf.html">make_vaf()</a></code> <code><a href="vaf.html">tally_vaf()</a></code> <code><a href="vaf.html">tidy_vaf()</a></code> <code><a href="vaf.html">filter_detectable()</a></code> <code><a href="vaf.html">sort_vaf()</a></code> </p>
-        </td>
-        <td><p>Utilities for variant allele frequency</p></td>
       </tr><tr>
         
         <td>
@@ -284,7 +340,14 @@
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#section-run-simulation">Run simulation</a></li>
+      <li><a href="#section-phylogeny">Phylogeny</a></li>
+      <li><a href="#section-sampling">Sampling</a></li>
+      <li><a href="#section-demography">Demography</a></li>
+      <li><a href="#section-summary-stats">Summary stats</a></li>
+      <li><a href="#section-coordinate-system">Coordinate system</a></li>
+      <li><a href="#section-visualization">Visualization</a></li>
+      <li><a href="#section-read-and-write">Read and Write</a></li>
     </ul>
   </div>
 </div>
