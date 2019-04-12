@@ -3,7 +3,6 @@ reference:
 - title: "Run simulation"
   contents:
   - tumopp
-  - cpp_tumopp
 - title: "Phylogeny"
   contents:
   - make_igraph

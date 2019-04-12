@@ -2,9 +2,6 @@
 #include <Rcpp.h>
 #include <tumopp/simulation.hpp>
 
-//' Run C++ simulation
-//' @param args command line arguments as a string vector
-//' @rdname rcpprun
 // [[Rcpp::export]]
 Rcpp::CharacterVector cpp_tumopp(const std::vector<std::string>& args) {
     try {

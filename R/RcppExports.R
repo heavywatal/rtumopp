@@ -5,9 +5,6 @@ nth_element <- function(x, n) {
     .Call(`_tumopp_nth_element`, x, n)
 }
 
-#' Run C++ simulation
-#' @param args command line arguments as a string vector
-#' @rdname rcpprun
 cpp_tumopp <- function(args) {
     .Call(`_tumopp_cpp_tumopp`, args)
 }
