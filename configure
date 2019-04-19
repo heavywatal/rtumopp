@@ -1,7 +1,9 @@
 #!/bin/sh
-if ! cmake --version; then
+cmake --version || brew install cmake
+if ! cmake --version >/dev/null; then
   echo 'Please install CMake to build this package.'
-  echo 'The easiest way is to use Homebrew: `brew install cmake`'
+  echo 'The easiest way is to use Homebrew (https://brew.sh/):'
+  echo '  brew install cmake'
   echo 'Otherwise, use an installer available at https://cmake.org/download/'
   exit 1
 fi
