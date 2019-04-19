@@ -26,11 +26,8 @@ as_symbolic_edgelist = function(population) {
 #' @export
 subtree = function(graph, nodes = integer(0L)) {
   vids = igraphlite::as_vids(graph, nodes)
-  vnames = igraphlite::Vnames(graph)
-  idx = igraphlite::neighborhood(graph, vids, order = 1073741824L, mode = 2L) %>%
-    purrr::flatten_dbl() %>%
-    unique()
-  igraphlite::induced_subgraph(graph, idx)
+  vids = upstream_vertices(graph, vids, to_mrca = TRUE)
+  igraphlite::induced_subgraph(graph, vids)
 }
 
 #' @details
@@ -44,6 +41,15 @@ internal_nodes = function(graph, nodes, sensitivity) {
     purrr::flatten_int() %>%
     table()
   as.integer(names(counts)[(counts / n) > sensitivity])
+}
+
+upstream_vertices = function(graph, vids, to_mrca = TRUE) {
+  vlist = igraphlite::neighborhood(graph, vids, order = 1073741824L, mode = 2L)
+  vids = unique(unlist(vlist, use.names = FALSE))
+  if (to_mrca) {
+    vids = setdiff(vids, Reduce(intersect, vlist)[-1L])
+  }
+  vids
 }
 
 paths_to_sink = function(graph, nodes) {
