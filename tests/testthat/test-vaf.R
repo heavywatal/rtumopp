@@ -1,5 +1,3 @@
-context("test-vaf")
-
 test_that("make_vaf works", {
   result = tumopp("--seed=42 -N256 -k1e6")
   population = result$population[[1L]]
