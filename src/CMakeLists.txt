@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.8)
 project(rtumopp
   VERSION 0.8.2
   LANGUAGES CXX)
