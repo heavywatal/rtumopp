@@ -7,11 +7,11 @@ if ! cmake --version >/dev/null; then
   echo 'Otherwise, use an installer available at https://cmake.org/download/'
   exit 1
 fi
-echo "CXX: ${CXX:=$(${R_HOME}/bin/R CMD config CXX)}"
+echo "CXX: ${CXX:=$(${R_HOME}/bin/R CMD config CXX11)}"
 echo "R_PACKAGE_DIR: $R_PACKAGE_DIR"
 BUILD_DIR=${R_SESSION_TMPDIR}/../rtumopp
 echo "BUILD_DIR: $BUILD_DIR"
 rm -r ${BUILD_DIR}/CMake*
-cmake -Hsrc -B$BUILD_DIR -DCMAKE_CXX_COMPILER=$CXX -DCMAKE_INSTALL_PREFIX=$R_PACKAGE_DIR
+cmake -Hsrc -B$BUILD_DIR -DCMAKE_CXX_COMPILER="$CXX" -DCMAKE_INSTALL_PREFIX=$R_PACKAGE_DIR
 cmake --build $BUILD_DIR -- -j2
 cmake --build $BUILD_DIR --target install
