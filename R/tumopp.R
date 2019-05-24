@@ -56,20 +56,26 @@ tumopp.list = function(args, ..., graph = TRUE, mc.cores = getOption("mc.cores",
   out
 }
 
+#' @rdname tumopp
+#' @export
+tumopp.data.frame = function(args, ..., graph = TRUE, mc.cores = getOption("mc.cores", 1L)) {
+  tumopp(vectorize_args(args), ..., graph = graph, mc.cores = mc.cores)
+}
+
 #' @details
-#' `make_args()` returns argument combinations in a list.
+#' `make_args()` returns argument combinations in a tibble.
 #' @param alt named list of altered arguments.
-#' @param const unnamed vector of constant arguments.
+#' @param const named vector of constant arguments.
 #' @param times,each passed to `rep()`
 #' @rdname tumopp
 #' @export
 make_args = function(alt, const = NULL, times = 1L, each = 1L) {
+  now = format(Sys.time(), "%Y%m%d_%H%M%S")
   purrr::invoke(expand.grid, alt, stringsAsFactors = FALSE) %>%
     filter_valid_LP() %>%
-    vectorize_args() %>%
-    rep(times = times, each = each) %>%
-    append_o() %>%
-    purrr::map(~ c(const, .x))
+    dplyr::slice(rep(seq_len(nrow(.)), times = times, each = each)) %>%
+    dplyr::mutate(o = paste(now, dplyr::row_number(), sep = "_")) %>%
+    dplyr::mutate(!!!const)
 }
 
 vectorize_args = function(.tbl) {
@@ -79,12 +85,6 @@ vectorize_args = function(.tbl) {
     .template = ifelse(nchar(.names) > 1L, "--%s=%s", "-%s%s")
     sprintf(.template, .names, .params)
   })
-}
-
-append_o = function(args, fmt = "%Y%m%d_%H%M%S_") {
-  prefix = format(Sys.time(), fmt)
-  o = paste0("-o", prefix, seq_along(args))
-  purrr::map2(args, o, c)
 }
 
 # prior is a named list of generating functions

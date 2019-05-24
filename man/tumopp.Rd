@@ -4,6 +4,7 @@
 \alias{tumopp}
 \alias{tumopp.default}
 \alias{tumopp.list}
+\alias{tumopp.data.frame}
 \alias{make_args}
 \title{Run tumopp}
 \usage{
@@ -12,6 +13,9 @@ tumopp(args, ...)
 \method{tumopp}{default}(args = character(0L), ..., graph = TRUE)
 
 \method{tumopp}{list}(args, ..., graph = TRUE,
+  mc.cores = getOption("mc.cores", 1L))
+
+\method{tumopp}{data.frame}(args, ..., graph = TRUE,
   mc.cores = getOption("mc.cores", 1L))
 
 make_args(alt, const = NULL, times = 1L, each = 1L)
@@ -27,7 +31,7 @@ make_args(alt, const = NULL, times = 1L, each = 1L)
 
 \item{alt}{named list of altered arguments.}
 
-\item{const}{unnamed vector of constant arguments.}
+\item{const}{named vector of constant arguments.}
 
 \item{times, each}{passed to \code{rep()}}
 }
@@ -35,5 +39,5 @@ make_args(alt, const = NULL, times = 1L, each = 1L)
 \code{tumopp()} returns full results with config columns in a data.frame.
 }
 \details{
-\code{make_args()} returns argument combinations in a list.
+\code{make_args()} returns argument combinations in a tibble.
 }
