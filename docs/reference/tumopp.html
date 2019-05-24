@@ -137,6 +137,10 @@
 <span class='fu'>tumopp</span>(<span class='no'>args</span>, <span class='no'>...</span>, <span class='kw'>graph</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>mc.cores</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"mc.cores"</span>, <span class='fl'>1L</span>))
 
+<span class='co'># S3 method for data.frame</span>
+<span class='fu'>tumopp</span>(<span class='no'>args</span>, <span class='no'>...</span>, <span class='kw'>graph</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>mc.cores</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"mc.cores"</span>, <span class='fl'>1L</span>))
+
 <span class='fu'>make_args</span>(<span class='no'>alt</span>, <span class='kw'>const</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>each</span> <span class='kw'>=</span> <span class='fl'>1L</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -164,7 +168,7 @@
     </tr>
     <tr>
       <th>const</th>
-      <td><p>unnamed vector of constant arguments.</p></td>
+      <td><p>named vector of constant arguments.</p></td>
     </tr>
     <tr>
       <th>times, each</th>
@@ -174,7 +178,7 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>make_args()</code> returns argument combinations in a list.</p>
+    <p><code>make_args()</code> returns argument combinations in a tibble.</p>
     
 
   </div>

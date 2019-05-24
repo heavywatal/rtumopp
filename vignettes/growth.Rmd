@@ -22,7 +22,7 @@ library(ggplot2)
 library(tumopp)
 
 .alt = list(k = c(1, 8, 2^30))
-.const = c("-D3", "-Chex", "-N16384", "-Lconst")
+.const = c(D = 3, C = "hex", N = 16384, L = "const")
 argslist = tumopp::make_args(alt = .alt, const = .const, each = 1L)
 results = tumopp::tumopp(argslist)
 
