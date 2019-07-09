@@ -21,9 +21,7 @@ sample_uniform_regions = function(tbl, nsam = 2L, ncell = 10L, jitter = 0) {
 #' @rdname sample
 #' @export
 sample_random_regions = function(tbl, nsam = 2L, ncell = 10L) {
-  centers = tbl %>%
-    dplyr::select(.data$x, .data$y, .data$z) %>%
-    dplyr::sample_n(nsam)
+  centers = dplyr::sample_n(tbl[c("x", "y", "z")], nsam)
   sample_regions(tbl, centers, ncell = ncell)
 }
 
@@ -38,17 +36,16 @@ sample_bulk = function(tbl, center = c(x = 0, y = 0, z = 0), ncell = 10L) {
 }
 
 kmeans_centers = function(tbl, centers, iter.max = 32L) {
-  tbl %>%
-    dplyr::select(.data$x, .data$y, .data$z) %>%
-    stats::kmeans(centers = centers, iter.max = iter.max) %>%
-    purrr::pluck("centers") %>%
-    tibble::as_tibble()
+  tbl = tbl[c("x", "y", "z")]
+  result = stats::kmeans(tbl, centers = centers, iter.max = iter.max)
+  tibble::as_tibble(result[["centers"]])
 }
 
 sample_regions = function(tbl, centers, ncell = 10L) {
-  dplyr::mutate(centers, id = purrr::pmap(centers, function(x, y, z) {
+  centers$id = purrr::pmap(centers, function(x, y, z) {
     sample_bulk(tbl, center = c(x = x, y = y, z = z), ncell = ncell)
-  }))
+  })
+  centers
 }
 
 tidy_regions = function(regions) {
