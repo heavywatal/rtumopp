@@ -42,9 +42,10 @@ kmeans_centers = function(tbl, centers, iter.max = 32L) {
 }
 
 sample_regions = function(tbl, centers, ncell = 10L) {
-  centers$id = purrr::pmap(centers, function(x, y, z) {
+  covr_issue377 = function(x, y, z) {
     sample_bulk(tbl, center = c(x = x, y = y, z = z), ncell = ncell)
-  })
+  }
+  centers$id = purrr::pmap(centers, covr_issue377)
   centers
 }
 
