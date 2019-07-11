@@ -1,6 +1,8 @@
 # R interface to tumopp
 
 [![Build Status](https://travis-ci.org/heavywatal/rtumopp.svg?branch=master)](https://travis-ci.org/heavywatal/rtumopp)
+[![codecov](https://codecov.io/gh/heavywatal/rtumopp/branch/master/graph/badge.svg)](https://codecov.io/gh/heavywatal/rtumopp)
+[![CRAN Status Badge](https://www.r-pkg.org/badges/version/rtumopp)](http://cran.r-project.org/package=rtumopp)
 
 This is an R interface to [tumopp](https://github.com/heavywatal/tumopp),
 a tumor growth simulator in C++.
