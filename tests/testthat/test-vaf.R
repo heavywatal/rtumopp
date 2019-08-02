@@ -17,7 +17,6 @@ test_that("make_vaf works", {
   expect_silent({
     subgraph = subtree(graph, sampled)
   })
-  within_between_samples(graph, regions)
   expect_silent({
     df_distances = within_between_samples(subgraph, regions)
   })
