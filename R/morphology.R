@@ -78,11 +78,11 @@ df2img = function(.tbl) {
   vars = c("x", "y", "z")
   .tbl = .tbl[vars]
   .summary = dplyr::summarise_at(.tbl, vars, dplyr::funs(min, max))
-  .grid = expand.grid(
+  .grid = tidyr::crossing(
     x = seq(.summary$x_min, .summary$x_max),
     y = seq(.summary$y_min, .summary$y_max),
     z = seq(.summary$z_min, .summary$z_max)
-  ) %>% tibble::as_tibble()
+  )
   joined = dplyr::left_join(.grid, dplyr::mutate(.tbl, v = 1L), by = vars)
   joined = tidyr::replace_na(joined, list(v = 0L))
   arr = reshape2::acast(joined, x ~ y ~ z, `[`, 1L, value.var = "v", fill = 0L)
