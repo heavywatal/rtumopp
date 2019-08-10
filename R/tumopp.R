@@ -71,9 +71,9 @@ tumopp.data.frame = function(args, ..., graph = TRUE, mc.cores = getOption("mc.c
 #' @export
 make_args = function(alt, const = NULL, times = 1L, each = 1L) {
   now = format(Sys.time(), "%Y%m%d_%H%M%S")
-  purrr::invoke(tidyr::crossing, alt) %>%
-    filter_valid_LP() %>%
-    dplyr::slice(rep(seq_len(nrow(.)), times = times, each = each)) %>%
+  grid = purrr::invoke(tidyr::crossing, alt) %>% filter_valid_LP()
+  idx = rep(seq_len(nrow(grid)), times = times, each = each)
+  dplyr::slice(grid, idx) %>%
     dplyr::mutate(o = paste(now, dplyr::row_number(), sep = "_")) %>%
     dplyr::mutate(!!!const)
 }
