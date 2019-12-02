@@ -42,7 +42,7 @@ sort_clades = function(population, graph, n = 4L) {
   tibble::tibble(
     clade = factor(founders),
     id = paths_to_sink(graph, founders)
-  ) %>% tidyr::unnest()
+  ) %>% tidyr::unnest("id")
 }
 
 count_extant_descendants = function(graph, nodes) {

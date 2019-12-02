@@ -11,7 +11,7 @@ combn_ids = function(x, m = seq_along(x)) {
     nsam = m,
     id = purrr::map(m, combn_int_list, x = x)
   ) %>%
-    tidyr::unnest()
+    tidyr::unnest("id")
 }
 
 # Make union of integers from list

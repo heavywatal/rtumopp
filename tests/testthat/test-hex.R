@@ -2,7 +2,8 @@ test_that("hex transformation works", {
   df = data.frame
   df0 = df(x = numeric(0), y = numeric(0))
   expect_equal(trans_coord_hex(df0), df0)
-  df2 = tidyr::crossing(x = seq(-2, 2), y = x, z = x)
+  v = seq(-2, 2)
+  df2 = tidyr::expand_grid(x = v, y = v, z = v)
   expect_equal(trans_coord_hex(df2), trans_coord_fcc(df2))
 
   expect_equal(trans_coord_fcc(df(x = 1, y = 0, z = 0)), df(x = sqrt(3) / 2, y = 0.5, z = 0))

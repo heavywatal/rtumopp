@@ -10,7 +10,7 @@ propagate_drivers = function(drivers, graph) {
   drivers %>%
     dplyr::mutate(id = paths_to_sink(graph, .data$id)) %>%
     dplyr::mutate(coef = 1 + .data$coef) %>%
-    tidyr::unnest() %>%
+    tidyr::unnest("id") %>%
     dplyr::group_by(.data$id, .data$type) %>%
     dplyr::summarise(value = prod(!!as.name("coef"))) %>%
     tidyr::spread("type", "value")

@@ -52,7 +52,7 @@ sample_regions = function(tbl, centers, ncell = 10L) {
 tidy_regions = function(regions) {
   tibble::tibble(id = regions$id) %>%
     tibble::rowid_to_column(var = "region") %>%
-    tidyr::unnest()
+    tidyr::unnest("id")
 }
 
 mutate_jitter = function(.data, ..., amount) {
