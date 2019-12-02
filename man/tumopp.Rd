@@ -29,7 +29,7 @@ make_args(alt, const = NULL, times = 1L, each = 1L)
 
 \item{alt}{named list of altered arguments.}
 
-\item{const}{named vector of constant arguments.}
+\item{const}{named list of constant arguments.}
 
 \item{times, each}{passed to \code{rep()}}
 }

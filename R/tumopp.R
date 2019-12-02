@@ -65,7 +65,7 @@ tumopp.data.frame = function(args, ..., graph = TRUE, mc.cores = getOption("mc.c
 #' @details
 #' `make_args()` returns argument combinations in a tibble.
 #' @param alt named list of altered arguments.
-#' @param const named vector of constant arguments.
+#' @param const named list of constant arguments.
 #' @param times,each passed to `rep()`
 #' @rdname tumopp
 #' @export

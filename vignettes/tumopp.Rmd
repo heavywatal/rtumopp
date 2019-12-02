@@ -34,7 +34,7 @@ See `tumopp -h` or
 for available parameters.
 
 ```{r dontrun, eval=FALSE}
-.const = c(D = 3, C = "hex", N = 1000)
+.const = list(D = 3L, C = "hex", N = 1000L)
 .alt = list(
   k = c("1", "1e6"),
   L = c("const", "linear", "step"),
