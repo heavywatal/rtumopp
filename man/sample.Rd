@@ -14,8 +14,14 @@ sample_random_regions(tbl, nsam = 2L, ncell = 10L)
 
 sample_bulk(tbl, center = c(x = 0, y = 0, z = 0), ncell = 10L)
 
-evaluate_mrs(population, nsam, ncell, threshold = 0.05,
-  sensitivity = 0.05, jitter = 0)
+evaluate_mrs(
+  population,
+  nsam,
+  ncell,
+  threshold = 0.05,
+  sensitivity = 0.05,
+  jitter = 0
+)
 
 distances_mrs(population, nsam, ncell, jitter = 0)
 }

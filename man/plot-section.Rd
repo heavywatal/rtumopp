@@ -4,8 +4,13 @@
 \alias{save_serial_section}
 \title{Plot serial sections of 3D tumor}
 \usage{
-save_serial_section(.tbl, filename = "png/section_\%03d.png",
-  scale = 6, dpi = 72, ...)
+save_serial_section(
+  .tbl,
+  filename = "png/section_\%03d.png",
+  scale = 6,
+  dpi = 72,
+  ...
+)
 }
 \arguments{
 \item{.tbl}{tbl with extant cells}

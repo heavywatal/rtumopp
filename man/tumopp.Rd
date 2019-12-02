@@ -12,11 +12,9 @@ tumopp(args, ...)
 
 \method{tumopp}{default}(args = character(0L), ..., graph = TRUE)
 
-\method{tumopp}{list}(args, ..., graph = TRUE,
-  mc.cores = getOption("mc.cores", 1L))
+\method{tumopp}{list}(args, ..., graph = TRUE, mc.cores = getOption("mc.cores", 1L))
 
-\method{tumopp}{data.frame}(args, ..., graph = TRUE,
-  mc.cores = getOption("mc.cores", 1L))
+\method{tumopp}{data.frame}(args, ..., graph = TRUE, mc.cores = getOption("mc.cores", 1L))
 
 make_args(alt, const = NULL, times = 1L, each = 1L)
 }

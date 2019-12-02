@@ -8,8 +8,7 @@
 \usage{
 plot_tumor3d(.tbl = NULL, limits = NULL)
 
-snapshot_surface(.tbl, filename = tempfile("rgl_", fileext = ".png"),
-  ...)
+snapshot_surface(.tbl, filename = tempfile("rgl_", fileext = ".png"), ...)
 
 add_col(.tbl, column = "clade", palette = "Spectral", direction = 1)
 }

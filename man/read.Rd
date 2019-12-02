@@ -10,11 +10,13 @@
 \usage{
 read_confs(indirs = getwd(), mc.cores = getOption("mc.cores", 1L))
 
-read_results(indirs = getwd(), mc.cores = getOption("mc.cores", 1L),
-  graph = TRUE)
+read_results(
+  indirs = getwd(),
+  mc.cores = getOption("mc.cores", 1L),
+  graph = TRUE
+)
 
-read_populations(indirs = getwd(), mc.cores = getOption("mc.cores",
-  1L))
+read_populations(indirs = getwd(), mc.cores = getOption("mc.cores", 1L))
 
 read_snapshots(indirs = getwd(), mc.cores = getOption("mc.cores", 1L))
 

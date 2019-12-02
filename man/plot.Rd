@@ -7,8 +7,13 @@
 \usage{
 histogram_freqspec(freqs)
 
-plot_lattice2d(.tbl, colour = "z", alpha = 1, size = 1,
-  limit = max_abs_xyz(.tbl))
+plot_lattice2d(
+  .tbl,
+  colour = "z",
+  alpha = 1,
+  size = 1,
+  limit = max_abs_xyz(.tbl)
+)
 }
 \arguments{
 \item{freqs}{numeric vector}
@@ -17,7 +22,7 @@ plot_lattice2d(.tbl, colour = "z", alpha = 1, size = 1,
 
 \item{colour}{column name to colorcode}
 
-\item{alpha}{opacity \code{[0, 1]}}
+\item{alpha}{opacity \verb{[0, 1]}}
 
 \item{size}{relative size of points}
 
