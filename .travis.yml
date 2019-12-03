@@ -6,6 +6,7 @@ addons:
     - ubuntu-toolchain-r-test
     packages:
     - g++-8
+    - devscripts
 env:
   global:
   - CXX=g++-8
