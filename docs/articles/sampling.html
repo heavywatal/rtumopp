@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tumopp</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.3</span>
       </span>
     </div>
 
@@ -100,20 +100,20 @@
 <a href="#workflow" class="anchor"></a>Workflow</h2>
 <p>Perform simulation and extract population data:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tumopp)</span>
-<span id="cb1-2"><a href="#cb1-2"></a>result =<span class="st"> </span>tumopp<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/tumopp/man/tumopp.html">tumopp</a></span>(<span class="st">"-N20000 -D3 -Chex -k10 -Lconst"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>result =<span class="st"> </span>tumopp<span class="op">::</span><span class="kw"><a href="https://heavywatal.github.io/rtumopp/reference/tumopp.html">tumopp</a></span>(<span class="st">"-N20000 -D3 -Chex -k10 -Lconst"</span>)</span>
 <span id="cb1-3"><a href="#cb1-3"></a>population =<span class="st"> </span>result<span class="op">$</span>population[[1L]]</span>
-<span id="cb1-4"><a href="#cb1-4"></a>extant =<span class="st"> </span>population <span class="op">%&gt;%</span><span class="st"> </span>tumopp<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/tumopp/man/population.html">filter_extant</a></span>()</span>
-<span id="cb1-5"><a href="#cb1-5"></a>graph =<span class="st"> </span>tumopp<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/tumopp/man/graph.html">make_igraph</a></span>(population)</span></code></pre></div>
+<span id="cb1-4"><a href="#cb1-4"></a>extant =<span class="st"> </span>population <span class="op">%&gt;%</span><span class="st"> </span>tumopp<span class="op">::</span><span class="kw"><a href="https://heavywatal.github.io/rtumopp/reference/population.html">filter_extant</a></span>()</span>
+<span id="cb1-5"><a href="#cb1-5"></a>graph =<span class="st"> </span>tumopp<span class="op">::</span><span class="kw"><a href="https://heavywatal.github.io/rtumopp/reference/graph.html">make_igraph</a></span>(population)</span></code></pre></div>
 <p>Sample cells and put neutral mutations on the lineages:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>regions =<span class="st"> </span>tumopp<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/tumopp/man/sample.html">sample_uniform_regions</a></span>(extant, <span class="dt">nsam =</span> 8L, <span class="dt">ncell =</span> 100L)</span>
-<span id="cb2-2"><a href="#cb2-2"></a>subgraph =<span class="st"> </span>tumopp<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/tumopp/man/graph.html">subtree</a></span>(graph, purrr<span class="op">::</span><span class="kw"><a href="https://purrr.tidyverse.org/reference/flatten.html">flatten_int</a></span>(regions<span class="op">$</span>id))</span>
-<span id="cb2-3"><a href="#cb2-3"></a>mutated =<span class="st"> </span>tumopp<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/tumopp/man/ms.html">mutate_clades</a></span>(subgraph, <span class="dt">mu =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>regions =<span class="st"> </span>tumopp<span class="op">::</span><span class="kw"><a href="https://heavywatal.github.io/rtumopp/reference/sample.html">sample_uniform_regions</a></span>(extant, <span class="dt">nsam =</span> 8L, <span class="dt">ncell =</span> 100L)</span>
+<span id="cb2-2"><a href="#cb2-2"></a>subgraph =<span class="st"> </span>tumopp<span class="op">::</span><span class="kw"><a href="https://heavywatal.github.io/rtumopp/reference/graph.html">subtree</a></span>(graph, purrr<span class="op">::</span><span class="kw"><a href="https://purrr.tidyverse.org/reference/flatten.html">flatten_int</a></span>(regions<span class="op">$</span>id))</span>
+<span id="cb2-3"><a href="#cb2-3"></a>mutated =<span class="st"> </span>tumopp<span class="op">::</span><span class="kw"><a href="https://heavywatal.github.io/rtumopp/reference/ms.html">mutate_clades</a></span>(subgraph, <span class="dt">mu =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p>Summarize and visualize VAF:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>vaf =<span class="st"> </span>tumopp<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/tumopp/man/vaf.html">tally_vaf</a></span>(regions<span class="op">$</span>id, mutated<span class="op">$</span>carriers) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>()</span>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>vaf =<span class="st"> </span>tumopp<span class="op">::</span><span class="kw"><a href="https://heavywatal.github.io/rtumopp/reference/vaf.html">tally_vaf</a></span>(regions<span class="op">$</span>id, mutated<span class="op">$</span>carriers) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>()</span>
 <span id="cb3-2"><a href="#cb3-2"></a>vaf_tidy =<span class="st"> </span>vaf <span class="op">%&gt;%</span></span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="st">  </span>tumopp<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/tumopp/man/vaf.html">filter_detectable</a></span>(<span class="fl">0.05</span>) <span class="op">%&gt;%</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a><span class="st">  </span>tumopp<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/tumopp/man/vaf.html">sort_vaf</a></span>() <span class="op">%&gt;%</span></span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="st">  </span>tumopp<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/tumopp/man/vaf.html">tidy_vaf</a></span>() <span class="op">%&gt;%</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="st">  </span>tumopp<span class="op">::</span><span class="kw"><a href="https://heavywatal.github.io/rtumopp/reference/vaf.html">filter_detectable</a></span>(<span class="fl">0.05</span>) <span class="op">%&gt;%</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="st">  </span>tumopp<span class="op">::</span><span class="kw"><a href="https://heavywatal.github.io/rtumopp/reference/vaf.html">sort_vaf</a></span>() <span class="op">%&gt;%</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="st">  </span>tumopp<span class="op">::</span><span class="kw"><a href="https://heavywatal.github.io/rtumopp/reference/vaf.html">tidy_vaf</a></span>() <span class="op">%&gt;%</span></span>
 <span id="cb3-6"><a href="#cb3-6"></a><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>()</span>
 <span id="cb3-7"><a href="#cb3-7"></a></span>
 <span id="cb3-8"><a href="#cb3-8"></a><span class="kw">ggplot</span>(vaf_tidy, <span class="kw">aes</span>(sample, site)) <span class="op">+</span></span>
