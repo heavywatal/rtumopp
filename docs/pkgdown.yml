@@ -5,4 +5,7 @@ articles:
   growth: growth.html
   sampling: sampling.html
   tumopp: tumopp.html
+urls:
+  reference: https://heavywatal.github.io/rtumopp/reference
+  article: https://heavywatal.github.io/rtumopp/articles
 

@@ -36,7 +36,9 @@
 
 
 <meta property="og:title" content="Run tumopp — tumopp" />
-<meta property="og:description" content="tumopp() returns full results with config columns in a data.frame." />
+<meta property="og:description" content="tumopp() returns full results with config columns in a data.frame.
+See tumopp(&quot;-h&quot;) or https://heavywatal.github.io/tumopp/group__params.html
+for the list of command options." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -129,7 +131,9 @@
     </div>
 
     <div class="ref-description">
-    <p><code>tumopp()</code> returns full results with config columns in a data.frame.</p>
+    <p><code>tumopp()</code> returns full results with config columns in a data.frame.
+See <code>tumopp("-h")</code> or https://heavywatal.github.io/tumopp/group__params.html
+for the list of command options.</p>
     </div>
 
     <pre class="usage"><span class='fu'>tumopp</span>(<span class='no'>args</span>, <span class='no'>...</span>)
@@ -180,7 +184,19 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>make_args()</code> returns argument combinations in a tibble.</p>
+    <p>A <code>population</code> data.frame includes ancestral cells.
+Extant cells can be extracted by filtering with <code>death == 0</code> or <code><a href='population.html'>filter_extant()</a></code> function.
+The sampling time, i.e., the end of a simulation, is typically the maximum value of birth time.</p>
+<p>The default unit of time (<code>birth</code> and <code>death</code> columns) is the average cell cycle of newborn cells
+(given the parameter <code>-b</code>/<code>--beta0</code> is set to 1).
+For example, step-wise tumor growth and integer values in the birth column will be observed
+if <code>-k</code>/<code>--shape</code> parameter is set to a very large value like <code>10**6</code>.
+If you are considering some cell line whose average cell cycle is 4 days for example,
+then the unit of those columns can be interpreted as 4 days,
+or you can set <code>--beta0=0.25</code> to change the unit to a day.</p>
+<p>The <code>omega</code> column denotes the number of cell devisions allowed for each cell.
+Negative values denote unlimited proliferation potential.</p>
+<p><code>make_args()</code> returns argument combinations in a tibble.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
