@@ -21,7 +21,7 @@ library(magrittr)
 library(ggplot2)
 library(tumopp)
 
-.alt = list(k = c(1, 8, 2^30))
+.alt = list(k = c(1, 8, 2 ** 30))
 .const = list(D = 3L, C = "hex", N = 16384L, L = "const")
 argslist = tumopp::make_args(alt = .alt, const = .const, each = 1L)
 results = tumopp::tumopp(argslist)
@@ -37,7 +37,7 @@ df = results %>%
 .labels = ifelse(.breaks < 1e6, .breaks, expression(infinity))
 .values = setNames(grey(c(0.666, 0.4, 0)), .breaks)
 
-labels_log10 = function (breaks) {
+labels_log10 = function(breaks) {
   parse(text = paste0("10^", log10(breaks)))
 }
 
@@ -47,7 +47,7 @@ fig5b = ggplot(df, aes(time, size, group = shape)) +
   scale_colour_manual(
     name = expression(italic(k)),
     labels = .labels, values = .values,
-    guide = guide_legend(reverse = TRUE, override.aes = list(size=3))
+    guide = guide_legend(reverse = TRUE, override.aes = list(size = 3))
   ) +
   labs(x = expression(Time~(italic(t))), y = "# of tumor cells") +
   theme_bw() +

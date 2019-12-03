@@ -1,6 +1,23 @@
 #' Run tumopp
 #'
 #' `tumopp()` returns full results with config columns in a data.frame.
+#' See `tumopp("-h")` or [https://heavywatal.github.io/tumopp/group__params.html]
+#' for the list of command options.
+#'
+#' A `population` data.frame includes ancestral cells.
+#' Extant cells can be extracted by filtering with `death == 0` or [filter_extant()] function.
+#' The sampling time, i.e., the end of a simulation, is typically the maximum value of birth time.
+#'
+#' The default unit of time (`birth` and `death` columns) is the average cell cycle of newborn cells
+#' (given the parameter `-b`/`--beta0` is set to 1).
+#' For example, step-wise tumor growth and integer values in the birth column will be observed
+#' if `-k`/`--shape` parameter is set to a very large value like `10**6`.
+#' If you are considering some cell line whose average cell cycle is 4 days for example,
+#' then the unit of those columns can be interpreted as 4 days,
+#' or you can set `--beta0=0.25` to change the unit to a day.
+#'
+#' The `omega` column denotes the number of cell devisions allowed for each cell.
+#' Negative values denote unlimited proliferation potential.
 #' @param args command line arguments as a string vector or list of strings.
 #' @param ... not used.
 #' @export
