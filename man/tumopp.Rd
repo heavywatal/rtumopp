@@ -35,7 +35,7 @@ make_args(alt, const = NULL, times = 1L, each = 1L)
 }
 \description{
 \code{tumopp()} returns full results with config columns in a data.frame.
-See \code{tumopp("-h")} or \link{https://heavywatal.github.io/tumopp/group__params.html}
+See \code{tumopp("-h")} or \url{https://heavywatal.github.io/tumopp/group__params.html}
 for the list of command options.
 }
 \details{

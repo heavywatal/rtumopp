@@ -1,7 +1,7 @@
 #' Run tumopp
 #'
 #' `tumopp()` returns full results with config columns in a data.frame.
-#' See `tumopp("-h")` or [https://heavywatal.github.io/tumopp/group__params.html]
+#' See `tumopp("-h")` or <https://heavywatal.github.io/tumopp/group__params.html>
 #' for the list of command options.
 #'
 #' A `population` data.frame includes ancestral cells.
