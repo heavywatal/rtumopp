@@ -20,6 +20,15 @@ a tumor growth simulator in C++.
 devtools::install_github("heavywatal/rtumopp")
 ```
 
+R packages are updated at random times.
+Please try to check updates once in a while and use the latest versions.
+
+```r
+update.packages()
+devtools::install_github("heavywatal/rigraphlite")
+devtools::install_github("heavywatal/rtumopp")
+```
+
 ## Basic usage
 
 See ["Get started" page](http://heavywatal.github.io/rtumopp/articles/tumopp.html).
