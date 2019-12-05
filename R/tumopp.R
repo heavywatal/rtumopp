@@ -79,6 +79,19 @@ tumopp.data.frame = function(args, ..., graph = TRUE, mc.cores = getOption("mc.c
   tumopp(vectorize_args(args), ..., graph = graph, mc.cores = mc.cores)
 }
 
+# execute as an external command for benchmarking
+system_tumopp = function(args, mc.cores = getOption("mc.cores", 1L)) {
+  args[["o"]] = paste0(tempdir(), "/", args[["o"]])
+  argslist = vectorize_args(args)
+  parallel::mclapply(argslist, system2, command = "tumopp", mc.cores = mc.cores)
+  out = read_results(args[["o"]], graph = FALSE, mc.cores = mc.cores) %>%
+    dplyr::bind_rows()
+  f = function(.x) {readr::read_tsv(file.path(.x, "benchmark.tsv.gz"))}
+  out[["benchmark"]] = purrr::map_if(out[["outdir"]], out[["benchmark"]], f)
+  out[["directory"]] = NULL
+  out
+}
+
 #' @details
 #' `make_args()` returns argument combinations in a tibble.
 #' @param alt named list of altered arguments.
