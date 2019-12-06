@@ -2,6 +2,7 @@ pandoc: 2.8.0.1
 pkgdown: 1.4.1
 pkgdown_sha: ~
 articles:
+  benchmark: benchmark.html
   growth: growth.html
   sampling: sampling.html
   tumopp: tumopp.html
