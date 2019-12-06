@@ -1,0 +1,98 @@
+---
+title: "Efficiency of tumopp"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Efficiency of tumopp}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.height = 6,
+  fig.width = 6
+)
+library(ggplot2)
+theme_here = theme_bw(base_size = 12) +
+  theme(panel.grid.minor = element_blank(),
+        axis.ticks = element_blank(),
+        strip.background = element_rect(linetype = 0))
+theme_set(theme_here)
+```
+
+## Run simulation with benchmark information
+
+```{r data-raw, eval = FALSE}
+library(tidyverse)
+library(tumopp)
+
+.const = list(D = 3, C = "hex", k = 10, N = 2 ** 17, benchmark = TRUE)
+.alt = list(
+  L = c("const", "linear"),
+  P = c("random", "mindrag"),
+  d = c(0, 0.2),
+  m = c(0, 2)
+)
+args_tbl = make_args(alt = .alt, const = .const) %>% print()
+
+results = tumopp:::system_tumopp(args_tbl) %>% print()
+
+unnested = results %>%
+  dplyr::select(-population, -seed) %>%
+  dplyr::mutate(outdir = fs::path_file(outdir)) %>%
+  dplyr::select_if(~ n_distinct(.x) > 1L) %>%
+  tidyr::unnest(benchmark) %>%
+  print()
+
+df_benchmark = unnested %>%
+  dplyr::distinct(outdir, size, .keep_all = TRUE) %>%
+  dplyr::mutate(
+    local = factor(local, levels = .alt[["L"]]),
+    path = factor(path, levels = .alt[["P"]]),
+    size = size / 1000,      # to K
+    memory = maxrss / 1024,  # K to M
+    utime = utime / 1000,    # ms to sec
+    stime = stime / 1000,    # ms to sec
+    maxrss = NULL
+  ) %>%
+  print()
+
+# usethis::use_data(df_benchmark, internal = TRUE, overwrite = TRUE)
+```
+
+
+## Memory
+
+- Memory usage increases linearly with the increasing number of cells
+  because *tumopp* is an individual-based model of tumor cells.
+- Memory is also used to trace back cell lineages and write them to a text file after growth simulation.
+- Cell death makes cell lineages longer given the same number of extant cells.
+- The effect of cell death is more pronounced
+  when the population average of birth rate is decreased with local competition (`-Llinear`).
+
+```{r memory}
+ggplot(tumopp:::df_benchmark, aes(size, memory)) +
+  geom_line(size = 1, color = "#337ab7") +
+  facet_grid(local + path ~ delta0 + rho0, label = label_both) +
+  labs(x = "Size (K cells)", y = "Memory (MB)")
+```
+
+## Time
+
+- The larger a population gets, the longer it takes
+    - (`-Pmindrag`) to search for nearest empty sites from dividing cells,
+    - (`-Lconst`) to push out other cells,
+    - (`-Llinear`) to skip event queues of dormant (surrounded) cells.
+- The combination of `-Lconst -Pmindrag` is slower than the others
+  because it involves both search and push from interior cells.
+- The effects of cell death and migration are smaller
+  than those of local competition (`-L`) and placement of daughter cells(`-P`).
+
+```{r time}
+ggplot(tumopp:::df_benchmark, aes(size, utime + stime)) +
+  geom_line(size = 1, color = "#337ab7") +
+  facet_grid(local + path ~ delta0 + rho0, label = label_both) +
+  labs(x = "Size (K cells)", y = "Time (sec)")
+```
