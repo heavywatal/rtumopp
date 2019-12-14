@@ -5,7 +5,7 @@
 \alias{within_between_samples}
 \title{Calculate genetic distance with igraph}
 \usage{
-mean_branch_length(graph, from = numeric(0), to = from)
+mean_branch_length(graph, from = graph$sink, to = from)
 
 within_between_samples(graph, regions)
 }

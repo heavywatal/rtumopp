@@ -6,7 +6,7 @@
 #' @param from,to igraph vertices (not cell ID)
 #' @rdname branch-length
 #' @export
-mean_branch_length = function(graph, from = numeric(0), to = from) {
+mean_branch_length = function(graph, from = graph$sink, to = from) {
   # TODO: Avoid creating huge matrix
   m = igraphlite::shortest_paths(graph, from, to, mode = 3L, algorithm = "unweighted")
   if (length(from)) {
