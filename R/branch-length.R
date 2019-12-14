@@ -53,3 +53,10 @@ within_between_samples = function(graph, regions) {
 fst_HBK = function(within, between, n = 2) {
   (between - within) / (between + within / (n - 1))
 }
+
+Kst = function(graph, regions) {
+  vids = lapply(regions$id, igraphlite::as_vids, graph = graph)
+  t_within = purrr::map_dbl(vids, ~ mean_branch_length(graph, .x))
+  t_total = mean_branch_length(graph, unique(unlist(vids)))
+  1 - mean(t_within) / t_total
+}
