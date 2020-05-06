@@ -6,13 +6,19 @@ test_that("make_vaf works", {
   nsam = 4L
   ncell = 4L
   .colnames = c("x", "y", "z", "id")
-  expect_named({
-    regions = sample_uniform_regions(extant, nsam = nsam, ncell = ncell)
-  }, .colnames)
+  expect_named(
+    {
+      regions = sample_uniform_regions(extant, nsam = nsam, ncell = ncell)
+    },
+    .colnames
+  )
   .colnames = c("site", "sample", "frequency")
-  expect_named({
-    vaf = make_vaf(graph, regions$id, mu = 1)
-  }, .colnames)
+  expect_named(
+    {
+      vaf = make_vaf(graph, regions$id, mu = 1)
+    },
+    .colnames
+  )
   sampled = purrr::flatten_int(regions$id)
   expect_silent({
     subgraph = subtree(graph, sampled)

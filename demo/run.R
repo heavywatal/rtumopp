@@ -19,7 +19,9 @@ result$population[[1]] %>%
 if (result[["dimensions"]] > 2L) {
   library(rgl)
 
-  if (rgl.cur()) {rgl.close()}
+  if (rgl.cur()) {
+    rgl.close()
+  }
   rgl::open3d(windowRect = c(0, 0, 600, 600))
   result$population[[1]] %>%
     add_surface(result$coord, result$dimensions) %>%
@@ -31,5 +33,4 @@ if (result[["dimensions"]] > 2L) {
   system(sprintf("open %s", .outfile))
 
   writeWebGL(".", "rgl.html", snapshot = FALSE, width = 600, height = 600)
-
 } # fi 3D

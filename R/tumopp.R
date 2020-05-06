@@ -31,7 +31,9 @@ tumopp.default = function(args = character(0L), ..., graph = TRUE) {
     args = stringr::str_split(args, "\\s+") %>% purrr::flatten_chr()
   }
   result = cpp_tumopp(args)
-  if (length(result) == 0L) return(invisible(NULL))
+  if (length(result) == 0L) {
+    return(invisible(NULL))
+  }
   .out = from_json(result["config"])
   .pop = read_tumopp(result["population"])
   transforming = ((.out$coord == "hex") && getOption("tumopp.autohex", TRUE))
@@ -86,7 +88,9 @@ system_tumopp = function(args, mc.cores = getOption("mc.cores", 1L)) {
   parallel::mclapply(argslist, system2, command = "tumopp", mc.cores = mc.cores)
   out = read_results(args[["o"]], graph = FALSE, mc.cores = mc.cores) %>%
     dplyr::bind_rows()
-  f = function(.x) {readr::read_tsv(file.path(.x, "benchmark.tsv.gz"))}
+  f = function(.x) {
+    readr::read_tsv(file.path(.x, "benchmark.tsv.gz"))
+  }
   out[["benchmark"]] = purrr::map_if(out[["outdir"]], out[["benchmark"]], f)
   out[["directory"]] = NULL
   out
@@ -109,10 +113,12 @@ make_args = function(alt, const = NULL, times = 1L, each = 1L) {
 }
 
 vectorize_args = function(.tbl) {
-  opts = options(scipen = 255L)  # suppress scientific notation like "-N1e+06"
+  opts = options(scipen = 255L) # suppress scientific notation like "-N1e+06"
   on.exit(options(opts))
   purrr::pmap(.tbl, function(...) {
-    .params = list(...) %>% purrr::keep(~ !isFALSE(.x)) %>% unlist()
+    .params = list(...) %>%
+      purrr::keep(~ !isFALSE(.x)) %>%
+      unlist()
     .names = names(.params)
     .template = ifelse(nchar(.names) > 1L, "--%s=%s", "-%s%s")
     sprintf(.template, .names, .params) %>%

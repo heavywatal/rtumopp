@@ -13,9 +13,13 @@ read_confs = function(indirs = getwd(), mc.cores = getOption("mc.cores", 1L)) {
 
 .read_conf = function(indir) {
   json = file.path(indir, "config.json")
-  if (file.exists(json)) return(read_json(json))
+  if (file.exists(json)) {
+    return(read_json(json))
+  }
   tsv = file.path(indir, "program_options.tsv.gz")
-  if (file.exists(tsv)) return(readr::read_tsv(tsv))
+  if (file.exists(tsv)) {
+    return(readr::read_tsv(tsv))
+  }
   read_boost_ini(file.path(indir, "program_options.conf"))
 }
 

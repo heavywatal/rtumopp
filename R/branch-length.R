@@ -130,7 +130,7 @@ combinations = function(vaf) {
 }
 
 bhatia_numerator = function(p1, p2, n1 = Inf, n2 = n1) {
-  (p1 - p2) ** 2 - p1 * (1 - p1) / (n1 - 1) - p2 * (1 - p2) / (n2 - 1)
+  (p1 - p2)**2 - p1 * (1 - p1) / (n1 - 1) - p2 * (1 - p2) / (n2 - 1)
 }
 
 bhatia_denominator = function(p1, p2) {

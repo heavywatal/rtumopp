@@ -11,7 +11,9 @@ library(tumopp)
 .extant %>%
   dplyr::left_join(tumopp:::tidy_regions(.regions), by = "id") %>%
   plot_lattice2d(size = 0.3) +
-  geom_point(data = function(x) {dplyr::filter(x, !is.na(region))}, aes(x, y), size = 0.3, alpha = 0.4) +
+  geom_point(data = function(x) {
+    dplyr::filter(x, !is.na(region))
+  }, aes(x, y), size = 0.3, alpha = 0.4) +
   theme(axis.title = element_blank())
 
 # #######1#########2#########3#########4#########5#########6#########7#########

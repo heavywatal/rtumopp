@@ -30,9 +30,11 @@ write_results(results)
     parallel::mclapply(.plot_snapshot, limit = .lim)
 }
 
-magick_gif_animation = function(infiles, outfile="animation.gif", delay = 15, loop = 1) {
-  args = c("-loop", loop, "-delay", delay,
-           infiles, "-layers", "Optimize", outfile)
+magick_gif_animation = function(infiles, outfile = "animation.gif", delay = 15, loop = 1) {
+  args = c(
+    "-loop", loop, "-delay", delay,
+    infiles, "-layers", "Optimize", outfile
+  )
   message(paste(args, collapse = " "))
   system2("magick", args)
 }
@@ -42,7 +44,7 @@ magick_gif_animation = function(infiles, outfile="animation.gif", delay = 15, lo
   .plt = .plot_snapshots(.tbl)
   .pngdir = file.path(outdir, "png")
   dir.create(.pngdir, recursive = TRUE, mode = "0755")
-  purrr::iwalk(.plt, ~{
+  purrr::iwalk(.plt, ~ {
     .outfile = file.path(.pngdir, sprintf("snapshot_%03d.png", .y))
     message(.outfile)
     ggsave(.outfile, .x, width = 1, height = 1, scale = 6, dpi = 72)

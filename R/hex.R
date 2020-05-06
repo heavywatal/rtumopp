@@ -4,7 +4,9 @@
 #' @rdname hex
 #' @export
 trans_coord_hex = function(.tbl) {
-  if (nrow(.tbl) == 0L) return(.tbl)
+  if (nrow(.tbl) == 0L) {
+    return(.tbl)
+  }
   trans_coord_fcc(.tbl)
 }
 
@@ -36,7 +38,9 @@ trans_coord_hex_xy = function(.tbl) {
 }
 
 revert_coord_hex = function(.tbl) {
-  if (nrow(.tbl) == 0L) return(.tbl)
+  if (nrow(.tbl) == 0L) {
+    return(.tbl)
+  }
   revert_coord_fcc(.tbl)
 }
 

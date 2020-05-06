@@ -34,7 +34,7 @@ Remotes:
     github::heavywatal/rigraphlite
 URL: https://heavywatal.github.io/rtumopp, https://github.com/heavywatal/rtumopp
 BugReports: https://github.com/heavywatal/rtumopp/issues
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 Roxygen: list(markdown = TRUE)
 LinkingTo: Rcpp
 SystemRequirements: C++11, CMake (>= 3.8.0)

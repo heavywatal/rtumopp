@@ -61,7 +61,9 @@ filter_detectable = function(tbl, threshold) {
 #' @export
 sort_vaf = function(tbl, method = c("average", "ward.D2", "complete", "single")) {
   method = match.arg(method)
-  if (nrow(tbl) < 2L) return(tbl)
+  if (nrow(tbl) < 2L) {
+    return(tbl)
+  }
   rsums = Reduce(`+`, tbl > 0)
   w_nonzero = 10
   w_shared = ifelse(rsums < 2L, 0, 1000)
