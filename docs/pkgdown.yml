@@ -1,11 +1,12 @@
-pandoc: 2.8.0.1
-pkgdown: 1.4.1
+pandoc: 2.9.2.1
+pkgdown: 1.5.1
 pkgdown_sha: ~
 articles:
   benchmark: benchmark.html
   growth: growth.html
   sampling: sampling.html
   tumopp: tumopp.html
+last_built: 2020-06-04T09:21Z
 urls:
   reference: https://heavywatal.github.io/rtumopp/reference
   article: https://heavywatal.github.io/rtumopp/articles

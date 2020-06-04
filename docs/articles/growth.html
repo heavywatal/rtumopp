@@ -6,19 +6,19 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Visualize population growth • tumopp</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Visualize population growth">
-<meta property="og:description" content="">
-<meta name="twitter:card" content="summary">
+<meta property="og:description" content="tumopp">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body>
+<body data-spy="scroll" data-target="#toc">
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -70,7 +70,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/heavywatal/rtumopp">
+  <a href="https://github.com/heavywatal/rtumopp/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -85,10 +85,10 @@
 
       
 
-      </header><div class="row">
+      </header><script src="growth_files/header-attrs-2.1/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Visualize population growth</h1>
+      <h1 data-toc-skip>Visualize population growth</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/heavywatal/rtumopp/blob/master/vignettes/growth.Rmd"><code>vignettes/growth.Rmd</code></a></small>
@@ -99,51 +99,51 @@
     
     
 <p>Following code extracts demographic history from population table, and draws the right panel of Fig. 5.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(magrittr)</span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tumopp)</span>
-<span id="cb1-4"><a href="#cb1-4"></a></span>
-<span id="cb1-5"><a href="#cb1-5"></a>.alt =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">k =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">8</span>, <span class="dv">2</span> <span class="op">**</span><span class="st"> </span><span class="dv">30</span>))</span>
-<span id="cb1-6"><a href="#cb1-6"></a>.const =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">D =</span> 3L, <span class="dt">C =</span> <span class="st">"hex"</span>, <span class="dt">N =</span> 16384L, <span class="dt">L =</span> <span class="st">"const"</span>)</span>
-<span id="cb1-7"><a href="#cb1-7"></a>argslist =<span class="st"> </span>tumopp<span class="op">::</span><span class="kw"><a href="https://heavywatal.github.io/rtumopp/reference/tumopp.html">make_args</a></span>(<span class="dt">alt =</span> .alt, <span class="dt">const =</span> .const, <span class="dt">each =</span> 1L)</span>
-<span id="cb1-8"><a href="#cb1-8"></a>results =<span class="st"> </span>tumopp<span class="op">::</span><span class="kw"><a href="https://heavywatal.github.io/rtumopp/reference/tumopp.html">tumopp</a></span>(argslist)</span>
-<span id="cb1-9"><a href="#cb1-9"></a></span>
-<span id="cb1-10"><a href="#cb1-10"></a>df =<span class="st"> </span>results <span class="op">%&gt;%</span></span>
-<span id="cb1-11"><a href="#cb1-11"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">demography =</span> purrr<span class="op">::</span><span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span>(population, <span class="op">~</span>{</span>
-<span id="cb1-12"><a href="#cb1-12"></a>    tumopp<span class="op">::</span><span class="kw"><a href="https://heavywatal.github.io/rtumopp/reference/demography.html">extract_history</a></span>(.x) <span class="op">%&gt;%</span><span class="st"> </span>tumopp<span class="op">::</span><span class="kw"><a href="https://heavywatal.github.io/rtumopp/reference/demography.html">summarise_demography</a></span>()</span>
-<span id="cb1-13"><a href="#cb1-13"></a>  })) <span class="op">%&gt;%</span></span>
-<span id="cb1-14"><a href="#cb1-14"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(shape, demography) <span class="op">%&gt;%</span></span>
-<span id="cb1-15"><a href="#cb1-15"></a><span class="st">  </span>tidyr<span class="op">::</span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span>(<span class="st">"demography"</span>)</span>
-<span id="cb1-16"><a href="#cb1-16"></a></span>
-<span id="cb1-17"><a href="#cb1-17"></a>.breaks =<span class="st"> </span>.alt[[<span class="st">"k"</span>]]</span>
-<span id="cb1-18"><a href="#cb1-18"></a>.labels =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span>(.breaks <span class="op">&lt;</span><span class="st"> </span><span class="fl">1e6</span>, .breaks, <span class="kw"><a href="https://rdrr.io/r/base/expression.html">expression</a></span>(infinity))</span>
-<span id="cb1-19"><a href="#cb1-19"></a>.values =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/setNames.html">setNames</a></span>(<span class="kw"><a href="https://rdrr.io/r/grDevices/gray.html">grey</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.666</span>, <span class="fl">0.4</span>, <span class="dv">0</span>)), .breaks)</span>
-<span id="cb1-20"><a href="#cb1-20"></a></span>
-<span id="cb1-21"><a href="#cb1-21"></a>labels_log10 =<span class="st"> </span><span class="cf">function</span>(breaks) {</span>
-<span id="cb1-22"><a href="#cb1-22"></a>  <span class="kw"><a href="https://rdrr.io/r/base/parse.html">parse</a></span>(<span class="dt">text =</span> <span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"10^"</span>, <span class="kw"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>(breaks)))</span>
-<span id="cb1-23"><a href="#cb1-23"></a>}</span>
-<span id="cb1-24"><a href="#cb1-24"></a></span>
-<span id="cb1-25"><a href="#cb1-25"></a>fig5b =<span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(df, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(time, size, <span class="dt">group =</span> shape)) <span class="op">+</span></span>
-<span id="cb1-26"><a href="#cb1-26"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">colour =</span> <span class="kw"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(shape)), <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">alpha =</span> <span class="fl">0.8</span>) <span class="op">+</span></span>
-<span id="cb1-27"><a href="#cb1-27"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_log10</a></span>(<span class="dt">breaks =</span> <span class="dv">10</span> <span class="op">**</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span>(4L), <span class="dt">labels =</span> labels_log10) <span class="op">+</span></span>
-<span id="cb1-28"><a href="#cb1-28"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_colour_manual</a></span>(</span>
-<span id="cb1-29"><a href="#cb1-29"></a>    <span class="dt">name =</span> <span class="kw"><a href="https://rdrr.io/r/base/expression.html">expression</a></span>(<span class="kw"><a href="https://rdrr.io/r/grDevices/plotmath.html">italic</a></span>(k)),</span>
-<span id="cb1-30"><a href="#cb1-30"></a>    <span class="dt">labels =</span> .labels, <span class="dt">values =</span> .values,</span>
-<span id="cb1-31"><a href="#cb1-31"></a>    <span class="dt">guide =</span> <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html">guide_legend</a></span>(<span class="dt">reverse =</span> <span class="ot">TRUE</span>, <span class="dt">override.aes =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">size =</span> <span class="dv">3</span>))</span>
-<span id="cb1-32"><a href="#cb1-32"></a>  ) <span class="op">+</span></span>
-<span id="cb1-33"><a href="#cb1-33"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="dt">x =</span> <span class="kw"><a href="https://rdrr.io/r/base/expression.html">expression</a></span>(Time<span class="op">~</span>(<span class="kw"><a href="https://rdrr.io/r/grDevices/plotmath.html">italic</a></span>(t))), <span class="dt">y =</span> <span class="st">"# of tumor cells"</span>) <span class="op">+</span></span>
-<span id="cb1-34"><a href="#cb1-34"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>() <span class="op">+</span></span>
-<span id="cb1-35"><a href="#cb1-35"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(</span>
-<span id="cb1-36"><a href="#cb1-36"></a>    <span class="dt">panel.grid =</span> <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span>(),</span>
-<span id="cb1-37"><a href="#cb1-37"></a>    <span class="dt">axis.ticks =</span> <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span>(),</span>
-<span id="cb1-38"><a href="#cb1-38"></a>    <span class="dt">legend.key.height =</span> <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/reexports.html">unit</a></span>(<span class="fl">0.7</span>, <span class="st">"lines"</span>),</span>
-<span id="cb1-39"><a href="#cb1-39"></a>    <span class="dt">legend.position =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.98</span>, <span class="fl">0.02</span>), <span class="dt">legend.justification =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">0</span>)</span>
-<span id="cb1-40"><a href="#cb1-40"></a>  )</span>
-<span id="cb1-41"><a href="#cb1-41"></a></span>
-<span id="cb1-42"><a href="#cb1-42"></a><span class="co"># ggsave("fig5b.png", fig5b, width = 3, height = 3)</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">magrittr</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggplot2</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tumopp</span>)
+
+<span class="no">.alt</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">k</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">8</span>, <span class="fl">2</span> ** <span class="fl">30</span>))
+<span class="no">.const</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">D</span> <span class="kw">=</span> <span class="fl">3L</span>, <span class="kw">C</span> <span class="kw">=</span> <span class="st">"hex"</span>, <span class="kw">N</span> <span class="kw">=</span> <span class="fl">16384L</span>, <span class="kw">L</span> <span class="kw">=</span> <span class="st">"const"</span>)
+<span class="no">argslist</span> <span class="kw">=</span> <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/tumopp.html">make_args</a></span>(<span class="kw">alt</span> <span class="kw">=</span> <span class="no">.alt</span>, <span class="kw">const</span> <span class="kw">=</span> <span class="no">.const</span>, <span class="kw">each</span> <span class="kw">=</span> <span class="fl">1L</span>)
+<span class="no">results</span> <span class="kw">=</span> <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/tumopp.html">tumopp</a></span>(<span class="no">argslist</span>)
+
+<span class="no">df</span> <span class="kw">=</span> <span class="no">results</span> <span class="kw">%&gt;%</span>
+  <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">demography</span> <span class="kw">=</span> <span class="kw pkg">purrr</span><span class="kw ns">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span>(<span class="no">population</span>, ~{
+    <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/demography.html">extract_history</a></span>(<span class="no">.x</span>) <span class="kw">%&gt;%</span> <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/demography.html">summarise_demography</a></span>()
+  })) <span class="kw">%&gt;%</span>
+  <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">shape</span>, <span class="no">demography</span>) <span class="kw">%&gt;%</span>
+  <span class="kw pkg">tidyr</span><span class="kw ns">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span>(<span class="st">"demography"</span>)
+
+<span class="no">.breaks</span> <span class="kw">=</span> <span class="no">.alt</span><span class="kw">[[</span><span class="st">"k"</span>]]
+<span class="no">.labels</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span>(<span class="no">.breaks</span> <span class="kw">&lt;</span> <span class="fl">1e6</span>, <span class="no">.breaks</span>, <span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span>(<span class="no">infinity</span>))
+<span class="no">.values</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html">setNames</a></span>(<span class="fu"><a href="https://rdrr.io/r/grDevices/gray.html">grey</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.666</span>, <span class="fl">0.4</span>, <span class="fl">0</span>)), <span class="no">.breaks</span>)
+
+<span class="no">labels_log10</span> <span class="kw">=</span> <span class="kw">function</span>(<span class="no">breaks</span>) {
+  <span class="fu"><a href="https://rdrr.io/r/base/parse.html">parse</a></span>(<span class="kw">text</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"10^"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>(<span class="no">breaks</span>)))
+}
+
+<span class="no">fig5b</span> <span class="kw">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="no">time</span>, <span class="no">size</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="no">shape</span>)) +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">colour</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(<span class="no">shape</span>)), <span class="kw">size</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">alpha</span> <span class="kw">=</span> <span class="fl">0.8</span>) +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_log10</a></span>(<span class="kw">breaks</span> <span class="kw">=</span> <span class="fl">10</span> ** <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span>(<span class="fl">4L</span>), <span class="kw">labels</span> <span class="kw">=</span> <span class="no">labels_log10</span>) +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_colour_manual</a></span>(
+    <span class="kw">name</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span>(<span class="fu"><a href="https://rdrr.io/r/grDevices/plotmath.html">italic</a></span>(<span class="no">k</span>)),
+    <span class="kw">labels</span> <span class="kw">=</span> <span class="no">.labels</span>, <span class="kw">values</span> <span class="kw">=</span> <span class="no">.values</span>,
+    <span class="kw">guide</span> <span class="kw">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html">guide_legend</a></span>(<span class="kw">reverse</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">override.aes</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">size</span> <span class="kw">=</span> <span class="fl">3</span>))
+  ) +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span>(<span class="no">Time</span>~(<span class="fu"><a href="https://rdrr.io/r/grDevices/plotmath.html">italic</a></span>(<span class="no">t</span>))), <span class="kw">y</span> <span class="kw">=</span> <span class="st">"# of tumor cells"</span>) +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>() +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(
+    <span class="kw">panel.grid</span> <span class="kw">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span>(),
+    <span class="kw">axis.ticks</span> <span class="kw">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span>(),
+    <span class="kw">legend.key.height</span> <span class="kw">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/reexports.html">unit</a></span>(<span class="fl">0.7</span>, <span class="st">"lines"</span>),
+    <span class="kw">legend.position</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.98</span>, <span class="fl">0.02</span>), <span class="kw">legend.justification</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">0</span>)
+  )
+
+<span class="co"># ggsave("fig5b.png", fig5b, width = 3, height = 3)</span></pre></body></html></div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
       </div>
 
@@ -156,7 +156,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

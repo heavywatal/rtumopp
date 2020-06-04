@@ -6,19 +6,19 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Multi-region sampling • tumopp</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Multi-region sampling">
-<meta property="og:description" content="">
-<meta name="twitter:card" content="summary">
+<meta property="og:description" content="tumopp">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body>
+<body data-spy="scroll" data-target="#toc">
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -70,7 +70,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/heavywatal/rtumopp">
+  <a href="https://github.com/heavywatal/rtumopp/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -85,10 +85,10 @@
 
       
 
-      </header><div class="row">
+      </header><script src="sampling_files/header-attrs-2.1/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Multi-region sampling</h1>
+      <h1 data-toc-skip>Multi-region sampling</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/heavywatal/rtumopp/blob/master/vignettes/sampling.Rmd"><code>vignettes/sampling.Rmd</code></a></small>
@@ -102,40 +102,35 @@
 <h2 class="hasAnchor">
 <a href="#workflow" class="anchor"></a>Workflow</h2>
 <p>Perform simulation and extract population data:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tumopp)</span>
-<span id="cb1-2"><a href="#cb1-2"></a>result =<span class="st"> </span>tumopp<span class="op">::</span><span class="kw"><a href="https://heavywatal.github.io/rtumopp/reference/tumopp.html">tumopp</a></span>(<span class="st">"-N20000 -D3 -Chex -k10 -Lconst"</span>)</span>
-<span id="cb1-3"><a href="#cb1-3"></a>population =<span class="st"> </span>result<span class="op">$</span>population[[1L]]</span>
-<span id="cb1-4"><a href="#cb1-4"></a>extant =<span class="st"> </span>population <span class="op">%&gt;%</span><span class="st"> </span>tumopp<span class="op">::</span><span class="kw"><a href="https://heavywatal.github.io/rtumopp/reference/population.html">filter_extant</a></span>()</span>
-<span id="cb1-5"><a href="#cb1-5"></a>graph =<span class="st"> </span>tumopp<span class="op">::</span><span class="kw"><a href="https://heavywatal.github.io/rtumopp/reference/graph.html">make_igraph</a></span>(population)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tumopp</span>)
+<span class="no">result</span> <span class="kw">=</span> <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/tumopp.html">tumopp</a></span>(<span class="st">"-N20000 -D3 -Chex -k10 -Lconst"</span>)
+<span class="no">population</span> <span class="kw">=</span> <span class="no">result</span>$<span class="no">population</span><span class="kw">[[</span><span class="fl">1L</span>]]
+<span class="no">extant</span> <span class="kw">=</span> <span class="no">population</span> <span class="kw">%&gt;%</span> <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/population.html">filter_extant</a></span>()
+<span class="no">graph</span> <span class="kw">=</span> <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/graph.html">make_igraph</a></span>(<span class="no">population</span>)</pre></body></html></div>
 <p>Sample cells and put neutral mutations on the lineages:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>regions =<span class="st"> </span>tumopp<span class="op">::</span><span class="kw"><a href="https://heavywatal.github.io/rtumopp/reference/sample.html">sample_uniform_regions</a></span>(extant, <span class="dt">nsam =</span> 8L, <span class="dt">ncell =</span> 100L)</span>
-<span id="cb2-2"><a href="#cb2-2"></a>subgraph =<span class="st"> </span>tumopp<span class="op">::</span><span class="kw"><a href="https://heavywatal.github.io/rtumopp/reference/graph.html">subtree</a></span>(graph, purrr<span class="op">::</span><span class="kw"><a href="https://purrr.tidyverse.org/reference/flatten.html">flatten_int</a></span>(regions<span class="op">$</span>id))</span>
-<span id="cb2-3"><a href="#cb2-3"></a>mutated =<span class="st"> </span>tumopp<span class="op">::</span><span class="kw"><a href="https://heavywatal.github.io/rtumopp/reference/ms.html">mutate_clades</a></span>(subgraph, <span class="dt">mu =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">regions</span> <span class="kw">=</span> <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/sample.html">sample_uniform_regions</a></span>(<span class="no">extant</span>, <span class="kw">nsam</span> <span class="kw">=</span> <span class="fl">8L</span>, <span class="kw">ncell</span> <span class="kw">=</span> <span class="fl">100L</span>)
+<span class="no">subgraph</span> <span class="kw">=</span> <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/graph.html">subtree</a></span>(<span class="no">graph</span>, <span class="kw pkg">purrr</span><span class="kw ns">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/flatten.html">flatten_int</a></span>(<span class="no">regions</span>$<span class="no">id</span>))
+<span class="no">mutated</span> <span class="kw">=</span> <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/ms.html">mutate_clades</a></span>(<span class="no">subgraph</span>, <span class="kw">mu</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></body></html></div>
 <p>Summarize and visualize VAF:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>vaf =<span class="st"> </span>tumopp<span class="op">::</span><span class="kw"><a href="https://heavywatal.github.io/rtumopp/reference/vaf.html">tally_vaf</a></span>(regions<span class="op">$</span>id, mutated<span class="op">$</span>carriers) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>()</span>
-<span id="cb3-2"><a href="#cb3-2"></a>vaf_tidy =<span class="st"> </span>vaf <span class="op">%&gt;%</span></span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="st">  </span>tumopp<span class="op">::</span><span class="kw"><a href="https://heavywatal.github.io/rtumopp/reference/vaf.html">filter_detectable</a></span>(<span class="fl">0.05</span>) <span class="op">%&gt;%</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a><span class="st">  </span>tumopp<span class="op">::</span><span class="kw"><a href="https://heavywatal.github.io/rtumopp/reference/vaf.html">sort_vaf</a></span>() <span class="op">%&gt;%</span></span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="st">  </span>tumopp<span class="op">::</span><span class="kw"><a href="https://heavywatal.github.io/rtumopp/reference/vaf.html">tidy_vaf</a></span>() <span class="op">%&gt;%</span></span>
-<span id="cb3-6"><a href="#cb3-6"></a><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>()</span>
-<span id="cb3-7"><a href="#cb3-7"></a></span>
-<span id="cb3-8"><a href="#cb3-8"></a><span class="kw">ggplot</span>(vaf_tidy, <span class="kw">aes</span>(sample, site)) <span class="op">+</span></span>
-<span id="cb3-9"><a href="#cb3-9"></a><span class="st">  </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> frequency)) <span class="op">+</span></span>
-<span id="cb3-10"><a href="#cb3-10"></a><span class="st">  </span><span class="kw">scale_fill_distiller</span>(<span class="dt">palette =</span> <span class="st">"Spectral"</span>, <span class="dt">limit =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">guide =</span> <span class="ot">FALSE</span>) <span class="op">+</span></span>
-<span id="cb3-11"><a href="#cb3-11"></a><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">expand =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">vaf</span> <span class="kw">=</span> <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/vaf.html">tally_vaf</a></span>(<span class="no">regions</span>$<span class="no">id</span>, <span class="no">mutated</span>$<span class="no">carriers</span>) <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>()
+<span class="no">vaf_tidy</span> <span class="kw">=</span> <span class="no">vaf</span> <span class="kw">%&gt;%</span>
+  <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/vaf.html">filter_detectable</a></span>(<span class="fl">0.05</span>) <span class="kw">%&gt;%</span>
+  <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/vaf.html">sort_vaf</a></span>() <span class="kw">%&gt;%</span>
+  <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/vaf.html">tidy_vaf</a></span>() <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>()
+
+<span class="fu">ggplot</span>(<span class="no">vaf_tidy</span>, <span class="fu">aes</span>(<span class="no">sample</span>, <span class="no">site</span>)) +
+  <span class="fu">geom_tile</span>(<span class="fu">aes</span>(<span class="kw">fill</span> <span class="kw">=</span> <span class="no">frequency</span>)) +
+  <span class="fu">scale_fill_distiller</span>(<span class="kw">palette</span> <span class="kw">=</span> <span class="st">"Spectral"</span>, <span class="kw">limit</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>, <span class="fl">1</span>), <span class="kw">guide</span> <span class="kw">=</span> <span class="fl">FALSE</span>) +
+  <span class="fu">coord_cartesian</span>(<span class="kw">expand</span> <span class="kw">=</span> <span class="fl">FALSE</span>)</pre></body></html></div>
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-        <div id="tocnav">
-      <h2 class="hasAnchor">
-<a href="#tocnav" class="anchor"></a>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-<li><a href="#workflow">Workflow</a></li>
-      </ul>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
 </div>
-      </div>
 
 </div>
 
@@ -146,7 +141,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
