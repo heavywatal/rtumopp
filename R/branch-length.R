@@ -43,100 +43,179 @@ within_between_samples = function(graph, regions) {
         between = mean_branch_length(graph, row_i$id, row_j$id)
       )
     }) %>%
-    dplyr::mutate(
-      within = 0.5 * (.data$within_i + .data$within_j),
-      # HSM = fst_HSM(.data$within, .data$between),
-      fst = fst_HBK(.data$within, .data$between)
-    )
+    dplyr::mutate(within = 0.5 * (.data$within_i + .data$within_j))
 }
 
-# Fst by Hudson, Slatkin, and Maddison (1992).
-fst_HSM = function(within, between) {
-  1 - within / between
+#' @details
+#' `pairwise_branch_length` summarizes lengths within/between regions.
+#' @param regions output of `sample_uniform_regions()`
+#' @rdname branch-length
+#' @export
+dist_genealogy = function(graph, cell_ids) {
+  vids = lapply(cell_ids, igraphlite::as_vids, graph = graph)
+  n_regions = length(vids)
+  .dn = list(seq_len(n_regions), seq_len(n_regions))
+  mtrx = matrix(0, n_regions, n_regions, dimnames = .dn)
+  for (i in seq_len(n_regions)) {
+    for (j in seq.int(i, n_regions)) {
+      mtrx[i, j] = mean_branch_length(graph, vids[[i]], vids[[j]])
+      mtrx[j, i] = mtrx[i, j]
+    }
+  }
+  mtrx
 }
 
-# Kst by Hudson, Boos, and Kaplan (1992).
-fst_HBK = function(within, between, n = 2) {
+if (FALSE) {
+# #######1#########2#########3#########4#########5#########6#########7#########
+
+load_all()
+
+result = tumopp::tumopp("-N20000 -D3 -Chex -k10 -Lconst")
+population = result$population[[1L]]
+extant = population %>% tumopp::filter_extant()
+graph = tumopp::make_igraph(population)
+regions = tumopp::sample_uniform_regions(extant, nsam = 5L, ncell = 200L)
+subgraph = tumopp::subtree(graph, purrr::flatten_int(regions$id))
+
+eu = dist(regions[,-4])
+m = dist_genealogy(subgraph, regions[["id"]])
+w = num_pairs(lengths(regions[["id"]]))
+
+bench::mark(
+  within_between_samples(subgraph, regions),
+  dist(regions[,-4]),
+  dist_genealogy(subgraph, regions[["id"]]),
+  check = FALSE
+)
+
+dist_genealogy(subgraph, regions[["id"]])
+mean(pop_spec_fst(subgraph, regions[["id"]], "between"))
+mean(pop_spec_fst(subgraph, regions[["id"]], "approx"))
+mean(pop_spec_fst(subgraph, regions[["id"]], "total"))
+mean(pop_spec_fst(subgraph, regions[["id"]], "unbiased"))
+
+bench::mark(
+  fst_between(subgraph, regions[["id"]]),
+  fst_tfor(subgraph, regions[["id"]]),
+  fst_total(subgraph, regions[["id"]]),
+  fst_unbiased(subgraph, regions[["id"]]),
+  check = FALSE
+)
+
+plot(c(dist(regions[,-4])), m[lower.tri(m)])
+
+# #######1#########2#########3#########4#########5#########6#########7#########
+}
+
+num_pairs = function(sample_sizes) {
+  m = sample_sizes %*% t(sample_sizes)
+  diag(m) = diag(m) * (sample_sizes - 1) / sample_sizes
+  m
+}
+
+offdiag = function(x) x[lower.tri(x) | upper.tri(x)]
+
+pop_spec_fst = function(graph, cell_ids, reference = c("between", "total", "approx", "unbiased")) {
+  reference = match.arg(reference)
+  sample_sizes = lengths(cell_ids)
+  m = dist_genealogy(graph, cell_ids)
+  w = num_pairs(sample_sizes)
+  avg_t_ref = if (reference %in% c("total", "unbiased")) {
+    weighted_mean(m, w)
+  } else {
+    weighted_mean(offdiag(m), offdiag(w))
+  }
+  if (reference == "approx") {
+    (avg_t_ref - diag(m)) / (avg_t_ref + diag(m) / (length(cell_ids) - 1))
+  } else if (reference == "unbiased") {
+    (avg_t_ref - diag(m)) / (avg_t_ref - diag(m) / length(cell_ids))
+  } else {
+    1 - diag(m) / avg_t_ref
+  }
+}
+
+fst_unbiased = function(graph, cell_ids) {
+  sample_sizes = lengths(cell_ids)
+  m = dist_genealogy(graph, cell_ids)
+  w = num_pairs(sample_sizes)
+  avg_t_ref = weighted_mean(m, w)
+  (avg_t_ref - diag(m)) / (avg_t_ref - diag(m) / length(cell_ids))
+}
+
+fst_between = function(graph, cell_ids, weight = FALSE) {
+  sample_sizes = lengths(cell_ids)
+  m = dist_genealogy(graph, cell_ids)
+  w = num_pairs(sample_sizes)
+  avg_t_between = weighted_mean(offdiag(m), offdiag(w))
+  avg_t_within = if (weight) {
+    weighted_mean(diag(m), sample_sizes)
+  } else {
+    mean(diag(m))
+  }
+  gamma_Slatkin(avg_t_within, avg_t_between, length(cell_ids))
+}
+
+fst_tfor = function(graph, cell_ids, weight = FALSE) {
+  sample_sizes = lengths(cell_ids)
+  m = dist_genealogy(graph, cell_ids)
+  w = num_pairs(sample_sizes)
+  avg_t_total = weighted_mean(m, w)
+  avg_t_within = if (weight) {
+    weighted_mean(diag(m), sample_sizes)
+  } else {
+    mean(diag(m))
+  }
+  1 - avg_t_within / avg_t_total
+}
+
+# Eq. 8 in Slatkin 1991 Genome Res.
+fst_total = function(graph, cell_ids, weight = FALSE) {
+  vids = lapply(cell_ids, igraphlite::as_vids, graph = graph)
+  avg_t_total = mean_branch_length(graph, unique(unlist(vids)))
+  t_within = purrr::map_dbl(vids, mean_branch_length, graph = graph)
+  avg_t_within = if (weight) {
+    # K_ST by Hudson, Boos, and Kaplan (1992) MBE
+    weighted_mean(t_within, lengths(cell_ids))
+  } else {
+    mean(t_within)
+  }
+  1 - avg_t_within / avg_t_total
+}
+
+weighted_mean = function(x, w, na.rm = TRUE) {
+  sum(x * w, na.rm = na.rm) / sum(w, na.rm = na.rm)
+}
+
+pairwise_fst = function(x, weight = NULL) {
+  ltri = lower.tri(x)
+  col_tri = col(x)[ltri]
+  row_tri = row(x)[ltri]
+  diag_x = diag(x, names = FALSE)
+  if (missing(weight)) {
+    within = 0.5 * (diag_x[col_tri] + diag_x[row_tri])
+  } else {
+    w = diag(weight, names = FALSE)
+    wx = w * diag_x
+    within = (wx[col_tri] + wx[row_tri]) / (w[col_tri] + w[row_tri])
+  }
+  between = x[ltri]
+  x[ltri] = gamma_Slatkin(within, between, 2)
+  as.dist(x)
+}
+
+# F_ST by Hudson, Slatkin, and Maddison (1992).
+# gamma_ST by Nei (1982).
+gamma_Slatkin = function(within, between, n = Inf) {
   (between - within) / (between + within / (n - 1))
 }
 
-Kst = function(graph, regions) {
-  vids = lapply(regions$id, igraphlite::as_vids, graph = graph)
-  t_within = purrr::map_dbl(vids, ~ mean_branch_length(graph, .x))
-  t_total = mean_branch_length(graph, unique(unlist(vids)))
-  1 - mean(t_within) / t_total
+hsm_Slatkin = function(within, between) {
+  1 - within / between
 }
 
-fst_HBK_roa = function(vaf) {
-  avg_H_S = vaf %>%
-    dplyr::mutate_all(Hexp) %>%
-    dplyr::summarise_all(mean) %>%
-    unlist()
-  combinations(vaf) %>%
-    dplyr::mutate(
-      H_S = (avg_H_S[.data$region_i] + avg_H_S[.data$region_j]) / 2,
-      H_T = purrr::map2_dbl(.data$region_i, .data$region_j, function(region_i, region_j) {
-        p_T = (vaf[[region_i]] + vaf[[region_j]]) / 2
-        mean(Hexp(p_T))
-      }),
-      fst = 1 - .data$H_S / .data$H_T
-    )
-}
-
-fst_HBK_aor = function(vaf) {
-  H_S = dplyr::mutate_all(vaf, Hexp)
-  df = combinations(vaf)
-  df$fst = purrr::pmap_dbl(df, function(region_i, region_j) {
-    p_T = (vaf[[region_i]] + vaf[[region_j]]) / 2
-    H_T = Hexp(p_T)
-    H_Sij = (H_S[[region_i]] + H_S[[region_j]]) / 2
-    mean(1 - H_Sij / H_T, na.rm = TRUE)
-    # roa
-    # 1 - mean(H_Sij, na.rm = TRUE) / mean(H_T, na.rm = TRUE)
-  })
-  df
-}
-
-# recommended
-fst_HSM_roa = function(vaf, n = Inf) {
-  df = combinations(vaf)
-  df$fst = purrr::pmap_dbl(df, function(region_i, region_j) {
-    p_i = vaf[[region_i]]
-    p_j = vaf[[region_j]]
-    N = bhatia_numerator(p_i, p_j, n)
-    D = bhatia_denominator(p_i, p_j)
-    mean(N, na.rm = TRUE) / mean(D, na.rm = TRUE)
-  })
-  df
-}
-
-# for testing
-fst_HSM_aor = function(vaf, n = Inf) {
-  df = combinations(vaf)
-  df$fst = purrr::pmap_dbl(df, function(region_i, region_j) {
-    p_i = vaf[[region_i]]
-    p_j = vaf[[region_j]]
-    fst = bhatia_numerator(p_i, p_j, n) / bhatia_denominator(p_i, p_j)
-    mean(fst, na.rm = TRUE)
-  })
-  df
-}
-
-Hexp = function(p) 2 * p * (1 - p)
-
-combinations = function(vaf) {
-  tidyr::crossing(region_i = colnames(vaf), region_j = colnames(vaf)) %>%
-    dplyr::filter(.data$region_i < .data$region_j)
-}
-
-bhatia_numerator = function(p1, p2, n1 = Inf, n2 = n1) {
-  (p1 - p2)**2 - p1 * (1 - p1) / (n1 - 1) - p2 * (1 - p2) / (n2 - 1)
-}
-
-bhatia_denominator = function(p1, p2) {
-  p1 * (1 - p2) + p2 * (1 - p1)
-}
-
-fst_HSM_bhatia = function(p1, p2, n1 = Inf, n2 = n1) {
-  bhatia_numerator(p1, p2, n1, n2) / bhatia_denominator(p1, p2)
+is_within = function(sample_sizes) {
+  num_inds = sum(sample_sizes)
+  v = rep.int(seq_along(sample_sizes), sample_sizes)
+  row_pop = matrix(v, num_inds, num_inds)
+  row_pop == t(row_pop)
 }
