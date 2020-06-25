@@ -2,17 +2,32 @@
 % Please edit documentation in R/branch-length.R
 \name{mean_branch_length}
 \alias{mean_branch_length}
-\alias{within_between_samples}
+\alias{dist_genealogy}
+\alias{fst_between}
+\alias{fst_total}
+\alias{pairwise_distances}
 \title{Calculate genetic distance with igraph}
 \usage{
 mean_branch_length(graph, from = graph$sink, to = from)
 
-within_between_samples(graph, regions)
+dist_genealogy(graph, cell_ids)
+
+fst_between(m, sample_sizes = NULL)
+
+fst_total(m, sample_sizes = NULL)
+
+pairwise_distances(graph, regions)
 }
 \arguments{
 \item{graph}{igraph}
 
 \item{from, to}{igraph vertices (not cell ID)}
+
+\item{cell_ids}{id column of sampled regions}
+
+\item{m}{output from \code{dist_genealogy()}}
+
+\item{sample_sizes}{cell numbers of each region}
 
 \item{regions}{output of \code{sample_uniform_regions()}}
 }
@@ -22,5 +37,16 @@ Calculate genetic distance with igraph
 \details{
 \code{mean_branch_length} calculates mean branch length within/between sub-graphs.
 
-\code{within_between_samples} summarizes branch lengths.
+\code{dist_genealogy} summarizes branch lengths within/between regions.
+
+\code{fst_between} estimates F_ST.
+theta: Weir and Cockerham (1984); Weir and Hill (2002)
+N_ST: Lynch and Crease (1990)
+<F_ST>: Hudson, Slatkin, and Maddison (1992) Genetics
+
+\code{fst_total} estimates F_ST.
+G_ST, gamma_ST: Nei (1973, 1977, 1982)
+K_ST: Hudson, Boos, and Kaplan (1992) MBE
+
+\code{pairwise_distances} summarizes physical and genetic distances.
 }

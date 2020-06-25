@@ -93,5 +93,5 @@ distances_mrs = function(population, nsam, ncell, jitter = 0) {
     sample_uniform_regions(nsam = nsam, ncell = ncell, jitter = jitter)
   sampled = purrr::flatten_int(regions$id)
   subgraph = subtree(graph, sampled)
-  within_between_samples(subgraph, regions)
+  pairwise_distances(subgraph, regions)
 }

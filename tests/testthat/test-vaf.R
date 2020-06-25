@@ -24,10 +24,10 @@ test_that("make_vaf works", {
     subgraph = subtree(graph, sampled)
   })
   expect_silent({
-    df_distances = within_between_samples(subgraph, regions)
+    df_distances = pairwise_distances(subgraph, regions)
   })
-  expect_named(df_distances, c("region_i", "region_j", "within_i", "within_j", "euclidean", "between", "within", "fst"))
+  expect_named(df_distances, c("i", "j", "euclidean", "fst"))
   expect_equal(nrow(df_distances), choose(nsam, 2L))
-  expect_equal(df_distances, within_between_samples(graph, regions))
+  expect_equal(df_distances, pairwise_distances(graph, regions))
   expect_type(internal_nodes(subgraph, sampled, sensitivity = 0.10), "integer")
 })

@@ -140,7 +140,13 @@
 
     <pre class="usage"><span class='fu'>mean_branch_length</span>(<span class='no'>graph</span>, <span class='kw'>from</span> <span class='kw'>=</span> <span class='no'>graph</span>$<span class='no'>sink</span>, <span class='kw'>to</span> <span class='kw'>=</span> <span class='no'>from</span>)
 
-<span class='fu'>within_between_samples</span>(<span class='no'>graph</span>, <span class='no'>regions</span>)</pre>
+<span class='fu'>dist_genealogy</span>(<span class='no'>graph</span>, <span class='no'>cell_ids</span>)
+
+<span class='fu'>fst_between</span>(<span class='no'>m</span>, <span class='kw'>sample_sizes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>fst_total</span>(<span class='no'>m</span>, <span class='kw'>sample_sizes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>pairwise_distances</span>(<span class='no'>graph</span>, <span class='no'>regions</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -154,6 +160,18 @@
       <td><p>igraph vertices (not cell ID)</p></td>
     </tr>
     <tr>
+      <th>cell_ids</th>
+      <td><p>id column of sampled regions</p></td>
+    </tr>
+    <tr>
+      <th>m</th>
+      <td><p>output from <code>dist_genealogy()</code></p></td>
+    </tr>
+    <tr>
+      <th>sample_sizes</th>
+      <td><p>cell numbers of each region</p></td>
+    </tr>
+    <tr>
       <th>regions</th>
       <td><p>output of <code><a href='sample.html'>sample_uniform_regions()</a></code></p></td>
     </tr>
@@ -162,7 +180,15 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>mean_branch_length</code> calculates mean branch length within/between sub-graphs.</p>
-<p><code>within_between_samples</code> summarizes branch lengths.</p>
+<p><code>dist_genealogy</code> summarizes branch lengths within/between regions.</p>
+<p><code>fst_between</code> estimates F_ST.
+theta: Weir and Cockerham (1984); Weir and Hill (2002)
+N_ST: Lynch and Crease (1990)
+&lt;F_ST&gt;: Hudson, Slatkin, and Maddison (1992) Genetics</p>
+<p><code>fst_total</code> estimates F_ST.
+G_ST, gamma_ST: Nei (1973, 1977, 1982)
+K_ST: Hudson, Boos, and Kaplan (1992) MBE</p>
+<p><code>pairwise_distances</code> summarizes physical and genetic distances.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -85,7 +85,7 @@
 
       
 
-      </header><script src="sampling_files/header-attrs-2.1/header-attrs.js"></script><div class="row">
+      </header><script src="sampling_files/header-attrs-2.2/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Multi-region sampling</h1>
@@ -108,9 +108,9 @@
 <span class="no">extant</span> <span class="kw">=</span> <span class="no">population</span> <span class="kw">%&gt;%</span> <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/population.html">filter_extant</a></span>()
 <span class="no">graph</span> <span class="kw">=</span> <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/graph.html">make_igraph</a></span>(<span class="no">population</span>)</pre></body></html></div>
 <p>Sample cells and put neutral mutations on the lineages:</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">regions</span> <span class="kw">=</span> <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/sample.html">sample_uniform_regions</a></span>(<span class="no">extant</span>, <span class="kw">nsam</span> <span class="kw">=</span> <span class="fl">8L</span>, <span class="kw">ncell</span> <span class="kw">=</span> <span class="fl">100L</span>)
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">regions</span> <span class="kw">=</span> <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/sample.html">sample_uniform_regions</a></span>(<span class="no">extant</span>, <span class="kw">nsam</span> <span class="kw">=</span> <span class="fl">8L</span>, <span class="kw">ncell</span> <span class="kw">=</span> <span class="fl">200L</span>)
 <span class="no">subgraph</span> <span class="kw">=</span> <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/graph.html">subtree</a></span>(<span class="no">graph</span>, <span class="kw pkg">purrr</span><span class="kw ns">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/flatten.html">flatten_int</a></span>(<span class="no">regions</span>$<span class="no">id</span>))
-<span class="no">mutated</span> <span class="kw">=</span> <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/ms.html">mutate_clades</a></span>(<span class="no">subgraph</span>, <span class="kw">mu</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></body></html></div>
+<span class="no">mutated</span> <span class="kw">=</span> <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/ms.html">mutate_clades</a></span>(<span class="no">subgraph</span>, <span class="kw">mu</span> <span class="kw">=</span> -<span class="fl">1</span>)</pre></body></html></div>
 <p>Summarize and visualize VAF:</p>
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">vaf</span> <span class="kw">=</span> <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/vaf.html">tally_vaf</a></span>(<span class="no">regions</span>$<span class="no">id</span>, <span class="no">mutated</span>$<span class="no">carriers</span>) <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>()
 <span class="no">vaf_tidy</span> <span class="kw">=</span> <span class="no">vaf</span> <span class="kw">%&gt;%</span>

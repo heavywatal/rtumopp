@@ -29,9 +29,9 @@ graph = tumopp::make_igraph(population)
 Sample cells and put neutral mutations on the lineages:
 
 ```{r sample, eval=FALSE}
-regions = tumopp::sample_uniform_regions(extant, nsam = 8L, ncell = 100L)
+regions = tumopp::sample_uniform_regions(extant, nsam = 8L, ncell = 200L)
 subgraph = tumopp::subtree(graph, purrr::flatten_int(regions$id))
-mutated = tumopp::mutate_clades(subgraph, mu = 1)
+mutated = tumopp::mutate_clades(subgraph, mu = -1)
 ```
 
 Summarize and visualize VAF:

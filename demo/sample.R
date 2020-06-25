@@ -1,15 +1,18 @@
 library(tidyverse)
 library(tumopp)
 
-(.result = tumopp("-N40000 -D2 -Chex -k24 -Lconst"))
-(.population = .result$population[[1L]])
-(.graph = .result$graph[[1L]])
-(.extant = .population %>% filter_extant())
+# load_all()
 
-(.regions = sample_uniform_regions(.extant, 8L, 100L))
+(result = tumopp("-N40000 -D2 -Chex -k24 -Lconst"))
+(population = result$population[[1L]])
+(graph = result$graph[[1L]])
+(extant = population %>% filter_extant())
 
-.extant %>%
-  dplyr::left_join(tumopp:::tidy_regions(.regions), by = "id") %>%
+(regions = sample_uniform_regions(extant, 8L, 100L))
+subgraph = tumopp::subtree(graph, purrr::flatten_chr(regions$id))
+
+extant %>%
+  dplyr::left_join(tumopp:::tidy_regions(regions), by = "id") %>%
   plot_lattice2d(size = 0.3) +
   geom_point(data = function(x) {
     dplyr::filter(x, !is.na(region))
@@ -18,14 +21,13 @@ library(tumopp)
 
 # #######1#########2#########3#########4#########5#########6#########7#########
 
-.tidy = make_vaf(.graph, .regions$id, -1) %>% print()
+.tidy = make_vaf(graph, regions$id, -1) %>% print()
 
-.subgraph = tumopp::subtree(.graph, purrr::flatten_chr(.regions$id))
-.mutated = mutate_clades(.subgraph, mu = 1)
-.mutated = mutate_clades(.subgraph, mu = -1)
-.mutated = mutate_clades(.subgraph, segsites = 1000L)
+mutated = mutate_clades(subgraph, mu = 1)
+mutated = mutate_clades(subgraph, mu = -1)
+mutated = mutate_clades(subgraph, segsites = 1000L)
 
-.vaf = tally_vaf(.regions$id, .mutated$carriers) %>% print()
+.vaf = tally_vaf(regions$id, mutated$carriers) %>% print()
 .tidy = .vaf %>%
   filter_detectable(0.05) %>%
   sort_vaf() %>%
@@ -40,12 +42,18 @@ ggplot(.tidy, aes(sample, site)) +
 
 # #######1#########2#########3#########4#########5#########6#########7#########
 
-.distances = within_between_samples(.subgraph, .regions) %>% print()
+distances = pairwise_distances(subgraph, regions) %>% print()
 
-.xmax = max(.distances$euclidean)
-.ymax = max(max(.distances$fst), 0.6)
-.distances %>%
+.xmax = max(distances$euclidean)
+.ymax = max(max(distances$fst), 0.6)
+distances %>%
   ggplot(aes(euclidean, fst)) +
   geom_point() +
   stat_smooth(method = lm, formula = y ~ x + 0) +
   coord_cartesian(xlim = c(0, .xmax), ylim = c(0, .ymax))
+
+m = dist_genealogy(subgraph, regions[["id"]])
+fst_between(m)
+fst_total(m)
+
+w = num_pairs(lengths(regions[["id"]]))
