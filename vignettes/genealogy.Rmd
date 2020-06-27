@@ -1,0 +1,72 @@
+---
+title: "Visualize cell genealogy"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Visualize cell genealogy}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The genealogy of sampled cells can be visualized with the code like this:
+
+```{r genealogy}
+library(magrittr)
+library(ggplot2)
+library(tumopp)
+
+result = tumopp::tumopp("-N4096 -D3 -Chex -k1e6 -Lconst")
+population = result$population[[1L]]
+graph = result$graph[[1L]]
+
+extant = population %>% tumopp::filter_extant()
+regions = tumopp::sample_uniform_regions(extant, nsam = 8L, ncell = 4L)
+subgraph = tumopp::subtree(graph, purrr::flatten_int(regions$id))
+
+tbl_tree = subgraph %>% augment_genealogy()
+
+p = gggenealogy(tbl_tree) +
+  theme_classic() + theme(
+    axis.title.y = element_blank(), axis.text.y = element_blank(),
+    axis.ticks.y = element_blank(), axis.line.y = element_blank()
+  )
+
+# ggsave("sample-tree.png", p, width = 4, height = 4)
+```
+
+The left panel of Fig. 5. can be drawn like this:
+
+```{r fig5a}
+.alt = list(k = c(1, 8, 2 ** 30))
+.const = list(D = 3L, C = "hex", L = "const", N = 4096L)
+args_table = tumopp::make_args(alt = .alt, const = .const, each = 1L)
+results = tumopp::tumopp(args_table)
+
+df = results %>%
+  dplyr::arrange(shape) %>%
+  dplyr::mutate(k = as.list(ifelse(shape < 1e6, shape, expression(infinity)))) %>%
+  dplyr::mutate(genealogy = parallel::mclapply(graph, augment_genealogy))
+
+.max_age = max(purrr::map_dbl(df[["genealogy"]], ~{max(.x$age)}))
+
+plts = df %>% purrr::pmap(function(k, shape, genealogy, ...) {
+  gggenealogy(genealogy, alpha = 0.3, size = 0.3) +
+  geom_point(
+    data = function(.) dplyr::filter(., .data$extant),
+    size = 0.8, colour = "#2B83BA", alpha = 0.2
+  ) +
+  scale_x_continuous(expand = expansion(c(0, 0.2))) +
+  coord_cartesian(xlim = c(0, .max_age)) +
+  labs(title = bquote(italic(k) == .(k))) +
+  theme_void()
+})
+
+# fig5a = cowplot::plot_grid(plotlist = rev(plts), ncol = 1L)
+# ggsave("fig5a.png", fig5a, width = 6, height = 6)
+```

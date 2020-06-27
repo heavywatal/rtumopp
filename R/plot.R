@@ -27,36 +27,6 @@ plot_lattice2d = function(.tbl, colour = "z", alpha = 1, size = 1, limit = max_a
 
 # #######1#########2#########3#########4#########5#########6#########7#########
 
-#' Plot genealogy
-#' @param .tbl tbl from layout_genealogy()
-#' @param xmax numeric
-#' @param colour character
-#' @rdname plot-igraph
-#' @export
-plot_genealogy = function(.tbl, xmax = max(.tbl$ageend), colour = "dodgerblue") {
-  ggplot2::ggplot(.tbl) +
-    ggplot2::geom_segment(ggplot2::aes_(~age, ~pos, xend = ~ageend, yend = ~posend), alpha = 0.3, size = 0.3) +
-    ggplot2::geom_point(
-      data = dplyr::filter(.tbl, .data$extant),
-      ggplot2::aes_(x = ~ageend, y = ~posend), size = 0.8, colour = colour, alpha = 0.2
-    ) +
-    ggplot2::coord_cartesian(xlim = c(0, xmax), expand = FALSE)
-}
-
-#' Plot age histogram
-#' @param alpha opacity `[0, 1]`
-#' @param ... passed to aes_()
-#' @rdname plot-igraph
-#' @export
-plot_bar_age = function(.tbl, xmax = max(.tbl$ageend), alpha = 1.0, ...) {
-  dplyr::filter(.tbl, .data$extant) %>%
-    ggplot2::ggplot(ggplot2::aes_(~ageend, ...)) +
-    ggplot2::geom_bar(alpha = alpha) +
-    ggplot2::coord_cartesian(xlim = c(0, xmax))
-}
-
-# #######1#########2#########3#########4#########5#########6#########7#########
-
 #' Plot capture_rate ~ nsam of biopsy
 #' @param data tbl from `summarize_capture_rate` or `evaluate_mrs`
 #' @param point size of a data point
