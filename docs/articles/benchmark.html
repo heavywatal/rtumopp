@@ -60,6 +60,9 @@
       <a href="../articles/benchmark.html">Efficiency of tumopp</a>
     </li>
     <li>
+      <a href="../articles/genealogy.html">Visualize cell genealogy</a>
+    </li>
+    <li>
       <a href="../articles/growth.html">Visualize population growth</a>
     </li>
     <li>
@@ -85,7 +88,7 @@
 
       
 
-      </header><script src="benchmark_files/header-attrs-2.2/header-attrs.js"></script><div class="row">
+      </header><script src="benchmark_files/header-attrs-2.3/header-attrs.js"></script><script src="benchmark_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Efficiency of tumopp</h1>
@@ -118,7 +121,7 @@
 <span class="no">unnested</span> <span class="kw">=</span> <span class="no">results</span> <span class="kw">%&gt;%</span>
   <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(-<span class="no">population</span>, -<span class="no">seed</span>) <span class="kw">%&gt;%</span>
   <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">outdir</span> <span class="kw">=</span> <span class="kw pkg">fs</span><span class="kw ns">::</span><span class="fu"><a href="http://fs.r-lib.org/reference/path_file.html">path_file</a></span>(<span class="no">outdir</span>)) <span class="kw">%&gt;%</span>
-  <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select_all.html">select_if</a></span>(~ <span class="fu">n_distinct</span>(<span class="no">.x</span>) <span class="kw">&gt;</span> <span class="fl">1L</span>) <span class="kw">%&gt;%</span>
+  <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="fu">where</span>(~ <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html">n_distinct</a></span>(<span class="no">.x</span>) <span class="kw">&gt;</span> <span class="fl">1L</span>)) <span class="kw">%&gt;%</span>
   <span class="kw pkg">tidyr</span><span class="kw ns">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span>(<span class="no">benchmark</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>()
 

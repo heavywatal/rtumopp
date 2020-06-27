@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot genealogy — plot_genealogy • tumopp</title>
+<title>Visualize cell genealogy — augment_genealogy • tumopp</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,8 @@
 
 
 
-<meta property="og:title" content="Plot genealogy — plot_genealogy" />
-<meta property="og:description" content="Plot genealogy
-Plot age histogram" />
+<meta property="og:title" content="Visualize cell genealogy — augment_genealogy" />
+<meta property="og:description" content="Visualize cell genealogy" />
 
 
 
@@ -102,6 +101,9 @@ Plot age histogram" />
       <a href="../articles/benchmark.html">Efficiency of tumopp</a>
     </li>
     <li>
+      <a href="../articles/genealogy.html">Visualize cell genealogy</a>
+    </li>
+    <li>
       <a href="../articles/growth.html">Visualize population growth</a>
     </li>
     <li>
@@ -130,45 +132,49 @@ Plot age histogram" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot genealogy</h1>
-    <small class="dont-index">Source: <a href='https://github.com/heavywatal/rtumopp/blob/master/R/plot.R'><code>R/plot.R</code></a></small>
-    <div class="hidden name"><code>plot-igraph.Rd</code></div>
+    <h1>Visualize cell genealogy</h1>
+    <small class="dont-index">Source: <a href='https://github.com/heavywatal/rtumopp/blob/master/R/plot-genealogy.R'><code>R/plot-genealogy.R</code></a></small>
+    <div class="hidden name"><code>plot-genealogy.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Plot genealogy</p>
-<p>Plot age histogram</p>
+    <p>Visualize cell genealogy</p>
     </div>
 
-    <pre class="usage"><span class='fu'>plot_genealogy</span>(<span class='no'>.tbl</span>, <span class='kw'>xmax</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span>(<span class='no'>.tbl</span>$<span class='no'>ageend</span>), <span class='kw'>colour</span> <span class='kw'>=</span> <span class='st'>"dodgerblue"</span>)
+    <pre class="usage"><span class='fu'>augment_genealogy</span>(<span class='no'>graph</span>, <span class='kw'>layout</span> <span class='kw'>=</span> <span class='kw pkg'>igraphlite</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/igraphlite/man/layout.html'>layout_reingold_tilford</a></span>)
 
-<span class='fu'>plot_bar_age</span>(<span class='no'>.tbl</span>, <span class='kw'>xmax</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span>(<span class='no'>.tbl</span>$<span class='no'>ageend</span>), <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>gggenealogy</span>(<span class='no'>data</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(), <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>.tbl</th>
-      <td><p>tbl from layout_genealogy()</p></td>
+      <th>graph</th>
+      <td><p>igraph</p></td>
     </tr>
     <tr>
-      <th>xmax</th>
-      <td><p>numeric</p></td>
+      <th>layout</th>
+      <td><p>A function or resulting data.frame.
+If not provided, <a href='https://rdrr.io/pkg/igraphlite/man/layout.html'>layout_nicely</a> is applied.</p></td>
     </tr>
     <tr>
-      <th>colour</th>
-      <td><p>character</p></td>
+      <th>data</th>
+      <td><p>tbl from <code>augment_genealogy()</code></p></td>
     </tr>
     <tr>
-      <th>alpha</th>
-      <td><p>opacity <code>[0, 1]</code></p></td>
+      <th>mapping</th>
+      <td><p><code><a href='https://ggplot2.tidyverse.org/reference/aes.html'>ggplot2::aes()</a></code></p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>passed to aes_()</p></td>
+      <td><p>passed to <code><a href='https://ggplot2.tidyverse.org/reference/geom_segment.html'>ggplot2::geom_segment()</a></code></p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p><code>augment_genealogy</code> calculates coordinates of nodes and edges for plotting.</p>
+<p><code>gggenealogy()</code> creates a basic ggplot object.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

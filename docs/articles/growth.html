@@ -60,6 +60,9 @@
       <a href="../articles/benchmark.html">Efficiency of tumopp</a>
     </li>
     <li>
+      <a href="../articles/genealogy.html">Visualize cell genealogy</a>
+    </li>
+    <li>
       <a href="../articles/growth.html">Visualize population growth</a>
     </li>
     <li>
@@ -85,7 +88,7 @@
 
       
 
-      </header><script src="growth_files/header-attrs-2.2/header-attrs.js"></script><div class="row">
+      </header><script src="growth_files/header-attrs-2.3/header-attrs.js"></script><script src="growth_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Visualize population growth</h1>
@@ -105,8 +108,8 @@
 
 <span class="no">.alt</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">k</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">8</span>, <span class="fl">2</span> ** <span class="fl">30</span>))
 <span class="no">.const</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">D</span> <span class="kw">=</span> <span class="fl">3L</span>, <span class="kw">C</span> <span class="kw">=</span> <span class="st">"hex"</span>, <span class="kw">N</span> <span class="kw">=</span> <span class="fl">16384L</span>, <span class="kw">L</span> <span class="kw">=</span> <span class="st">"const"</span>)
-<span class="no">argslist</span> <span class="kw">=</span> <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/tumopp.html">make_args</a></span>(<span class="kw">alt</span> <span class="kw">=</span> <span class="no">.alt</span>, <span class="kw">const</span> <span class="kw">=</span> <span class="no">.const</span>, <span class="kw">each</span> <span class="kw">=</span> <span class="fl">1L</span>)
-<span class="no">results</span> <span class="kw">=</span> <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/tumopp.html">tumopp</a></span>(<span class="no">argslist</span>)
+<span class="no">args_table</span> <span class="kw">=</span> <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/tumopp.html">make_args</a></span>(<span class="kw">alt</span> <span class="kw">=</span> <span class="no">.alt</span>, <span class="kw">const</span> <span class="kw">=</span> <span class="no">.const</span>, <span class="kw">each</span> <span class="kw">=</span> <span class="fl">1L</span>)
+<span class="no">results</span> <span class="kw">=</span> <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/tumopp.html">tumopp</a></span>(<span class="no">args_table</span>)
 
 <span class="no">df</span> <span class="kw">=</span> <span class="no">results</span> <span class="kw">%&gt;%</span>
   <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">demography</span> <span class="kw">=</span> <span class="kw pkg">purrr</span><span class="kw ns">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span>(<span class="no">population</span>, ~{
