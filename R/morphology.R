@@ -41,7 +41,7 @@ detect_surface = function(.tbl, se) {
   }
   if (!is.integer(.tbl$x)) .tbl = revert_coord_hex(.tbl)
   axes = c("x", "y", "z")
-  mins = dplyr::summarise_at(.tbl, axes, dplyr::funs(min))
+  mins = dplyr::summarize(.tbl, dplyr::across(axes, min))
   img = df2img(.tbl) %>% filter_surface(se)
   product = img2df(img) %>% dplyr::transmute(
     x = .data$x + mins$x - 1L,
@@ -77,11 +77,11 @@ filter_surface = function(img, se) {
 df2img = function(.tbl) {
   vars = c("x", "y", "z")
   .tbl = .tbl[vars]
-  .summary = dplyr::summarise_at(.tbl, vars, dplyr::funs(min, max))
+  .range = dplyr::summarise(.tbl, dplyr::across(dplyr::everything(), range))
   .grid = tidyr::crossing(
-    x = seq(.summary$x_min, .summary$x_max),
-    y = seq(.summary$y_min, .summary$y_max),
-    z = seq(.summary$z_min, .summary$z_max)
+    x = seq(.range[["x"]][1L], .range[["x"]][2L]),
+    y = seq(.range[["y"]][1L], .range[["y"]][2L]),
+    z = seq(.range[["z"]][1L], .range[["z"]][2L])
   )
   joined = dplyr::left_join(.grid, dplyr::mutate(.tbl, v = 1L), by = vars)
   joined = tidyr::replace_na(joined, list(v = 0L))

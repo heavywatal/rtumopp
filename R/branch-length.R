@@ -87,7 +87,7 @@ pairwise_distances = function(graph, regions) {
   tibble::tibble(
     i = .col(.dim)[ltri],
     j = .row(.dim)[ltri],
-    euclidean = c(dist(dplyr::select(regions, c("x", "y", "z")))),
+    euclidean = c(stats::dist(regions[c("x", "y", "z")])),
     fst = c(pairwise_fst(m))
   )
 }
@@ -106,7 +106,7 @@ pairwise_fst = function(x, weight = NULL) {
   }
   between = x[ltri]
   x[ltri] = 1 - within / between
-  as.dist(x)
+  stats::as.dist(x)
 }
 
 num_pairs = function(sample_sizes) {

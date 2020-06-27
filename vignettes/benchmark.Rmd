@@ -42,7 +42,7 @@ results = tumopp:::system_tumopp(args_tbl) %>% print()
 unnested = results %>%
   dplyr::select(-population, -seed) %>%
   dplyr::mutate(outdir = fs::path_file(outdir)) %>%
-  dplyr::select_if(~ n_distinct(.x) > 1L) %>%
+  dplyr::select(where(~ dplyr::n_distinct(.x) > 1L)) %>%
   tidyr::unnest(benchmark) %>%
   print()
 

@@ -5,6 +5,6 @@ test_that("write-read roundtrip works", {
     roundtrip = read_results(result$outdir, graph = TRUE)
   })
   roundtrip$directory = NULL
-  expect_equal(dplyr::select_if(result, is.atomic), dplyr::select_if(roundtrip, is.atomic))
+  expect_equal(dplyr::select(result, where(is.atomic)), dplyr::select(roundtrip, where(is.atomic)))
   expect_equal(result$population[[1]], roundtrip$population[[1]])
 })

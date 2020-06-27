@@ -33,7 +33,7 @@ from_json = function(conf) {
 
 read_boost_ini = function(file) {
   readr::read_delim(file, "=", col_names = c("key", "val"), comment = "#", trim_ws = TRUE) %>%
-    dplyr::summarise_all(function(x) paste0(x, collapse = "\t")) %>%
+    dplyr::summarize(dplyr::across(dplyr::everything(), paste0, collapse = "\t")) %>%
     paste0(collapse = "\n") %>%
     readr::read_tsv()
 }
