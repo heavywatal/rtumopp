@@ -6,8 +6,8 @@
 #' @rdname graph
 #' @export
 make_igraph = function(population) {
-  as_symbolic_edgelist(population) %>%
-    igraphlite::graph_from_data_frame()
+  el = as_symbolic_edgelist(population)
+  igraphlite::graph_from_data_frame(el)
 }
 
 as_symbolic_edgelist = function(population) {
@@ -52,25 +52,33 @@ upstream_vertices = function(graph, vids, to_mrca = TRUE) {
   vids
 }
 
+neighborhood_out = function(graph, vids) {
+  igraphlite::neighborhood(graph, vids, order = 1073741824L, mode = 1L)
+}
+
+neighborhood_in = function(graph, vids = numeric(0)) {
+  igraphlite::neighborhood(graph, vids, order = 1073741824L, mode = 2L)
+}
+
 paths_to_sink = function(graph, nodes) {
   vids = igraphlite::as_vids(graph, nodes)
   vnames = igraphlite::Vnames(graph)
-  igraphlite::neighborhood(graph, vids, order = 1073741824L, mode = 1L) %>%
-    lapply(function(x) vnames[x])
+  res = neighborhood_out(graph, vids)
+  lapply(res, function(x) vnames[x])
 }
 
 paths_to_source = function(graph, nodes = integer(0L)) {
   vids = igraphlite::as_vids(graph, nodes)
   vnames = igraphlite::Vnames(graph)
-  igraphlite::neighborhood(graph, vids, order = 1073741824L, mode = 2L) %>%
-    lapply(function(x) vnames[x])
+  res = neighborhood_in(graph, vids)
+  lapply(res, function(x) vnames[x])
 }
 
 distances_from_origin = function(graph, nodes = integer(0L)) {
   vids = igraphlite::as_vids(graph, nodes)
   origin = graph$source
-  igraphlite::shortest_paths(graph, origin, vids, mode = 1L, algorithm = "unweighted") %>%
-    as.integer()
+  res = igraphlite::shortest_paths(graph, origin, vids, mode = 1L, algorithm = "unweighted")
+  as.integer(res)
 }
 
 sink_nodes = function(graph) {
