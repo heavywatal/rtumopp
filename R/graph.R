@@ -26,7 +26,7 @@ as_symbolic_edgelist = function(population) {
 #' @export
 subtree = function(graph, nodes = integer(0L)) {
   vids = igraphlite::as_vids(graph, nodes)
-  vids = upstream_vertices(graph, vids, to_mrca = TRUE)
+  vids = upstream_vertices(graph, vids, to_mrca = FALSE)
   igraphlite::induced_subgraph(graph, vids)
 }
 
@@ -43,8 +43,8 @@ internal_nodes = function(graph, nodes, sensitivity) {
   as.integer(names(counts)[(counts / n) > sensitivity])
 }
 
-upstream_vertices = function(graph, vids, to_mrca = TRUE) {
-  vlist = igraphlite::neighborhood(graph, vids, order = 1073741824L, mode = 2L)
+upstream_vertices = function(graph, vids, to_mrca = FALSE) {
+  vlist = neighborhood_in(graph, vids)
   vids = unique(unlist(vlist, use.names = FALSE))
   if (to_mrca) {
     vids = setdiff(vids, Reduce(intersect, vlist)[-1L])
@@ -74,11 +74,14 @@ paths_to_source = function(graph, nodes = integer(0L)) {
   lapply(res, function(x) vnames[x])
 }
 
+shortest_dist_from_source = function(graph, vids = numeric(0)) {
+  res = igraphlite::shortest_paths(graph, vids, graph$source, mode = 2L, algorithm = "unweighted")
+  as.integer(res)
+}
+
 distances_from_origin = function(graph, nodes = integer(0L)) {
   vids = igraphlite::as_vids(graph, nodes)
-  origin = graph$source
-  res = igraphlite::shortest_paths(graph, origin, vids, mode = 1L, algorithm = "unweighted")
-  as.integer(res)
+  shortest_dist_from_source(graph, vids)
 }
 
 sink_nodes = function(graph) {
