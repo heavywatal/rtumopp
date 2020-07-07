@@ -29,9 +29,9 @@ extant = population %>% tumopp::filter_extant()
 regions = tumopp::sample_uniform_regions(extant, nsam = 8L, ncell = 4L)
 subgraph = tumopp::subtree(graph, purrr::flatten_int(regions$id))
 
-tbl_tree = subgraph %>% augment_genealogy()
+tbl_genealogy = subgraph %>% augment_genealogy()
 
-p = gggenealogy(tbl_tree) +
+p = gggenealogy(tbl_genealogy) +
   theme_classic() + theme(
     axis.title.y = element_blank(), axis.text.y = element_blank(),
     axis.ticks.y = element_blank(), axis.line.y = element_blank()
@@ -53,16 +53,16 @@ df = results %>%
   dplyr::mutate(k = as.list(ifelse(shape < 1e6, shape, expression(infinity)))) %>%
   dplyr::mutate(genealogy = parallel::mclapply(graph, augment_genealogy))
 
-.max_age = max(purrr::map_dbl(df[["genealogy"]], ~{max(.x$age)}))
+.max_d = max(purrr::map_dbl(df[["genealogy"]], ~{max(.x$d)}))
 
 plts = df %>% purrr::pmap(function(k, shape, genealogy, ...) {
   gggenealogy(genealogy, alpha = 0.3, size = 0.3) +
   geom_point(
-    data = function(.) dplyr::filter(., .data$extant),
+    data = function(.) dplyr::filter(., .data$node_type == "tip"),
     size = 0.8, colour = "#2B83BA", alpha = 0.2
   ) +
   scale_x_continuous(expand = expansion(c(0, 0.2))) +
-  coord_cartesian(xlim = c(0, .max_age)) +
+  coord_cartesian(xlim = c(0, .max_d)) +
   labs(title = bquote(italic(k) == .(k))) +
   theme_void()
 })

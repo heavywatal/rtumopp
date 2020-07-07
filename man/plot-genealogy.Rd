@@ -5,15 +5,12 @@
 \alias{gggenealogy}
 \title{Visualize cell genealogy}
 \usage{
-augment_genealogy(graph, layout = igraphlite::layout_reingold_tilford)
+augment_genealogy(graph)
 
 gggenealogy(data, mapping = ggplot2::aes(), ...)
 }
 \arguments{
 \item{graph}{igraph}
-
-\item{layout}{A function or resulting data.frame.
-If not provided, \link[igraphlite]{layout_nicely} is applied.}
 
 \item{data}{tbl from \code{augment_genealogy()}}
 
