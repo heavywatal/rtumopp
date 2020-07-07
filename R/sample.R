@@ -23,8 +23,14 @@ sample_uniform_regions = function(tbl, nsam = 2L, ncell = 10L, jitter = 0) {
 #' @rdname sample
 #' @export
 sample_random_regions = function(tbl, nsam = 2L, ncell = 10L) {
-  centers = dplyr::sample_n(tbl[c("x", "y", "z")], nsam)
-  sample_regions(tbl, centers, ncell = ncell)
+  if (ncell > 1L) {
+    centers = dplyr::slice_sample(tbl[c("x", "y", "z")], n = nsam)
+    sample_regions(tbl, centers, ncell = ncell)
+  } else {
+    tbl[c("x", "y", "z", "id")] %>%
+      dplyr::slice_sample(n = nsam) %>%
+      dplyr::mutate(id = as.list(.data$id))
+  }
 }
 
 #' @details
