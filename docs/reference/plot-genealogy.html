@@ -141,7 +141,7 @@
     <p>Visualize cell genealogy</p>
     </div>
 
-    <pre class="usage"><span class='fu'>augment_genealogy</span>(<span class='no'>graph</span>, <span class='kw'>layout</span> <span class='kw'>=</span> <span class='kw pkg'>igraphlite</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/igraphlite/man/layout.html'>layout_reingold_tilford</a></span>)
+    <pre class="usage"><span class='fu'>augment_genealogy</span>(<span class='no'>graph</span>)
 
 <span class='fu'>gggenealogy</span>(<span class='no'>data</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(), <span class='no'>...</span>)</pre>
 
@@ -151,11 +151,6 @@
     <tr>
       <th>graph</th>
       <td><p>igraph</p></td>
-    </tr>
-    <tr>
-      <th>layout</th>
-      <td><p>A function or resulting data.frame.
-If not provided, <a href='https://rdrr.io/pkg/igraphlite/man/layout.html'>layout_nicely</a> is applied.</p></td>
     </tr>
     <tr>
       <th>data</th>
