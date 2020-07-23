@@ -9,12 +9,9 @@
 mean_branch_length = function(graph, from = graph$sink, to = from) {
   # TODO: Avoid creating huge matrix
   m = igraphlite::shortest_paths(graph, from, to, mode = 3L, algorithm = "unweighted")
-  if (length(from)) {
-    nzero = sum(from %in% to)
-  } else {
-    nzero = nrow(m)
-  }
-  sum(m) / (nrow(m) * ncol(m) - nzero)
+  # Exclude self-comparison only if "within"
+  n = length(m) - if (identical(from, to)) {length(from)} else {0}
+  sum(m) / n
 }
 
 #' @details
