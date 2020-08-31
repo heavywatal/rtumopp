@@ -22,11 +22,12 @@ make_vaf = function(graph, samples, mu, threshold = 0.05) {
 #' @rdname vaf
 #' @export
 tally_vaf = function(samples, sites) {
-  purrr::map_dfc(samples, function(region) {
+  names(samples) = seq_along(samples)
+  lapply(samples, function(region) {
     vapply(sites, function(holders) {
       sum(region %in% holders)
     }, integer(1), USE.NAMES = FALSE) / length(region)
-  })
+  }) %>% tibble::as_tibble()
 }
 
 #' @details
@@ -35,9 +36,7 @@ tally_vaf = function(samples, sites) {
 #' @rdname vaf
 #' @export
 tidy_vaf = function(tbl) {
-  col_names = seq_len(ncol(tbl))
   tbl %>%
-    rlang::set_names(col_names) %>%
     tibble::rowid_to_column(var = "site") %>%
     tidyr::gather("sample", "frequency", -"site") %>%
     dplyr::filter(.data$frequency > 0) %>%
