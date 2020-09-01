@@ -34,5 +34,5 @@ Calculate genetic distance from genealogy or VAF
 \code{pairwise_distances} summarizes physical and genetic distances.
 }
 \seealso{
-\code{\link[=fst_between]{fst_between()}}
+\code{\link[=fst]{fst()}}
 }

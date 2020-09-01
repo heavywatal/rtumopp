@@ -53,7 +53,7 @@ distances %>%
   coord_cartesian(xlim = c(0, .xmax), ylim = c(0, .ymax))
 
 m = dist_genealogy(subgraph, regions[["id"]])
-fst_between(m)
-fst_total(m)
+fst(m)
+gst(m)
 
 w = num_pairs(lengths(regions[["id"]]))

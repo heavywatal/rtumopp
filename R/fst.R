@@ -1,42 +1,43 @@
 #' Calculate F_ST from matrix
 #'
 #' @details
-#' `fst_between` estimates F_ST.
+#' `fst` calculates Hudson's F_ST estimator.
 #' - theta: Weir and Cockerham (1984); Weir and Hill (2002).
 #' - N_ST: Lynch and Crease (1990).
 #' - <F_ST>: Hudson, Slatkin, and Maddison (1992) Genetics.
 #' @param m matrix output from [dist_genealogy()] or [dist_vaf()]
 #' @param sample_sizes cell numbers of each region
+#' @seealso [dist_genealogy()]
 #' @rdname fst
 #' @export
-fst_between = function(m, sample_sizes = NULL) {
+fst = function(m, sample_sizes = NULL) {
   if (is.null(sample_sizes)) {
-    avg_t_within = mean(diag(m, names = FALSE))
-    avg_t_between = mean(lower_tri(m))
+    h_within = mean(diag(m, names = FALSE))
+    h_between = mean(lower_tri(m))
   } else {
     w = num_pairs(sample_sizes)
-    avg_t_within = weighted_mean(diag(m, names = FALSE), diag(w, names = FALSE))
-    avg_t_between = weighted_mean(lower_tri(m), lower_tri(w))
+    h_within = weighted_mean(diag(m, names = FALSE), diag(w, names = FALSE))
+    h_between = weighted_mean(lower_tri(m), lower_tri(w))
   }
-  1 - avg_t_within / avg_t_between
+  1 - h_within / h_between
 }
 
 #' @details
-#' `fst_total` estimates F_ST.
+#' `gst` calculates Nei's F_ST estimator.
 #' - G_ST, gamma_ST: Nei (1973, 1977, 1982).
 #' - K_ST: Hudson, Boos, and Kaplan (1992) MBE.
 #' @rdname fst
 #' @export
-fst_total = function(m, sample_sizes = NULL) {
+gst = function(m, sample_sizes = NULL) {
   if (is.null(sample_sizes)) {
-    avg_t_within = mean(diag(m, names = FALSE))
-    avg_t_total = mean(m)
+    h_within = mean(diag(m, names = FALSE))
+    h_total = mean(m)
   } else {
     w = num_pairs(sample_sizes)
-    avg_t_within = weighted_mean(diag(m, names = FALSE), diag(w, names = FALSE))
-    avg_t_total = weighted_mean(m, w)
+    h_within = weighted_mean(diag(m, names = FALSE), diag(w, names = FALSE))
+    h_total = weighted_mean(m, w)
   }
-  1 - avg_t_within / avg_t_total
+  1 - h_within / h_total
 }
 
 #' @rdname fst

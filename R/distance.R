@@ -4,7 +4,7 @@
 #' `dist_genealogy` summarizes branch lengths within/between regions.
 #' @param graph igraph
 #' @param cell_ids id column of sampled regions
-#' @seealso [fst_between()]
+#' @seealso [fst()]
 #' @rdname distance
 #' @export
 dist_genealogy = function(graph, cell_ids) {
