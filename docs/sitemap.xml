@@ -4,16 +4,19 @@
     <loc>https://heavywatal.github.io/rtumopp/index.html</loc>
   </url>
   <url>
-    <loc>https://heavywatal.github.io/rtumopp/reference/branch-length.html</loc>
-  </url>
-  <url>
     <loc>https://heavywatal.github.io/rtumopp/reference/coord.html</loc>
   </url>
   <url>
     <loc>https://heavywatal.github.io/rtumopp/reference/demography.html</loc>
   </url>
   <url>
+    <loc>https://heavywatal.github.io/rtumopp/reference/distance.html</loc>
+  </url>
+  <url>
     <loc>https://heavywatal.github.io/rtumopp/reference/drivers.html</loc>
+  </url>
+  <url>
+    <loc>https://heavywatal.github.io/rtumopp/reference/fst.html</loc>
   </url>
   <url>
     <loc>https://heavywatal.github.io/rtumopp/reference/graph.html</loc>

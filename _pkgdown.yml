@@ -11,9 +11,10 @@ reference:
 - title: "Sampling"
   contents:
   - sample_uniform_regions
-  - mean_branch_length
+  - dist_genealogy
   - make_vaf
-  - mutate_clades
+  - make_sample
+  - fst
   - combn_ids
 - title: "Demography"
   contents:

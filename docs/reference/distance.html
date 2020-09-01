@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Calculate genetic distance with igraph — mean_branch_length • tumopp</title>
+<title>Calculate genetic distance from genealogy or VAF — dist_genealogy • tumopp</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Calculate genetic distance with igraph — mean_branch_length" />
-<meta property="og:description" content="Calculate genetic distance with igraph" />
+<meta property="og:title" content="Calculate genetic distance from genealogy or VAF — dist_genealogy" />
+<meta property="og:description" content="Calculate genetic distance from genealogy or VAF" />
 
 
 
@@ -132,22 +132,18 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Calculate genetic distance with igraph</h1>
-    <small class="dont-index">Source: <a href='https://github.com/heavywatal/rtumopp/blob/master/R/branch-length.R'><code>R/branch-length.R</code></a></small>
-    <div class="hidden name"><code>branch-length.Rd</code></div>
+    <h1>Calculate genetic distance from genealogy or VAF</h1>
+    <small class="dont-index">Source: <a href='https://github.com/heavywatal/rtumopp/blob/master/R/distance.R'><code>R/distance.R</code></a></small>
+    <div class="hidden name"><code>distance.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Calculate genetic distance with igraph</p>
+    <p>Calculate genetic distance from genealogy or VAF</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mean_branch_length</span>(<span class='no'>graph</span>, <span class='kw'>from</span> <span class='kw'>=</span> <span class='no'>graph</span>$<span class='no'>sink</span>, <span class='kw'>to</span> <span class='kw'>=</span> <span class='no'>from</span>)
+    <pre class="usage"><span class='fu'>dist_genealogy</span>(<span class='no'>graph</span>, <span class='no'>cell_ids</span>)
 
-<span class='fu'>dist_genealogy</span>(<span class='no'>graph</span>, <span class='no'>cell_ids</span>)
-
-<span class='fu'>fst_between</span>(<span class='no'>m</span>, <span class='kw'>sample_sizes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='fu'>fst_total</span>(<span class='no'>m</span>, <span class='kw'>sample_sizes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'>dist_vaf</span>(<span class='no'>vaf</span>, <span class='kw'>ncell</span> <span class='kw'>=</span> <span class='fl'>Inf</span>)
 
 <span class='fu'>pairwise_distances</span>(<span class='no'>graph</span>, <span class='no'>regions</span>)</pre>
 
@@ -159,20 +155,16 @@
       <td><p>igraph</p></td>
     </tr>
     <tr>
-      <th>from, to</th>
-      <td><p>igraph vertices (not cell ID)</p></td>
-    </tr>
-    <tr>
       <th>cell_ids</th>
       <td><p>id column of sampled regions</p></td>
     </tr>
     <tr>
-      <th>m</th>
-      <td><p>output from <code>dist_genealogy()</code></p></td>
+      <th>vaf</th>
+      <td><p>data.frame or matrix. e.g., output from <code><a href='vaf.html'>make_vaf()</a></code>.</p></td>
     </tr>
     <tr>
-      <th>sample_sizes</th>
-      <td><p>cell numbers of each region</p></td>
+      <th>ncell</th>
+      <td><p>number of cells per specimen</p></td>
     </tr>
     <tr>
       <th>regions</th>
@@ -182,16 +174,12 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>mean_branch_length</code> calculates mean branch length within/between sub-graphs.</p>
-<p><code>dist_genealogy</code> summarizes branch lengths within/between regions.</p>
-<p><code>fst_between</code> estimates F_ST.
-theta: Weir and Cockerham (1984); Weir and Hill (2002)
-N_ST: Lynch and Crease (1990)
-&lt;F_ST&gt;: Hudson, Slatkin, and Maddison (1992) Genetics</p>
-<p><code>fst_total</code> estimates F_ST.
-G_ST, gamma_ST: Nei (1973, 1977, 1982)
-K_ST: Hudson, Boos, and Kaplan (1992) MBE</p>
+    <p><code>dist_genealogy</code> summarizes branch lengths within/between regions.</p>
+<p><code>dist_vaf</code> summarizes diversity within/between regions.</p>
 <p><code>pairwise_distances</code> summarizes physical and genetic distances.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='fst.html'>fst()</a></code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
