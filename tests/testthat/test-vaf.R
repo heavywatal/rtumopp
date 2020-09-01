@@ -30,13 +30,4 @@ test_that("make_vaf works", {
   expect_equal(nrow(df_distances), choose(nsam, 2L))
   expect_equal(df_distances, pairwise_distances(graph, regions))
   expect_type(internal_nodes(subgraph, sampled, sensitivity = 0.10), "integer")
-  mutated = mutate_clades(subgraph, regions$id, mu = -1)
-  vaf = tally_vaf(regions$id, mutated$carriers)
-  expect_silent({
-    d_vaf = dist_vaf(vaf, ncell)
-  })
-  expect_silent({
-    d_tree = dist_genealogy(subgraph, regions$id)
-  })
-  expect_equal(fst_between(d_vaf), fst_between(d_tree))
 })

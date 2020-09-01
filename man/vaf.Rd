@@ -6,7 +6,6 @@
 \alias{tidy_vaf}
 \alias{filter_detectable}
 \alias{sort_vaf}
-\alias{dist_vaf}
 \title{Utilities for variant allele frequency}
 \usage{
 make_vaf(graph, samples, mu, threshold = 0.05)
@@ -18,8 +17,6 @@ tidy_vaf(tbl)
 filter_detectable(tbl, threshold)
 
 sort_vaf(tbl, method = c("average", "ward.D2", "complete", "single"))
-
-dist_vaf(tbl, ncell = Inf)
 }
 \arguments{
 \item{graph}{igraph}
@@ -35,8 +32,6 @@ dist_vaf(tbl, ncell = Inf)
 \item{tbl}{output of \code{tally_vaf}}
 
 \item{method}{passed to \code{stats::hclust}}
-
-\item{ncell}{number of cells per specimen}
 }
 \description{
 Utilities for variant allele frequency
@@ -51,9 +46,4 @@ Utilities for variant allele frequency
 \code{filter_detectable} removes sites where freq < threshold.
 
 \code{sort_vaf} reorders rows and columns of VAF table.
-
-\code{dist_vaf} summarizes diversity within/between regions.
-}
-\seealso{
-\code{\link[=dist_genealogy]{dist_genealogy()}}
 }

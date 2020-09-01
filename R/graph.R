@@ -94,6 +94,17 @@ sinks = function(graph, nodes) {
   lapply(paths, function(x) x[x %in% .sink])
 }
 
+mean_branch_length = function(graph, from = graph$sink, to = from) {
+  # TODO: Avoid creating huge matrix
+  m = igraphlite::shortest_paths(graph, from, to, mode = 3L, algorithm = "unweighted")
+  # Exclude self-comparison only if "within"
+  n = length(m)
+  if (identical(from, to)) {
+    n = n - length(from)
+  }
+  sum(m) / n
+}
+
 # NOTE: (vcount + 1) / 2 cannot be used if death rate > 0
 count_sink = function(graph, nodes = integer(0L)) {
   if (length(nodes) > 0L) {
