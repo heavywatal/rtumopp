@@ -16,7 +16,7 @@ extract_history = function(population) {
 
 #' @details
 #' `summarise_demography` simplifies history.
-#' @param history data.frame from `extract_history`
+#' @param history data.frame from [extract_history()]
 #' @rdname demography
 #' @export
 summarise_demography = function(history) {

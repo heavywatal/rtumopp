@@ -48,7 +48,7 @@ p_hetero = function(p1, p2 = p1) {
 
 #' @details
 #' `pairwise_distances` summarizes physical and genetic distances.
-#' @param regions output of `sample_uniform_regions()`
+#' @param regions output of [sample_uniform_regions()]
 #' @rdname distance
 #' @export
 pairwise_distances = function(graph, regions) {

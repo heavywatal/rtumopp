@@ -28,7 +28,7 @@ plot_lattice2d = function(.tbl, colour = "z", alpha = 1, size = 1, limit = max_a
 # #######1#########2#########3#########4#########5#########6#########7#########
 
 #' Plot capture_rate ~ nsam of biopsy
-#' @param data tbl from `summarize_capture_rate` or `evaluate_mrs`
+#' @param data tbl from [summarize_capture_rate()]` or [evaluate_mrs()]
 #' @param point size of a data point
 #' @param alpha opacity of a data point
 #' @param errorbar logical
@@ -63,7 +63,7 @@ mean_sd = function(x, mult = 1.96) {
 #' Plot serial sections of 3D tumor
 #' @param .tbl tbl with extant cells
 #' @inheritParams ggplot2::ggsave
-#' @param ... passed to plot_lattice2d
+#' @param ... passed to [plot_lattice2d()]
 #' @rdname plot-section
 #' @export
 save_serial_section = function(.tbl, filename = "png/section_%03d.png", scale = 6, dpi = 72, ...) {

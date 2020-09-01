@@ -12,7 +12,7 @@ summarise_demography(history)
 \arguments{
 \item{population}{data.frame}
 
-\item{history}{data.frame from \code{extract_history}}
+\item{history}{data.frame from \code{\link[=extract_history]{extract_history()}}}
 }
 \description{
 \code{extract_history} extracts birth and death events from raw population data.

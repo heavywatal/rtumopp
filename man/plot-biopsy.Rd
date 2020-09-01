@@ -7,7 +7,7 @@
 plot_capture_rate(data, point = 1, alpha = 0.3, errorbar = TRUE)
 }
 \arguments{
-\item{data}{tbl from \code{summarize_capture_rate} or \code{evaluate_mrs}}
+\item{data}{tbl from \code{\link[=summarize_capture_rate]{summarize_capture_rate()}}` or \code{\link[=evaluate_mrs]{evaluate_mrs()}}}
 
 \item{point}{size of a data point}
 

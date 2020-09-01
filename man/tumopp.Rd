@@ -31,7 +31,7 @@ make_args(alt, const = NULL, times = 1L, each = 1L)
 
 \item{const}{named list of constant arguments.}
 
-\item{times, each}{passed to \code{rep()}}
+\item{times, each}{passed to \code{\link[=rep]{rep()}}}
 }
 \description{
 \code{tumopp()} returns full results with config columns in a data.frame.

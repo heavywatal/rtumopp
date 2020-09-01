@@ -14,7 +14,7 @@ summarize_capture_rate(combinations, population, threshold = 0.01)
 
 \item{m}{number of regions to sample}
 
-\item{combinations}{nested tibble from \code{combn_ids}}
+\item{combinations}{nested tibble from \code{\link[=combn_ids]{combn_ids()}}}
 
 \item{population}{tibble}
 

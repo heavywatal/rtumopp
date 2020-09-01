@@ -100,7 +100,7 @@ system_tumopp = function(args, mc.cores = getOption("mc.cores", 1L)) {
 #' `make_args()` returns argument combinations in a tibble.
 #' @param alt named list of altered arguments.
 #' @param const named list of constant arguments.
-#' @param times,each passed to `rep()`
+#' @param times,each passed to [rep()]
 #' @rdname tumopp
 #' @export
 make_args = function(alt, const = NULL, times = 1L, each = 1L) {

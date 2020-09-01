@@ -12,9 +12,9 @@ gggenealogy(data, mapping = ggplot2::aes(), ...)
 \arguments{
 \item{graph}{igraph}
 
-\item{data}{tbl from \code{augment_genealogy()}}
+\item{data}{tbl from \code{\link[=augment_genealogy]{augment_genealogy()}}}
 
-\item{mapping}{\code{ggplot2::aes()}}
+\item{mapping}{\code{\link[ggplot2:aes]{ggplot2::aes()}}}
 
 \item{...}{passed to \code{ggplot2::geom_segment()}}
 }

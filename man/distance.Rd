@@ -21,7 +21,7 @@ pairwise_distances(graph, regions)
 
 \item{ncell}{number of cells per specimen}
 
-\item{regions}{output of \code{sample_uniform_regions()}}
+\item{regions}{output of \code{\link[=sample_uniform_regions]{sample_uniform_regions()}}}
 }
 \description{
 Calculate genetic distance from genealogy or VAF

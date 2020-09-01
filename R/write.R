@@ -2,7 +2,7 @@
 #'
 #' @details
 #' `write_results` writes nested data.frame to files
-#' @param results data.frame returned from tumopp()
+#' @param results data.frame returned from [tumopp()]
 #' @rdname write
 #' @export
 write_results = function(results) {

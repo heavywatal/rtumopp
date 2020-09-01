@@ -22,7 +22,7 @@ save_serial_section(
 \item{dpi}{Plot resolution. Also accepts a string input: "retina" (320),
 "print" (300), or "screen" (72). Applies only to raster output types.}
 
-\item{...}{passed to plot_lattice2d}
+\item{...}{passed to \code{\link[=plot_lattice2d]{plot_lattice2d()}}}
 }
 \description{
 Plot serial sections of 3D tumor

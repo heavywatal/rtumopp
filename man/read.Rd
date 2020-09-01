@@ -29,7 +29,7 @@ read_tumopp(file)
 
 \item{graph}{add graph column if TRUE}
 
-\item{file}{passed as the first argument of \code{readr::read_tsv()}}
+\item{file}{passed as the first argument of \code{\link[readr:read_delim]{readr::read_tsv()}}}
 }
 \description{
 \code{read_confs} reads config files.
@@ -39,8 +39,8 @@ read_tumopp(file)
 
 \code{read_populations} reads populations.
 
-\code{read_snapshots} calls \code{read_results} and reads snapshots.
+\code{read_snapshots} calls \code{\link[=read_results]{read_results()}} and reads snapshots.
 
-\code{read_tumopp} is an alias of \code{readr::read_tsv()} with some options
+\code{read_tumopp} is an alias of \code{\link[readr:read_delim]{readr::read_tsv()}} with some options
 to read result files: \code{population.tsv.gz} and \code{snapshots.tsv.gz}.
 }

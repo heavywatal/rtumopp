@@ -18,8 +18,8 @@ augment_genealogy = function(graph) {
 
 #' @details
 #' `gggenealogy()` creates a basic ggplot object.
-#' @param data tbl from `augment_genealogy()`
-#' @param mapping `ggplot2::aes()`
+#' @param data tbl from [augment_genealogy()]
+#' @param mapping [ggplot2::aes()]
 #' @param ... passed to `ggplot2::geom_segment()`
 #' @rdname plot-genealogy
 #' @export
@@ -29,7 +29,7 @@ gggenealogy = function(data, mapping = ggplot2::aes(), ...) {
     ggplot2::geom_segment(ggplot2::aes_(xend = ~d_parent, yend = ~x_parent), ...)
 }
 
-# @param distance named vector from `genetic_distance()`
+# @param distance named vector from [genetic_distance()]
 mutate_distance = function(data, distance) {
   data$d = distance[as.character(data$node)]
   data$d_parent = distance[as.character(data$parent)]

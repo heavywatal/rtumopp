@@ -3,7 +3,7 @@
 #' @details
 #' `plot_tumor3d` plots tumor in 3D with rgl.
 #' @param .tbl data.frame with (x, y, z, col)
-#' @param limits passed to xlim, ylim, zlim of `rgl::plot3d()`
+#' @param limits passed to xlim, ylim, zlim of [rgl::plot3d()]
 #' @rdname plot-rgl
 #' @export
 plot_tumor3d = function(.tbl = NULL, limits = NULL) {
@@ -27,9 +27,9 @@ plot_tumor3d = function(.tbl = NULL, limits = NULL) {
 }
 
 #' @details
-#' `snapshot_surface` is a shortcut of `plot_tumor3d()` and `rgl::snapshot3d()`.
+#' `snapshot_surface` is a shortcut of [plot_tumor3d()] and [rgl::snapshot3d()].
 #' @param filename string
-#' @param ... passed to `plot_tumor3d()`
+#' @param ... passed to [plot_tumor3d()].
 #' @rdname plot-rgl
 #' @export
 snapshot_surface = function(.tbl, filename = tempfile("rgl_", fileext = ".png"), ...) {
@@ -41,7 +41,7 @@ snapshot_surface = function(.tbl, filename = tempfile("rgl_", fileext = ".png"),
 }
 
 #' @details
-#' `add_col` adds a column for color in `plot_tumor3d()`.
+#' `add_col` adds a column for color in [plot_tumor3d()].
 #' @param column column name to colorcode
 #' @param palette name of ColorBrewer palette
 #' @param direction -1 to reverse color scale

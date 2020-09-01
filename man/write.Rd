@@ -7,7 +7,7 @@
 write_results(results)
 }
 \arguments{
-\item{results}{data.frame returned from tumopp()}
+\item{results}{data.frame returned from \code{\link[=tumopp]{tumopp()}}}
 }
 \description{
 Utilities for writing files

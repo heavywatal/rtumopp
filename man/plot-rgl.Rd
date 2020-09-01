@@ -15,11 +15,11 @@ add_col(.tbl, column = "clade", palette = "Spectral", direction = 1)
 \arguments{
 \item{.tbl}{data.frame with (x, y, z, col)}
 
-\item{limits}{passed to xlim, ylim, zlim of \code{rgl::plot3d()}}
+\item{limits}{passed to xlim, ylim, zlim of \code{\link[rgl:plot3d]{rgl::plot3d()}}}
 
 \item{filename}{string}
 
-\item{...}{passed to \code{plot_tumor3d()}}
+\item{...}{passed to \code{\link[=plot_tumor3d]{plot_tumor3d()}}.}
 
 \item{column}{column name to colorcode}
 
@@ -33,7 +33,7 @@ add_col(.tbl, column = "clade", palette = "Spectral", direction = 1)
 \details{
 \code{plot_tumor3d} plots tumor in 3D with rgl.
 
-\code{snapshot_surface} is a shortcut of \code{plot_tumor3d()} and \code{rgl::snapshot3d()}.
+\code{snapshot_surface} is a shortcut of \code{\link[=plot_tumor3d]{plot_tumor3d()}} and \code{\link[rgl:snapshot]{rgl::snapshot3d()}}.
 
-\code{add_col} adds a column for color in \code{plot_tumor3d()}.
+\code{add_col} adds a column for color in \code{\link[=plot_tumor3d]{plot_tumor3d()}}.
 }

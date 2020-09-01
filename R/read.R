@@ -65,7 +65,7 @@ read_populations = function(indirs = getwd(), mc.cores = getOption("mc.cores", 1
 }
 
 #' @details
-#' `read_snapshots` calls `read_results` and reads snapshots.
+#' `read_snapshots` calls [read_results()] and reads snapshots.
 #' @rdname read
 #' @export
 read_snapshots = function(indirs = getwd(), mc.cores = getOption("mc.cores", 1L)) {
@@ -78,9 +78,9 @@ read_snapshots = function(indirs = getwd(), mc.cores = getOption("mc.cores", 1L)
 }
 
 #' @details
-#' `read_tumopp` is an alias of `readr::read_tsv()` with some options
+#' `read_tumopp` is an alias of [readr::read_tsv()] with some options
 #' to read result files: `population.tsv.gz` and `snapshots.tsv.gz`.
-#' @param file passed as the first argument of `readr::read_tsv()`
+#' @param file passed as the first argument of [readr::read_tsv()]
 #' @rdname read
 #' @export
 read_tumopp = function(file) {
