@@ -9,7 +9,7 @@ library(tumopp)
 (extant = population %>% filter_extant())
 
 (regions = sample_uniform_regions(extant, 8L, 100L))
-subgraph = tumopp::subtree(graph, purrr::flatten_chr(regions$id))
+subgraph = tumopp::subtree(graph, unlist(regions$id))
 
 extant %>%
   dplyr::left_join(tumopp:::tidy_regions(regions), by = "id") %>%
@@ -21,24 +21,33 @@ extant %>%
 
 # #######1#########2#########3#########4#########5#########6#########7#########
 
-.tidy = make_vaf(graph, regions$id, -1) %>% print()
-
 mutated = mutate_clades(subgraph, mu = 1)
 mutated = mutate_clades(subgraph, mu = -1)
 mutated = mutate_clades(subgraph, segsites = 1000L)
 
-.vaf = tally_vaf(regions$id, mutated$carriers) %>% print()
+.vaf = make_vaf(subgraph, regions$id, mu = -1) %>% print()
 .tidy = .vaf %>%
   filter_detectable(0.05) %>%
   sort_vaf() %>%
-  # dplyr::filter(Reduce(`+`, . > 0) > 1L) %>%
-  tidy_vaf() %>%
+  longer_vaf() %>%
   print()
+
+.tidy = make_longer_vaf(graph, regions$id, -1) %>% print()
 
 ggplot(.tidy, aes(sample, site)) +
   geom_tile(aes(fill = frequency)) +
   scale_fill_distiller(palette = "Spectral", limit = c(0, 1), guide = FALSE) +
   coord_cartesian(expand = FALSE)
+
+
+testdf = tibble::tibble(mu = rep(c(1, 4, 16, 64), each = 200)) %>%
+  dplyr::mutate(fst = wtl::mcmap_dbl(mu, ~tumopp::make_vaf(subgraph, regions$id, mu = .x) %>% tumopp::dist_vaf(ncell) %>% tumopp::fst())) %>%
+  print()
+
+# load_all()
+xi = tumopp::make_vaf(subgraph, regions$id, mu = -1) %>% tumopp::dist_vaf(ncell) %>% tumopp::fst()
+ggplot(testdf) + aes(fst) + geom_histogram(bins = 30) + geom_vline(xintercept = xi) + facet_wrap(~mu)
+
 
 # #######1#########2#########3#########4#########5#########6#########7#########
 

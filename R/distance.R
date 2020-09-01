@@ -23,7 +23,7 @@ dist_genealogy = function(graph, cell_ids) {
 
 #' @details
 #' `dist_vaf` summarizes diversity within/between regions.
-#' @param vaf data.frame or matrix. e.g., output from [tally_vaf()].
+#' @param vaf data.frame or matrix. e.g., output from [make_vaf()].
 #' @inheritParams sample_uniform_regions
 #' @rdname distance
 #' @export

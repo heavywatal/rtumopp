@@ -1,4 +1,4 @@
-test_that("make_vaf works", {
+test_that("fst works", {
   result = tumopp("--seed=42 -N256 -k1e6")
   population = result$population[[1L]]
   extant = filter_extant(population)
@@ -6,10 +6,8 @@ test_that("make_vaf works", {
   nsam = 4L
   ncell = 4L
   regions = sample_uniform_regions(extant, nsam = nsam, ncell = ncell)
-  sampled = purrr::flatten_int(regions$id)
-  subgraph = subtree(graph, sampled)
-  mutated = mutate_clades(subgraph, regions$id, mu = -1)
-  vaf = tally_vaf(regions$id, mutated$carriers)
+  subgraph = subtree(graph, unlist(regions$id))
+  vaf = make_vaf(subgraph, regions$id, mu = -1)
   expect_silent({
     d_vaf = dist_vaf(vaf, ncell)
   })

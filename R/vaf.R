@@ -1,44 +1,46 @@
 #' Utilities for variant allele frequency
 #'
 #' @details
-#' `make_vaf` is a shortcut to make neutral VAF pattern.
+#' `make_vaf` generates neutral VAF pattern from cell genealogy.
+#' @param samples list of integer IDs
 #' @inheritParams subtree
-#' @inheritParams mutate_clades
+#' @inheritParams make_sample
 #' @rdname vaf
 #' @export
-make_vaf = function(graph, samples, mu, threshold = 0.05) {
-  mutated = subtree(graph, purrr::flatten_int(samples)) %>%
-    mutate_clades(mu = mu)
-  tally_vaf(samples, mutated$carriers) %>%
+make_vaf = function(graph, samples, mu) {
+  df_mut = mutate_clades(graph, mu = mu)
+  names(samples) = seq_along(samples)
+  purrr::map_dfc(samples, function(sampled) {
+    freqs = vapply(df_mut$carriers, function(carriers) {
+      sum(carriers %in% sampled)
+    }, integer(1), USE.NAMES = FALSE)
+    rep(freqs / length(sampled), times = df_mut$number)
+  })
+}
+
+#' @details
+#' `make_longer_vaf` is a shortcut to make VAF in longer format.
+#' @rdname vaf
+#' @export
+make_longer_vaf = function(graph, samples, mu, threshold = 0.05) {
+  if (sum(graph$is_sink) > sum(lengths(samples))) {
+    graph = subtree(graph, unlist(samples))
+  }
+  make_vaf(graph, samples, mu) %>%
     filter_detectable(threshold) %>%
     sort_vaf() %>%
-    tidy_vaf()
+    longer_vaf()
 }
 
 #' @details
-#' `tally_vaf` evaluates overlap of sampled and mutated cells.
-#' @param samples list of integer IDs
-#' @param sites list of integer IDs
+#' `longer_vaf` transforms vaf table.
+#' @param vaf output of [make_vaf()]
 #' @rdname vaf
 #' @export
-tally_vaf = function(samples, sites) {
-  names(samples) = seq_along(samples)
-  lapply(samples, function(region) {
-    vapply(sites, function(holders) {
-      sum(region %in% holders)
-    }, integer(1), USE.NAMES = FALSE) / length(region)
-  }) %>% tibble::as_tibble()
-}
-
-#' @details
-#' `tidy_vaf` transforms vaf table.
-#' @param tbl output of `tally_vaf`
-#' @rdname vaf
-#' @export
-tidy_vaf = function(tbl) {
-  tbl %>%
+longer_vaf = function(vaf) {
+  vaf %>%
     tibble::rowid_to_column(var = "site") %>%
-    tidyr::gather("sample", "frequency", -"site") %>%
+    tidyr::pivot_longer(-"site", names_to = "sample", values_to = "frequency") %>%
     dplyr::filter(.data$frequency > 0) %>%
     dplyr::mutate(sample = as.integer(.data$sample))
 }
@@ -48,9 +50,9 @@ tidy_vaf = function(tbl) {
 #' @param threshold minimum detectable frequency
 #' @rdname vaf
 #' @export
-filter_detectable = function(tbl, threshold) {
-  tbl[tbl < threshold] = 0
-  dplyr::filter(tbl, Reduce(`+`, tbl) > 0)
+filter_detectable = function(vaf, threshold) {
+  vaf[vaf < threshold] = 0
+  dplyr::filter(vaf, Reduce(`+`, vaf) > 0)
 }
 
 #' @details
@@ -58,26 +60,26 @@ filter_detectable = function(tbl, threshold) {
 #' @param method passed to `stats::hclust`
 #' @rdname vaf
 #' @export
-sort_vaf = function(tbl, method = c("average", "ward.D2", "complete", "single")) {
+sort_vaf = function(vaf, method = c("average", "ward.D2", "complete", "single")) {
   method = match.arg(method)
-  if (nrow(tbl) < 2L) {
-    return(tbl)
+  if (nrow(vaf) < 2L) {
+    return(vaf)
   }
-  rsums = Reduce(`+`, tbl > 0)
+  rsums = Reduce(`+`, vaf > 0)
   w_nonzero = 10
   w_shared = ifelse(rsums < 2L, 0, 1000)
   covr_issue377 = function(.x) {
     ifelse(.x > 0, w_nonzero, 0) + w_shared + .x
   }
-  tbl_weighted = dplyr::mutate(tbl, dplyr::across(dplyr::everything(), covr_issue377))
+  tbl_weighted = dplyr::mutate(vaf, dplyr::across(dplyr::everything(), covr_issue377))
   d_rows = stats::dist(tbl_weighted, method = "euclidean")
   order_rows = stats::hclust(d_rows, method = method)$order
   tbl_shared = dplyr::filter(tbl_weighted, rsums > 1L)
   if (nrow(tbl_shared) > 1L) {
     d_cols = stats::dist(t(tbl_shared), method = "euclidean")
     order_cols = stats::hclust(d_cols, method = method)$order
-    tbl[order_rows, order_cols]
+    vaf[order_rows, order_cols]
   } else {
-    tbl[order_rows, ]
+    vaf[order_rows, ]
   }
 }

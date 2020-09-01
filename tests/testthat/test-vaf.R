@@ -15,13 +15,12 @@ test_that("make_vaf works", {
   .colnames = c("site", "sample", "frequency")
   expect_named(
     {
-      vaf_tidy = make_vaf(graph, regions$id, mu = 1)
+      vaf_tidy = make_longer_vaf(graph, regions$id, mu = 1)
     },
     .colnames
   )
-  sampled = purrr::flatten_int(regions$id)
   expect_silent({
-    subgraph = subtree(graph, sampled)
+    subgraph = subtree(graph, unlist(regions$id))
   })
   expect_silent({
     df_distances = pairwise_distances(subgraph, regions)
@@ -29,5 +28,5 @@ test_that("make_vaf works", {
   expect_named(df_distances, c("i", "j", "euclidean", "fst"))
   expect_equal(nrow(df_distances), choose(nsam, 2L))
   expect_equal(df_distances, pairwise_distances(graph, regions))
-  expect_type(internal_nodes(subgraph, sampled, sensitivity = 0.10), "integer")
+  expect_type(internal_nodes(subgraph, unlist(regions$id), sensitivity = 0.10), "integer")
 })

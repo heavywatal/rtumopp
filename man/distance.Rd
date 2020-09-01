@@ -17,7 +17,7 @@ pairwise_distances(graph, regions)
 
 \item{cell_ids}{id column of sampled regions}
 
-\item{vaf}{data.frame or matrix. e.g., output from \code{\link[=tally_vaf]{tally_vaf()}}.}
+\item{vaf}{data.frame or matrix. e.g., output from \code{\link[=make_vaf]{make_vaf()}}.}
 
 \item{ncell}{number of cells per specimen}
 

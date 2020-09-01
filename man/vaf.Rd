@@ -2,21 +2,21 @@
 % Please edit documentation in R/vaf.R
 \name{make_vaf}
 \alias{make_vaf}
-\alias{tally_vaf}
-\alias{tidy_vaf}
+\alias{make_longer_vaf}
+\alias{longer_vaf}
 \alias{filter_detectable}
 \alias{sort_vaf}
 \title{Utilities for variant allele frequency}
 \usage{
-make_vaf(graph, samples, mu, threshold = 0.05)
+make_vaf(graph, samples, mu)
 
-tally_vaf(samples, sites)
+make_longer_vaf(graph, samples, mu, threshold = 0.05)
 
-tidy_vaf(tbl)
+longer_vaf(vaf)
 
-filter_detectable(tbl, threshold)
+filter_detectable(vaf, threshold)
 
-sort_vaf(tbl, method = c("average", "ward.D2", "complete", "single"))
+sort_vaf(vaf, method = c("average", "ward.D2", "complete", "single"))
 }
 \arguments{
 \item{graph}{igraph}
@@ -27,9 +27,7 @@ sort_vaf(tbl, method = c("average", "ward.D2", "complete", "single"))
 
 \item{threshold}{minimum detectable frequency}
 
-\item{sites}{list of integer IDs}
-
-\item{tbl}{output of \code{tally_vaf}}
+\item{vaf}{output of \code{\link[=make_vaf]{make_vaf()}}}
 
 \item{method}{passed to \code{stats::hclust}}
 }
@@ -37,11 +35,11 @@ sort_vaf(tbl, method = c("average", "ward.D2", "complete", "single"))
 Utilities for variant allele frequency
 }
 \details{
-\code{make_vaf} is a shortcut to make neutral VAF pattern.
+\code{make_vaf} generates neutral VAF pattern from cell genealogy.
 
-\code{tally_vaf} evaluates overlap of sampled and mutated cells.
+\code{make_longer_vaf} is a shortcut to make VAF in longer format.
 
-\code{tidy_vaf} transforms vaf table.
+\code{longer_vaf} transforms vaf table.
 
 \code{filter_detectable} removes sites where freq < threshold.
 
