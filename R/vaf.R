@@ -81,3 +81,28 @@ sort_vaf = function(tbl, method = c("average", "ward.D2", "complete", "single"))
     tbl[order_rows, ]
   }
 }
+
+#' @details
+#' `dist_vaf` summarizes diversity within/between regions.
+#' @inheritParams sample_uniform_regions
+#' @rdname vaf
+#' @export
+#' @seealso [dist_genealogy()]
+dist_vaf = function(tbl, ncell = Inf) {
+  n_regions = ncol(tbl)
+  seq_n = seq_len(n_regions)
+  mtrx = matrix(0, n_regions, n_regions, dimnames = list(seq_n, seq_n))
+  for (i in seq_n) {
+    for (j in seq.int(i, n_regions)) {
+      p_i = tbl[, i, drop = TRUE]
+      p_j = tbl[, j, drop = TRUE]
+      mtrx[i, j] = mtrx[j, i] = mean(p_hetero(p_i, p_j))
+    }
+  }
+  diag(mtrx) = diag(mtrx) / (1 - 1 / ncell)
+  mtrx
+}
+
+p_hetero = function(p1, p2 = p1) {
+  p1 * (1 - p2) + (1 - p1) * p2
+}
