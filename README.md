@@ -1,6 +1,6 @@
 # R interface to tumopp
 
-[![Build Status](https://travis-ci.org/heavywatal/rtumopp.svg?branch=master)](https://travis-ci.org/heavywatal/rtumopp)
+[![R build status](https://github.com/heavywatal/rtumopp/workflows/R-CMD-check/badge.svg)](https://github.com/heavywatal/rtumopp/actions)
 [![codecov](https://codecov.io/gh/heavywatal/rtumopp/branch/master/graph/badge.svg)](https://codecov.io/gh/heavywatal/rtumopp)
 [![CRAN Status Badge](https://www.r-pkg.org/badges/version/rtumopp)](http://cran.r-project.org/package=rtumopp)
 

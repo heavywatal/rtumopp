@@ -8,3 +8,4 @@
 ^\.vscode$
 ^_pkgdown\.yml$
 ^pkgdown$
+^\.github$
