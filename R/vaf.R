@@ -40,8 +40,7 @@ make_longer_vaf = function(graph, samples, mu, threshold = 0.05) {
 longer_vaf = function(vaf) {
   vaf %>%
     tibble::rowid_to_column(var = "site") %>%
-    tidyr::pivot_longer(-"site", names_to = "sample", values_to = "frequency") %>%
-    dplyr::mutate(sample = as.integer(.data$sample))
+    tidyr::pivot_longer(-"site", names_to = "sample", values_to = "frequency")
 }
 
 #' @details
