@@ -41,7 +41,6 @@ longer_vaf = function(vaf) {
   vaf %>%
     tibble::rowid_to_column(var = "site") %>%
     tidyr::pivot_longer(-"site", names_to = "sample", values_to = "frequency") %>%
-    dplyr::filter(.data$frequency > 0) %>%
     dplyr::mutate(sample = as.integer(.data$sample))
 }
 
