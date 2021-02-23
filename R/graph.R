@@ -43,6 +43,12 @@ internal_nodes = function(graph, nodes, sensitivity) {
   as.integer(names(counts)[(counts / n) > sensitivity])
 }
 
+subgraph_random_sink = function(graph, nsam, sink = graph$sink, to_mrca = FALSE) {
+  tips = sample(sink, nsam, replace = FALSE)
+  vids = upstream_vertices(graph, tips, to_mrca = to_mrca)
+  igraphlite::induced_subgraph(graph, vids)
+}
+
 upstream_vertices = function(graph, vids, to_mrca = FALSE) {
   vlist = neighborhood_in(graph, vids)
   vids = unique(unlist(vlist, use.names = FALSE))
