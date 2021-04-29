@@ -47,6 +47,7 @@ sort_clades = function(population, graph, n = 4L) {
 
 count_extant_descendants = function(graph, nodes) {
   paths = paths_to_source(graph, nodes)
-  tibble::tibble(id = purrr::flatten_int(paths)) %>%
-    dplyr::count(.data$id)
+  table(unlist(paths, use.names = FALSE), dnn = "id") %>%
+    tibble::as_tibble() %>%
+    dplyr::mutate(id = as.integer(.data$id))
 }
