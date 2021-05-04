@@ -35,7 +35,7 @@ dist_vaf = function(vaf, ncell = Inf) {
     for (j in seq.int(i, n_regions)) {
       p_i = vaf[, i, drop = TRUE]
       p_j = vaf[, j, drop = TRUE]
-      mtrx[i, j] = mtrx[j, i] = mean(p_hetero(p_i, p_j))
+      mtrx[i, j] = mtrx[j, i] = mean(p_hetero(p_i, p_j), na.rm = TRUE)
     }
   }
   diag(mtrx) = diag(mtrx) / (1 - 1 / ncell)
