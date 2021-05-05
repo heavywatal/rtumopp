@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -115,7 +115,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/heavywatal/rtumopp/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -141,11 +141,11 @@
     <p>3D plotting with rgl</p>
     </div>
 
-    <pre class="usage"><span class='fu'>plot_tumor3d</span>(<span class='kw'>.tbl</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>limits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>plot_tumor3d</span><span class='op'>(</span>.tbl <span class='op'>=</span> <span class='cn'>NULL</span>, limits <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>snapshot_surface</span>(<span class='no'>.tbl</span>, <span class='kw'>filename</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span>(<span class='st'>"rgl_"</span>, <span class='kw'>fileext</span> <span class='kw'>=</span> <span class='st'>".png"</span>), <span class='no'>...</span>)
+<span class='fu'>snapshot_surface</span><span class='op'>(</span><span class='va'>.tbl</span>, filename <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span><span class='op'>(</span><span class='st'>"rgl_"</span>, fileext <span class='op'>=</span> <span class='st'>".png"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>add_col</span>(<span class='no'>.tbl</span>, <span class='kw'>column</span> <span class='kw'>=</span> <span class='st'>"clade"</span>, <span class='kw'>palette</span> <span class='kw'>=</span> <span class='st'>"Spectral"</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
+<span class='fu'>add_col</span><span class='op'>(</span><span class='va'>.tbl</span>, column <span class='op'>=</span> <span class='st'>"clade"</span>, palette <span class='op'>=</span> <span class='st'>"Spectral"</span>, direction <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -156,7 +156,7 @@
     </tr>
     <tr>
       <th>limits</th>
-      <td><p>passed to xlim, ylim, zlim of <code><a href='https://rdrr.io/pkg/rgl/man/plot3d.html'>rgl::plot3d()</a></code></p></td>
+      <td><p>passed to xlim, ylim, zlim of <code><a href='https://dmurdoch.github.io/rgl/dev/reference/plot3d.html'>rgl::plot3d()</a></code></p></td>
     </tr>
     <tr>
       <th>filename</th>
@@ -183,7 +183,7 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>plot_tumor3d</code> plots tumor in 3D with rgl.</p>
-<p><code>snapshot_surface</code> is a shortcut of <code>plot_tumor3d()</code> and <code><a href='https://rdrr.io/pkg/rgl/man/snapshot.html'>rgl::snapshot3d()</a></code>.</p>
+<p><code>snapshot_surface</code> is a shortcut of <code>plot_tumor3d()</code> and <code><a href='https://dmurdoch.github.io/rgl/dev/reference/snapshot.html'>rgl::snapshot3d()</a></code>.</p>
 <p><code>add_col</code> adds a column for color in <code>plot_tumor3d()</code>.</p>
 
   </div>
@@ -201,7 +201,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

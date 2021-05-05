@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -74,7 +74,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/heavywatal/rtumopp/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -88,7 +88,7 @@
 
       
 
-      </header><script src="benchmark_files/header-attrs-2.3/header-attrs.js"></script><div class="row">
+      </header><script src="benchmark_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Efficiency of tumopp</h1>
@@ -104,41 +104,42 @@
 <div id="run-simulation-with-benchmark-information" class="section level2">
 <h2 class="hasAnchor">
 <a href="#run-simulation-with-benchmark-information" class="anchor"></a>Run simulation with benchmark information</h2>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidyverse</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tumopp</span>)
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://heavywatal.github.io/rtumopp">tumopp</a></span><span class="op">)</span>
 
-<span class="no">.const</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">D</span> <span class="kw">=</span> <span class="fl">3</span>, <span class="kw">C</span> <span class="kw">=</span> <span class="st">"hex"</span>, <span class="kw">k</span> <span class="kw">=</span> <span class="fl">10</span>, <span class="kw">N</span> <span class="kw">=</span> <span class="fl">2</span> ** <span class="fl">17</span>, <span class="kw">benchmark</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
-<span class="no">.alt</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
-  <span class="kw">L</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"const"</span>, <span class="st">"linear"</span>),
-  <span class="kw">P</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"random"</span>, <span class="st">"mindrag"</span>),
-  <span class="kw">d</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>, <span class="fl">0.2</span>),
-  <span class="kw">m</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>, <span class="fl">2</span>)
-)
-<span class="no">args_tbl</span> <span class="kw">=</span> <span class="fu"><a href="../reference/tumopp.html">make_args</a></span>(<span class="kw">alt</span> <span class="kw">=</span> <span class="no">.alt</span>, <span class="kw">const</span> <span class="kw">=</span> <span class="no">.const</span>) <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>()
+<span class="va">.const</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>D <span class="op">=</span> <span class="fl">3</span>, C <span class="op">=</span> <span class="st">"hex"</span>, k <span class="op">=</span> <span class="fl">10</span>, N <span class="op">=</span> <span class="fl">2</span> <span class="op">**</span> <span class="fl">17</span>, benchmark <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">.alt</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+  L <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"const"</span>, <span class="st">"linear"</span><span class="op">)</span>,
+  P <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"random"</span>, <span class="st">"mindrag"</span><span class="op">)</span>,
+  d <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.2</span><span class="op">)</span>,
+  m <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span>
+<span class="op">)</span>
+<span class="va">args_tbl</span> <span class="op">=</span> <span class="fu"><a href="../reference/tumopp.html">make_args</a></span><span class="op">(</span>alt <span class="op">=</span> <span class="va">.alt</span>, const <span class="op">=</span> <span class="va">.const</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="op">)</span>
 
-<span class="no">results</span> <span class="kw">=</span> <span class="kw pkg">tumopp</span><span class="kw ns">:::</span><span class="fu">system_tumopp</span>(<span class="no">args_tbl</span>) <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>()
+<span class="va">results</span> <span class="op">=</span> <span class="fu">tumopp</span><span class="fu">:::</span><span class="fu">system_tumopp</span><span class="op">(</span><span class="va">args_tbl</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="op">)</span>
 
-<span class="no">unnested</span> <span class="kw">=</span> <span class="no">results</span> <span class="kw">%&gt;%</span>
-  <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(-<span class="no">population</span>, -<span class="no">seed</span>) <span class="kw">%&gt;%</span>
-  <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">outdir</span> <span class="kw">=</span> <span class="kw pkg">fs</span><span class="kw ns">::</span><span class="fu"><a href="http://fs.r-lib.org/reference/path_file.html">path_file</a></span>(<span class="no">outdir</span>)) <span class="kw">%&gt;%</span>
-  <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="fu">where</span>(~ <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html">n_distinct</a></span>(<span class="no">.x</span>) <span class="kw">&gt;</span> <span class="fl">1L</span>)) <span class="kw">%&gt;%</span>
-  <span class="kw pkg">tidyr</span><span class="kw ns">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span>(<span class="no">benchmark</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>()
+<span class="va">unnested</span> <span class="op">=</span> <span class="va">results</span> <span class="op">%&gt;%</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">population</span>, <span class="op">-</span><span class="va">seed</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>outdir <span class="op">=</span> <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="http://fs.r-lib.org/reference/path_file.html">path_file</a></span><span class="op">(</span><span class="va">outdir</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="op">~</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html">n_distinct</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1L</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="va">benchmark</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="op">)</span>
 
-<span class="no">df_benchmark</span> <span class="kw">=</span> <span class="no">unnested</span> <span class="kw">%&gt;%</span>
-  <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span>(<span class="no">outdir</span>, <span class="no">size</span>, <span class="kw">.keep_all</span> <span class="kw">=</span> <span class="fl">TRUE</span>) <span class="kw">%&gt;%</span>
-  <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(
-    <span class="kw">local</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="no">local</span>, <span class="kw">levels</span> <span class="kw">=</span> <span class="no">.alt</span><span class="kw">[[</span><span class="st">"L"</span>]]),
-    <span class="kw">path</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="no">path</span>, <span class="kw">levels</span> <span class="kw">=</span> <span class="no">.alt</span><span class="kw">[[</span><span class="st">"P"</span>]]),
-    <span class="kw">size</span> <span class="kw">=</span> <span class="no">size</span> / <span class="fl">1000</span>,      <span class="co"># to K</span>
-    <span class="kw">memory</span> <span class="kw">=</span> <span class="no">maxrss</span> / <span class="fl">1024</span>,  <span class="co"># K to M</span>
-    <span class="kw">utime</span> <span class="kw">=</span> <span class="no">utime</span> / <span class="fl">1000</span>,    <span class="co"># ms to sec</span>
-    <span class="kw">stime</span> <span class="kw">=</span> <span class="no">stime</span> / <span class="fl">1000</span>,    <span class="co"># ms to sec</span>
-    <span class="kw">maxrss</span> <span class="kw">=</span> <span class="kw">NULL</span>
-  ) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>()
+<span class="va">df_benchmark</span> <span class="op">=</span> <span class="va">unnested</span> <span class="op">%&gt;%</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="va">outdir</span>, <span class="va">size</span>, .keep_all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
+    local <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">local</span>, levels <span class="op">=</span> <span class="va">.alt</span><span class="op">[[</span><span class="st">"L"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>,
+    path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">path</span>, levels <span class="op">=</span> <span class="va">.alt</span><span class="op">[[</span><span class="st">"P"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>,
+    size <span class="op">=</span> <span class="va">size</span> <span class="op">/</span> <span class="fl">1000</span>,      <span class="co"># to K</span>
+    memory <span class="op">=</span> <span class="va">maxrss</span> <span class="op">/</span> <span class="fl">1024</span>,  <span class="co"># K to M</span>
+    utime <span class="op">=</span> <span class="va">utime</span> <span class="op">/</span> <span class="fl">1000</span>,    <span class="co"># ms to sec</span>
+    stime <span class="op">=</span> <span class="va">stime</span> <span class="op">/</span> <span class="fl">1000</span>,    <span class="co"># ms to sec</span>
+    maxrss <span class="op">=</span> <span class="cn">NULL</span>
+  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="op">)</span>
 
-<span class="co"># usethis::use_data(df_benchmark, internal = TRUE, overwrite = TRUE)</span></pre></body></html></div>
+<span class="co"># usethis::use_data(df_benchmark, internal = TRUE, overwrite = TRUE)</span></code></pre></div>
 </div>
 <div id="memory" class="section level2">
 <h2 class="hasAnchor">
@@ -149,10 +150,11 @@
 <li>Cell death makes cell lineages longer given the same number of extant cells.</li>
 <li>The effect of cell death is more pronounced when the population average of birth rate is decreased with local competition (<code>-Llinear</code>).</li>
 </ul>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu">ggplot</span>(<span class="kw pkg">tumopp</span><span class="kw ns">:::</span><span class="no">df_benchmark</span>, <span class="fu">aes</span>(<span class="no">size</span>, <span class="no">memory</span>)) +
-  <span class="fu">geom_line</span>(<span class="kw">size</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="st">"#337ab7"</span>) +
-  <span class="fu">facet_grid</span>(<span class="no">local</span> + <span class="no">path</span> ~ <span class="no">delta0</span> + <span class="no">rho0</span>, <span class="kw">label</span> <span class="kw">=</span> <span class="no">label_both</span>) +
-  <span class="fu">labs</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="st">"Size (K cells)"</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="st">"Memory (MB)"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="fu">tumopp</span><span class="fu">:::</span><span class="va">df_benchmark</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">size</span>, <span class="va">memory</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_line</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">"#337ab7"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">facet_grid</span><span class="op">(</span><span class="va">local</span> <span class="op">+</span> <span class="va">path</span> <span class="op">~</span> <span class="va">delta0</span> <span class="op">+</span> <span class="va">rho0</span>, label <span class="op">=</span> <span class="va">label_both</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Size (K cells)"</span>, y <span class="op">=</span> <span class="st">"Memory (MB)"</span><span class="op">)</span></code></pre></div>
 <p><img src="benchmark_files/figure-html/memory-1.png" width="576"></p>
 </div>
 <div id="time" class="section level2">
@@ -169,10 +171,11 @@
 <li>The combination of <code>-Lconst -Pmindrag</code> is slower than the others because it involves both search and push from interior cells.</li>
 <li>The effects of cell death and migration are smaller than those of local competition (<code>-L</code>) and placement of daughter cells(<code>-P</code>).</li>
 </ul>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu">ggplot</span>(<span class="kw pkg">tumopp</span><span class="kw ns">:::</span><span class="no">df_benchmark</span>, <span class="fu">aes</span>(<span class="no">size</span>, <span class="no">utime</span> + <span class="no">stime</span>)) +
-  <span class="fu">geom_line</span>(<span class="kw">size</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="st">"#337ab7"</span>) +
-  <span class="fu">facet_grid</span>(<span class="no">local</span> + <span class="no">path</span> ~ <span class="no">delta0</span> + <span class="no">rho0</span>, <span class="kw">label</span> <span class="kw">=</span> <span class="no">label_both</span>) +
-  <span class="fu">labs</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="st">"Size (K cells)"</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="st">"Time (sec)"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="fu">tumopp</span><span class="fu">:::</span><span class="va">df_benchmark</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">size</span>, <span class="va">utime</span> <span class="op">+</span> <span class="va">stime</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_line</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">"#337ab7"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">facet_grid</span><span class="op">(</span><span class="va">local</span> <span class="op">+</span> <span class="va">path</span> <span class="op">~</span> <span class="va">delta0</span> <span class="op">+</span> <span class="va">rho0</span>, label <span class="op">=</span> <span class="va">label_both</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Size (K cells)"</span>, y <span class="op">=</span> <span class="st">"Time (sec)"</span><span class="op">)</span></code></pre></div>
 <p><img src="benchmark_files/figure-html/time-1.png" width="576"></p>
 </div>
   </div>
@@ -192,7 +195,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

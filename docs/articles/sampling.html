@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -74,7 +74,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/heavywatal/rtumopp/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -88,7 +88,7 @@
 
       
 
-      </header><script src="sampling_files/header-attrs-2.3/header-attrs.js"></script><div class="row">
+      </header><script src="sampling_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Multi-region sampling</h1>
@@ -105,17 +105,19 @@
 <h2 class="hasAnchor">
 <a href="#workflow" class="anchor"></a>Workflow</h2>
 <p>Perform simulation and extract population data:</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tumopp</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)
-<span class="no">result</span> <span class="kw">=</span> <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/tumopp.html">tumopp</a></span>(<span class="st">"-N20000 -D3 -Chex -Lconst -k10"</span>)
-<span class="no">population</span> <span class="kw">=</span> <span class="no">result</span>$<span class="no">population</span><span class="kw">[[</span><span class="fl">1L</span>]]
-<span class="no">graph</span> <span class="kw">=</span> <span class="no">result</span>$<span class="no">graph</span><span class="kw">[[</span><span class="fl">1L</span>]]</pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://heavywatal.github.io/rtumopp">tumopp</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
+<span class="va">result</span> <span class="op">=</span> <span class="fu">tumopp</span><span class="fu">::</span><span class="fu"><a href="../reference/tumopp.html">tumopp</a></span><span class="op">(</span><span class="st">"-N20000 -D3 -Chex -Lconst -k10"</span><span class="op">)</span>
+<span class="va">population</span> <span class="op">=</span> <span class="va">result</span><span class="op">$</span><span class="va">population</span><span class="op">[[</span><span class="fl">1L</span><span class="op">]</span><span class="op">]</span>
+<span class="va">graph</span> <span class="op">=</span> <span class="va">result</span><span class="op">$</span><span class="va">graph</span><span class="op">[[</span><span class="fl">1L</span><span class="op">]</span><span class="op">]</span></code></pre></div>
 <p>Sample cells and put neutral mutations on the lineages:</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">extant</span> <span class="kw">=</span> <span class="no">population</span> <span class="kw">%&gt;%</span> <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/population.html">filter_extant</a></span>()
-<span class="no">ncell</span> <span class="kw">=</span> <span class="fl">200L</span>
-<span class="no">regions</span> <span class="kw">=</span> <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/sample.html">sample_uniform_regions</a></span>(<span class="no">extant</span>, <span class="kw">nsam</span> <span class="kw">=</span> <span class="fl">4L</span>, <span class="kw">ncell</span> <span class="kw">=</span> <span class="no">ncell</span>)
-<span class="no">subgraph</span> <span class="kw">=</span> <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/graph.html">subtree</a></span>(<span class="no">graph</span>, <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>(<span class="no">regions</span>$<span class="no">id</span>))
-<span class="no">vaf</span> <span class="kw">=</span> <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/vaf.html">make_vaf</a></span>(<span class="no">subgraph</span>, <span class="no">regions</span>$<span class="no">id</span>, <span class="kw">mu</span> <span class="kw">=</span> <span class="fl">8.0</span>) <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>()
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">extant</span> <span class="op">=</span> <span class="va">population</span> <span class="op">%&gt;%</span> <span class="fu">tumopp</span><span class="fu">::</span><span class="fu"><a href="../reference/filter_extant.html">filter_extant</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">ncell</span> <span class="op">=</span> <span class="fl">200L</span>
+<span class="va">regions</span> <span class="op">=</span> <span class="fu">tumopp</span><span class="fu">::</span><span class="fu"><a href="../reference/sample_uniform_regions.html">sample_uniform_regions</a></span><span class="op">(</span><span class="va">extant</span>, nsam <span class="op">=</span> <span class="fl">4L</span>, ncell <span class="op">=</span> <span class="va">ncell</span><span class="op">)</span>
+<span class="va">subgraph</span> <span class="op">=</span> <span class="fu">tumopp</span><span class="fu">::</span><span class="fu"><a href="../reference/make_igraph.html">subtree</a></span><span class="op">(</span><span class="va">graph</span>, <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">regions</span><span class="op">$</span><span class="va">id</span><span class="op">)</span><span class="op">)</span>
+<span class="va">vaf</span> <span class="op">=</span> <span class="fu">tumopp</span><span class="fu">::</span><span class="fu"><a href="../reference/make_vaf.html">make_vaf</a></span><span class="op">(</span><span class="va">subgraph</span>, <span class="va">regions</span><span class="op">$</span><span class="va">id</span>, mu <span class="op">=</span> <span class="fl">8.0</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 29,816 x 4</span>
 <span class="co">#&gt;      `1`   `2`   `3`   `4`</span>
 <span class="co">#&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
@@ -129,26 +131,28 @@
 <span class="co">#&gt;  8     0     0     0 0.005</span>
 <span class="co">#&gt;  9     0     0     0 0.025</span>
 <span class="co">#&gt; 10     0     0     0 0.025</span>
-<span class="co">#&gt; # … with 29,806 more rows</span></pre></body></html></div>
+<span class="co">#&gt; # … with 29,806 more rows</span></code></pre></div>
 <p>Estimate <span class="math inline">\(F_{ST}\)</span> from VAF.</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/distance.html">dist_vaf</a></span>(<span class="no">vaf</span>, <span class="no">ncell</span>) <span class="kw">%&gt;%</span> <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/fst.html">fst</a></span>()
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">tumopp</span><span class="fu">::</span><span class="fu"><a href="../reference/dist_genealogy.html">dist_vaf</a></span><span class="op">(</span><span class="va">vaf</span>, <span class="va">ncell</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">tumopp</span><span class="fu">::</span><span class="fu"><a href="../reference/fst.html">fst</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; [1] 0.06250332</span>
 
 <span class="co"># True FST from cell genealogy</span>
-<span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/distance.html">dist_genealogy</a></span>(<span class="no">subgraph</span>, <span class="no">regions</span>$<span class="no">id</span>) <span class="kw">%&gt;%</span> <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/fst.html">fst</a></span>()
-<span class="co">#&gt; [1] 0.06050219</span></pre></body></html></div>
+<span class="fu">tumopp</span><span class="fu">::</span><span class="fu"><a href="../reference/dist_genealogy.html">dist_genealogy</a></span><span class="op">(</span><span class="va">subgraph</span>, <span class="va">regions</span><span class="op">$</span><span class="va">id</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">tumopp</span><span class="fu">::</span><span class="fu"><a href="../reference/fst.html">fst</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; [1] 0.06050219</span></code></pre></div>
 <p>Summarize and visualize VAF:</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">vaf_tidy</span> <span class="kw">=</span> <span class="no">vaf</span> <span class="kw">%&gt;%</span>
-  <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/vaf.html">filter_detectable</a></span>(<span class="fl">0.01</span>) <span class="kw">%&gt;%</span>
-  <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/vaf.html">sort_vaf</a></span>() <span class="kw">%&gt;%</span>
-  <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/vaf.html">longer_vaf</a></span>() <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>()
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">vaf_tidy</span> <span class="op">=</span> <span class="va">vaf</span> <span class="op">%&gt;%</span>
+  <span class="fu">tumopp</span><span class="fu">::</span><span class="fu"><a href="../reference/make_vaf.html">filter_detectable</a></span><span class="op">(</span><span class="fl">0.01</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">tumopp</span><span class="fu">::</span><span class="fu"><a href="../reference/make_vaf.html">sort_vaf</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">tumopp</span><span class="fu">::</span><span class="fu"><a href="../reference/make_vaf.html">longer_vaf</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggplot2</span>)
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">vaf_tidy</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="no">sample</span>, <span class="no">site</span>)) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html">geom_tile</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">fill</span> <span class="kw">=</span> <span class="no">frequency</span>)) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_distiller</a></span>(<span class="kw">palette</span> <span class="kw">=</span> <span class="st">"Spectral"</span>, <span class="kw">limit</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>, <span class="fl">1</span>), <span class="kw">guide</span> <span class="kw">=</span> <span class="fl">FALSE</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html">coord_cartesian</a></span>(<span class="kw">expand</span> <span class="kw">=</span> <span class="fl">FALSE</span>)</pre></body></html></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">vaf_tidy</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">sample</span>, <span class="va">site</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html">geom_tile</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">frequency</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_distiller</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Spectral"</span>, limit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, guide <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html">coord_cartesian</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 </div>
   </div>
 
@@ -167,7 +171,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

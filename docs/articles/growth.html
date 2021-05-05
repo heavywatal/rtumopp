@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -74,7 +74,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/heavywatal/rtumopp/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -88,7 +88,7 @@
 
       
 
-      </header><script src="growth_files/header-attrs-2.3/header-attrs.js"></script><div class="row">
+      </header><script src="growth_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Visualize population growth</h1>
@@ -102,48 +102,49 @@
     
     
 <p>Following code extracts demographic history from population table, and draws the right panel of Fig. 5.</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">magrittr</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggplot2</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tumopp</span>)
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://heavywatal.github.io/rtumopp">tumopp</a></span><span class="op">)</span>
 
-<span class="no">.alt</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">k</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">8</span>, <span class="fl">2</span> ** <span class="fl">30</span>))
-<span class="no">.const</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">D</span> <span class="kw">=</span> <span class="fl">3L</span>, <span class="kw">C</span> <span class="kw">=</span> <span class="st">"hex"</span>, <span class="kw">N</span> <span class="kw">=</span> <span class="fl">16384L</span>, <span class="kw">L</span> <span class="kw">=</span> <span class="st">"const"</span>)
-<span class="no">args_table</span> <span class="kw">=</span> <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/tumopp.html">make_args</a></span>(<span class="kw">alt</span> <span class="kw">=</span> <span class="no">.alt</span>, <span class="kw">const</span> <span class="kw">=</span> <span class="no">.const</span>, <span class="kw">each</span> <span class="kw">=</span> <span class="fl">1L</span>)
-<span class="no">results</span> <span class="kw">=</span> <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/tumopp.html">tumopp</a></span>(<span class="no">args_table</span>)
+<span class="va">.alt</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>k <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">8</span>, <span class="fl">2</span> <span class="op">**</span> <span class="fl">30</span><span class="op">)</span><span class="op">)</span>
+<span class="va">.const</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>D <span class="op">=</span> <span class="fl">3L</span>, C <span class="op">=</span> <span class="st">"hex"</span>, N <span class="op">=</span> <span class="fl">16384L</span>, L <span class="op">=</span> <span class="st">"const"</span><span class="op">)</span>
+<span class="va">args_table</span> <span class="op">=</span> <span class="fu">tumopp</span><span class="fu">::</span><span class="fu"><a href="../reference/tumopp.html">make_args</a></span><span class="op">(</span>alt <span class="op">=</span> <span class="va">.alt</span>, const <span class="op">=</span> <span class="va">.const</span>, each <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span>
+<span class="va">results</span> <span class="op">=</span> <span class="fu">tumopp</span><span class="fu">::</span><span class="fu"><a href="../reference/tumopp.html">tumopp</a></span><span class="op">(</span><span class="va">args_table</span><span class="op">)</span>
 
-<span class="no">df</span> <span class="kw">=</span> <span class="no">results</span> <span class="kw">%&gt;%</span>
-  <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">demography</span> <span class="kw">=</span> <span class="kw pkg">purrr</span><span class="kw ns">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span>(<span class="no">population</span>, ~{
-    <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/demography.html">extract_history</a></span>(<span class="no">.x</span>) <span class="kw">%&gt;%</span> <span class="kw pkg">tumopp</span><span class="kw ns">::</span><span class="fu"><a href="../reference/demography.html">summarise_demography</a></span>()
-  })) <span class="kw">%&gt;%</span>
-  <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">shape</span>, <span class="no">demography</span>) <span class="kw">%&gt;%</span>
-  <span class="kw pkg">tidyr</span><span class="kw ns">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span>(<span class="st">"demography"</span>)
+<span class="va">df</span> <span class="op">=</span> <span class="va">results</span> <span class="op">%&gt;%</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>demography <span class="op">=</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">population</span>, <span class="op">~</span><span class="op">{</span>
+    <span class="fu">tumopp</span><span class="fu">::</span><span class="fu"><a href="../reference/extract_history.html">extract_history</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">tumopp</span><span class="fu">::</span><span class="fu"><a href="../reference/extract_history.html">summarise_demography</a></span><span class="op">(</span><span class="op">)</span>
+  <span class="op">}</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">shape</span>, <span class="va">demography</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="st">"demography"</span><span class="op">)</span>
 
-<span class="no">.breaks</span> <span class="kw">=</span> <span class="no">.alt</span><span class="kw">[[</span><span class="st">"k"</span>]]
-<span class="no">.labels</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span>(<span class="no">.breaks</span> <span class="kw">&lt;</span> <span class="fl">1e6</span>, <span class="no">.breaks</span>, <span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span>(<span class="no">infinity</span>))
-<span class="no">.values</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html">setNames</a></span>(<span class="fu"><a href="https://rdrr.io/r/grDevices/gray.html">grey</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.666</span>, <span class="fl">0.4</span>, <span class="fl">0</span>)), <span class="no">.breaks</span>)
+<span class="va">.breaks</span> <span class="op">=</span> <span class="va">.alt</span><span class="op">[[</span><span class="st">"k"</span><span class="op">]</span><span class="op">]</span>
+<span class="va">.labels</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">.breaks</span> <span class="op">&lt;</span> <span class="fl">1e6</span>, <span class="va">.breaks</span>, <span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="va">infinity</span><span class="op">)</span><span class="op">)</span>
+<span class="va">.values</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html">setNames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/gray.html">grey</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.666</span>, <span class="fl">0.4</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>, <span class="va">.breaks</span><span class="op">)</span>
 
-<span class="no">labels_log10</span> <span class="kw">=</span> <span class="kw">function</span>(<span class="no">breaks</span>) {
-  <span class="fu"><a href="https://rdrr.io/r/base/parse.html">parse</a></span>(<span class="kw">text</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"10^"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>(<span class="no">breaks</span>)))
-}
+<span class="va">labels_log10</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">breaks</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/parse.html">parse</a></span><span class="op">(</span>text <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"10^"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">breaks</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="op">}</span>
 
-<span class="no">fig5b</span> <span class="kw">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="no">time</span>, <span class="no">size</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="no">shape</span>)) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">colour</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(<span class="no">shape</span>)), <span class="kw">size</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">alpha</span> <span class="kw">=</span> <span class="fl">0.8</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_log10</a></span>(<span class="kw">breaks</span> <span class="kw">=</span> <span class="fl">10</span> ** <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span>(<span class="fl">4L</span>), <span class="kw">labels</span> <span class="kw">=</span> <span class="no">labels_log10</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_colour_manual</a></span>(
-    <span class="kw">name</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span>(<span class="fu"><a href="https://rdrr.io/r/grDevices/plotmath.html">italic</a></span>(<span class="no">k</span>)),
-    <span class="kw">labels</span> <span class="kw">=</span> <span class="no">.labels</span>, <span class="kw">values</span> <span class="kw">=</span> <span class="no">.values</span>,
-    <span class="kw">guide</span> <span class="kw">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html">guide_legend</a></span>(<span class="kw">reverse</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">override.aes</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">size</span> <span class="kw">=</span> <span class="fl">3</span>))
-  ) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span>(<span class="no">Time</span>~(<span class="fu"><a href="https://rdrr.io/r/grDevices/plotmath.html">italic</a></span>(<span class="no">t</span>))), <span class="kw">y</span> <span class="kw">=</span> <span class="st">"# of tumor cells"</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>() +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(
-    <span class="kw">panel.grid</span> <span class="kw">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span>(),
-    <span class="kw">axis.ticks</span> <span class="kw">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span>(),
-    <span class="kw">legend.key.height</span> <span class="kw">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/reexports.html">unit</a></span>(<span class="fl">0.7</span>, <span class="st">"lines"</span>),
-    <span class="kw">legend.position</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.98</span>, <span class="fl">0.02</span>), <span class="kw">legend.justification</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">0</span>)
-  )
+<span class="va">fig5b</span> <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">size</span>, group <span class="op">=</span> <span class="va">shape</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">shape</span><span class="op">)</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">1</span>, alpha <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_log10</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fl">10</span> <span class="op">**</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fl">4L</span><span class="op">)</span>, labels <span class="op">=</span> <span class="va">labels_log10</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_colour_manual</a></span><span class="op">(</span>
+    name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/plotmath.html">italic</a></span><span class="op">(</span><span class="va">k</span><span class="op">)</span><span class="op">)</span>,
+    labels <span class="op">=</span> <span class="va">.labels</span>, values <span class="op">=</span> <span class="va">.values</span>,
+    guide <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html">guide_legend</a></span><span class="op">(</span>reverse <span class="op">=</span> <span class="cn">TRUE</span>, override.aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span>
+  <span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="va">Time</span><span class="op">~</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/plotmath.html">italic</a></span><span class="op">(</span><span class="va">t</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>, y <span class="op">=</span> <span class="st">"# of tumor cells"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>
+    panel.grid <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
+    axis.ticks <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
+    legend.key.height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0.7</span>, <span class="st">"lines"</span><span class="op">)</span>,
+    legend.position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.98</span>, <span class="fl">0.02</span><span class="op">)</span>, legend.justification <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>
+  <span class="op">)</span>
 
-<span class="co"># ggsave("fig5b.png", fig5b, width = 3, height = 3)</span></pre></body></html></div>
+<span class="co"># ggsave("fig5b.png", fig5b, width = 3, height = 3)</span></code></pre></div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -159,7 +160,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
