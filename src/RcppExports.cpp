@@ -5,6 +5,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // nth_element
 double nth_element(const Rcpp::NumericVector& x, int n);
 RcppExport SEXP _tumopp_nth_element(SEXP xSEXP, SEXP nSEXP) {
