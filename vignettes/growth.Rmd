@@ -40,7 +40,8 @@ labels_log10 = function(breaks) {
   parse(text = paste0("10^", log10(breaks)))
 }
 
-fig5b = ggplot(df, aes(time, size, group = shape)) +
+fig5b = ggplot(df) +
+  aes(time, size, group = shape) +
   geom_line(aes(color = as.factor(shape)), size = 1, alpha = 0.8) +
   scale_y_log10(breaks = 10 ** seq_len(4L), labels = labels_log10) +
   scale_color_manual(

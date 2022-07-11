@@ -16,7 +16,7 @@ extant |>
   plot_lattice2d(size = 0.3) +
   geom_point(data = function(x) {
     dplyr::filter(x, !is.na(region))
-  }, aes(x, y), size = 0.3, alpha = 0.4) +
+  }, size = 0.3, alpha = 0.4) +
   theme(axis.title = element_blank())
 
 # #######1#########2#########3#########4#########5#########6#########7#########
@@ -34,7 +34,8 @@ mutated = mutate_clades(subgraph, segsites = 1000L)
 
 .tidy = make_longer_vaf(graph, regions$id, -1) |> print()
 
-ggplot(.tidy, aes(sample, site)) +
+ggplot(.tidy) +
+  aes(sample, site) +
   geom_tile(aes(fill = frequency)) +
   scale_fill_distiller(palette = "Spectral", limit = c(0, 1), guide = FALSE) +
   coord_cartesian(expand = FALSE)

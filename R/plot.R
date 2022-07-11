@@ -4,7 +4,8 @@
 #' @export
 histogram_freqspec = function(freqs) {
   tibble::tibble(x = freqs) |>
-    ggplot2::ggplot(ggplot2::aes_(~x, ~..density..)) +
+    ggplot2::ggplot() +
+    ggplot2::aes(.data[["x"]], .data[["..density.."]]) +
     ggplot2::geom_histogram(bins = 25) +
     ggplot2::coord_cartesian(xlim = c(0, 1)) +
     ggplot2::labs(x = "frequency of alleles (or living descendants)")
@@ -20,15 +21,16 @@ histogram_freqspec = function(freqs) {
 #' @export
 plot_lattice2d = function(.tbl, color = "z", alpha = 1, size = 1, limit = max_abs_xyz(.tbl)) {
   size = size * 96 / (limit - 0.5)
-  ggplot2::ggplot(.tbl, ggplot2::aes_(~x, ~y)) +
-    ggplot2::geom_point(ggplot2::aes_string(color = color), alpha = alpha, size = size) +
+  ggplot2::ggplot(.tbl) +
+    ggplot2::aes(.data[["x"]], .data[["y"]]) +
+    ggplot2::geom_point(ggplot2::aes(color = {{ color }}), alpha = alpha, size = size) +
     ggplot2::coord_equal(xlim = limit * c(-1, 1), ylim = limit * c(-1, 1))
 }
 
 # #######1#########2#########3#########4#########5#########6#########7#########
 
 #' Plot capture_rate ~ nsam of biopsy
-#' @param data tbl from [summarize_capture_rate()]` or [evaluate_mrs()]
+#' @param data tbl from [summarize_capture_rate()] or [evaluate_mrs()]
 #' @param point size of a data point
 #' @param alpha opacity of a data point
 #' @param errorbar logical
@@ -36,7 +38,8 @@ plot_lattice2d = function(.tbl, color = "z", alpha = 1, size = 1, limit = max_ab
 #' @export
 plot_capture_rate = function(data, point = 1, alpha = 0.3, errorbar = TRUE) {
   # scales::viridis_pal()(5L) |> str_replace("FF$", "") |> tail(2L)
-  p = ggplot2::ggplot(data, ggplot2::aes_(~nsam, ~capture_rate)) +
+  p = ggplot2::ggplot(data) +
+    ggplot2::aes(.data[["nsam"]], .data[["capture_rate"]]) +
     ggplot2::annotate("rect", xmin = -Inf, xmax = Inf, ymin = 0.9, ymax = 1.0, fill = "#5DC863", alpha = 0.8) +
     ggplot2::annotate("rect", xmin = -Inf, xmax = Inf, ymin = 0.8, ymax = 0.9, fill = "#FDE725", alpha = 0.8) +
     ggplot2::stat_summary(fun.y = mean, geom = "bar", fill = "#777777") +

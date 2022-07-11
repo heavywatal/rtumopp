@@ -30,8 +30,8 @@ augment_genealogy = function(graph) {
 #' @export
 gggenealogy = function(data, mapping = ggplot2::aes(), ...) {
   ggplot2::ggplot(data) +
-    utils::modifyList(ggplot2::aes_(~d, ~x), mapping) +
-    ggplot2::geom_segment(ggplot2::aes_(xend = ~d_parent, yend = ~x_parent), ...)
+    utils::modifyList(ggplot2::aes(.data[["d"]], .data[["x"]]), mapping) +
+    ggplot2::geom_segment(ggplot2::aes(xend = .data[["d_parent"]], yend = .data[["x_parent"]]), ...)
 }
 
 # @param distance named vector from [genetic_distance()]

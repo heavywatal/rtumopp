@@ -73,7 +73,8 @@ df_benchmark = unnested |>
   when the population average of birth rate is decreased with local competition (`-Llinear`).
 
 ```{r memory}
-ggplot(tumopp:::df_benchmark, aes(size, memory)) +
+ggplot(tumopp:::df_benchmark) +
+  aes(size, memory) +
   geom_line(size = 1, color = "#337ab7") +
   facet_grid(local + path ~ delta0 + rho0, label = label_both) +
   labs(x = "Size (K cells)", y = "Memory (MB)")
@@ -91,7 +92,8 @@ ggplot(tumopp:::df_benchmark, aes(size, memory)) +
   than those of local competition (`-L`) and placement of daughter cells(`-P`).
 
 ```{r time}
-ggplot(tumopp:::df_benchmark, aes(size, utime + stime)) +
+ggplot(tumopp:::df_benchmark) +
+  aes(size, utime + stime) +
   geom_line(size = 1, color = "#337ab7") +
   facet_grid(local + path ~ delta0 + rho0, label = label_both) +
   labs(x = "Size (K cells)", y = "Time (sec)")
