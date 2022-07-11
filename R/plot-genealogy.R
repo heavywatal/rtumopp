@@ -14,8 +14,10 @@ augment_genealogy = function(graph) {
       parent = "from", node = "to",
       d = "y", x_parent = "xend", d_parent = "yend"
     ) |>
-    dplyr::mutate(node_type = ifelse(.data$node %in% tips, "tip",
-      ifelse(.data$node %in% root, "root", "internal")
+    dplyr::mutate(node_type = dplyr::case_when(
+      .data$node %in% tips ~ "tip",
+      .data$node %in% root ~ "root",
+      TRUE ~ "internal"
     ))
 }
 

@@ -43,8 +43,8 @@ internal_nodes = function(graph, nodes, sensitivity) {
   as.integer(names(counts)[(counts / n) > sensitivity])
 }
 
-subgraph_random_sink = function(graph, nsam, sink = graph$sink, to_mrca = FALSE) {
-  tips = sample(sink, nsam, replace = FALSE)
+subgraph_random_sink = function(graph, nsam, sinks = graph$sink, to_mrca = FALSE) {
+  tips = sample(sinks, nsam, replace = FALSE)
   vids = upstream_vertices(graph, tips, to_mrca = to_mrca)
   igraphlite::induced_subgraph(graph, vids)
 }
@@ -116,8 +116,8 @@ count_sink = function(graph, nodes = integer(0L)) {
   if (length(nodes) > 0L) {
     vids = igraphlite::as_vids(graph, nodes)
     egos = igraphlite::neighborhood(graph, vids, order = 1073741824L, mode = 1L)
-    sink = graph$sink
-    vapply(egos, function(x) sum(x %in% sink), integer(1L), USE.NAMES = FALSE)
+    .sink = graph$sink
+    vapply(egos, function(x) sum(x %in% .sink), integer(1L), USE.NAMES = FALSE)
   } else {
     sum(graph$is_sink)
   }

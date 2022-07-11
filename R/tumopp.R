@@ -163,6 +163,6 @@ filter_valid_LP = function(x) {
 valid_LP_combinations = function() {
   rbind(
     tidyr::crossing(L = c("const", "linear", "step"), P = c("random", "mindrag")),
-    tidyr::crossing(L = c("const"), P = c("roulette", "minstraight", "stroll"))
+    tidyr::crossing(L = "const", P = c("roulette", "minstraight", "stroll"))
   )
 }

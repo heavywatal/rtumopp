@@ -32,7 +32,7 @@ add_phi = function(population, coord, dimensions) {
     dplyr::left_join(counts, by = c("x", "y", "z")) |>
     dplyr::transmute(.data$id, phi = nrow(kernel) - .data$n)
   population |>
-    dplyr::left_join(info, by = c("id"))
+    dplyr::left_join(info, by = "id")
 }
 
 detect_surface = function(.tbl, se) {

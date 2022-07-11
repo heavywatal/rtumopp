@@ -48,7 +48,7 @@ fig5b = ggplot(df, aes(time, size, group = shape)) +
     labels = .labels, values = .values,
     guide = guide_legend(reverse = TRUE, override.aes = list(size = 3))
   ) +
-  labs(x = expression(Time~(italic(t))), y = "# of tumor cells") +
+  labs(x = expression(Time ~ (italic(t))), y = "# of tumor cells") +
   theme_bw() +
   theme(
     panel.grid = element_blank(),
