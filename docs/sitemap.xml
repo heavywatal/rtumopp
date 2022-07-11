@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://heavywatal.github.io/rtumopp/404.html</loc>
+  </url>
+  <url>
+    <loc>https://heavywatal.github.io/rtumopp/LICENSE-text.html</loc>
+  </url>
+  <url>
+    <loc>https://heavywatal.github.io/rtumopp/LICENSE.html</loc>
+  </url>
+  <url>
+    <loc>https://heavywatal.github.io/rtumopp/articles/benchmark.html</loc>
+  </url>
+  <url>
+    <loc>https://heavywatal.github.io/rtumopp/articles/genealogy.html</loc>
+  </url>
+  <url>
+    <loc>https://heavywatal.github.io/rtumopp/articles/growth.html</loc>
+  </url>
+  <url>
+    <loc>https://heavywatal.github.io/rtumopp/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://heavywatal.github.io/rtumopp/articles/sampling.html</loc>
+  </url>
+  <url>
+    <loc>https://heavywatal.github.io/rtumopp/articles/tumopp.html</loc>
+  </url>
+  <url>
+    <loc>https://heavywatal.github.io/rtumopp/authors.html</loc>
+  </url>
+  <url>
     <loc>https://heavywatal.github.io/rtumopp/index.html</loc>
   </url>
   <url>
@@ -26,6 +56,9 @@
   </url>
   <url>
     <loc>https://heavywatal.github.io/rtumopp/reference/hex.html</loc>
+  </url>
+  <url>
+    <loc>https://heavywatal.github.io/rtumopp/reference/index.html</loc>
   </url>
   <url>
     <loc>https://heavywatal.github.io/rtumopp/reference/morphology.html</loc>
@@ -74,20 +107,5 @@
   </url>
   <url>
     <loc>https://heavywatal.github.io/rtumopp/reference/write.html</loc>
-  </url>
-  <url>
-    <loc>https://heavywatal.github.io/rtumopp/articles/benchmark.html</loc>
-  </url>
-  <url>
-    <loc>https://heavywatal.github.io/rtumopp/articles/genealogy.html</loc>
-  </url>
-  <url>
-    <loc>https://heavywatal.github.io/rtumopp/articles/growth.html</loc>
-  </url>
-  <url>
-    <loc>https://heavywatal.github.io/rtumopp/articles/sampling.html</loc>
-  </url>
-  <url>
-    <loc>https://heavywatal.github.io/rtumopp/articles/tumopp.html</loc>
   </url>
 </urlset>

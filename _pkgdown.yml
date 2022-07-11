@@ -1,4 +1,6 @@
 url: https://heavywatal.github.io/rtumopp
+template:
+  bootstrap: 5
 destination: docs
 reference:
 - title: "Run simulation"
