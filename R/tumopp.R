@@ -113,16 +113,17 @@ make_args = function(alt, const = NULL, times = 1L, each = 1L) {
 }
 
 vectorize_args = function(.tbl) {
-  opts = options(scipen = 255L) # suppress scientific notation like "-N1e+06"
-  on.exit(options(opts))
-  purrr::pmap(.tbl, function(...) {
-    .params = list(...) |>
-      purrr::keep(~ !isFALSE(.x)) |>
-      unlist()
-    .names = names(.params)
-    .template = ifelse(nchar(.names) > 1L, "--%s=%s", "-%s%s")
-    sprintf(.template, .names, .params) |>
-      stringr::str_replace("=?TRUE$", "")
+  # suppress scientific notation like "-N1e+06"
+  withr::with_options(list(scipen = 255L), {
+    purrr::pmap(.tbl, function(...) {
+      .params = list(...) |>
+        purrr::discard(isFALSE) |>
+        unlist()
+      .names = names(.params)
+      .template = ifelse(nchar(.names) > 1L, "--%s=%s", "-%s%s")
+      sprintf(.template, .names, .params) |>
+        stringr::str_remove("=?TRUE$")
+    })
   })
 }
 
