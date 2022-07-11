@@ -12,7 +12,7 @@ test_that("tumopp runs", {
     },
     "invalid and excluded"
   )
-  expect_equal(nrow(argslist), 2L * prod(lengths(.alt)) - 4L)
+  expect_identical(nrow(argslist), 2L * as.integer(prod(lengths(.alt))) - 4L)
   expect_s3_class(argslist, "data.frame")
   expect_s3_class(tumopp(head(argslist, 3L), mc.cores = 1L), "data.frame")
 
@@ -34,5 +34,5 @@ test_that("tumopp runs", {
   expect_silent({
     argslist = generate_args(prior = .prior, const = .const, n = .n)
   })
-  expect_equal(length(argslist), .n)
+  expect_length(argslist, .n)
 })

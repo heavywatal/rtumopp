@@ -11,11 +11,11 @@ test_that("fst works", {
   expect_silent({
     d_vaf = dist_vaf(vaf, ncell)
   })
-  expect_equal(dim(d_vaf), c(4L, 4L))
+  expect_identical(dim(d_vaf), c(4L, 4L))
   expect_silent({
     d_tree = dist_genealogy(subgraph, regions$id)
   })
-  expect_equal(dim(d_tree), c(4L, 4L))
-  expect_equal(fst(d_vaf), fst(d_tree))
-  expect_equal(gst(d_vaf), gst(d_tree))
+  expect_identical(dim(d_tree), c(4L, 4L))
+  expect_equal(fst(d_vaf), fst(d_tree), tolerance = 1e-9)
+  expect_equal(gst(d_vaf), gst(d_tree), tolerance = 1e-9)
 })
