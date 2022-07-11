@@ -12,16 +12,16 @@ histogram_freqspec = function(freqs) {
 
 #' ggplot for 2D lattice
 #' @param .tbl tbl with extant cells
-#' @param colour column name to colorcode
+#' @param color column name to colorcode
 #' @param size relative size of points
 #' @param alpha opacity `[0, 1]`
 #' @param limit for value range
 #' @rdname plot
 #' @export
-plot_lattice2d = function(.tbl, colour = "z", alpha = 1, size = 1, limit = max_abs_xyz(.tbl)) {
+plot_lattice2d = function(.tbl, color = "z", alpha = 1, size = 1, limit = max_abs_xyz(.tbl)) {
   size = size * 96 / (limit - 0.5)
   ggplot2::ggplot(.tbl, ggplot2::aes_(~x, ~y)) +
-    ggplot2::geom_point(ggplot2::aes_string(colour = colour), alpha = alpha, size = size) +
+    ggplot2::geom_point(ggplot2::aes_string(color = color), alpha = alpha, size = size) +
     ggplot2::coord_equal(xlim = limit * c(-1, 1), ylim = limit * c(-1, 1))
 }
 
@@ -75,7 +75,7 @@ save_serial_section = function(.tbl, filename = "png/section_%03d.png", scale = 
       .outfile = sprintf(filename, i)
       # TODO: fix color for each lineage
       .p = plot_lattice2d(data, ..., limit = .lim) +
-        ggplot2::geom_hline(yintercept = z[1L], colour = "#999999", size = 1.5) +
+        ggplot2::geom_hline(yintercept = z[1L], color = "#999999", size = 1.5) +
         ggplot2::labs(title = sprintf("z =%4.1f", z)) +
         ggplot2::theme_bw() +
         ggplot2::theme(

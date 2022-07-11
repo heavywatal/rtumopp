@@ -31,7 +31,7 @@ morphological_stats = function(extant, coord = "") {
       r = dist_euclidean(extant_surface),
       phi = .data$phi / max_phi
     ) |>
-    dplyr::summarise(
+    dplyr::summarize(
       phi_mean = mean(.data$phi), phi_sd = stats::sd(.data$phi),
       r_mean = mean(.data$r), r_sd = stats::sd(.data$r)
     ) |>

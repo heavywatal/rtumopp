@@ -2,12 +2,12 @@
 % Please edit documentation in R/demography.R
 \name{extract_history}
 \alias{extract_history}
-\alias{summarise_demography}
+\alias{summarize_demography}
 \title{Functions for event history}
 \usage{
 extract_history(population)
 
-summarise_demography(history)
+summarize_demography(history)
 }
 \arguments{
 \item{population}{data.frame}
@@ -18,5 +18,5 @@ summarise_demography(history)
 \code{extract_history} extracts birth and death events from raw population data.
 }
 \details{
-\code{summarise_demography} simplifies history.
+\code{summarize_demography} simplifies history.
 }

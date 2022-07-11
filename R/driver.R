@@ -12,6 +12,6 @@ propagate_drivers = function(drivers, graph) {
     dplyr::mutate(coef = 1 + .data$coef) |>
     tidyr::unnest("id") |>
     dplyr::group_by(.data$id, .data$type) |>
-    dplyr::summarise(value = prod(!!as.name("coef"))) |>
-    tidyr::spread("type", "value")
+    dplyr::summarize(value = prod(!!as.name("coef"))) |>
+    tidyr::pivot_wider(names_from = "type", values_from = "value")
 }

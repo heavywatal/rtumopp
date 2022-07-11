@@ -9,27 +9,27 @@ LazyData: true
 Depends:
     R (>= 4.1.0)
 Imports:
-    dplyr (>= 1.0.7),
-    ggplot2 (>= 3.3.5),
+    dplyr (>= 1.0.9),
+    ggplot2 (>= 3.3.6),
     igraphlite,
-    jsonlite (>= 1.7.2),
+    jsonlite (>= 1.8.0),
     mmand (>= 1.6.1),
     purrr (>= 0.3.4),
-    readr (>= 2.1.0),
+    readr (>= 2.1.2),
     reshape2 (>= 1.4.4),
-    rlang (>= 0.4.12),
+    rlang (>= 1.0.3),
     stringr (>= 1.4.0),
-    tibble (>= 3.1.6),
-    tidyr (>= 1.1.4),
-    Rcpp (>= 1.0.7),
-    scales (>= 1.1.1),
+    tibble (>= 3.1.7),
+    tidyr (>= 1.2.0),
+    Rcpp (>= 1.0.9),
+    scales (>= 1.2.0),
     withr (>= 2.5.0)
 Suggests:
     covr,
     knitr,
     rgl,
     rmarkdown,
-    testthat (>= 3.1.0)
+    testthat (>= 3.1.4)
 Remotes:
     github::heavywatal/rigraphlite
 URL: https://heavywatal.github.io/rtumopp, https://github.com/heavywatal/rtumopp

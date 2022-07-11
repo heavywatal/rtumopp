@@ -7,7 +7,7 @@
 extract_history = function(population) {
   population |>
     dplyr::select(.data$id, .data$ancestor, .data$birth, .data$death) |>
-    tidyr::gather("event", "time", c("birth", "death")) |>
+    tidyr::pivot_longer(c("birth", "death"), names_to = "event", values_to = "time") |>
     dplyr::filter(!(.data$event == "death" & .data$time == 0)) |> # alive
     dplyr::mutate(event = factor(.data$event, levels = c("death", "birth"))) |>
     dplyr::arrange(.data$time, .data$event) |>
@@ -15,20 +15,20 @@ extract_history = function(population) {
 }
 
 #' @details
-#' `summarise_demography` simplifies history.
+#' `summarize_demography` simplifies history.
 #' @param history data.frame from [extract_history()]
 #' @rdname demography
 #' @export
-summarise_demography = function(history) {
+summarize_demography = function(history) {
   history |>
     dplyr::group_by(.data$time) |>
-    dplyr::summarise(size = max(!!as.name("size")))
+    dplyr::summarize(size = max(!!as.name("size")))
 }
 
 list_clade_founders = function(population, n) {
   stopifnot(n < 16L)
   history = extract_history(population) |> utils::head(10000L)
-  demography = summarise_demography(history)
+  demography = summarize_demography(history)
   indices = which(demography$size == n)
   the_time = demography$time[utils::tail(indices, 1L)]
   history = dplyr::filter(history, .data$time <= the_time)

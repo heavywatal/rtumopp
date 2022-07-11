@@ -27,7 +27,7 @@ results = tumopp::tumopp(args_table)
 
 df = results |>
   dplyr::mutate(demography = purrr::map(population, ~{
-    tumopp::extract_history(.x) |> tumopp::summarise_demography()
+    tumopp::extract_history(.x) |> tumopp::summarize_demography()
   })) |>
   dplyr::select(shape, demography) |>
   tidyr::unnest("demography")
@@ -41,9 +41,9 @@ labels_log10 = function(breaks) {
 }
 
 fig5b = ggplot(df, aes(time, size, group = shape)) +
-  geom_line(aes(colour = as.factor(shape)), size = 1, alpha = 0.8) +
+  geom_line(aes(color = as.factor(shape)), size = 1, alpha = 0.8) +
   scale_y_log10(breaks = 10 ** seq_len(4L), labels = labels_log10) +
-  scale_colour_manual(
+  scale_color_manual(
     name = expression(italic(k)),
     labels = .labels, values = .values,
     guide = guide_legend(reverse = TRUE, override.aes = list(size = 3))

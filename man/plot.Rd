@@ -9,7 +9,7 @@ histogram_freqspec(freqs)
 
 plot_lattice2d(
   .tbl,
-  colour = "z",
+  color = "z",
   alpha = 1,
   size = 1,
   limit = max_abs_xyz(.tbl)
@@ -20,7 +20,7 @@ plot_lattice2d(
 
 \item{.tbl}{tbl with extant cells}
 
-\item{colour}{column name to colorcode}
+\item{color}{column name to colorcode}
 
 \item{alpha}{opacity \verb{[0, 1]}}
 

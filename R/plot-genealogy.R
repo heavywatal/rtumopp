@@ -67,7 +67,7 @@ remove_tandem_ancestors = function(data) {
       node_type = (!!as.name("node_type"))[!!as.name("idx")]
     ) |>
     dplyr::ungroup() |>
-    dplyr::select(-.data$idx) |>
+    dplyr::select(!.data$idx) |>
     dplyr::relocate(.data$x, .data$x_parent, .after = .data$d_parent) |>
     dplyr::arrange(.data$node)
 }

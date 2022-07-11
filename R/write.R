@@ -29,7 +29,7 @@ write_results = function(results) {
       readr::write_tsv(content, outfile)
     }
   })
-  conf = suppressWarnings(dplyr::select(result, -dplyr::one_of(c(dfs, "graph"))))
+  conf = suppressWarnings(dplyr::select(result, !dplyr::one_of(c(dfs, "graph"))))
   json = to_json(as.list(conf))
   cat(json, file = file.path(outdir, "config.json"))
   invisible(result)
