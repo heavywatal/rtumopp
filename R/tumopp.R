@@ -28,7 +28,7 @@ tumopp = function(args, ...) UseMethod("tumopp")
 #' @export
 tumopp.default = function(args = character(0L), ..., graph = TRUE) {
   if (length(args) == 1L) {
-    args = stringr::str_split(args, "\\s+") %>% purrr::flatten_chr()
+    args = stringr::str_split(args, "\\s+") |> purrr::flatten_chr()
   }
   result = cpp_tumopp(args)
   if (length(result) == 0L) {
@@ -67,7 +67,7 @@ tumopp.default = function(args = character(0L), ..., graph = TRUE) {
 #' @rdname tumopp
 #' @export
 tumopp.list = function(args, ..., graph = TRUE, mc.cores = getOption("mc.cores", 1L)) {
-  out = parallel::mclapply(args, tumopp, ..., graph = FALSE, mc.cores = mc.cores) %>%
+  out = parallel::mclapply(args, tumopp, ..., graph = FALSE, mc.cores = mc.cores) |>
     dplyr::bind_rows(.id = "args")
   if (graph) {
     out$graph = lapply(out[["population"]], make_igraph)
@@ -86,7 +86,7 @@ system_tumopp = function(args, mc.cores = getOption("mc.cores", 1L)) {
   args[["o"]] = paste0(tempdir(), "/", args[["o"]])
   argslist = vectorize_args(args)
   parallel::mclapply(argslist, system2, command = "tumopp", mc.cores = mc.cores)
-  out = read_results(args[["o"]], graph = FALSE, mc.cores = mc.cores) %>%
+  out = read_results(args[["o"]], graph = FALSE, mc.cores = mc.cores) |>
     dplyr::bind_rows()
   f = function(.x) {
     readr::read_tsv(file.path(.x, "benchmark.tsv.gz"))
@@ -105,10 +105,10 @@ system_tumopp = function(args, mc.cores = getOption("mc.cores", 1L)) {
 #' @export
 make_args = function(alt, const = NULL, times = 1L, each = 1L) {
   now = format(Sys.time(), "%Y%m%d_%H%M%S")
-  grid = purrr::invoke(tidyr::crossing, alt) %>% filter_valid_LP()
+  grid = purrr::invoke(tidyr::crossing, alt) |> filter_valid_LP()
   idx = rep(seq_len(nrow(grid)), times = times, each = each)
-  dplyr::slice(grid, idx) %>%
-    dplyr::mutate(o = paste(now, dplyr::row_number(), sep = "_")) %>%
+  dplyr::slice(grid, idx) |>
+    dplyr::mutate(o = paste(now, dplyr::row_number(), sep = "_")) |>
     dplyr::mutate(!!!const)
 }
 
@@ -116,20 +116,20 @@ vectorize_args = function(.tbl) {
   opts = options(scipen = 255L) # suppress scientific notation like "-N1e+06"
   on.exit(options(opts))
   purrr::pmap(.tbl, function(...) {
-    .params = list(...) %>%
-      purrr::keep(~ !isFALSE(.x)) %>%
+    .params = list(...) |>
+      purrr::keep(~ !isFALSE(.x)) |>
       unlist()
     .names = names(.params)
     .template = ifelse(nchar(.names) > 1L, "--%s=%s", "-%s%s")
-    sprintf(.template, .names, .params) %>%
+    sprintf(.template, .names, .params) |>
       stringr::str_replace("=?TRUE$", "")
   })
 }
 
 # prior is a named list of generating functions
 generate_args = function(prior, const = NULL, n = 1L) {
-  generate_valid(prior, n = n) %>%
-    vectorize_args() %>%
+  generate_valid(prior, n = n) |>
+    vectorize_args() |>
     purrr::map(~ c(const, .x))
 }
 

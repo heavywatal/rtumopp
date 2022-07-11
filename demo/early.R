@@ -16,7 +16,7 @@ write_results(results)
   clade_info = tumopp:::sort_clades(population, graph, 4L)
   dplyr::left_join(snapshots, clade_info, by = "id")
 }
-# .tbl = (dplyr::slice(results, 1L) %>% purrr::pmap(.add_clade_to_snapshots))[[1L]]
+# .tbl = (dplyr::slice(results, 1L) |> purrr::pmap(.add_clade_to_snapshots))[[1L]]
 
 .plot_snapshot = function(data, limit) {
   tumopp::plot_lattice2d(data, "clade", alpha = 1.0, limit = limit) +
@@ -26,7 +26,7 @@ write_results(results)
 
 .plot_snapshots = function(.tbl) {
   .lim = tumopp::max_abs_xyz(.tbl)
-  tidyr::nest(.tbl, -time)$data %>%
+  tidyr::nest(.tbl, -time)$data |>
     parallel::mclapply(.plot_snapshot, limit = .lim)
 }
 
@@ -52,4 +52,4 @@ magick_gif_animation = function(infiles, outfile = "animation.gif", delay = 15, 
   .infiles = file.path(.pngdir, "snapshot_*.png")
   magick_gif_animation(.infiles, sprintf("%s/%s.gif", outdir, outdir), delay = 8)
 }
-dplyr::slice(results, 1L) %>% purrr::pmap(.do)
+dplyr::slice(results, 1L) |> purrr::pmap(.do)

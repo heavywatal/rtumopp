@@ -9,11 +9,11 @@ augment_genealogy = function(graph) {
   vnames = igraphlite::Vnames(graph)
   tips = vnames[graph$is_sink]
   root = vnames[graph$is_source]
-  igraphlite::augment(graph, layout = igraphlite::layout_reingold_tilford) %>%
+  igraphlite::augment(graph, layout = igraphlite::layout_reingold_tilford) |>
     dplyr::rename(
       parent = "from", node = "to",
       d = "y", x_parent = "xend", d_parent = "yend"
-    ) %>%
+    ) |>
     dplyr::mutate(node_type = ifelse(.data$node %in% tips, "tip",
       ifelse(.data$node %in% root, "root", "internal")
     ))
@@ -54,8 +54,8 @@ genetic_distance = function(graph, vids = graph$V, mu = 0, accel = 0) {
 }
 
 remove_tandem_ancestors = function(data) {
-  data %>%
-    dplyr::group_by(.data$x, .data$x_parent) %>%
+  data |>
+    dplyr::group_by(.data$x, .data$x_parent) |>
     dplyr::summarize(
       idx = which.max(!!as.name("d")),
       parent = (!!as.name("parent"))[which.min(!!as.name("d"))],
@@ -63,9 +63,9 @@ remove_tandem_ancestors = function(data) {
       d = max(!!as.name("d")),
       d_parent = min(!!as.name("d_parent")),
       node_type = (!!as.name("node_type"))[!!as.name("idx")]
-    ) %>%
-    dplyr::ungroup() %>%
-    dplyr::select(-.data$idx) %>%
-    dplyr::relocate(.data$x, .data$x_parent, .after = .data$d_parent) %>%
+    ) |>
+    dplyr::ungroup() |>
+    dplyr::select(-.data$idx) |>
+    dplyr::relocate(.data$x, .data$x_parent, .after = .data$d_parent) |>
     dplyr::arrange(.data$node)
 }

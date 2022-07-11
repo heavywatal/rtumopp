@@ -17,7 +17,6 @@ knitr::opts_chunk$set(
 Following code extracts demographic history from population table, and draws the right panel of Fig. 5.
 
 ```{r run, eval = TRUE}
-library(magrittr)
 library(ggplot2)
 library(tumopp)
 
@@ -26,11 +25,11 @@ library(tumopp)
 args_table = tumopp::make_args(alt = .alt, const = .const, each = 1L)
 results = tumopp::tumopp(args_table)
 
-df = results %>%
+df = results |>
   dplyr::mutate(demography = purrr::map(population, ~{
-    tumopp::extract_history(.x) %>% tumopp::summarise_demography()
-  })) %>%
-  dplyr::select(shape, demography) %>%
+    tumopp::extract_history(.x) |> tumopp::summarise_demography()
+  })) |>
+  dplyr::select(shape, demography) |>
   tidyr::unnest("demography")
 
 .breaks = .alt[["k"]]

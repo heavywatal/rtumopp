@@ -26,7 +26,7 @@ See `?tumopp` for details.
 library(tumopp)
 result = tumopp("--seed=24601 -D3 -Cmoore -k10 -N1000")
 colnames(result)
-result$population[[1L]] %>% dplyr::arrange(id)
+result$population[[1L]] |> dplyr::arrange(id)
 ```
 
 ## Explore parameter space
@@ -46,11 +46,11 @@ for available parameters.
 
 # Generate combinations of arguments
 args_table = make_args(alt = .alt, const = .const, each = 1L)
-args_table %>% dplyr::select(-o)
+args_table |> dplyr::select(-o)
 
 # Concurrent execution
 results = tumopp(args_table)
-results %>%
-  dplyr::select(-outdir, -seed, -where(is.list)) %>%
+results |>
+  dplyr::select(-outdir, -seed, -where(is.list)) |>
   dplyr::select(where(~ dplyr::n_distinct(.x) > 1L))
 ```

@@ -27,14 +27,14 @@ mutate_clades = function(graph, mu = NULL, segsites = NULL) {
   # TODO: remove low-freq variants?
   number = if (is.null(mu)) {
     if (is.null(segsites)) stop("specify either mu or segsites")
-    stats::rmultinom(1L, segsites, rep(1, length(nodes))) %>% as.vector()
+    stats::rmultinom(1L, segsites, rep(1, length(nodes))) |> as.vector()
   } else if (mu > 0) {
     if (!is.null(segsites)) stop("segsites is ignored if mu is given")
     stats::rpois(length(nodes), mu)
   } else {
     rep(1L, length(nodes))
   }
-  tibble::tibble(origin = nodes, number = number) %>%
-    dplyr::filter(.data$number > 0) %>%
+  tibble::tibble(origin = nodes, number = number) |>
+    dplyr::filter(.data$number > 0) |>
     dplyr::mutate(carriers = paths_to_sink(graph, .data$origin))
 }

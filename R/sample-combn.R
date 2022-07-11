@@ -10,7 +10,7 @@ combn_ids = function(x, m = seq_along(x)) {
   tibble::tibble(
     nsam = m,
     id = purrr::map(m, combn_int_list, x = x)
-  ) %>%
+  ) |>
     tidyr::unnest("id")
 }
 

@@ -1,6 +1,5 @@
 #' @useDynLib tumopp, .registration = TRUE
 #' @importFrom Rcpp sourceCpp
-#' @importFrom magrittr %>%
 #' @importFrom rlang :=
 #' @importFrom rlang .data
 #' @aliases NULL tumopp-package

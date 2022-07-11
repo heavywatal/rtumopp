@@ -35,19 +35,19 @@ library(tumopp)
   d = c(0, 0.2),
   m = c(0, 2)
 )
-args_tbl = make_args(alt = .alt, const = .const) %>% print()
+args_tbl = make_args(alt = .alt, const = .const) |> print()
 
-results = tumopp:::system_tumopp(args_tbl) %>% print()
+results = tumopp:::system_tumopp(args_tbl) |> print()
 
-unnested = results %>%
-  dplyr::select(-population, -seed) %>%
-  dplyr::mutate(outdir = fs::path_file(outdir)) %>%
-  dplyr::select(where(~ dplyr::n_distinct(.x) > 1L)) %>%
-  tidyr::unnest(benchmark) %>%
+unnested = results |>
+  dplyr::select(-population, -seed) |>
+  dplyr::mutate(outdir = fs::path_file(outdir)) |>
+  dplyr::select(where(~ dplyr::n_distinct(.x) > 1L)) |>
+  tidyr::unnest(benchmark) |>
   print()
 
-df_benchmark = unnested %>%
-  dplyr::distinct(outdir, size, .keep_all = TRUE) %>%
+df_benchmark = unnested |>
+  dplyr::distinct(outdir, size, .keep_all = TRUE) |>
   dplyr::mutate(
     local = factor(local, levels = .alt[["L"]]),
     path = factor(path, levels = .alt[["P"]]),
@@ -56,7 +56,7 @@ df_benchmark = unnested %>%
     utime = utime / 1000,    # ms to sec
     stime = stime / 1000,    # ms to sec
     maxrss = NULL
-  ) %>%
+  ) |>
   print()
 
 # usethis::use_data(df_benchmark, internal = TRUE, overwrite = TRUE)

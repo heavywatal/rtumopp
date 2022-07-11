@@ -26,15 +26,15 @@ morphological_stats = function(extant, coord = "") {
     1
   )
   extant_surface = dplyr::filter(extant, .data$surface)
-  extant_surface %>%
+  extant_surface |>
     dplyr::mutate(
       r = dist_euclidean(extant_surface),
       phi = .data$phi / max_phi
-    ) %>%
+    ) |>
     dplyr::summarise(
       phi_mean = mean(.data$phi), phi_sd = stats::sd(.data$phi),
       r_mean = mean(.data$r), r_sd = stats::sd(.data$r)
-    ) %>%
+    ) |>
     dplyr::mutate(surface = sum(extant$surface) / nrow(extant))
 }
 

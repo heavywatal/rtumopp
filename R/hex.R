@@ -49,7 +49,7 @@ revert_coord_fcc = function(.tbl) {
     .tbl,
     z = as.integer(round(.data$z * sqrt(3 / 2))),
     x = .data$x - .data$z / sqrt(3)
-  ) %>% revert_coord_hex_xy()
+  ) |> revert_coord_hex_xy()
 }
 
 revert_coord_hex_xy = function(.tbl) {

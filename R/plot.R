@@ -3,7 +3,7 @@
 #' @rdname plot
 #' @export
 histogram_freqspec = function(freqs) {
-  tibble::tibble(x = freqs) %>%
+  tibble::tibble(x = freqs) |>
     ggplot2::ggplot(ggplot2::aes_(~x, ~..density..)) +
     ggplot2::geom_histogram(bins = 25) +
     ggplot2::coord_cartesian(xlim = c(0, 1)) +
@@ -35,7 +35,7 @@ plot_lattice2d = function(.tbl, colour = "z", alpha = 1, size = 1, limit = max_a
 #' @rdname plot-biopsy
 #' @export
 plot_capture_rate = function(data, point = 1, alpha = 0.3, errorbar = TRUE) {
-  # scales::viridis_pal()(5L) %>% str_replace("FF$", "") %>% tail(2L)
+  # scales::viridis_pal()(5L) |> str_replace("FF$", "") |> tail(2L)
   p = ggplot2::ggplot(data, ggplot2::aes_(~nsam, ~capture_rate)) +
     ggplot2::annotate("rect", xmin = -Inf, xmax = Inf, ymin = 0.9, ymax = 1.0, fill = "#5DC863", alpha = 0.8) +
     ggplot2::annotate("rect", xmin = -Inf, xmax = Inf, ymin = 0.8, ymax = 0.9, fill = "#FDE725", alpha = 0.8) +
@@ -68,9 +68,9 @@ mean_sd = function(x, mult = 1.96) {
 #' @export
 save_serial_section = function(.tbl, filename = "png/section_%03d.png", scale = 6, dpi = 72, ...) {
   .lim = max_abs_xyz(.tbl)
-  tidyr::nest(.tbl, -.data$z) %>%
-    dplyr::arrange(.data$z) %>%
-    dplyr::mutate(i = dplyr::row_number()) %>%
+  tidyr::nest(.tbl, -.data$z) |>
+    dplyr::arrange(.data$z) |>
+    dplyr::mutate(i = dplyr::row_number()) |>
     purrr::pwalk(function(z, data, i) {
       .outfile = sprintf(filename, i)
       # TODO: fix color for each lineage

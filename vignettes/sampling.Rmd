@@ -14,7 +14,6 @@ knitr::opts_chunk$set(
 )
 
 library(tumopp)
-library(magrittr)
 set.seed(24601L)
 result = tumopp::tumopp("-N20000 -D3 -Chex -Lconst -k10 --seed=42")
 population = result$population[[1L]]
@@ -36,29 +35,29 @@ graph = result$graph[[1L]]
 Sample cells and put neutral mutations on the lineages:
 
 ```{r sample}
-extant = population %>% tumopp::filter_extant()
+extant = population |> tumopp::filter_extant()
 ncell = 200L
 regions = tumopp::sample_uniform_regions(extant, nsam = 4L, ncell = ncell)
 subgraph = tumopp::subtree(graph, unlist(regions$id))
-vaf = tumopp::make_vaf(subgraph, regions$id, mu = 8.0) %>% print()
+vaf = tumopp::make_vaf(subgraph, regions$id, mu = 8.0) |> print()
 ```
 
 Estimate $F_{ST}$ from VAF.
 
 ```{r fst}
-tumopp::dist_vaf(vaf, ncell) %>% tumopp::fst()
+tumopp::dist_vaf(vaf, ncell) |> tumopp::fst()
 
 # True FST from cell genealogy
-tumopp::dist_genealogy(subgraph, regions$id) %>% tumopp::fst()
+tumopp::dist_genealogy(subgraph, regions$id) |> tumopp::fst()
 ```
 
 Summarize and visualize VAF:
 
 ```{r visualize, eval = FALSE}
-vaf_tidy = vaf %>%
-  tumopp::filter_detectable(0.01) %>%
-  tumopp::sort_vaf() %>%
-  tumopp::longer_vaf() %>%
+vaf_tidy = vaf |>
+  tumopp::filter_detectable(0.01) |>
+  tumopp::sort_vaf() |>
+  tumopp::longer_vaf() |>
   print()
 
 library(ggplot2)

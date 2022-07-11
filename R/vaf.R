@@ -26,9 +26,9 @@ make_longer_vaf = function(graph, samples, mu, threshold = 0.05) {
   if (sum(graph$is_sink) > sum(lengths(samples))) {
     graph = subtree(graph, unlist(samples))
   }
-  make_vaf(graph, samples, mu) %>%
-    filter_detectable(threshold) %>%
-    sort_vaf() %>%
+  make_vaf(graph, samples, mu) |>
+    filter_detectable(threshold) |>
+    sort_vaf() |>
     longer_vaf()
 }
 
@@ -38,8 +38,8 @@ make_longer_vaf = function(graph, samples, mu, threshold = 0.05) {
 #' @rdname vaf
 #' @export
 longer_vaf = function(vaf) {
-  vaf %>%
-    tibble::rowid_to_column(var = "site") %>%
+  vaf |>
+    tibble::rowid_to_column(var = "site") |>
     tidyr::pivot_longer(-"site", names_to = "sample", values_to = "frequency")
 }
 

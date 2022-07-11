@@ -17,7 +17,6 @@ knitr::opts_chunk$set(
 The genealogy of sampled cells can be visualized with the code like this:
 
 ```{r genealogy}
-library(magrittr)
 library(ggplot2)
 library(tumopp)
 
@@ -25,11 +24,11 @@ result = tumopp::tumopp("-N4096 -D3 -Chex -k1e6 -Lconst")
 population = result$population[[1L]]
 graph = result$graph[[1L]]
 
-extant = population %>% tumopp::filter_extant()
+extant = population |> tumopp::filter_extant()
 regions = tumopp::sample_uniform_regions(extant, nsam = 8L, ncell = 4L)
 subgraph = tumopp::subtree(graph, purrr::flatten_int(regions$id))
 
-tbl_genealogy = subgraph %>% augment_genealogy()
+tbl_genealogy = subgraph |> augment_genealogy()
 
 p = gggenealogy(tbl_genealogy) +
   theme_classic() + theme(
@@ -48,14 +47,14 @@ The left panel of Fig. 5. can be drawn like this:
 args_table = tumopp::make_args(alt = .alt, const = .const, each = 1L)
 results = tumopp::tumopp(args_table)
 
-df = results %>%
-  dplyr::arrange(shape) %>%
-  dplyr::mutate(k = as.list(ifelse(shape < 1e6, shape, expression(infinity)))) %>%
+df = results |>
+  dplyr::arrange(shape) |>
+  dplyr::mutate(k = as.list(ifelse(shape < 1e6, shape, expression(infinity)))) |>
   dplyr::mutate(genealogy = parallel::mclapply(graph, augment_genealogy))
 
 .max_d = max(purrr::map_dbl(df[["genealogy"]], ~{max(.x$d)}))
 
-plts = df %>% purrr::pmap(function(k, shape, genealogy, ...) {
+plts = df |> purrr::pmap(function(k, shape, genealogy, ...) {
   gggenealogy(genealogy, alpha = 0.3, size = 0.3) +
   geom_point(
     data = function(.) dplyr::filter(., .data$node_type == "tip"),

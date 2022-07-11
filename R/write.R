@@ -7,7 +7,7 @@
 #' @export
 write_results = function(results) {
   for (i in seq_len(nrow(results))) {
-    dplyr::slice(results, i) %>% .write_result()
+    dplyr::slice(results, i) |> .write_result()
   }
 }
 

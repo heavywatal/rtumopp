@@ -9,10 +9,10 @@
 #' @export
 add_surface = function(population, coord, dimensions) {
   extant = filter_extant(population)
-  strelem = get_se(coord, dimensions) %>% df2img()
-  col_surface = detect_surface(extant, strelem) %>%
+  strelem = get_se(coord, dimensions) |> df2img()
+  col_surface = detect_surface(extant, strelem) |>
     dplyr::select(.data$id, .data$surface)
-  population %>%
+  population |>
     dplyr::left_join(col_surface, by = "id")
 }
 
@@ -26,12 +26,12 @@ add_phi = function(population, coord, dimensions) {
   kernel = get_se(coord, dimensions)
   counts = purrr::pmap_dfr(kernel, ~ {
     dplyr::mutate(coords, x = .data$x + ..1, y = .data$y + ..2, z = .data$z + ..3)
-  }) %>%
+  }) |>
     dplyr::count(.data$x, .data$y, .data$z)
-  info = coords %>%
-    dplyr::left_join(counts, by = c("x", "y", "z")) %>%
+  info = coords |>
+    dplyr::left_join(counts, by = c("x", "y", "z")) |>
     dplyr::transmute(.data$id, phi = nrow(kernel) - .data$n)
-  population %>%
+  population |>
     dplyr::left_join(info, by = c("id"))
 }
 
@@ -42,8 +42,8 @@ detect_surface = function(.tbl, se) {
   if (!is.integer(.tbl$x)) .tbl = revert_coord_hex(.tbl)
   axes = c("x", "y", "z")
   mins = dplyr::summarize(.tbl, dplyr::across(axes, min))
-  img = df2img(.tbl) %>% filter_surface(se)
-  product = img2df(img) %>% dplyr::transmute(
+  img = df2img(.tbl) |> filter_surface(se)
+  product = img2df(img) |> dplyr::transmute(
     x = .data$x + mins$x - 1L,
     y = .data$y + mins$y - 1L,
     z = .data$z + mins$z - 1L,
@@ -60,7 +60,7 @@ get_se = function(coord = c("moore", "neumann", "hex"), dimensions = 3L) {
   if (coord == "neumann") {
     df = dplyr::filter(df, abs(.data$x) + abs(.data$y) + abs(.data$z) < 2)
   } else if (coord == "hex") {
-    df = dplyr::filter(df, (trans_coord_hex(df) %>% dist_euclidean()) < 1.1)
+    df = dplyr::filter(df, (trans_coord_hex(df) |> dist_euclidean()) < 1.1)
   }
   if (dimensions < 3L) {
     df = dplyr::filter(df, .data$z == 0L)
@@ -93,7 +93,7 @@ df2img = function(.tbl) {
 # Convert binary array to data.frame with (x, y, z) columns
 img2df = function(img) {
   dim(img) = utils::head(dim(img), 3L)
-  img %>%
-    reshape2::melt(c("x", "y", "z")) %>%
+  img |>
+    reshape2::melt(c("x", "y", "z")) |>
     tibble::as_tibble()
 }

@@ -27,8 +27,8 @@ sample_random_regions = function(tbl, nsam = 2L, ncell = 10L) {
     centers = dplyr::slice_sample(tbl[c("x", "y", "z")], n = nsam)
     sample_regions(tbl, centers, ncell = ncell)
   } else {
-    tbl[c("x", "y", "z", "id")] %>%
-      dplyr::slice_sample(n = nsam) %>%
+    tbl[c("x", "y", "z", "id")] |>
+      dplyr::slice_sample(n = nsam) |>
       dplyr::mutate(id = as.list(.data$id))
   }
 }
@@ -58,8 +58,8 @@ sample_regions = function(tbl, centers, ncell = 10L) {
 }
 
 tidy_regions = function(regions) {
-  tibble::tibble(id = regions$id) %>%
-    tibble::rowid_to_column(var = "region") %>%
+  tibble::tibble(id = regions$id) |>
+    tibble::rowid_to_column(var = "region") |>
     tidyr::unnest("id")
 }
 
@@ -72,14 +72,14 @@ tidy_regions = function(regions) {
 #' @export
 evaluate_mrs = function(population, nsam, ncell, threshold = 0.05, sensitivity = 0.05, jitter = 0) {
   graph = make_igraph(population)
-  regions = filter_extant(population) %>%
+  regions = filter_extant(population) |>
     sample_uniform_regions(nsam = nsam, ncell = ncell, jitter = jitter)
   sampled = purrr::flatten_int(regions$id)
   subgraph = subtree(graph, sampled)
   detectable = internal_nodes(subgraph, sampled, sensitivity = sensitivity)
-  major_ca = population %>%
-    add_node_property(graph) %>%
-    filter_common_ancestors(threshold = threshold) %>%
+  major_ca = population |>
+    add_node_property(graph) |>
+    filter_common_ancestors(threshold = threshold) |>
     dplyr::pull("id")
   sum(detectable %in% major_ca) / length(major_ca)
 }
@@ -90,7 +90,7 @@ evaluate_mrs = function(population, nsam, ncell, threshold = 0.05, sensitivity =
 #' @export
 distances_mrs = function(population, nsam, ncell, jitter = 0) {
   graph = make_igraph(population)
-  regions = filter_extant(population) %>%
+  regions = filter_extant(population) |>
     sample_uniform_regions(nsam = nsam, ncell = ncell, jitter = jitter)
   sampled = purrr::flatten_int(regions$id)
   subgraph = subtree(graph, sampled)
