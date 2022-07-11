@@ -10,10 +10,13 @@ augment_genealogy = function(graph) {
   tips = vnames[graph$is_sink]
   root = vnames[graph$is_source]
   igraphlite::augment(graph, layout = igraphlite::layout_reingold_tilford) %>%
-    dplyr::rename(parent = "from", node = "to",
-                  d = "y", x_parent = "xend", d_parent = "yend") %>%
+    dplyr::rename(
+      parent = "from", node = "to",
+      d = "y", x_parent = "xend", d_parent = "yend"
+    ) %>%
     dplyr::mutate(node_type = ifelse(.data$node %in% tips, "tip",
-                              ifelse(.data$node %in% root, "root", "internal")))
+      ifelse(.data$node %in% root, "root", "internal")
+    ))
 }
 
 #' @details
@@ -38,14 +41,16 @@ mutate_distance = function(data, distance) {
 
 genetic_distance = function(graph, vids = graph$V, mu = 0, accel = 0) {
   age = distances_from_origin(graph)
-  segments = (1 + accel) ** age
+  segments = (1 + accel)**age
   if (mu > 0) {
     segments = stats::rpois(graph$vcount, mu * segments)
   }
   segments[graph$is_source] = 0
   ancestors = neighborhood_in(graph, vids)
   names(ancestors) = igraphlite::Vnames(graph)[vids]
-  purrr::map_dbl(ancestors, function(x) {sum(segments[x])})
+  purrr::map_dbl(ancestors, function(x) {
+    sum(segments[x])
+  })
 }
 
 remove_tandem_ancestors = function(data) {

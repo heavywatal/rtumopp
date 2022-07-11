@@ -41,12 +41,20 @@ ggplot(.tidy, aes(sample, site)) +
 
 
 testdf = tibble::tibble(mu = rep(c(1, 4, 16, 64), each = 200)) %>%
-  dplyr::mutate(fst = wtl::mcmap_dbl(mu, ~tumopp::make_vaf(subgraph, regions$id, mu = .x) %>% tumopp::dist_vaf(ncell) %>% tumopp::fst())) %>%
+  dplyr::mutate(fst = wtl::mcmap_dbl(mu, ~ tumopp::make_vaf(subgraph, regions$id, mu = .x) %>%
+    tumopp::dist_vaf(ncell) %>%
+    tumopp::fst())) %>%
   print()
 
 # load_all()
-xi = tumopp::make_vaf(subgraph, regions$id, mu = -1) %>% tumopp::dist_vaf(ncell) %>% tumopp::fst()
-ggplot(testdf) + aes(fst) + geom_histogram(bins = 30) + geom_vline(xintercept = xi) + facet_wrap(~mu)
+xi = tumopp::make_vaf(subgraph, regions$id, mu = -1) %>%
+  tumopp::dist_vaf(ncell) %>%
+  tumopp::fst()
+ggplot(testdf) +
+  aes(fst) +
+  geom_histogram(bins = 30) +
+  geom_vline(xintercept = xi) +
+  facet_wrap(~mu)
 
 
 # #######1#########2#########3#########4#########5#########6#########7#########

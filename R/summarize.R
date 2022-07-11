@@ -19,7 +19,12 @@ genetic_stats = function(extant) {
 #' @rdname summarize
 #' @export
 morphological_stats = function(extant, coord = "") {
-  max_phi = switch(coord, hex = 12, moore = 27, neumann = 6, 1)
+  max_phi = switch(coord,
+    hex = 12,
+    moore = 27,
+    neumann = 6,
+    1
+  )
   extant_surface = dplyr::filter(extant, .data$surface)
   extant_surface %>%
     dplyr::mutate(

@@ -50,6 +50,6 @@ magick_gif_animation = function(infiles, outfile = "animation.gif", delay = 15, 
     ggsave(.outfile, .x, width = 1, height = 1, scale = 6, dpi = 72)
   })
   .infiles = file.path(.pngdir, "snapshot_*.png")
-  magick_gif_animation(.infiles, sprintf("%s/%s.gif", outdir, outdir, delay = 8))
+  magick_gif_animation(.infiles, sprintf("%s/%s.gif", outdir, outdir), delay = 8)
 }
 dplyr::slice(results, 1L) %>% purrr::pmap(.do)
