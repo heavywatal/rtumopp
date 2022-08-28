@@ -39,3 +39,4 @@ LinkingTo: Rcpp
 SystemRequirements: C++11, CMake (>= 3.8.0)
 VignetteBuilder: knitr
 StagedInstall: no
+Config/testthat/edition: 3

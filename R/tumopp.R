@@ -35,7 +35,7 @@ tumopp.default = function(args = character(0L), ..., graph = TRUE) {
     return(invisible(NULL))
   }
   .out = from_json(result["config"])
-  .pop = read_tumopp(result["population"])
+  .pop = read_tumopp(I(result["population"]))
   transforming = ((.out$coord == "hex") && getOption("tumopp.autohex", TRUE))
   if (transforming) {
     .pop = trans_coord_hex(.pop)
