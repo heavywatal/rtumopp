@@ -24,6 +24,7 @@ if (result[["dimensions"]] > 2L) {
   }
   rgl::open3d(windowRect = c(0, 0, 600, 600))
   result$population[[1]] |>
+    filter_extant() |>
     add_surface(result$coord, result$dimensions) |>
     dplyr::filter(surface) |>
     plot_tumor3d()

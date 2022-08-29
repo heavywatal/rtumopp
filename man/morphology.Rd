@@ -17,10 +17,7 @@ add_phi(population, coord, dimensions)
 \item{dimensions}{an integer}
 }
 \description{
-Extract surface cells with mathematical morphology
-}
-\details{
-\code{add_surface} adds a binary column to the data.frame
+\code{add_surface()} adds a binary column to the data.frame.
 
-\code{add_phi} counts empty neighbors of each cell and adds an integer column
+\code{add_phi()} counts empty neighbors of each cell and adds an integer column.
 }

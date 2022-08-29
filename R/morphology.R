@@ -1,7 +1,6 @@
 #' Extract surface cells with mathematical morphology
 #'
-#' @details
-#' `add_surface` adds a binary column to the data.frame
+#' `add_surface()` adds a binary column to the data.frame.
 #' @param population a data.frame with (x, y, z)
 #' @param coord a string
 #' @param dimensions an integer
@@ -9,54 +8,55 @@
 #' @export
 add_surface = function(population, coord, dimensions) {
   extant = filter_extant(population)
-  strelem = get_se(coord, dimensions) |> df2img()
-  col_surface = detect_surface(extant, strelem) |>
+  kernel = structuring_element(coord, dimensions)
+  col_surface = detect_surface(extant, kernel) |>
     dplyr::select(.data$id, .data$surface)
   population |>
     dplyr::left_join(col_surface, by = "id")
 }
 
-#' @details
-#' `add_phi` counts empty neighbors of each cell and adds an integer column
+#' @description
+#' `add_phi()` counts empty neighbors of each cell and adds an integer column.
 #' @rdname morphology
 #' @export
 add_phi = function(population, coord, dimensions) {
   extant = filter_extant(population)
-  coords = extant[c("x", "y", "z", "id")]
-  kernel = get_se(coord, dimensions)
-  counts = purrr::pmap_dfr(kernel, ~ {
-    dplyr::mutate(coords, x = .data$x + ..1, y = .data$y + ..2, z = .data$z + ..3)
+  cells = extant[c("x", "y", "z", "id")]
+  if (!is.integer(cells$x)) cells = revert_coord_hex(cells)
+  kernel_df = structuring_element(coord, dimensions) |>
+    as.data.frame() |>
+    dplyr::filter(.data$state > 0L)
+  counts = purrr::pmap_dfr(kernel_df, ~ {
+    dplyr::mutate(cells, x = .data$x + ..1, y = .data$y + ..2, z = .data$z + ..3)
   }) |>
     dplyr::count(.data$x, .data$y, .data$z)
-  info = coords |>
+  info = cells |>
     dplyr::left_join(counts, by = c("x", "y", "z")) |>
-    dplyr::transmute(.data$id, phi = nrow(kernel) - .data$n)
+    dplyr::transmute(.data$id, phi = nrow(kernel_df) - .data$n)
   population |>
     dplyr::left_join(info, by = "id")
 }
 
 detect_surface = function(.tbl, se) {
-  if (nrow(.tbl) == 0L) {
-    return(dplyr::mutate(.tbl, surface = logical(0L)))
-  }
   if (!is.integer(.tbl$x)) .tbl = revert_coord_hex(.tbl)
-  axes = c("x", "y", "z")
-  mins = dplyr::summarize(.tbl, dplyr::across(axes, min))
-  img = df2img(.tbl) |> filter_surface(se)
-  product = img2df(img) |> dplyr::transmute(
-    x = .data$x + mins$x - 1L,
-    y = .data$y + mins$y - 1L,
-    z = .data$z + mins$z - 1L,
-    surface = .data$value > 0L
-  )
-  dplyr::left_join(.tbl, product, by = axes)
+  product = as_cuboid(.tbl, expand = 1L) |>
+    filter_surface(se) |>
+    as.data.frame() |>
+    dplyr::mutate(surface = .data$state > 0L, state = NULL)
+  dplyr::left_join(.tbl, product, by = c("x", "y", "z"))
+}
+
+# Filter img by surface
+filter_surface = function(x, kernel) {
+  y = x - as.integer(mmand::erode(x, kernel))
+  attributes(y) = attributes(x)
+  y
 }
 
 # Construct a structuring element (kernel)
-get_se = function(coord = c("moore", "neumann", "hex"), dimensions = 3L) {
+structuring_element = function(coord = c("moore", "neumann", "hex"), dimensions = 3L) {
   coord = match.arg(coord)
-  v = c(-1L, 0L, 1L)
-  df = tidyr::crossing(x = v, y = v, z = v)
+  df = expand_xyz(c(-1L, 0L, 1L))
   if (coord == "neumann") {
     df = dplyr::filter(df, abs(.data$x) + abs(.data$y) + abs(.data$z) < 2)
   } else if (coord == "hex") {
@@ -65,41 +65,70 @@ get_se = function(coord = c("moore", "neumann", "hex"), dimensions = 3L) {
   if (dimensions < 3L) {
     df = dplyr::filter(df, .data$z == 0L)
   }
-  df
+  as_cuboid(df)
 }
 
-# Filter img by surface
-filter_surface = function(img, se) {
-  img - mmand::erode(img, se)
-}
-
-# Convert data.frame to binary array
-df2img = function(.tbl) {
-  vars = c("x", "y", "z")
-  .tbl = .tbl[vars]
-  x = seq_range(.tbl[["x"]])
-  y = seq_range(.tbl[["y"]])
-  z = seq_range(.tbl[["z"]])
-  .grid = expand.grid(x = x, y = y, z = z, KEEP.OUT.ATTRS = FALSE, stringsAsFactors = FALSE)
-  joined = dplyr::left_join(.grid, dplyr::mutate(.tbl, v = 1L), by = vars)
-  joined = tidyr::replace_na(joined, list(v = 0L))
-  arr = array(joined[["v"]], c(length(x), length(y), length(z)))
-  dim(arr) = c(dim(arr), 1L)
-  arr
+#' Binary expression of cell existence
+#'
+#' `as_cuboid()` expand a coordinate set to a binary cuboid with zero-padding.
+#' The data.frame representation is ordered in the same way as the array representation.
+#' They have some extra attributes to ensure round-trip conversion.
+#' @param x a data.frame with (x, y, z) or 3D array.
+#' @param expand an integer.
+#' @rdname cuboid
+#' @export
+as_cuboid = function(x, expand = 0L) {
+  if (nrow(x) == 0L) {
+    res = array(integer(0L), c(0L, 0L, 0L))
+    attr(res, "start") = c(c(0L, 0L, 0L))
+    class(res) = c("cuboid", "array")
+    return(res)
+  }
+  .tbl = x[c("x", "y", "z")]
+  if (all(.tbl[["z"]] == 0L)) {
+    expand = c(expand, expand, 0L)
+  }
+  start = purrr::map_int(.tbl, min) - expand
+  .dim = purrr::map_int(.tbl, max) - start + 1L + expand
+  idx = purrr::map2(.tbl, start, ~.x - .y)
+  serial = 1L + idx[["x"]] + .dim[1L] * idx[["y"]] + .dim[1L] * .dim[2L] * idx[["z"]]
+  res = array(integer(prod(.dim)), .dim)
+  res[serial] = 1L
+  attr(res, "start") = start
+  class(res) = c("cuboid", "array")
+  res
 }
 
 # Convert binary array to data.frame with (x, y, z) columns
-img2df = function(img) {
-  d = dim(img)
-  df = expand.grid(
-    x = seq.int(d[[1L]]), y = seq.int(d[[2L]]), z = seq.int(d[[3L]]),
-    KEEP.OUT.ATTRS = FALSE, stringsAsFactors = FALSE
-  )
-  df[["value"]] = c(img)
-  tibble::as_tibble(df)
+#' @param row.names,optional,... ignored; to suppress warnings for S3 methods.
+#' @rdname cuboid
+#' @export
+as.data.frame.cuboid = function(x, row.names = NULL, optional = FALSE, ...) {
+  if (is.data.frame(x)) return(x)
+  .dim = dim(x)
+  start = attr(x, "start")
+  vx = seq.int(start[[1L]], length.out = .dim[[1L]])
+  vy = seq.int(start[[2L]], length.out = .dim[[2L]])
+  vz = seq.int(start[[3L]], length.out = .dim[[3L]])
+  res = expand_xyz(vx, vy, vz)
+  res[["state"]] = c(x)
+  attr(res, "dimarray") = .dim
+  tibble::new_tibble(res, class = "cuboid")
 }
 
-seq_range = function(v) {
-  r = range(v)
-  seq.int(r[[1L]], r[[2L]])
+# Convert data.frame to binary array
+#' @rdname cuboid
+#' @export
+as.array.cuboid = function(x, ...) {
+  if (is.array(x)) return(x)
+  res = array(x[["state"]], dim = attr(x, "dimarray"))
+  attr(res, "start") = x[c("x", "y", "z")] |> purrr::map_int(min)
+  class(res) = c("cuboid", "array")
+  res
+}
+
+expand_xyz = function(x, y = x, z = x) {
+  # The order is consistent with array.
+  # tidyr::expand_grid() sorts differently.
+  expand.grid(x = x, y = y, z = z, KEEP.OUT.ATTRS = FALSE, stringsAsFactors = FALSE)
 }
