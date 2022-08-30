@@ -30,7 +30,7 @@ Suggests:
     rmarkdown,
     testthat (>= 3.1.4)
 Remotes:
-    github::heavywatal/rigraphlite
+    igraphlite=github::heavywatal/rigraphlite
 URL: https://heavywatal.github.io/rtumopp, https://github.com/heavywatal/rtumopp
 BugReports: https://github.com/heavywatal/rtumopp/issues
 RoxygenNote: 7.2.1
