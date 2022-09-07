@@ -31,6 +31,7 @@ reference:
   - max_abs_xyz
   - trans_coord_hex
   - add_surface
+  - as_cuboid
 - title: "Visualization"
   contents:
   - augment_genealogy
