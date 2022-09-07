@@ -9,19 +9,19 @@ LazyData: true
 Depends:
     R (>= 4.1.0)
 Imports:
-    dplyr (>= 1.0.9),
+    dplyr (>= 1.0.10),
     ggplot2 (>= 3.3.6),
     igraphlite,
     jsonlite (>= 1.8.0),
-    mmand (>= 1.6.1),
+    mmand (>= 1.6.2),
     purrr (>= 0.3.4),
     readr (>= 2.1.2),
-    rlang (>= 1.0.3),
-    stringr (>= 1.4.0),
-    tibble (>= 3.1.7),
+    rlang (>= 1.0.5),
+    stringr (>= 1.4.1),
+    tibble (>= 3.1.8),
     tidyr (>= 1.2.0),
     Rcpp (>= 1.0.9),
-    scales (>= 1.2.0),
+    scales (>= 1.2.1),
     withr (>= 2.5.0)
 Suggests:
     covr,
@@ -36,7 +36,7 @@ BugReports: https://github.com/heavywatal/rtumopp/issues
 RoxygenNote: 7.2.1
 Roxygen: list(markdown = TRUE)
 LinkingTo: Rcpp
-SystemRequirements: C++11, CMake (>= 3.8.0)
+SystemRequirements: C++14, CMake (>= 3.13.0)
 VignetteBuilder: knitr
 StagedInstall: no
 Config/testthat/edition: 3
