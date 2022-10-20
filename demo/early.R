@@ -26,7 +26,7 @@ write_results(results)
 
 .plot_snapshots = function(.tbl) {
   .lim = tumopp::max_abs_xyz(.tbl)
-  tidyr::nest(.tbl, -time)$data |>
+  tidyr::nest(.tbl, !"time")$data |>
     parallel::mclapply(.plot_snapshot, limit = .lim)
 }
 

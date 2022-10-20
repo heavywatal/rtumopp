@@ -6,7 +6,7 @@
 #' @export
 extract_history = function(population) {
   population |>
-    dplyr::select(.data$id, .data$ancestor, .data$birth, .data$death) |>
+    dplyr::select("id", "ancestor", "birth", "death") |>
     tidyr::pivot_longer(c("birth", "death"), names_to = "event", values_to = "time") |>
     dplyr::filter(!(.data$event == "death" & .data$time == 0)) |> # alive
     dplyr::mutate(event = factor(.data$event, levels = c("death", "birth"))) |>

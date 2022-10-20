@@ -10,7 +10,7 @@ add_surface = function(population, coord, dimensions) {
   extant = filter_extant(population)
   kernel = structuring_element(coord, dimensions)
   col_surface = detect_surface(extant, kernel) |>
-    dplyr::select(.data$id, .data$surface)
+    dplyr::select("id", "surface")
   population |>
     dplyr::left_join(col_surface, by = "id")
 }

@@ -71,7 +71,7 @@ mean_sd = function(x, mult = 1.96) {
 #' @export
 save_serial_section = function(.tbl, filename = "png/section_%03d.png", scale = 6, dpi = 72, ...) {
   .lim = max_abs_xyz(.tbl)
-  tidyr::nest(.tbl, -.data$z) |>
+  tidyr::nest(.tbl, !"z") |>
     dplyr::arrange(.data$z) |>
     dplyr::mutate(i = dplyr::row_number()) |>
     purrr::pwalk(function(z, data, i) {

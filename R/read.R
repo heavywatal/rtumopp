@@ -71,7 +71,7 @@ read_populations = function(indirs = getwd(), mc.cores = getOption("mc.cores", 1
 read_snapshots = function(indirs = getwd(), mc.cores = getOption("mc.cores", 1L)) {
   read_results(indirs, mc.cores = mc.cores) |>
     dplyr::mutate(snapshots = purrr::map2(indirs, .data$population, ~ {
-      meta_info = dplyr::select(.y, .data$id, .data$clade)
+      meta_info = dplyr::select(.y, "id", "clade")
       read_tumopp(file.path(.x, "snapshots.tsv.gz")) |>
         dplyr::left_join(meta_info, by = "id")
     }))
