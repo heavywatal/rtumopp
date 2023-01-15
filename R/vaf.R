@@ -10,12 +10,12 @@
 make_vaf = function(graph, samples, mu) {
   df_mut = mutate_clades(graph, mu = mu)
   names(samples) = seq_along(samples)
-  purrr::map_dfc(samples, function(sampled) {
+  purrr::map(samples, function(sampled) {
     freqs = vapply(df_mut$carriers, function(carriers) {
       sum(carriers %in% sampled)
     }, integer(1), USE.NAMES = FALSE)
     rep(freqs / length(sampled), times = df_mut$number)
-  })
+  }) |> tibble::as_tibble()
 }
 
 #' @details

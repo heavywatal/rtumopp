@@ -16,7 +16,7 @@ combn_ids = function(x, m = seq_along(x)) {
 
 # Make union of integers from list
 union_int = function(x) {
-  unique(purrr::flatten_int(x))
+  unique(purrr::list_c(x, ptype = integer()))
 }
 
 # Shortcut with different defaults

@@ -74,7 +74,7 @@ evaluate_mrs = function(population, nsam, ncell, threshold = 0.05, sensitivity =
   graph = make_igraph(population)
   regions = filter_extant(population) |>
     sample_uniform_regions(nsam = nsam, ncell = ncell, jitter = jitter)
-  sampled = purrr::flatten_int(regions$id)
+  sampled = purrr::list_c(regions$id)
   subgraph = subtree(graph, sampled)
   detectable = internal_nodes(subgraph, sampled, sensitivity = sensitivity)
   major_ca = population |>
@@ -92,7 +92,7 @@ distances_mrs = function(population, nsam, ncell, jitter = 0) {
   graph = make_igraph(population)
   regions = filter_extant(population) |>
     sample_uniform_regions(nsam = nsam, ncell = ncell, jitter = jitter)
-  sampled = purrr::flatten_int(regions$id)
+  sampled = purrr::list_c(regions$id)
   subgraph = subtree(graph, sampled)
   pairwise_distances(subgraph, regions)
 }

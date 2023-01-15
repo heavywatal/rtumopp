@@ -26,7 +26,7 @@ graph = result$graph[[1L]]
 
 extant = population |> tumopp::filter_extant()
 regions = tumopp::sample_uniform_regions(extant, nsam = 8L, ncell = 4L)
-subgraph = tumopp::subtree(graph, purrr::flatten_int(regions$id))
+subgraph = tumopp::subtree(graph, purrr::list_c(regions$id))
 
 tbl_genealogy = subgraph |> augment_genealogy()
 

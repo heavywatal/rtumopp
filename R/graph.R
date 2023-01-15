@@ -38,7 +38,7 @@ subtree = function(graph, nodes = integer(0L)) {
 internal_nodes = function(graph, nodes, sensitivity) {
   n = length(nodes)
   counts = paths_to_source(graph, nodes) |>
-    purrr::flatten_int() |>
+    purrr::list_c() |>
     table()
   as.integer(names(counts)[(counts / n) > sensitivity])
 }

@@ -28,7 +28,7 @@ tumopp = function(args, ...) UseMethod("tumopp")
 #' @export
 tumopp.default = function(args = character(0L), ..., graph = TRUE) {
   if (length(args) == 1L) {
-    args = stringr::str_split(args, "\\s+") |> purrr::flatten_chr()
+    args = stringr::str_split(args, "\\s+") |> purrr::list_c()
   }
   result = cpp_tumopp(args)
   if (length(result) == 0L) {
@@ -105,7 +105,7 @@ system_tumopp = function(args, mc.cores = getOption("mc.cores", 1L)) {
 #' @export
 make_args = function(alt, const = NULL, times = 1L, each = 1L) {
   now = format(Sys.time(), "%Y%m%d_%H%M%S")
-  grid = purrr::invoke(tidyr::crossing, alt) |> filter_valid_LP()
+  grid = rlang::exec(tidyr::crossing, !!!alt) |> filter_valid_LP()
   idx = rep(seq_len(nrow(grid)), times = times, each = each)
   dplyr::slice(grid, idx) |>
     dplyr::mutate(o = paste(now, dplyr::row_number(), sep = "_")) |>
@@ -136,14 +136,12 @@ generate_args = function(prior, const = NULL, n = 1L) {
 
 generate_valid = function(prior, n = 1L) {
   output = NULL
-  k = 0L
-  while (k < n) {
-    generated = purrr::map_dfc(prior, function(f, x) {
-      f(x)
-    }, x = n - k)
+  while (n > 0L) {
+    generated = purrr::map(prior, rlang::exec, n) |>
+      tibble::as_tibble()
     generated = suppressMessages(filter_valid_LP(generated))
     output = dplyr::bind_rows(output, generated)
-    k = nrow(output)
+    n = n - nrow(output)
   }
   output
 }
