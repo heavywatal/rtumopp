@@ -33,7 +33,7 @@ plot_tumor3d = function(.tbl = NULL, limits = NULL) {
 #' @rdname plot-rgl
 #' @export
 snapshot_surface = function(.tbl, filename = tempfile("rgl_", fileext = ".png"), ...) {
-  on.exit(rgl::rgl.close())
+  on.exit(rgl::close3d())
   rgl::open3d(useNULL = FALSE)
   dplyr::filter(.tbl, .data$surface) |> plot_tumor3d(...)
   rgl::snapshot3d(filename)

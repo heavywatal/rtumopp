@@ -19,9 +19,7 @@ result$population[[1]] |>
 if (result[["dimensions"]] > 2L) {
   library(rgl)
 
-  if (rgl.cur()) {
-    rgl.close()
-  }
+  rgl::close3d()
   rgl::open3d(windowRect = c(0, 0, 600, 600))
   result$population[[1]] |>
     filter_extant() |>

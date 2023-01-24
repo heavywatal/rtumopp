@@ -6,9 +6,7 @@ library(tumopp)
 ######## 1#########2#########3#########4#########5#########6#########7#########
 ## transformation
 
-if (rgl.cur()) {
-  rgl.close()
-}
+rgl::close3d()
 rgl::open3d(windowRect = c(0, 0, 600, 600))
 rgl::clear3d()
 rgl::view3d(70, 5, 60)
@@ -27,9 +25,7 @@ title3d("", "", "x", "y", "z")
 
 .hex_xy = read_csv("x,y,z\n0,0,0\n1,0,0\n0,1,0\n1,0,-1")
 
-if (rgl.cur()) {
-  rgl.close()
-}
+rgl::close3d()
 rgl::open3d(windowRect = c(0, 0, 600, 600))
 rgl::clear3d()
 rgl::view3d(20, 10, 60)
@@ -44,9 +40,7 @@ title3d("", "", "x", "y", "z")
 
 .hex_xy = read_csv("x,y,z\n0,0,0\n0,1,0\n0,-1,0\n-1,0,0\n-1,1,0\n1,0,0\n1,-1,0")
 
-if (rgl.cur()) {
-  rgl.close()
-}
+rgl::close3d()
 rgl::open3d(windowRect = c(0, 0, 600, 600))
 rgl::clear3d()
 rgl::view3d(20, 10, 60)
@@ -60,9 +54,7 @@ axes3d()
 title3d("", "", "x", "y", "z")
 
 
-if (rgl.cur()) {
-  rgl.close()
-}
+rgl::close3d()
 rgl::open3d(windowRect = c(0, 0, 600, 600))
 rgl::clear3d()
 rgl::view3d(40, 20, 60)
