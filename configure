@@ -8,9 +8,9 @@ if ! cmake --version >/dev/null; then
   exit 1
 fi
 if [ -z "$CXX" ]; then
-  CXX=$(${R_HOME}/bin/R CMD config CXX11)
-  CXX=${CXX% *}
+  CXX=$(${R_HOME}/bin/R CMD config CXX)
 fi
+CXX=${CXX%% *}
 echo "CXX: $CXX"
 echo "R_PACKAGE_DIR: $R_PACKAGE_DIR"
 BUILD_DIR=${R_SESSION_TMPDIR}/../rtumopp
