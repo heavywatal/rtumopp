@@ -81,7 +81,7 @@ paths_to_source = function(graph, nodes = integer(0L)) {
 }
 
 shortest_dist_from_source = function(graph, vids = numeric(0)) {
-  res = igraphlite::shortest_paths(graph, vids, graph$source, mode = 2L, algorithm = "unweighted")
+  res = igraphlite::distances(graph, vids, graph$source, mode = 2L, algorithm = "unweighted")
   as.integer(res)
 }
 
@@ -102,7 +102,7 @@ sinks = function(graph, nodes) {
 
 mean_branch_length = function(graph, from = graph$sink, to = from) {
   # TODO: Avoid creating huge matrix
-  m = igraphlite::shortest_paths(graph, from, to, mode = 3L, algorithm = "unweighted")
+  m = igraphlite::distances(graph, from, to, mode = 3L, algorithm = "unweighted")
   # Exclude self-comparison only if "within"
   n = length(m)
   if (identical(from, to)) {
