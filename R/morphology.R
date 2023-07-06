@@ -26,7 +26,7 @@ add_phi = function(population, coord, dimensions) {
   kernel_df = structuring_element(coord, dimensions) |>
     as.data.frame() |>
     dplyr::filter(.data$state > 0L)
-  counts = purrr::pmap(kernel_df, ~ {
+  counts = purrr::pmap(kernel_df, \(..1, ..2, ..3, ...) {
     dplyr::mutate(cells, x = .data$x + ..1, y = .data$y + ..2, z = .data$z + ..3)
   }) |>
     purrr::list_rbind() |>
@@ -91,7 +91,7 @@ as_cuboid = function(x, expand = 0L) {
   }
   start = purrr::map_int(.tbl, min) - expand
   .dim = purrr::map_int(.tbl, max) - start + 1L + expand
-  idx = purrr::map2(.tbl, start, ~ .x - .y)
+  idx = purrr::map2(.tbl, start, \(x, y) x - y)
   serial = 1L + idx[["x"]] + .dim[1L] * idx[["y"]] + .dim[1L] * .dim[2L] * idx[["z"]]
   res = array(integer(prod(.dim)), .dim)
   res[serial] = 1L

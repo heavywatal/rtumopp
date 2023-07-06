@@ -26,8 +26,8 @@ args_table = tumopp::make_args(alt = .alt, const = .const, each = 1L)
 results = tumopp::tumopp(args_table)
 
 df = results |>
-  dplyr::mutate(demography = purrr::map(population, ~{
-    tumopp::extract_history(.x) |> tumopp::summarize_demography()
+  dplyr::mutate(demography = purrr::map(population, \(x) {
+    tumopp::extract_history(x) |> tumopp::summarize_demography()
   })) |>
   dplyr::select(shape, demography) |>
   tidyr::unnest("demography")

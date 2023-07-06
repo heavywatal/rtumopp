@@ -15,7 +15,7 @@ make_sample = function(graph, nsam = 0L, mu = NULL, segsites = NULL) {
     graph = subtree(graph, nodes)
   }
   mutations = mutate_clades(graph, mu = mu, segsites = segsites)
-  origins = purrr::map(mutations$carriers, ~ as.integer(nodes %in% .x))
+  origins = purrr::map(mutations$carriers, \(x) as.integer(nodes %in% x))
   m = t(do.call(rbind, origins) * mutations$number)
   rownames(m) = nodes
   colnames(m) = mutations$origin

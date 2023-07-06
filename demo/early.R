@@ -44,7 +44,7 @@ magick_gif_animation = function(infiles, outfile = "animation.gif", delay = 15, 
   .plt = .plot_snapshots(.tbl)
   .pngdir = file.path(outdir, "png")
   dir.create(.pngdir, recursive = TRUE, mode = "0755")
-  purrr::iwalk(.plt, ~ {
+  purrr::iwalk(.plt, \(.x, .y) {
     .outfile = file.path(.pngdir, sprintf("snapshot_%03d.png", .y))
     message(.outfile)
     ggsave(.outfile, .x, width = 1, height = 1, scale = 6, dpi = 72)

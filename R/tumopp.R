@@ -131,7 +131,7 @@ vectorize_args = function(.tbl) {
 generate_args = function(prior, const = NULL, n = 1L) {
   generate_valid(prior, n = n) |>
     vectorize_args() |>
-    purrr::map(~ c(const, .x))
+    purrr::map(\(x) c(const, x))
 }
 
 generate_valid = function(prior, n = 1L) {

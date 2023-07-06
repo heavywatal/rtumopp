@@ -42,7 +42,7 @@ ggplot(.tidy) +
 
 
 testdf = tibble::tibble(mu = rep(c(1, 4, 16, 64), each = 200)) |>
-  dplyr::mutate(fst = wtl::mcmap_dbl(mu, ~ tumopp::make_vaf(subgraph, regions$id, mu = .x) |>
+  dplyr::mutate(fst = wtl::mcmap_dbl(mu, \(x) tumopp::make_vaf(subgraph, regions$id, mu = x) |>
     tumopp::dist_vaf(ncell) |>
     tumopp::fst())) |>
   print()
@@ -55,7 +55,7 @@ ggplot(testdf) +
   aes(fst) +
   geom_histogram(bins = 30) +
   geom_vline(xintercept = xi) +
-  facet_wrap(~mu)
+  facet_wrap(vars(mu))
 
 
 # #######1#########2#########3#########4#########5#########6#########7#########

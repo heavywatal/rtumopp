@@ -17,7 +17,7 @@ write_results = function(results) {
   stopifnot(dir.create(outdir, mode = "0755") || force)
   cols = names(result)
   dfs = c("population", "snapshots", "drivers", "distances")
-  purrr::walk(dfs, ~ {
+  purrr::walk(dfs, \(.x) {
     if (.x %in% cols) {
       content = result[[.x]][[1L]]
       if (.x %in% c("population", "snapshots") &&

@@ -52,7 +52,7 @@ df = results |>
   dplyr::mutate(k = as.list(ifelse(shape < 1e6, shape, expression(infinity)))) |>
   dplyr::mutate(genealogy = parallel::mclapply(graph, augment_genealogy))
 
-.max_d = max(purrr::map_dbl(df[["genealogy"]], ~{max(.x$d)}))
+.max_d = max(purrr::map_dbl(df[["genealogy"]], \(x) {max(x$d)}))
 
 plts = df |> purrr::pmap(function(k, shape, genealogy, ...) {
   gggenealogy(genealogy, alpha = 0.3, size = 0.3) +

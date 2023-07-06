@@ -39,6 +39,6 @@ summarize_capture_rate = function(combinations, population, threshold = 0.01) {
     combinations,
     threshold,
     .data$nsam,
-    capture_rate = purrr::map_dbl(.data$id, ~ sum(.x %in% ids)) / len_ids
+    capture_rate = purrr::map_dbl(.data$id, \(x) sum(x %in% ids)) / len_ids
   )
 }

@@ -52,5 +52,5 @@ args_table |> dplyr::select(-o)
 results = tumopp(args_table)
 results |>
   dplyr::select(-outdir, -seed, -where(is.list)) |>
-  dplyr::select(where(~ dplyr::n_distinct(.x) > 1L))
+  dplyr::select(where(\(x) dplyr::n_distinct(x) > 1L))
 ```
