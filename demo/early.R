@@ -1,6 +1,3 @@
-library(tidyverse)
-library(tumopp)
-
 .args = list(
   "-D2 -k100 -Cmoore -Lconst -R256 -N256 -o Cmoore_Lconst",
   "-D2 -k100 -Cmoore -Lstep -R256 -N256 -o Cmoore_Lstep",
@@ -9,8 +6,8 @@ library(tumopp)
   "-D2 -k100 -Chex -Lstep -R256 -N256 -o Chex_Lstep",
   "-D2 -k100 -Chex -Llinear -R256 -N256 -o Chex_Llinear"
 )
-results = tumopp(.args)
-write_results(results)
+results = tumopp::tumopp(.args)
+# tumopp::write_results(results)
 
 .add_clade_to_snapshots = function(population, graph, snapshots, ...) {
   clade_info = tumopp:::sort_clades(population, graph, 4L)
@@ -20,13 +17,13 @@ write_results(results)
 
 .plot_snapshot = function(data, limit) {
   tumopp::plot_lattice2d(data, "clade", alpha = 1.0, limit = limit) +
-    scale_colour_brewer(palette = "Spectral", na.value = "grey50", guide = FALSE) +
-    theme_void()
+    ggplot2::scale_colour_brewer(palette = "Spectral", na.value = "grey50", guide = FALSE) +
+    ggplot2::theme_void()
 }
 
 .plot_snapshots = function(.tbl) {
   .lim = tumopp::max_abs_xyz(.tbl)
-  tidyr::nest(.tbl, !"time")$data |>
+  tidyr::nest(.tbl, data = !"time")$data |>
     parallel::mclapply(.plot_snapshot, limit = .lim)
 }
 
@@ -47,7 +44,7 @@ magick_gif_animation = function(infiles, outfile = "animation.gif", delay = 15, 
   purrr::iwalk(.plt, \(.x, .y) {
     .outfile = file.path(.pngdir, sprintf("snapshot_%03d.png", .y))
     message(.outfile)
-    ggsave(.outfile, .x, width = 1, height = 1, scale = 6, dpi = 72)
+    ggplot2::ggsave(.outfile, .x, width = 1, height = 1, scale = 6, dpi = 72)
   })
   .infiles = file.path(.pngdir, "snapshot_*.png")
   magick_gif_animation(.infiles, sprintf("%s/%s.gif", outdir, outdir), delay = 8)
