@@ -105,7 +105,9 @@ as_cuboid = function(x, expand = 0L) {
 #' @rdname cuboid
 #' @export
 as.data.frame.cuboid = function(x, row.names = NULL, optional = FALSE, ...) {
-  if (is.data.frame(x)) return(x)
+  if (is.data.frame(x)) {
+    return(x)
+  }
   .dim = dim(x)
   start = attr(x, "start")
   vx = seq.int(start[[1L]], length.out = .dim[[1L]])
@@ -121,7 +123,9 @@ as.data.frame.cuboid = function(x, row.names = NULL, optional = FALSE, ...) {
 #' @rdname cuboid
 #' @export
 as.array.cuboid = function(x, ...) {
-  if (is.array(x)) return(x)
+  if (is.array(x)) {
+    return(x)
+  }
   res = array(x[["state"]], dim = attr(x, "dimarray"))
   attr(res, "start") = x[c("x", "y", "z")] |> purrr::map_int(min)
   class(res) = c("cuboid", "array")
