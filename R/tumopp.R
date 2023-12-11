@@ -28,7 +28,7 @@ tumopp = function(args, ...) UseMethod("tumopp")
 #' @export
 tumopp.default = function(args = character(0L), ..., graph = TRUE) {
   if (length(args) == 1L) {
-    args = stringr::str_split(args, "\\s+") |> purrr::list_c()
+    args = stringr::str_split_1(args, "\\s+")
   }
   result = cpp_tumopp(args)
   if (length(result) == 0L) {
@@ -83,7 +83,7 @@ tumopp.data.frame = function(args, ..., graph = TRUE, mc.cores = getOption("mc.c
 
 # execute as an external command for benchmarking
 system_tumopp = function(args, mc.cores = getOption("mc.cores", 1L)) {
-  args[["o"]] = paste0(tempdir(), "/", args[["o"]])
+  args[["o"]] = file.path(tempdir(), args[["o"]])
   argslist = vectorize_args(args)
   parallel::mclapply(argslist, system2, command = "tumopp", mc.cores = mc.cores)
   out = read_results(args[["o"]], graph = FALSE, mc.cores = mc.cores) |>
