@@ -30,6 +30,10 @@ tumopp.default = function(args = character(0L), ..., graph = TRUE) {
   if (length(args) == 1L) {
     args = stringr::str_split_1(args, "\\s+")
   }
+  if (!any(stringr::str_detect(args, "--seed"))) {
+    seed = runif.int(1L)
+    args = c(args, paste0("--seed=", seed))
+  }
   result = cpp_tumopp(args)
   if (length(result) == 0L) {
     return(invisible(NULL))
@@ -163,4 +167,9 @@ valid_LP_combinations = function() {
     tidyr::crossing(L = c("const", "linear", "step"), P = c("random", "mindrag")),
     tidyr::crossing(L = "const", P = c("roulette", "minstraight", "stroll"))
   )
+}
+
+runif.int = function(n, min = -.Machine$integer.max, max = .Machine$integer.max) {
+  offset = min - 1
+  as.integer(sample.int(max - offset, n, replace = TRUE) + offset)
 }
