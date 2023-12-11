@@ -40,7 +40,7 @@ args_tbl = make_args(alt = .alt, const = .const) |> print()
 results = tumopp:::system_tumopp(args_tbl) |> print()
 
 unnested = results |>
-  dplyr::select(-population, -seed) |>
+  dplyr::select(!c(population, seed)) |>
   dplyr::mutate(outdir = fs::path_file(outdir)) |>
   dplyr::select(where(\(x) dplyr::n_distinct(x) > 1L)) |>
   tidyr::unnest(benchmark) |>
@@ -75,7 +75,7 @@ df_benchmark = unnested |>
 ```{r memory}
 ggplot(tumopp:::df_benchmark) +
   aes(size, memory) +
-  geom_line(size = 1, color = "#337ab7") +
+  geom_line(linewidth = 1, color = "#337ab7") +
   facet_grid(vars(local, path), vars(delta0, rho0), label = label_both) +
   labs(x = "Size (K cells)", y = "Memory (MB)")
 ```
@@ -94,7 +94,7 @@ ggplot(tumopp:::df_benchmark) +
 ```{r time}
 ggplot(tumopp:::df_benchmark) +
   aes(size, utime + stime) +
-  geom_line(size = 1, color = "#337ab7") +
+  geom_line(linewidth = 1, color = "#337ab7") +
   facet_grid(vars(local, path), vars(delta0, rho0), label = label_both) +
   labs(x = "Size (K cells)", y = "Time (sec)")
 ```

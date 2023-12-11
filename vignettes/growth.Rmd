@@ -42,7 +42,7 @@ labels_log10 = function(breaks) {
 
 fig5b = ggplot(df) +
   aes(time, size, group = shape) +
-  geom_line(aes(color = as.factor(shape)), size = 1, alpha = 0.8) +
+  geom_line(aes(color = as.factor(shape)), linewidth = 1, alpha = 0.8) +
   scale_y_log10(breaks = 10 ** seq_len(4L), labels = labels_log10) +
   scale_color_manual(
     name = expression(italic(k)),

@@ -78,7 +78,7 @@ save_serial_section = function(.tbl, filename = "png/section_%03d.png", scale = 
       .outfile = sprintf(filename, i)
       # TODO: fix color for each lineage
       .p = plot_lattice2d(data, ..., limit = .lim) +
-        ggplot2::geom_hline(yintercept = z[1L], color = "#999999", size = 1.5) +
+        ggplot2::geom_hline(yintercept = z[1L], color = "#999999", linewidth = 1.5) +
         ggplot2::labs(title = sprintf("z =%4.1f", z)) +
         ggplot2::theme_bw() +
         ggplot2::theme(
