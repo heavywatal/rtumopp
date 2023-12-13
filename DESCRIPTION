@@ -36,7 +36,7 @@ BugReports: https://github.com/heavywatal/rtumopp/issues
 RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
 LinkingTo: Rcpp
-SystemRequirements: C++14, CMake (>= 3.13.0)
+SystemRequirements: CMake (>= 3.13.0)
 VignetteBuilder: knitr
 StagedInstall: no
 Config/testthat/edition: 3
