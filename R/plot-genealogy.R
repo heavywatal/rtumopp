@@ -3,13 +3,15 @@
 #' @details
 #' `augment_genealogy` calculates coordinates of nodes and edges for plotting.
 #' @param graph igraph
+#' @param mu mutation rate per cell division.
+#' @param accel assumption of accelerated mutation.
 #' @rdname plot-genealogy
 #' @export
-augment_genealogy = function(graph) {
+augment_genealogy = function(graph, mu = 0, accel = 0) {
   vnames = igraphlite::Vnames(graph)
   tips = vnames[graph$is_sink]
   root = vnames[graph$is_source]
-  igraphlite::augment(graph, layout = igraphlite::layout_reingold_tilford) |>
+  res = igraphlite::augment(graph, layout = igraphlite::layout_reingold_tilford) |>
     dplyr::rename(
       parent = "from", node = "to",
       d = "y", x_parent = "xend", d_parent = "yend"
@@ -19,6 +21,12 @@ augment_genealogy = function(graph) {
       .data$node %in% root ~ "root",
       TRUE ~ "internal"
     ))
+  if (mu > 0 || accel > 0) {
+    named_dist = genetic_distance(graph, graph$V, mu = mu, accel = accel)
+    res$d = named_dist[as.character(res$node)]
+    res$d_parent = named_dist[as.character(res$parent)]
+  }
+  res
 }
 
 #' @details
@@ -34,13 +42,6 @@ gggenealogy = function(data, mapping = ggplot2::aes(), ...) {
     ggplot2::geom_segment(ggplot2::aes(xend = .data[["d_parent"]], yend = .data[["x_parent"]]), ...)
 }
 
-# @param distance named vector from [genetic_distance()]
-mutate_distance = function(data, distance) {
-  data$d = distance[as.character(data$node)]
-  data$d_parent = distance[as.character(data$parent)]
-  data
-}
-
 genetic_distance = function(graph, vids = graph$V, mu = 0, accel = 0) {
   age = distances_from_origin(graph)
   segments = (1 + accel)**age
@@ -50,9 +51,7 @@ genetic_distance = function(graph, vids = graph$V, mu = 0, accel = 0) {
   segments[graph$is_source] = 0
   ancestors = neighborhood_in(graph, vids)
   names(ancestors) = igraphlite::Vnames(graph)[vids]
-  purrr::map_dbl(ancestors, function(x) {
-    sum(segments[x])
-  })
+  purrr::map_dbl(ancestors, \(v) sum(segments[v]))
 }
 
 remove_tandem_ancestors = function(data) {

@@ -5,12 +5,16 @@
 \alias{gggenealogy}
 \title{Visualize cell genealogy}
 \usage{
-augment_genealogy(graph)
+augment_genealogy(graph, mu = 0, accel = 0)
 
 gggenealogy(data, mapping = ggplot2::aes(), ...)
 }
 \arguments{
 \item{graph}{igraph}
+
+\item{mu}{mutation rate per cell division.}
+
+\item{accel}{assumption of accelerated mutation.}
 
 \item{data}{tbl from \code{\link[=augment_genealogy]{augment_genealogy()}}}
 
