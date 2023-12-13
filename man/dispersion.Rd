@@ -2,19 +2,30 @@
 % Please edit documentation in R/dispersion.R
 \name{stats_dispersion}
 \alias{stats_dispersion}
+\alias{summary_row}
+\alias{mutate_chisq}
 \alias{rpois_dispersion}
 \alias{tibble_dchisq}
 \title{Utilities for dispersion
-\code{stats_dispersion()} calculates various dispersion stats.}
+\code{summary_row()} and \code{mutate_chisq()} calculate various dispersion stats.
+\code{stats_dispersion()} is a shortcut to call them both at once.}
 \usage{
 stats_dispersion(x)
+
+summary_row(x)
+
+mutate_chisq(.data, ...)
 
 rpois_dispersion(n, lambda, nrep = 1L)
 
 tibble_dchisq(x, n)
 }
 \arguments{
-\item{x}{A numeric vector}
+\item{x}{A numeric vector.}
+
+\item{.data}{A data.frame.}
+
+\item{...}{passed to \code{\link[dplyr:mutate]{dplyr::mutate()}}.}
 
 \item{n, lambda}{passed to \code{\link[stats:Poisson]{stats::rpois()}}.}
 
@@ -22,7 +33,8 @@ tibble_dchisq(x, n)
 }
 \description{
 Utilities for dispersion
-\code{stats_dispersion()} calculates various dispersion stats.
+\code{summary_row()} and \code{mutate_chisq()} calculate various dispersion stats.
+\code{stats_dispersion()} is a shortcut to call them both at once.
 }
 \details{
 \code{rpois_dispersion()} summarizes the results of \code{\link[stats:Poisson]{stats::rpois()}}.

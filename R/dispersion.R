@@ -1,17 +1,33 @@
 #' Utilities for dispersion
 
-#' `stats_dispersion()` calculates various dispersion stats.
-#' @param x A numeric vector
+#' `summary_row()` and `mutate_chisq()` calculate various dispersion stats.
+#' `stats_dispersion()` is a shortcut to call them both at once.
+#' @param x A numeric vector.
 #' @rdname dispersion
 #' @export
 stats_dispersion = function(x) {
+  summary_row(x) |> mutate_chisq()
+}
+
+#' @rdname dispersion
+#' @export
+summary_row = function(x) {
   tibble::tibble_row(
     nsam = length(x),
     mean = mean(x),
-    devsq = sum((x - .data$mean) ** 2),
-    chisq = .data$devsq / .data$mean,
-    var = .data$devsq / (.data$nsam - 1),
-    R = .data$var / .data$mean
+    var = stats::var(x)
+  )
+}
+
+#' @param .data A data.frame.
+#' @param ... passed to [dplyr::mutate()].
+#' @rdname dispersion
+#' @export
+mutate_chisq = function(.data, ...) {
+  dplyr::mutate(.data,
+    R = !!as.name("var") / !!as.name("mean"),
+    chisq = !!as.name("R") * (!!as.name("nsam") - 1),
+    ...
   )
 }
 
@@ -23,8 +39,9 @@ stats_dispersion = function(x) {
 #' @export
 rpois_dispersion = function(n, lambda, nrep = 1L) {
   seq_len(nrep) |>
-    purrr::map(\(.i) stats_dispersion(stats::rpois(n, lambda))) |>
-    purrr::list_rbind(names_to = "repl")
+    purrr::map(\(.i) summary_row(stats::rpois(n, lambda))) |>
+    purrr::list_rbind(names_to = "repl") |>
+    mutate_chisq()
 }
 
 #' @details
