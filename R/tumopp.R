@@ -24,9 +24,10 @@
 tumopp = function(args, ...) UseMethod("tumopp")
 
 #' @param graph add graph column if TRUE
+#' @param cache use cache if TRUE.
 #' @rdname tumopp
 #' @export
-tumopp.default = function(args = character(0L), ..., graph = TRUE) {
+tumopp.default = function(args = character(0L), ..., graph = TRUE, cache = FALSE) {
   if (length(args) == 1L) {
     args = stringr::str_split_1(args, "\\s+")
   }
@@ -34,6 +35,14 @@ tumopp.default = function(args = character(0L), ..., graph = TRUE) {
     seed = runif.int(1L)
     args = c(args, paste0("--seed=", seed))
   }
+  if (cache) {
+    .tumopp_cached(args, graph = graph)
+  } else {
+    .tumopp_run(args, graph = graph)
+  }
+}
+
+.tumopp_run = function(args, graph = TRUE) {
   result = cpp_tumopp(args)
   if (length(result) == 0L) {
     return(invisible(NULL))
@@ -65,6 +74,24 @@ tumopp.default = function(args = character(0L), ..., graph = TRUE) {
     .out$benchmark = list(readr::read_tsv(.benchmark))
   }
   .out
+}
+
+.tumopp_cached = function(args, graph = TRUE) {
+  cache_dir = cache_name(args)
+  if (dir.exists(cache_dir)) {
+    read_results(cache_dir, graph = graph)
+  } else {
+    .tumopp_run(args, graph = graph) |>
+      dplyr::mutate(outdir = cache_dir) |>
+      write_results()
+  }
+}
+
+cache_name = function(args) {
+  x = stringr::str_flatten(args) |>
+    stringr::str_remove_all("[ =.]+") |>
+    stringr::str_replace_all("-+", "-")
+  paste0(".tumopp", x)
 }
 
 #' @param mc.cores The number of cores to use for concurrent execution.
