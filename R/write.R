@@ -6,9 +6,7 @@
 #' @rdname write
 #' @export
 write_results = function(results) {
-  for (i in seq_len(nrow(results))) {
-    dplyr::slice(results, i) |> .write_result()
-  }
+  dplyr::rowwise(results) |> dplyr::group_walk(\(.x, .y) .write_result(.x))
 }
 
 .write_result = function(result, outdir = NULL, force = FALSE) {
