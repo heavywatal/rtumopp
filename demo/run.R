@@ -17,6 +17,8 @@ if (result[["dimensions"]] > 2L) {
   rgl::close3d()
   rgl::open3d(windowRect = c(0, 0, 600, 600))
   result$population[[1]] |>
+    tumopp:::add_node_property(result$graph[[1]], 6L) |>
+    tumopp::add_col(palette = "turbo") |>
     tumopp::filter_extant() |>
     tumopp::add_surface(result$coord, result$dimensions) |>
     dplyr::filter(surface) |>

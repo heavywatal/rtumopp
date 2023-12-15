@@ -43,19 +43,25 @@ snapshot_surface = function(.tbl, filename = tempfile("rgl_", fileext = ".png"),
 #' @details
 #' `add_col` adds a column for color in [plot_tumor3d()].
 #' @param column column name to colorcode
-#' @param palette name of ColorBrewer palette
-#' @param direction -1 to reverse color scale
+#' @param palette name of palette in grDevices or viridis.
 #' @rdname plot-rgl
 #' @export
-add_col = function(.tbl, column = "clade", palette = "Spectral", direction = 1) {
+add_col = function(.tbl, column = "clade", palette = "turbo", ...) {
   .column = .tbl[[column]]
   if (!is.factor(.column)) .column = as.factor(.column)
   .levels = levels(.column)
   n = length(.levels)
   .map = if (n > 1L) {
-    scales::brewer_pal(palette = palette, direction = direction)(n)
+    palette_colors(n, palette = palette, ...)
   } else {
     getOption("tumopp.default_color", "#666666")
   }
   dplyr::mutate(.tbl, col = .map[.column])
+}
+
+palette_colors = function(n = NULL, palette = "Okabe-Ito", ...) {
+  tryCatch(
+    grDevices::palette.colors(n + 1, palette, ...)[-1],
+    error = \(e) scales::pal_viridis(option = palette, ...)(n)
+  )
 }

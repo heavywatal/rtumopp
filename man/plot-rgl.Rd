@@ -10,7 +10,7 @@ plot_tumor3d(.tbl = NULL, limits = NULL)
 
 snapshot_surface(.tbl, filename = tempfile("rgl_", fileext = ".png"), ...)
 
-add_col(.tbl, column = "clade", palette = "Spectral", direction = 1)
+add_col(.tbl, column = "clade", palette = "turbo", ...)
 }
 \arguments{
 \item{.tbl}{data.frame with (x, y, z, col)}
@@ -23,9 +23,7 @@ add_col(.tbl, column = "clade", palette = "Spectral", direction = 1)
 
 \item{column}{column name to colorcode}
 
-\item{palette}{name of ColorBrewer palette}
-
-\item{direction}{-1 to reverse color scale}
+\item{palette}{name of palette in grDevices or viridis.}
 }
 \description{
 3D plotting with rgl
