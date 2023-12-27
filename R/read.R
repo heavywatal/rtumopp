@@ -39,7 +39,7 @@ read_boost_ini = function(file) {
 }
 
 #' @details
-#' `read_results` reads confs and populations as a nested tibble.
+#' `read_results` reads configs and populations as a nested tibble.
 #' @param graph add graph column if TRUE
 #' @rdname read
 #' @export

@@ -35,7 +35,7 @@ read_tumopp(file)
 \code{read_confs} reads config files.
 }
 \details{
-\code{read_results} reads confs and populations as a nested tibble.
+\code{read_results} reads configs and populations as a nested tibble.
 
 \code{read_populations} reads populations.
 

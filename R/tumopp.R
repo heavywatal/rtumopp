@@ -16,7 +16,7 @@
 #' then the unit of those columns can be interpreted as 4 days,
 #' or you can set `--beta0=0.25` to change the unit to a day.
 #'
-#' The `omega` column denotes the number of cell devisions allowed for each cell.
+#' The `omega` column denotes the number of cell divisions allowed for each cell.
 #' Negative values denote unlimited proliferation potential.
 #' @param args command line arguments as a string vector or list of strings.
 #' @param ... not used.

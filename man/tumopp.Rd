@@ -53,7 +53,7 @@ If you are considering some cell line whose average cell cycle is 4 days for exa
 then the unit of those columns can be interpreted as 4 days,
 or you can set \code{--beta0=0.25} to change the unit to a day.
 
-The \code{omega} column denotes the number of cell devisions allowed for each cell.
+The \code{omega} column denotes the number of cell divisions allowed for each cell.
 Negative values denote unlimited proliferation potential.
 
 \code{make_args()} returns argument combinations in a tibble.
