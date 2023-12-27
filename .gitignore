@@ -5,3 +5,5 @@
 .RData
 inst/doc
 /docs/pkgdown.yml
+font.css
+fonts/

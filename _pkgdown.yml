@@ -26,6 +26,7 @@ reference:
   contents:
   - math_score
   - genetic_stats
+  - stats_dispersion
 - title: "Coordinate system"
   contents:
   - max_abs_xyz
