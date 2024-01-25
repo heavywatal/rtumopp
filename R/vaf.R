@@ -23,7 +23,7 @@ make_vaf = function(graph, samples, mu) {
 #' @rdname vaf
 #' @export
 make_longer_vaf = function(graph, samples, mu, threshold = 0.05) {
-  if (sum(graph$is_sink) > sum(lengths(samples))) {
+  if (sum(igraphlite::is_sink(graph)) > sum(lengths(samples))) {
     graph = subtree(graph, unlist(samples))
   }
   make_vaf(graph, samples, mu) |>

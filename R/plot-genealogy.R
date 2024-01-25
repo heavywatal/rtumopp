@@ -9,8 +9,8 @@
 #' @export
 augment_genealogy = function(graph, mu = 0, accel = 0) {
   vnames = igraphlite::Vnames(graph)
-  tips = vnames[graph$is_sink]
-  root = vnames[graph$is_source]
+  tips = vnames[igraphlite::is_sink(graph)]
+  root = vnames[igraphlite::is_source(graph)]
   res = igraphlite::augment(graph, layout = igraphlite::layout_reingold_tilford) |>
     dplyr::rename(
       parent = "from", node = "to",
@@ -22,7 +22,7 @@ augment_genealogy = function(graph, mu = 0, accel = 0) {
       TRUE ~ "internal"
     ))
   if (mu > 0 || accel > 0) {
-    named_dist = genetic_distance(graph, graph$V, mu = mu, accel = accel)
+    named_dist = genetic_distance(graph, igraphlite::V(graph), mu = mu, accel = accel)
     res$d = named_dist[as.character(res$node)]
     res$d_parent = named_dist[as.character(res$parent)]
   }
@@ -42,13 +42,13 @@ gggenealogy = function(data, mapping = ggplot2::aes(), ...) {
     ggplot2::geom_segment(ggplot2::aes(xend = .data[["d_parent"]], yend = .data[["x_parent"]]), ...)
 }
 
-genetic_distance = function(graph, vids = graph$V, mu = 0, accel = 0) {
+genetic_distance = function(graph, vids = igraphlite::V(graph), mu = 0, accel = 0) {
   age = distances_from_origin(graph)
   segments = (1 + accel)**age
   if (mu > 0) {
     segments = stats::rpois(graph$vcount, mu * segments)
   }
-  segments[graph$is_source] = 0
+  segments[igraphlite::is_source(graph)] = 0
   ancestors = neighborhood_in(graph, vids)
   names(ancestors) = igraphlite::Vnames(graph)[vids]
   purrr::map_dbl(ancestors, \(v) sum(segments[v]))

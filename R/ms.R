@@ -9,7 +9,7 @@
 #' @rdname ms
 #' @export
 make_sample = function(graph, nsam = 0L, mu = NULL, segsites = NULL) {
-  nodes = igraphlite::Vnames(graph)[graph$is_sink]
+  nodes = igraphlite::Vnames(graph)[igraphlite::is_sink(graph)]
   if (nsam > 0L) {
     nodes = sample(nodes, nsam, replace = FALSE)
     graph = subtree(graph, nodes)
@@ -23,7 +23,7 @@ make_sample = function(graph, nsam = 0L, mu = NULL, segsites = NULL) {
 }
 
 mutate_clades = function(graph, mu = NULL, segsites = NULL) {
-  nodes = igraphlite::Vnames(graph)[!graph$is_source]
+  nodes = igraphlite::Vnames(graph)[!igraphlite::is_source(graph)]
   # TODO: remove low-freq variants?
   number = if (is.null(mu)) {
     if (is.null(segsites)) stop("specify either mu or segsites")
