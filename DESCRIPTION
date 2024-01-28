@@ -1,6 +1,6 @@
 Package: tumopp
 Title: R interface to tumopp, a tumor growth simulator in C++
-Version: 0.8.4
+Version: 0.8.5
 Authors@R: person("Watal M.", "Iwasaki", email = "heavywatal@gmail.com", role = c("aut", "cre"), comment = c(ORCID="0000-0002-4718-7605"))
 Description: R interface to tumopp, a tumor growth simulator in C++.
 License: MIT + file LICENSE
@@ -36,7 +36,7 @@ BugReports: https://github.com/heavywatal/rtumopp/issues
 RoxygenNote: 7.3.1
 Roxygen: list(markdown = TRUE)
 LinkingTo: Rcpp
-SystemRequirements: CMake (>= 3.13.0)
+SystemRequirements: CMake (>= 3.15.0)
 VignetteBuilder: knitr
 StagedInstall: no
 Config/testthat/edition: 3
