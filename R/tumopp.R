@@ -116,7 +116,7 @@ tumopp.data.frame = function(args, ..., graph = TRUE, mc.cores = getOption("mc.c
 system_tumopp = function(args, mc.cores = getOption("mc.cores", 1L)) {
   args[["o"]] = file.path(tempdir(), args[["o"]])
   argslist = vectorize_args(args)
-  parallel::mclapply(argslist, system2, command = "tumopp", mc.cores = mc.cores)
+  parallel::mclapply(argslist, system2, command = tumopp_path(), mc.cores = mc.cores)
   out = read_results(args[["o"]], graph = FALSE, mc.cores = mc.cores) |>
     dplyr::bind_rows()
   f = function(.x) {

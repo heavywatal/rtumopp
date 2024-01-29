@@ -1,9 +1,7 @@
-/Meta/
-/doc/
 .Rproj.user
 .Rhistory
 .RData
-inst/doc
+/inst/path
 /docs/pkgdown.yml
 font.css
 fonts/

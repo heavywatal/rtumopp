@@ -32,7 +32,7 @@ else()
     # FIND_PACKAGE_ARGS  # 3.24
   )
   set(CMAKE_BUILD_TYPE Release)
-  set(BUILD_EXECUTABLE OFF CACHE BOOL "")
+  set(BUILD_EXECUTABLE ON CACHE BOOL "")
   set(BUILD_TESTING OFF CACHE BOOL "")
   FetchContent_MakeAvailable(tumopp)
   cmake_print_variables(tumopp_SOURCE_DIR tumopp_BINARY_DIR)
@@ -51,3 +51,6 @@ configure_file(
   ${CMAKE_CURRENT_SOURCE_DIR}/Makevars.in
   ${CMAKE_CURRENT_SOURCE_DIR}/Makevars @ONLY
 )
+get_filename_component(R_PACKAGE_SOURCE ${CMAKE_CURRENT_SOURCE_DIR} DIRECTORY)
+set(BINDIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR})
+file(WRITE ${R_PACKAGE_SOURCE}/inst/path "${BINDIR}/tumopp")
