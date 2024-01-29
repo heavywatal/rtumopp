@@ -24,7 +24,7 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
-      FETCHCONTENT_SOURCE_DIR_TUMOPP: $RUNNER_TEMP/tumopp
+      FETCHCONTENT_SOURCE_DIR_TUMOPP: ${{ runner.temp }}/tumopp
 
     steps:
       - uses: actions/checkout@v4
