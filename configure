@@ -12,10 +12,16 @@ if [ -z "$CXX" ]; then
 fi
 CXX=${CXX%% *}
 echo "CXX: $CXX"
+echo "PWD: $PWD"
 echo "R_PACKAGE_DIR: $R_PACKAGE_DIR"
-BUILD_DIR="${R_SESSION_TMPDIR}/rtumopp"
+# R CMD check tries to use libraries before installation.
+FINAL_INSTDIR="${R_LIBRARY_DIR}/${R_PACKAGE_NAME}"
+echo "FINAL_INSTDIR: $FINAL_INSTDIR"
+mkdir -p "$FINAL_INSTDIR"
+ln -s "$R_PACKAGE_DIR/libs" "$FINAL_INSTDIR/libs"
+BUILD_DIR="${R_SESSION_TMPDIR}/${R_PACKAGE_NAME}-build"
 echo "BUILD_DIR: $BUILD_DIR"
-rm -r ${BUILD_DIR}/CMake*
-cmake -Hsrc -B "$BUILD_DIR" -DCMAKE_CXX_COMPILER="$CXX" -DCMAKE_INSTALL_PREFIX="$R_PACKAGE_DIR/local" -DCMAKE_PREFIX_PATH="$CMAKE_PREFIX_PATH"
-cmake --build "$BUILD_DIR" -j2
-cmake --install "$BUILD_DIR"
+rm -r "${BUILD_DIR}/CMake*"
+cmake -Hsrc -B "$BUILD_DIR" -DCMAKE_CXX_COMPILER="$CXX" -DCMAKE_INSTALL_PREFIX="$FINAL_INSTDIR"
+cmake --build "$BUILD_DIR" -j3
+cmake --install "$BUILD_DIR" --prefix "$R_PACKAGE_DIR"
