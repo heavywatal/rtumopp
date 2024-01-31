@@ -14,11 +14,14 @@ CXX=${CXX%% *}
 echo "CXX: $CXX"
 echo "PWD: $PWD"
 echo "R_PACKAGE_DIR: $R_PACKAGE_DIR"
-# R CMD check tries to use libraries before installation.
 FINAL_INSTDIR="${R_LIBRARY_DIR}/${R_PACKAGE_NAME}"
 echo "FINAL_INSTDIR: $FINAL_INSTDIR"
-mkdir -p "$FINAL_INSTDIR"
-ln -s "$R_PACKAGE_DIR/libs" "$FINAL_INSTDIR/libs"
+if [ "$FINAL_INSTDIR" != "$R_PACKAGE_DIR" ]; then
+  # R CMD check tries to use libraries before installation.
+  # covr ignores staged installation
+  mkdir -p "$FINAL_INSTDIR"
+  ln -s "$R_PACKAGE_DIR/libs" "$FINAL_INSTDIR/libs"
+fi
 BUILD_DIR="${R_SESSION_TMPDIR}/${R_PACKAGE_NAME}-build"
 echo "BUILD_DIR: $BUILD_DIR"
 rm -r "${BUILD_DIR}/CMake*"

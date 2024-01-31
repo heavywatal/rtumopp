@@ -1,6 +1,8 @@
+/Makevars
 *.o
 *.o.tmp
 *.so
 *.dll
-/Makevars
-/external
+*.gcda
+*.gcno
+*.gcov
