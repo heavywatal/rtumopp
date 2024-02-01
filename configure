@@ -20,6 +20,7 @@ if [ "$FINAL_INSTDIR" != "$R_PACKAGE_DIR" ]; then
   # R CMD check tries to use libraries before installation.
   # covr ignores staged installation
   mkdir -p "$FINAL_INSTDIR"
+  ln -s "$R_PACKAGE_DIR/include" "$FINAL_INSTDIR/include"
   ln -s "$R_PACKAGE_DIR/libs" "$FINAL_INSTDIR/libs"
 fi
 BUILD_DIR="${R_SESSION_TMPDIR}/${R_PACKAGE_NAME}-build"
