@@ -78,13 +78,10 @@ tumopp.default = function(args = character(0L), ..., graph = TRUE, cache = FALSE
 
 .tumopp_cached = function(args, graph = TRUE) {
   cache_dir = cache_name(args)
-  if (dir.exists(cache_dir)) {
-    read_results(cache_dir, graph = graph)
-  } else {
-    .tumopp_run(args, graph = graph) |>
-      dplyr::mutate(outdir = cache_dir) |>
-      write_results()
+  if (!dir.exists(cache_dir)) {
+    system2(tumopp_path(), c(args, "-o", cache_dir))
   }
+  read_results(cache_dir, graph = graph)
 }
 
 cache_name = function(args) {
