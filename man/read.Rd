@@ -3,8 +3,6 @@
 \name{read_confs}
 \alias{read_confs}
 \alias{read_results}
-\alias{read_populations}
-\alias{read_snapshots}
 \alias{read_tumopp}
 \title{Read TSV files in given directories}
 \usage{
@@ -15,10 +13,6 @@ read_results(
   mc.cores = getOption("mc.cores", 1L),
   graph = TRUE
 )
-
-read_populations(indirs = getwd(), mc.cores = getOption("mc.cores", 1L))
-
-read_snapshots(indirs = getwd(), mc.cores = getOption("mc.cores", 1L))
 
 read_tumopp(file)
 }
@@ -36,10 +30,6 @@ read_tumopp(file)
 }
 \details{
 \code{read_results} reads configs and populations as a nested tibble.
-
-\code{read_populations} reads populations.
-
-\code{read_snapshots} calls \code{\link[=read_results]{read_results()}} and reads snapshots.
 
 \code{read_tumopp} is an alias of \code{\link[readr:read_delim]{readr::read_tsv()}} with some options
 to read result files: \code{population.tsv.gz} and \code{snapshots.tsv.gz}.

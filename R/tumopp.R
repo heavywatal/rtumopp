@@ -35,11 +35,14 @@ tumopp.default = function(args = character(0L), ..., graph = TRUE, cache = FALSE
     seed = runif.int(1L)
     args = c(args, paste0("--seed=", seed))
   }
-  if (cache) {
-    .tumopp_cached(args, graph = graph)
-  } else {
-    .tumopp_run(args, graph = graph)
+  cache_dir = cache_name(args)
+  if (!cache) {
+    cache_dir = file.path(tempdir(), cache_dir)
   }
+  if (!dir.exists(cache_dir)) {
+    system2(tumopp_path(), c(args, "-o", cache_dir))
+  }
+  .read_result(cache_dir, graph = graph)
 }
 
 .tumopp_run = function(args, graph = TRUE) {
@@ -76,14 +79,6 @@ tumopp.default = function(args = character(0L), ..., graph = TRUE, cache = FALSE
   .out
 }
 
-.tumopp_cached = function(args, graph = TRUE) {
-  cache_dir = cache_name(args)
-  if (!dir.exists(cache_dir)) {
-    system2(tumopp_path(), c(args, "-o", cache_dir))
-  }
-  read_results(cache_dir, graph = graph)
-}
-
 cache_name = function(args) {
   x = stringr::str_flatten(args) |>
     stringr::str_remove_all("[ =.]+") |>
@@ -109,21 +104,6 @@ tumopp.data.frame = function(args, ..., graph = TRUE, mc.cores = getOption("mc.c
   tumopp(vectorize_args(args), ..., graph = graph, mc.cores = mc.cores)
 }
 
-# execute as an external command for benchmarking
-system_tumopp = function(args, mc.cores = getOption("mc.cores", 1L)) {
-  args[["o"]] = file.path(tempdir(), args[["o"]])
-  argslist = vectorize_args(args)
-  parallel::mclapply(argslist, system2, command = tumopp_path(), mc.cores = mc.cores)
-  out = read_results(args[["o"]], graph = FALSE, mc.cores = mc.cores) |>
-    dplyr::bind_rows()
-  f = function(.x) {
-    readr::read_tsv(file.path(.x, "benchmark.tsv.gz"))
-  }
-  out[["benchmark"]] = purrr::map_if(out[["outdir"]], out[["benchmark"]], f)
-  out[["directory"]] = NULL
-  out
-}
-
 #' @details
 #' `make_args()` returns argument combinations in a tibble.
 #' @param alt named list of altered arguments.
@@ -132,11 +112,9 @@ system_tumopp = function(args, mc.cores = getOption("mc.cores", 1L)) {
 #' @rdname tumopp
 #' @export
 make_args = function(alt, const = NULL, times = 1L, each = 1L) {
-  now = format(Sys.time(), "%Y%m%d_%H%M%S")
   grid = rlang::exec(tidyr::crossing, !!!alt) |> filter_valid_LP()
   idx = rep(seq_len(nrow(grid)), times = times, each = each)
   dplyr::slice(grid, idx) |>
-    dplyr::mutate(o = paste(now, dplyr::row_number(), sep = "_")) |>
     dplyr::mutate(!!!const)
 }
 

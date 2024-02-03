@@ -44,37 +44,37 @@ read_boost_ini = function(file) {
 #' @rdname read
 #' @export
 read_results = function(indirs = getwd(), mc.cores = getOption("mc.cores", 1L), graph = TRUE) {
-  autohex = getOption("tumopp.autohex", TRUE)
-  pop = read_populations(indirs, mc.cores = mc.cores)
-  results = read_confs(indirs) |> dplyr::mutate(
-    population = purrr::map_if(pop, (.data$coord == "hex") & autohex, trans_coord_hex)
-  )
-  if (graph) {
-    results = dplyr::mutate(results, graph = parallel::mclapply(results$population, make_igraph, mc.cores = mc.cores))
+  parallel::mclapply(indirs, .read_result, graph = graph) |> purrr::list_rbind()
+}
+
+.read_result = function(indir = getwd(), graph = TRUE) {
+  res = .read_conf(indir)
+  population = read_tumopp(file.path(indir, "population.tsv.gz"))
+  transforming = (res$coord == "hex") && getOption("tumopp.autohex", TRUE)
+  if (transforming) {
+    population = trans_coord_hex(population)
   }
-  results
-}
-
-#' @details
-#' `read_populations` reads populations.
-#' @rdname read
-#' @export
-read_populations = function(indirs = getwd(), mc.cores = getOption("mc.cores", 1L)) {
-  file.path(indirs, "population.tsv.gz") |>
-    parallel::mclapply(read_tumopp, mc.cores = mc.cores)
-}
-
-#' @details
-#' `read_snapshots` calls [read_results()] and reads snapshots.
-#' @rdname read
-#' @export
-read_snapshots = function(indirs = getwd(), mc.cores = getOption("mc.cores", 1L)) {
-  read_results(indirs, mc.cores = mc.cores) |>
-    dplyr::mutate(snapshots = purrr::map2(indirs, .data$population, \(x, y) {
-      meta_info = dplyr::select(y, "id", "clade")
-      read_tumopp(file.path(x, "snapshots.tsv.gz")) |>
-        dplyr::left_join(meta_info, by = "id")
-    }))
+  res[["population"]] = list(population)
+  if (graph) {
+    res[["graph"]] = list(make_igraph(population))
+  }
+  snapshots = file.path(indir, "snapshots.tsv.gz")
+  if (file.exists(snapshots)) {
+    snapshots = read_tumopp(snapshots)
+    if (transforming) {
+      snapshots = trans_coord_hex(snapshots)
+    }
+    res[["snapshots"]] = list(snapshots)
+  }
+  drivers = file.path(indir, "drivers.tsv.gz")
+  if (file.exists(drivers)) {
+    res[["drivers"]] = list(readr::read_tsv(drivers))
+  }
+  benchmark = file.path(indir, "benchmark.tsv.gz")
+  if (file.exists(benchmark)) {
+    res[["benchmark"]] = list(readr::read_tsv(benchmark))
+  }
+  res
 }
 
 #' @details

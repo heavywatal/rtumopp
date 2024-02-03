@@ -37,7 +37,7 @@ library(tumopp)
 )
 args_tbl = make_args(alt = .alt, const = .const) |> print()
 
-results = tumopp:::system_tumopp(args_tbl) |> print()
+results = tumopp::tumopp(args_tbl, graph = FALSE) |> print()
 
 unnested = results |>
   dplyr::select(!c(population, seed)) |>
