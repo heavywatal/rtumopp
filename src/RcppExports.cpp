@@ -22,21 +22,9 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// cpp_tumopp
-Rcpp::CharacterVector cpp_tumopp(const std::vector<std::string>& args);
-RcppExport SEXP _tumopp_cpp_tumopp(SEXP argsSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const std::vector<std::string>& >::type args(argsSEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_tumopp(args));
-    return rcpp_result_gen;
-END_RCPP
-}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_tumopp_nth_element", (DL_FUNC) &_tumopp_nth_element, 2},
-    {"_tumopp_cpp_tumopp", (DL_FUNC) &_tumopp_cpp_tumopp, 1},
     {NULL, NULL, 0}
 };
 

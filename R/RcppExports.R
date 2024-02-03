@@ -5,7 +5,3 @@ nth_element <- function(x, n) {
     .Call(`_tumopp_nth_element`, x, n)
 }
 
-cpp_tumopp <- function(args) {
-    .Call(`_tumopp_cpp_tumopp`, args)
-}
-

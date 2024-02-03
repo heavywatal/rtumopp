@@ -43,19 +43,7 @@ else()
   cmake_print_variables(tumopp_SOURCE_DIR tumopp_BINARY_DIR)
 endif()
 
-if(${CMAKE_INSTALL_PREFIX} MATCHES linuxbrew)
-  set(CMAKE_INSTALL_LIBDIR lib)
-endif()
 set(BINDIR "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}")
-set(LIBDIR "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
-set(CPPFLAGS "-I${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR}")
-set(LDFLAGS "-L${LIBDIR} -Wl,-rpath,${LIBDIR}")
-set(LDLIBS "-ltumopp")
-cmake_print_variables(CPPFLAGS)
-cmake_print_variables(LDFLAGS)
-configure_file(
-  ${CMAKE_CURRENT_SOURCE_DIR}/Makevars.in
-  ${CMAKE_CURRENT_SOURCE_DIR}/Makevars @ONLY
-)
+cmake_print_variables(BINDIR)
 get_filename_component(R_PACKAGE_SOURCE ${CMAKE_CURRENT_SOURCE_DIR} DIRECTORY)
 file(WRITE ${R_PACKAGE_SOURCE}/inst/path "${BINDIR}/tumopp")
