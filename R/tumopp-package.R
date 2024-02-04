@@ -1,5 +1,4 @@
 #' @useDynLib tumopp, .registration = TRUE
-#' @importFrom Rcpp sourceCpp
 #' @importFrom rlang :=
 #' @importFrom rlang .data
 #' @aliases NULL tumopp-package

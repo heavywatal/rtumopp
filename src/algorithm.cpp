@@ -1,8 +1,7 @@
-#include <Rcpp.h>
+#include <cpp11.hpp>
 
-// [[Rcpp::export]]
-double nth_element(const Rcpp::NumericVector& x, int n) {
-    Rcpp::NumericVector copy(Rcpp::clone(x));
+[[cpp11::register]]
+double nth_element(std::vector<double> copy, int n) {
     auto it = copy.begin() + n;
     std::nth_element(copy.begin(), it, copy.end());
     return *it;
