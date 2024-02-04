@@ -1,3 +1,5 @@
+#include <vector>
+#include <algorithm>
 #include <cpp11.hpp>
 
 [[cpp11::register]]
