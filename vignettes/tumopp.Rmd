@@ -45,8 +45,7 @@ for available parameters.
 )
 
 # Generate combinations of arguments
-args_table = make_args(alt = .alt, const = .const, each = 1L)
-args_table |> dplyr::select(!o)
+args_table = make_args(alt = .alt, const = .const, each = 1L) |> print()
 
 # Concurrent execution
 results = tumopp(args_table)

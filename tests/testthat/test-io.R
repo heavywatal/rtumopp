@@ -1,5 +1,6 @@
 test_that("write-read roundtrip works", {
-  result = tumopp(c("-N8", "-o", tempfile()))
+  result = tumopp("-N8")
+  result$outdir = tempfile()
   expect_message(write_results(result), "outdir")
   expect_silent({
     roundtrip = read_results(result$outdir, graph = TRUE)
