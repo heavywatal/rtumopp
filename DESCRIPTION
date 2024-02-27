@@ -11,7 +11,7 @@ Depends:
 Imports:
     dplyr (>= 1.1.4),
     ggplot2 (>= 3.4.4),
-    igraphlite (>= 0.10.8),
+    igraphlite (>= 0.10.10),
     jsonlite (>= 1.8.8),
     mmand (>= 1.6.3),
     purrr (>= 1.0.2),
@@ -25,7 +25,7 @@ Imports:
 Suggests:
     covr,
     knitr,
-    rgl (>= 1.2.1),
+    rgl (>= 1.2.8),
     rmarkdown,
     testthat (>= 3.2.1)
 Remotes:
