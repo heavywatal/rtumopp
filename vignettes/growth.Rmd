@@ -54,8 +54,8 @@ fig5b = ggplot(df) +
   theme(
     panel.grid = element_blank(),
     axis.ticks = element_blank(),
-    legend.key.height = unit(0.7, "lines"),
-    legend.position = c(0.98, 0.02), legend.justification = c(1, 0)
+    legend.key.height = unit(0.7, "lines"), legend.justification = c(1, 0),
+    legend.position = "inside", legend.position.inside = c(0.98, 0.02)
   )
 
 # ggsave("fig5b.png", fig5b, width = 3, height = 3)
