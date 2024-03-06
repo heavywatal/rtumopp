@@ -46,3 +46,4 @@ reference:
   - read_confs
   - read_results
   - write_results
+  - tumopp_path

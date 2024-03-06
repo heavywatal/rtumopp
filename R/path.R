@@ -9,5 +9,5 @@ tumopp_path = function() {
 #' @rdname path
 #' @export
 tumopp_version = function() {
-  system2(tumopp_path(), "--version", stdout=TRUE, stderr=FALSE)
+  system2(tumopp_path(), "--version", stdout = TRUE, stderr = FALSE)
 }
