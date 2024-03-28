@@ -31,10 +31,7 @@ tumopp.default = function(args = character(0L), ..., graph = TRUE, cache = FALSE
   if (length(args) == 1L) {
     args = stringr::str_split_1(args, "\\s+")
   }
-  if (!any(stringr::str_detect(args, "--seed"))) {
-    seed = runif.int(1L)
-    args = c(args, paste0("--seed=", seed))
-  }
+  args = append_seed(args)
   cache_dir = cache_name(args)
   if (!cache) {
     cache_dir = file.path(tempdir(), cache_dir)
@@ -56,6 +53,7 @@ cache_name = function(args) {
 #' @rdname tumopp
 #' @export
 tumopp.list = function(args, ..., graph = TRUE, mc.cores = getOption("mc.cores", 1L)) {
+  args = purrr::map(args, append_seed)
   out = parallel::mclapply(args, tumopp, ..., graph = FALSE, mc.cores = mc.cores) |>
     dplyr::bind_rows(.id = "args")
   if (graph) {
@@ -135,6 +133,13 @@ valid_LP_combinations = function() {
     tidyr::crossing(L = c("const", "linear", "step"), P = c("random", "mindrag")),
     tidyr::crossing(L = "const", P = c("roulette", "minstraight", "stroll"))
   )
+}
+
+append_seed = function(args, seed = NULL) {
+  if (!any(stringr::str_starts(args, "--seed"))) {
+    args = c(args, paste0("--seed=", seed %||% runif.int(1L)))
+  }
+  args
 }
 
 runif.int = function(n, min = -.Machine$integer.max, max = .Machine$integer.max) {
