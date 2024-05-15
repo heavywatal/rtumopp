@@ -9,13 +9,23 @@
 #' @rdname sample
 #' @export
 sample_uniform_regions = function(tbl, nsam = 2L, ncell = 10L, jitter = 0) {
-  centers = kmeans_centers(tbl, nsam)
+  tbl = tbl[c("x", "y", "z", "id")]
+  km = kmeans_xyz(tbl, nsam)
+  centers = km[["centers"]]
   if (jitter > 0) {
-    centers = dplyr::mutate(centers, dplyr::across(c("x", "y"), function(x) {
-      x + stats::runif(length(x), -jitter, jitter)
-    }))
+    xy = centers[, c("x", "y")]
+    centers[, c("x", "y")] = xy + stats::runif(length(xy), -jitter, jitter)
   }
-  sample_regions(tbl, centers, ncell = ncell)
+  id = tbl |>
+    dplyr::mutate(cluster = km[["cluster"]]) |>
+    tidyr::nest(.by = "cluster") |>
+    dplyr::arrange("cluster") |>
+    purrr::pmap(\(cluster, data) {
+      sample_bulk(data, centers[cluster, ], ncell = ncell)
+    })
+  as.data.frame(centers) |>
+    tibble::new_tibble() |>
+    dplyr::mutate(id = id)
 }
 
 #' @details
@@ -39,14 +49,14 @@ sample_random_regions = function(tbl, nsam = 2L, ncell = 10L) {
 #' @rdname sample
 #' @export
 sample_bulk = function(tbl, center = c(x = 0, y = 0, z = 0), ncell = 10L) {
+  stopifnot(ncell < nrow(tbl))
   d = dist_euclidean(tbl, center)
   tbl$id[d < nth_element(d, ncell)]
 }
 
-kmeans_centers = function(tbl, centers, iter.max = 32L) {
+kmeans_xyz = function(tbl, centers, iter.max = 2L) {
   tbl = tbl[c("x", "y", "z")]
-  result = stats::kmeans(tbl, centers = centers, iter.max = iter.max)
-  tibble::as_tibble(result[["centers"]])
+  suppressWarnings(stats::kmeans(tbl, centers, iter.max = iter.max))
 }
 
 sample_regions = function(tbl, centers, ncell = 10L) {
