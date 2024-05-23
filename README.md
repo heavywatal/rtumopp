@@ -1,6 +1,6 @@
 # R interface to tumopp
 
-[![R build status](https://github.com/heavywatal/rtumopp/workflows/R-CMD-check/badge.svg)](https://github.com/heavywatal/rtumopp/actions)
+[![R-CMD-check](https://github.com/heavywatal/rtumopp/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/heavywatal/rtumopp/actions/workflows/R-CMD-check.yaml)
 [![Codecov](https://codecov.io/gh/heavywatal/rtumopp/branch/master/graph/badge.svg)](https://app.codecov.io/gh/heavywatal/rtumopp?branch=master)
 [![CRAN Status Badge](https://www.r-pkg.org/badges/version/rtumopp)](https://cran.r-project.org/package=rtumopp)
 
