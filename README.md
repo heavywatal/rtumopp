@@ -10,14 +10,13 @@ a tumor growth simulator in C++.
 ## Requirements
 
 - Unix-like OS (macOS, Linux, etc.)
-- C++14 compiler (clang++ >= Apple LLVM 8.1, g++ >= 5.3)
-- [CMake](https://cmake.org/) (>= 3.13.0)
+- C++17 compiler (clang++ >= Apple LLVM 12, g++ >= 8)
+- [CMake](https://cmake.org/) (>= 3.18.0)
 
 ## Installation
 
 ```r
 install.packages("devtools")
-devtools::install_github("r-lib/remotes")  # until #719 is released
 devtools::install_github("heavywatal/rtumopp")
 ```
 
