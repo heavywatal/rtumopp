@@ -1,7 +1,7 @@
 # R interface to tumopp
 
 [![R-CMD-check](https://github.com/heavywatal/rtumopp/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/heavywatal/rtumopp/actions/workflows/R-CMD-check.yaml)
-[![Codecov](https://codecov.io/gh/heavywatal/rtumopp/branch/master/graph/badge.svg)](https://app.codecov.io/gh/heavywatal/rtumopp?branch=master)
+[![codecov](https://codecov.io/gh/heavywatal/rtumopp/graph/badge.svg?token=S8QayYTeJ0)](https://codecov.io/gh/heavywatal/rtumopp)
 [![CRAN Status Badge](https://www.r-pkg.org/badges/version/rtumopp)](https://cran.r-project.org/package=rtumopp)
 
 This is an R interface to [tumopp](https://github.com/heavywatal/tumopp),
