@@ -3,12 +3,15 @@
 \name{make_igraph}
 \alias{make_igraph}
 \alias{subtree}
+\alias{trim_root}
 \alias{internal_nodes}
 \title{Functions depending on igraph}
 \usage{
 make_igraph(population)
 
-subtree(graph, nodes = integer(0L))
+subtree(graph, nodes = integer(0L), trim = FALSE)
+
+trim_root(graph)
 
 internal_nodes(graph, nodes, sensitivity)
 }
@@ -19,6 +22,8 @@ internal_nodes(graph, nodes, sensitivity)
 
 \item{nodes}{integer cell IDs}
 
+\item{trim}{whether to remove common ancestors older than MRCA.}
+
 \item{sensitivity}{minimum allele frequency}
 }
 \description{
@@ -28,6 +33,8 @@ Functions depending on igraph
 \code{make_igraph} converts raw population tbl into graph.
 
 \code{subtree} extracts subgraph among terminal nodes.
+
+\code{trim_root()} removes ancestral nodes older than MRCA.
 
 \code{internal_nodes} selects major common ancestors above threshold.
 }
