@@ -42,18 +42,6 @@ gggenealogy = function(data, mapping = ggplot2::aes(), ...) {
     ggplot2::geom_segment(ggplot2::aes(xend = .data[["d_parent"]], yend = .data[["x_parent"]]), ...)
 }
 
-genetic_distance = function(graph, vids = igraphlite::V(graph), mu = 0, accel = 0) {
-  age = distances_from_origin(graph)
-  segments = (1 + accel)**age
-  if (mu > 0) {
-    segments = stats::rpois(graph$vcount, mu * segments)
-  }
-  segments[igraphlite::is_source(graph)] = 0
-  ancestors = neighborhood_in(graph, vids)
-  names(ancestors) = igraphlite::Vnames(graph)[vids]
-  purrr::map_dbl(ancestors, \(v) sum(segments[v]))
-}
-
 remove_tandem_ancestors = function(data) {
   data |>
     dplyr::group_by(.data$x, .data$x_parent) |>

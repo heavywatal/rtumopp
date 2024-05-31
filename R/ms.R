@@ -24,17 +24,32 @@ make_sample = function(graph, nsam = 0L, mu = NULL, segsites = NULL) {
 
 mutate_clades = function(graph, mu = NULL, segsites = NULL) {
   nodes = igraphlite::Vnames(graph)[!igraphlite::is_source(graph)]
-  # TODO: remove low-freq variants?
   number = if (is.null(mu)) {
     if (is.null(segsites)) stop("specify either mu or segsites")
-    stats::rmultinom(1L, segsites, rep(1, length(nodes))) |> as.vector()
+    stats::rmultinom(1L, segsites, rep_len(1L, length(nodes))) |> as.vector()
   } else if (mu > 0) {
     if (!is.null(segsites)) stop("segsites is ignored if mu is given")
     stats::rpois(length(nodes), mu)
   } else {
-    rep(1L, length(nodes))
+    rep_len(1L, length(nodes))
   }
   tibble::tibble(origin = nodes, number = number) |>
     dplyr::filter(.data$number > 0) |>
     dplyr::mutate(carriers = paths_to_sink(graph, .data$origin))
+}
+
+genetic_distance = function(graph, vids = igraphlite::Vsink(graph), mu = 0, accel = 0) {
+  segments = if (accel > 0) {
+    age = distances_from_origin(graph)
+    (1 + accel)**age
+  } else {
+    rep_len(1.0, graph$vcount)
+  }
+  if (mu > 0) {
+    segments = stats::rpois(length(segments), mu * segments)
+  }
+  segments[igraphlite::is_source(graph)] = 0
+  ancestors = neighborhood_in(graph, vids)
+  names(ancestors) = igraphlite::Vnames(graph)[vids]
+  purrr::map_dbl(ancestors, \(v) sum(segments[v]))
 }
