@@ -51,7 +51,7 @@ sample_random_regions = function(tbl, nsam = 2L, ncell = 10L) {
 sample_bulk = function(tbl, center = c(x = 0, y = 0, z = 0), ncell = 10L) {
   stopifnot(ncell < nrow(tbl))
   d = dist_euclidean(tbl, center)
-  tbl$id[d < nth_element(d, ncell)]
+  tbl$id[d <= nth_element(d, ncell)][seq_len(ncell)]
 }
 
 kmeans_xyz = function(tbl, centers, iter.max = 2L) {
