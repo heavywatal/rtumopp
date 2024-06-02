@@ -2,9 +2,12 @@
 % Please edit documentation in R/ms.R
 \name{make_sample}
 \alias{make_sample}
+\alias{edge_lengths}
 \title{Sprinkle mutations on genealogy}
 \usage{
 make_sample(graph, nsam = 0L, mu = NULL, segsites = NULL)
+
+edge_lengths(graph, mu = 0, accel = 0)
 }
 \arguments{
 \item{graph}{igraph}
@@ -14,10 +17,14 @@ make_sample(graph, nsam = 0L, mu = NULL, segsites = NULL)
 \item{mu}{mutation rate per cell division (ignored if segsites is given)}
 
 \item{segsites}{number of segregating sites}
+
+\item{accel}{assumption undocumented yet}
 }
 \description{
 Sprinkle mutations on genealogy
 }
 \details{
 \code{make_sample} creates a genotype matrix from a given genealogy tree.
+
+\code{edge_lengths()} calculates lengths of edges on a given genealogy tree.
 }

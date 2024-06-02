@@ -3,17 +3,39 @@
 \name{make_igraph}
 \alias{make_igraph}
 \alias{subtree}
+\alias{subgraph_upstream}
 \alias{trim_root}
 \alias{internal_nodes}
+\alias{distances_from_origin}
+\alias{distances_upstream}
+\alias{sink_cells}
 \title{Functions depending on igraph}
 \usage{
 make_igraph(population)
 
 subtree(graph, nodes = integer(0L), trim = FALSE)
 
+subgraph_upstream(graph, vids = integer(0L), trim = FALSE)
+
 trim_root(graph)
 
 internal_nodes(graph, nodes, sensitivity)
+
+distances_from_origin(
+  graph,
+  nodes = sink_cells(graph),
+  weights = numeric(0L),
+  trim = FALSE
+)
+
+distances_upstream(
+  graph,
+  vids = numeric(0),
+  weights = numeric(0L),
+  trim = FALSE
+)
+
+sink_cells(graph)
 }
 \arguments{
 \item{population}{tbl}
@@ -24,7 +46,11 @@ internal_nodes(graph, nodes, sensitivity)
 
 \item{trim}{whether to remove common ancestors older than MRCA.}
 
+\item{vids}{vertex IDs}
+
 \item{sensitivity}{minimum allele frequency}
+
+\item{weights}{A numeric or logical. Edge attribute "weight" is used if TRUE.}
 }
 \description{
 Functions depending on igraph
@@ -32,9 +58,14 @@ Functions depending on igraph
 \details{
 \code{make_igraph} converts raw population tbl into graph.
 
-\code{subtree} extracts subgraph among terminal nodes.
+\code{subtree()} and \code{subgraph_upstream()} extracts subgraph among terminal nodes.
 
 \code{trim_root()} removes ancestral nodes older than MRCA.
 
 \code{internal_nodes} selects major common ancestors above threshold.
+
+\code{distances_from_origin()} and \code{distances_upstream()} are a shorthand of
+\code{distances(..., mode = 2L)}.
+
+\code{sink_cells()} returns the cell IDs of the sink nodes.
 }

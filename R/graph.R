@@ -19,14 +19,21 @@ as_symbolic_edgelist = function(population) {
 }
 
 #' @details
-#' `subtree` extracts subgraph among terminal nodes.
+#' `subtree()` and `subgraph_upstream()` extracts subgraph among terminal nodes.
 #' @param graph igraph
 #' @param nodes integer cell IDs
+#' @param vids vertex IDs
 #' @param trim whether to remove common ancestors older than MRCA.
 #' @rdname graph
 #' @export
 subtree = function(graph, nodes = integer(0L), trim = FALSE) {
   vids = igraphlite::as_vids(graph, nodes)
+  subgraph_upstream(graph, vids, trim = trim)
+}
+
+#' @rdname graph
+#' @export
+subgraph_upstream = function(graph, vids = integer(0L), trim = FALSE) {
   vids = upstream_vertices(graph, vids, trim = trim)
   igraphlite::induced_subgraph(graph, vids)
 }
@@ -59,6 +66,29 @@ internal_nodes = function(graph, nodes, sensitivity) {
   as.integer(names(counts)[(counts / n) > sensitivity])
 }
 
+#' @details
+#' `distances_from_origin()` and `distances_upstream()` are a shorthand of
+#' `distances(..., mode = 2L)`.
+#' @param weights A numeric or logical. Edge attribute "weight" is used if TRUE.
+#' @rdname graph
+#' @export
+distances_from_origin = function(graph, nodes = sink_cells(graph), weights = numeric(0L), trim = FALSE) {
+  vids = igraphlite::as_vids(graph, nodes)
+  distances_upstream(graph, vids, weights = weights, trim = trim)
+}
+
+#' @rdname graph
+#' @export
+distances_upstream = function(graph, vids = numeric(0), weights = numeric(0L), trim = FALSE) {
+  src = if (trim) {
+    common_ancestors(graph, vids)[1L]
+  } else {
+    igraphlite::Vsource(graph)
+  }
+  res = igraphlite::distances(graph, vids, src, weights = weights, mode = 2L)
+  as.vector(res)
+}
+
 upstream_vertices = function(graph, vids, trim = FALSE) {
   vlist = neighborhood_in(graph, vids)
   vids = unique(unlist(vlist, use.names = FALSE))
@@ -67,6 +97,17 @@ upstream_vertices = function(graph, vids, trim = FALSE) {
     vids = setdiff(vids, ca[-1L]) # keep MRCA in graph
   }
   vids
+}
+
+get_mrca = function(graph, nodes) {
+  ca = common_ancestors(graph, igraphlite::as_vids(graph, nodes))
+  igraphlite::as_vnames(graph, ca[1L])
+}
+
+common_ancestors = function(graph, vids) {
+  vlist = neighborhood_in(graph, vids)
+  vids = unique(unlist(vlist, use.names = FALSE))
+  Reduce(intersect, vlist)
 }
 
 neighborhood_out = function(graph, vids) {
@@ -91,22 +132,16 @@ paths_to_source = function(graph, nodes = integer(0L)) {
   lapply(res, function(x) vnames[x])
 }
 
-shortest_dist_from_source = function(graph, vids = numeric(0)) {
-  res = igraphlite::distances(graph, vids, igraphlite::Vsource(graph), mode = 2L, algorithm = "unweighted")
-  as.integer(res)
-}
-
-distances_from_origin = function(graph, nodes = integer(0L)) {
-  vids = igraphlite::as_vids(graph, nodes)
-  shortest_dist_from_source(graph, vids)
-}
-
-sink_nodes = function(graph) {
+#' @details
+#' `sink_cells()` returns the cell IDs of the sink nodes.
+#' @rdname graph
+#' @export
+sink_cells = function(graph) {
   igraphlite::Vnames(graph)[igraphlite::is_sink(graph)]
 }
 
 sinks = function(graph, nodes) {
-  .sink = sink_nodes(graph)
+  .sink = sink_cells(graph)
   paths = paths_to_sink(graph, nodes)
   lapply(paths, function(x) x[x %in% .sink])
 }
@@ -132,4 +167,16 @@ count_sink = function(graph, nodes = integer(0L)) {
   } else {
     sum(igraphlite::is_sink(graph))
   }
+}
+
+copy_edge_attr = function(subgraph, graph) {
+  if (ncol(graph$Eattr) > 0L) {
+    eattr_names = names(igraphlite::edge_attr(graph))
+    lhs = as.data.frame(subgraph) |>
+      dplyr::select(!dplyr::any_of(eattr_names))
+    rhs = as.data.frame(graph)
+    subgraph$Eattr = dplyr::left_join(lhs, rhs, by = c("from", "to")) |>
+      dplyr::select(!c("from", "to"))
+  }
+  invisible(subgraph)
 }

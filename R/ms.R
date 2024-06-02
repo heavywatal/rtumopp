@@ -38,18 +38,33 @@ mutate_clades = function(graph, mu = NULL, segsites = NULL) {
     dplyr::mutate(carriers = paths_to_sink(graph, .data$origin))
 }
 
-genetic_distance = function(graph, vids = igraphlite::Vsink(graph), mu = 0, accel = 0) {
-  segments = if (accel > 0) {
-    age = distances_from_origin(graph)
-    (1 + accel)**age
-  } else {
-    rep_len(1.0, graph$vcount)
+#' @details
+#' `edge_lengths()` calculates lengths of edges on a given genealogy tree.
+#' @param accel assumption undocumented yet
+#' @rdname ms
+#' @export
+edge_lengths = function(graph, mu = 0, accel = 0) {
+  # distances(): "unweighted" is slower than "dijkstra"
+  lens = rep_len(1, graph$ecount)
+  if (accel > 0) {
+    lens = (1 + accel)**edge_ages(graph)
   }
   if (mu > 0) {
-    segments = stats::rpois(length(segments), mu * segments)
+    lens = stats::rpois(graph$ecount, mu * lens)
   }
-  segments[igraphlite::is_source(graph)] = 0
-  ancestors = neighborhood_in(graph, vids)
-  names(ancestors) = igraphlite::Vnames(graph)[vids]
-  purrr::map_dbl(ancestors, \(v) sum(segments[v]))
+  lens
+}
+
+edge_ages = function(graph) {
+  age = igraphlite::edge_attr(graph, "age")
+  if (is.null(age)) {
+    age = distances_upstream(graph, graph$to, trim = FALSE)
+    igraphlite::edge_attr(graph, "age") = age
+  }
+  age
+}
+
+mutate_edges = function(graph, mu = 0, accel = 0) {
+  igraphlite::edge_attr(graph, "weight") = edge_lengths(graph, mu = mu, accel = accel)
+  graph
 }

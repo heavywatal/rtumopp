@@ -22,7 +22,9 @@ augment_genealogy = function(graph, mu = 0, accel = 0) {
       TRUE ~ "internal"
     ))
   if (mu > 0 || accel > 0) {
-    named_dist = genetic_distance(graph, igraphlite::V(graph), mu = mu, accel = accel)
+    elengths = edge_lengths(graph, mu = mu, accel = accel)
+    udist = distances_upstream(graph, weights = elengths)
+    named_dist = stats::setNames(udist, vnames)
     res$d = named_dist[as.character(res$node)]
     res$d_parent = named_dist[as.character(res$parent)]
   }
