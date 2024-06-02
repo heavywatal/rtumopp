@@ -38,9 +38,17 @@ mutate_chisq = function(.data, ...) {
 #' @rdname dispersion
 #' @export
 rpois_dispersion = function(n, lambda, nrep = 1L) {
-  seq_len(nrep) |>
-    purrr::map(\(.i) summary_row(stats::rpois(n, lambda))) |>
-    purrr::list_rbind(names_to = "repl") |>
+  list(
+    repl = rep(seq_len(nrep), each = n),
+    x = stats::rpois(n * nrep, lambda)
+  ) |>
+    tibble::new_tibble() |>
+    dplyr::summarize(
+      nsam = length(!!as.name("x")),
+      mean = mean(!!as.name("x")),
+      var = stats::var(!!as.name("x")),
+      .by = !!as.name("repl")
+    ) |>
     mutate_chisq()
 }
 
