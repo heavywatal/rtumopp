@@ -45,12 +45,13 @@ mutate_clades = function(graph, mu = NULL, segsites = NULL) {
 #' @export
 edge_lengths = function(graph, mu = 0, accel = 0) {
   # distances(): "unweighted" is slower than "dijkstra"
-  lens = rep_len(1, graph$ecount)
+  ecnt = igraphlite::ecount(graph)
+  lens = rep_len(1, )
   if (accel > 0) {
     lens = (1 + accel)**edge_ages(graph)
   }
   if (mu > 0) {
-    lens = stats::rpois(graph$ecount, mu * lens)
+    lens = stats::rpois(ecnt, mu * lens)
   }
   lens
 }
@@ -58,7 +59,7 @@ edge_lengths = function(graph, mu = 0, accel = 0) {
 edge_ages = function(graph) {
   age = igraphlite::edge_attr(graph, "age")
   if (is.null(age)) {
-    age = distances_upstream(graph, graph$to, trim = FALSE)
+    age = distances_upstream(graph, igraphlite::igraph_to(graph), trim = FALSE)
     igraphlite::edge_attr(graph, "age") = age
   }
   age

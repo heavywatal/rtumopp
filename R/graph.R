@@ -170,12 +170,12 @@ count_sink = function(graph, nodes = integer(0L)) {
 }
 
 copy_edge_attr = function(subgraph, graph) {
-  if (ncol(graph$Eattr) > 0L) {
+  if (ncol(igraphlite::edge_attr(graph)) > 0L) {
     eattr_names = names(igraphlite::edge_attr(graph))
     lhs = as.data.frame(subgraph) |>
       dplyr::select(!dplyr::any_of(eattr_names))
     rhs = as.data.frame(graph)
-    subgraph$Eattr = dplyr::left_join(lhs, rhs, by = c("from", "to")) |>
+    igraphlite::edge_attr(subgraph) = dplyr::left_join(lhs, rhs, by = c("from", "to")) |>
       dplyr::select(!c("from", "to"))
   }
   invisible(subgraph)
