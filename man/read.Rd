@@ -10,8 +10,8 @@ read_confs(indirs = getwd(), mc.cores = getOption("mc.cores", 1L))
 
 read_results(
   indirs = getwd(),
-  mc.cores = getOption("mc.cores", 1L),
-  graph = TRUE
+  graph = getOption("tumopp.graph", TRUE),
+  mc.cores = getOption("mc.cores", 1L)
 )
 
 read_tumopp(file)

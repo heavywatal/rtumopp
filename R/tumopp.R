@@ -24,22 +24,32 @@
 tumopp = function(args, ...) UseMethod("tumopp")
 
 #' @param graph add graph column if TRUE
-#' @param cache use cache if TRUE.
+#' @param cache A parent directory to cache results.
+#' `~/.cache/tumopp` for `TRUE`, `tempdir()` for any `FALSE`-like values.
 #' @rdname tumopp
 #' @export
-tumopp.default = function(args = character(0L), ..., graph = TRUE, cache = FALSE) {
+tumopp.default = function(
+    args = character(0L), ...,
+    graph = getOption("tumopp.graph", TRUE),
+    cache = getOption("tumopp.cache", character(0))) {
   if (length(args) == 1L) {
     args = stringr::str_split_1(args, "\\s+")
   }
   args = append_seed(args)
-  cache_dir = cache_name(args)
-  if (!cache) {
-    cache_dir = file.path(tempdir(), cache_dir)
-  }
+  cache_dir = file.path(sanitize_cache_root(cache), cache_name(args))
   if (!dir.exists(cache_dir)) {
     system2(tumopp_path(), c(args, "-o", cache_dir))
   }
   .read_result(cache_dir, graph = graph)
+}
+
+sanitize_cache_root = function(root) {
+  if (isTRUE(root)) {
+    root = "~/.cache/tumopp"
+  } else if (length(root) != 1L || !is.character(root) || is.na(root) || nchar(root) == 0L) {
+    root = tempdir()
+  }
+  root
 }
 
 cache_name = function(args) {

@@ -10,7 +10,12 @@
 \usage{
 tumopp(args, ...)
 
-\method{tumopp}{default}(args = character(0L), ..., graph = TRUE, cache = FALSE)
+\method{tumopp}{default}(
+  args = character(0L),
+  ...,
+  graph = getOption("tumopp.graph", TRUE),
+  cache = getOption("tumopp.cache", character(0))
+)
 
 \method{tumopp}{list}(args, ..., graph = TRUE, mc.cores = getOption("mc.cores", 1L))
 
@@ -25,7 +30,8 @@ make_args(alt, const = NULL, times = 1L, each = 1L)
 
 \item{graph}{add graph column if TRUE}
 
-\item{cache}{use cache if TRUE.}
+\item{cache}{A parent directory to cache results.
+\verb{~/.cache/tumopp} for \code{TRUE}, \code{tempdir()} for any \code{FALSE}-like values.}
 
 \item{mc.cores}{The number of cores to use for concurrent execution.}
 

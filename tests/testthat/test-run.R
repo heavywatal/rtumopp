@@ -36,3 +36,15 @@ test_that("tumopp runs", {
   })
   expect_length(argslist, .n)
 })
+
+test_that("sanitize_cache_dir works", {
+  default = tempdir()
+  expect_identical(sanitize_cache_root(""), default)
+  expect_identical(sanitize_cache_root(character(0)), default)
+  expect_identical(sanitize_cache_root(NA_character_), default)
+  expect_identical(sanitize_cache_root(NA), default)
+  expect_identical(sanitize_cache_root(NULL), default)
+  expect_identical(sanitize_cache_root(FALSE), default)
+  expect_identical(sanitize_cache_root(TRUE), "~/.cache/tumopp")
+  expect_identical(sanitize_cache_root("path"), "path")
+})

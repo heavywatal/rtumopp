@@ -43,11 +43,14 @@ read_boost_ini = function(file) {
 #' @param graph add graph column if TRUE
 #' @rdname read
 #' @export
-read_results = function(indirs = getwd(), mc.cores = getOption("mc.cores", 1L), graph = TRUE) {
-  parallel::mclapply(indirs, .read_result, graph = graph) |> purrr::list_rbind()
+read_results = function(
+    indirs = getwd(),
+    graph = getOption("tumopp.graph", TRUE),
+    mc.cores = getOption("mc.cores", 1L)) {
+  parallel::mclapply(indirs, .read_result, mc.cores = mc.cores, graph = graph) |> purrr::list_rbind()
 }
 
-.read_result = function(indir = getwd(), graph = TRUE) {
+.read_result = function(indir, graph) {
   res = .read_conf(indir)
   population = read_tumopp(file.path(indir, "population.tsv.gz"))
   transforming = (res$coord == "hex") && getOption("tumopp.autohex", TRUE)
