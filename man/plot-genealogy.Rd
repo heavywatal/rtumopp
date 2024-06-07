@@ -5,16 +5,15 @@
 \alias{gggenealogy}
 \title{Visualize cell genealogy}
 \usage{
-augment_genealogy(graph, mu = 0, accel = 0)
+augment_genealogy(graph, lengths = numeric(0))
 
 gggenealogy(data, mapping = ggplot2::aes(), ...)
 }
 \arguments{
 \item{graph}{igraph}
 
-\item{mu}{mutation rate per cell division.}
-
-\item{accel}{assumption of accelerated mutation.}
+\item{lengths}{lengths of edges. \code{\link[=edge_lengths]{edge_lengths()}} is useful for this.
+The edge attribute "weight" is used if \code{TRUE}.}
 
 \item{data}{tbl from \code{\link[=augment_genealogy]{augment_genealogy()}}}
 

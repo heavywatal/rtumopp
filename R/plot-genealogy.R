@@ -3,11 +3,11 @@
 #' @details
 #' `augment_genealogy` calculates coordinates of nodes and edges for plotting.
 #' @param graph igraph
-#' @param mu mutation rate per cell division.
-#' @param accel assumption of accelerated mutation.
+#' @param lengths lengths of edges. [edge_lengths()] is useful for this.
+#' The edge attribute "weight" is used if `TRUE`.
 #' @rdname plot-genealogy
 #' @export
-augment_genealogy = function(graph, mu = 0, accel = 0) {
+augment_genealogy = function(graph, lengths = numeric(0)) {
   vnames = igraphlite::Vnames(graph)
   tips = vnames[igraphlite::is_sink(graph)]
   root = vnames[igraphlite::is_source(graph)]
@@ -21,9 +21,8 @@ augment_genealogy = function(graph, mu = 0, accel = 0) {
       .data$node %in% root ~ "root",
       TRUE ~ "internal"
     ))
-  if (mu > 0 || accel > 0) {
-    elengths = edge_lengths(graph, mu = mu, accel = accel)
-    udist = distances_upstream(graph, weights = elengths)
+  if (length(lengths) > 0) {
+    udist = distances_upstream(graph, weights = lengths)
     named_dist = stats::setNames(udist, vnames)
     res$d = named_dist[as.character(res$node)]
     res$d_parent = named_dist[as.character(res$parent)]

@@ -30,7 +30,7 @@ distances_from_origin(
 
 distances_upstream(
   graph,
-  vids = numeric(0),
+  vids = integer(0),
   weights = numeric(0L),
   trim = FALSE
 )

@@ -79,7 +79,7 @@ distances_from_origin = function(graph, nodes = sink_cells(graph), weights = num
 
 #' @rdname graph
 #' @export
-distances_upstream = function(graph, vids = numeric(0), weights = numeric(0L), trim = FALSE) {
+distances_upstream = function(graph, vids = integer(0), weights = numeric(0L), trim = FALSE) {
   src = if (trim) {
     common_ancestors(graph, vids)[1L]
   } else {
