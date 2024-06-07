@@ -23,6 +23,7 @@ Imports:
     scales (>= 1.3.0),
     withr (>= 3.0.0)
 Suggests:
+    ClusterR,
     covr,
     knitr,
     rgl (>= 1.3.1),

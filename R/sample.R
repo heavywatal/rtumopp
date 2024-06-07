@@ -10,22 +10,16 @@
 #' @export
 sample_uniform_regions = function(tbl, nsam = 2L, ncell = 10L, jitter = 0) {
   tbl = tbl[c("x", "y", "z", "id")]
-  km = kmeans_xyz(tbl, nsam)
-  centers = km[["centers"]]
+  centers = kmeans_xyz(tbl, nsam)
   if (jitter > 0) {
     xy = centers[, c("x", "y")]
     centers[, c("x", "y")] = xy + stats::runif(length(xy), -jitter, jitter)
   }
-  id = tbl |>
-    dplyr::mutate(cluster = km[["cluster"]]) |>
-    tidyr::nest(.by = "cluster") |>
-    dplyr::arrange("cluster") |>
-    purrr::pmap(\(cluster, data) {
-      sample_bulk(data, centers[cluster, ], ncell = ncell)
-    })
-  as.data.frame(centers) |>
-    tibble::new_tibble() |>
-    dplyr::mutate(id = id)
+  centers = as.data.frame(centers) |> tibble::new_tibble()
+  centers$id = purrr::pmap(centers, \(...) {
+    sample_bulk(tbl, c(...), ncell = ncell)
+  })
+  centers
 }
 
 #' @details
@@ -56,6 +50,22 @@ sample_bulk = function(tbl, center = c(x = 0, y = 0, z = 0), ncell = 10L) {
 
 kmeans_xyz = function(tbl, centers, iter.max = 2L) {
   tbl = tbl[c("x", "y", "z")]
+  if (requireNamespace("ClusterR", quietly = TRUE)) {
+    kmeans_arma(tbl, centers, iter.max = iter.max)
+  } else {
+    kmeans_base(tbl, centers, iter.max = iter.max)[["centers"]]
+  }
+}
+
+kmeans_arma = function(tbl, centers, iter.max = 2L) {
+  # ClusterR calls set.seed() and the default seed is 1.
+  res = ClusterR::KMeans_arma(tbl, centers, n_iter = iter.max, seed = runif.int(1L))
+  class(res) = NULL
+  colnames(res) = colnames(tbl)
+  res
+}
+
+kmeans_base = function(tbl, centers, iter.max = 2L) {
   suppressWarnings(stats::kmeans(tbl, centers, iter.max = iter.max))
 }
 
