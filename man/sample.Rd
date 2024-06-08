@@ -4,6 +4,8 @@
 \alias{sample_uniform_regions}
 \alias{sample_random_regions}
 \alias{sample_bulk}
+\alias{sim_sample_single_cell}
+\alias{sim_sample_biopsy}
 \alias{evaluate_mrs}
 \alias{distances_mrs}
 \title{Sample cells from a population}
@@ -13,6 +15,18 @@ sample_uniform_regions(tbl, nsam = 2L, ncell = 10L, jitter = 0)
 sample_random_regions(tbl, nsam = 2L, ncell = 10L)
 
 sample_bulk(tbl, center = c(x = 0, y = 0, z = 0), ncell = 10L)
+
+sim_sample_single_cell(graph, nrep = 1L, ncell = 100L, mu = 0, accel = 0)
+
+sim_sample_biopsy(
+  graph,
+  population,
+  nrep = 1L,
+  nsam = 5L,
+  ncell = 100L,
+  mu = 0,
+  accel = 0
+)
 
 evaluate_mrs(
   population,
@@ -35,6 +49,14 @@ distances_mrs(population, nsam, ncell, jitter = 0)
 \item{jitter}{amount of random variations on x and y axes}
 
 \item{center}{named (x, y, z) vector, list, or tibble}
+
+\item{graph}{igraph}
+
+\item{nrep}{number of replications.}
+
+\item{mu}{mutation rate per cell division (ignored if segsites is given)}
+
+\item{accel}{assumption undocumented yet}
 
 \item{population}{tbl}
 

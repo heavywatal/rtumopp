@@ -82,6 +82,50 @@ tidy_regions = function(regions) {
     tidyr::unnest("id")
 }
 
+#' @rdname sample
+#' @export
+sim_sample_single_cell = function(graph, nrep = 1L, ncell = 100L, mu = 0, accel = 0) {
+  on.exit(runif(1L)) # proxy of parallel::nextRNGStream(.Random.seed)
+  vsink = igraphlite::Vsink(graph)  # slower than you think
+  parallel::mclapply(seq_len(nrep), \(i) {
+    sampling_single_cell(graph, vsink, ncell, mu, accel)
+  }) |>
+    purrr::list_rbind(names_to = "repl") |>
+    mutate_chisq(mu = mu, accel = accel)
+}
+
+sampling_single_cell = function(graph, vsink, ncell, mu, accel = 0) {
+  vsam = sample(vsink, ncell, replace = FALSE)
+  graph = subgraph_upstream(graph, vsam, trim = FALSE)
+  vsam = igraphlite::Vsink(graph)
+  lens = edge_lengths(graph, mu = mu, accel = accel)
+  dista = distances_upstream(graph, vsam, weights = lens, trim = TRUE)
+  summary_row(dista)
+}
+
+#' @param nrep number of replications.
+#' @inheritParams edge_lengths
+#' @rdname sample
+#' @export
+sim_sample_biopsy = function(graph, population, nrep = 1L, nsam = 5L, ncell = 100L, mu = 0, accel = 0) {
+  on.exit(runif(1L)) # proxy of parallel::nextRNGStream(.Random.seed)
+  extant = population |> tumopp::filter_extant()
+  parallel::mclapply(seq_len(nrep), \(i) {
+    sampling_biopsy(graph, extant, nsam = nsam, ncell = ncell, mu = mu, accel = accel)
+  }) |>
+    purrr::list_rbind(names_to = "repl") |>
+    mutate_chisq(mu = mu, accel = accel)
+}
+
+sampling_biopsy = function(graph, extant, nsam, ncell, mu, accel = 0) {
+  regions = sample_uniform_regions(extant, nsam = nsam, ncell = ncell)
+  subgraph = subtree(graph, unlist(regions$id, use.names = FALSE), trim = TRUE)
+  if (accel > 0) warning("accel > 0 on a trimmed tree")
+  vaf = make_vaf(subgraph, regions$id, mu = mu, accel = accel)
+  dista = colSums(vaf)
+  summary_row(dista)
+}
+
 #' @details
 #' `evaluate_mrs` is a shortcut to evaluate multi-region sampling.
 #' @param population tbl
