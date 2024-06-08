@@ -8,7 +8,7 @@
 \alias{sort_vaf}
 \title{Utilities for variant allele frequency}
 \usage{
-make_vaf(graph, samples, mu)
+make_vaf(graph, samples, mu, accel = 0)
 
 make_longer_vaf(graph, samples, mu, threshold = 0.05)
 
@@ -24,6 +24,8 @@ sort_vaf(vaf, method = c("average", "ward.D2", "complete", "single"))
 \item{samples}{list of integer IDs}
 
 \item{mu}{mutation rate per cell division (ignored if segsites is given)}
+
+\item{accel}{assumption undocumented yet}
 
 \item{threshold}{minimum detectable frequency}
 

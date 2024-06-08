@@ -7,14 +7,15 @@
 #' @inheritParams make_sample
 #' @rdname vaf
 #' @export
-make_vaf = function(graph, samples, mu) {
-  df_mut = mutate_clades(graph, mu = mu)
+make_vaf = function(graph, samples, mu, accel = 0) {
+  elengths = edge_lengths(graph, mu = mu, accel = accel)
+  src = igraphlite::Vsource(graph)
   names(samples) = seq_along(samples)
-  purrr::map(samples, function(sampled) {
-    freqs = vapply(df_mut$carriers, function(carriers) {
-      sum(carriers %in% sampled)
-    }, integer(1), USE.NAMES = FALSE)
-    rep(freqs / length(sampled), times = df_mut$number)
+  purrr::map(samples, \(bulk) {
+    to = igraphlite::as_vids(graph, bulk)
+    ebet = igraphlite::edge_betweenness_subset(graph, TRUE, from = src, to = to)
+    freq = ebet / length(to)
+    rep(freq, times = elengths)
   }) |> tibble::as_tibble()
 }
 
