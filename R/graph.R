@@ -101,7 +101,7 @@ upstream_vertices = function(graph, vids, trim = FALSE) {
 
 get_mrca = function(graph, nodes) {
   ca = common_ancestors(graph, igraphlite::as_vids(graph, nodes))
-  igraphlite::as_vnames(graph, ca[1L])
+  igraphlite::Vnames(graph)[ca[1L]]
 }
 
 common_ancestors = function(graph, vids) {
@@ -148,7 +148,7 @@ sinks = function(graph, nodes) {
 
 mean_branch_length = function(graph, from = igraphlite::Vsink(graph), to = from) {
   # TODO: Avoid creating huge matrix
-  m = igraphlite::distances(graph, from, to, mode = 3L, algorithm = "unweighted")
+  m = igraphlite::distances(graph, from, to, mode = 3L)
   # Exclude self-comparison only if "within"
   n = length(m)
   if (identical(from, to)) {

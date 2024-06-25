@@ -57,7 +57,7 @@ edge_lengths = function(graph, mu = 0, accel = 0) {
 }
 
 edge_ages = function(graph) {
-  age = igraphlite::Eattr(graph, "age")
+  age = igraphlite::Eattr(graph)[["age"]]
   if (is.null(age)) {
     age = distances_upstream(graph, igraphlite::igraph_to(graph), trim = FALSE)
     igraphlite::Eattr(graph, "age") = age
