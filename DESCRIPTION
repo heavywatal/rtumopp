@@ -11,17 +11,17 @@ Depends:
 Imports:
     dplyr (>= 1.1.4),
     ggplot2 (>= 3.5.1),
-    igraphlite (>= 0.10.12),
+    igraphlite (>= 0.10.13),
     jsonlite (>= 1.8.8),
     mmand (>= 1.6.3),
     purrr (>= 1.0.2),
     readr (>= 2.1.5),
-    rlang (>= 1.1.3),
+    rlang (>= 1.1.4),
     stringr (>= 1.5.1),
     tibble (>= 3.2.1),
     tidyr (>= 1.3.1),
     scales (>= 1.3.0),
-    withr (>= 3.0.0)
+    withr (>= 3.0.1)
 Suggests:
     ClusterR,
     covr,
@@ -33,7 +33,7 @@ Remotes:
     igraphlite=heavywatal/rigraphlite
 URL: https://heavywatal.github.io/rtumopp, https://github.com/heavywatal/rtumopp
 BugReports: https://github.com/heavywatal/rtumopp/issues
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)
 LinkingTo:
     cpp11 (>= 0.4.7)
