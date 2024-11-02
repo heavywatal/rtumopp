@@ -1,6 +1,6 @@
 Package: tumopp
 Title: R interface to tumopp, a tumor growth simulator in C++
-Version: 0.8.9
+Version: 0.9.0
 Authors@R: person("Watal M.", "Iwasaki", email = "heavywatal@gmail.com", role = c("aut", "cre"), comment = c(ORCID="0000-0002-4718-7605"))
 Description: R interface to tumopp, a tumor growth simulator in C++.
 License: MIT + file LICENSE
