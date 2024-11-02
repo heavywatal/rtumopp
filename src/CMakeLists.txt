@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.18)
 project(rtumopp
-  VERSION 0.8.7.1
+  VERSION 0.8.9
   LANGUAGES CXX)
 
 include(CMakePrintHelpers)
@@ -12,8 +12,7 @@ cmake_print_variables(CMAKE_CURRENT_SOURCE_DIR)
 find_package(tumopp ${PROJECT_VERSION} QUIET)
 cmake_print_variables(tumopp_FOUND tumopp_DIR)
 if(tumopp_FOUND)
-  get_target_property(INCLUDEDIR tumopp::tumopp INTERFACE_INCLUDE_DIRECTORIES)
-  get_filename_component(CMAKE_INSTALL_PREFIX "${INCLUDEDIR}" DIRECTORY)
+  set(CMAKE_INSTALL_PREFIX "${tumopp_DIR}/../../..")
   cmake_print_variables(CMAKE_INSTALL_PREFIX)
   install(CODE "message(STATUS ${tumopp_DIR})") # to make target 'install'
 else()

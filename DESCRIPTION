@@ -1,6 +1,6 @@
 Package: tumopp
 Title: R interface to tumopp, a tumor growth simulator in C++
-Version: 0.8.7
+Version: 0.8.9
 Authors@R: person("Watal M.", "Iwasaki", email = "heavywatal@gmail.com", role = c("aut", "cre"), comment = c(ORCID="0000-0002-4718-7605"))
 Description: R interface to tumopp, a tumor growth simulator in C++.
 License: MIT + file LICENSE
@@ -12,7 +12,7 @@ Imports:
     dplyr (>= 1.1.4),
     ggplot2 (>= 3.5.1),
     igraphlite (>= 0.10.13),
-    jsonlite (>= 1.8.8),
+    jsonlite (>= 1.8.9),
     mmand (>= 1.6.3),
     purrr (>= 1.0.2),
     readr (>= 2.1.5),
@@ -21,7 +21,7 @@ Imports:
     tibble (>= 3.2.1),
     tidyr (>= 1.3.1),
     scales (>= 1.3.0),
-    withr (>= 3.0.1)
+    withr (>= 3.0.2)
 Suggests:
     ClusterR,
     covr,
