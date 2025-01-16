@@ -1,0 +1,6 @@
+#include <cpp11.hpp>
+
+[[cpp11::register]]
+cpp11::strings tumopp_path_config() {
+  return cpp11::writable::strings{R"(@exec_path@)"};
+}

@@ -12,10 +12,18 @@ extern "C" SEXP _tumopp_nth_element(SEXP copy, SEXP n) {
     return cpp11::as_sexp(nth_element(cpp11::as_cpp<cpp11::decay_t<std::vector<double>>>(copy), cpp11::as_cpp<cpp11::decay_t<int>>(n)));
   END_CPP11
 }
+// config.cpp
+cpp11::strings tumopp_path_config();
+extern "C" SEXP _tumopp_tumopp_path_config() {
+  BEGIN_CPP11
+    return cpp11::as_sexp(tumopp_path_config());
+  END_CPP11
+}
 
 extern "C" {
 static const R_CallMethodDef CallEntries[] = {
-    {"_tumopp_nth_element", (DL_FUNC) &_tumopp_nth_element, 2},
+    {"_tumopp_nth_element",        (DL_FUNC) &_tumopp_nth_element,        2},
+    {"_tumopp_tumopp_path_config", (DL_FUNC) &_tumopp_tumopp_path_config, 0},
     {NULL, NULL, 0}
 };
 }

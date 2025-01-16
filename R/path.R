@@ -3,7 +3,16 @@
 #' @rdname path
 #' @export
 tumopp_path = function() {
-  scan(system.file("path", package = "tumopp"), what = character(0), quiet = TRUE)
+  x = tumopp_path_config()
+  if (!file.exists(x)) {
+    x = tumopp_path_exec()
+    if (!file.exists(x)) x = "tumopp"
+  }
+  x
+}
+
+tumopp_path_exec = function() {
+  system.file("exec", "tumopp", package = "tumopp")
 }
 
 #' @rdname path

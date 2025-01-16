@@ -3,3 +3,7 @@
 nth_element <- function(copy, n) {
   .Call(`_tumopp_nth_element`, copy, n)
 }
+
+tumopp_path_config <- function() {
+  .Call(`_tumopp_tumopp_path_config`)
+}

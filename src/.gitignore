@@ -1,4 +1,4 @@
-/Makevars
+/config.cpp
 *.o
 *.o.tmp
 *.so
