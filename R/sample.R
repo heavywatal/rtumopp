@@ -86,7 +86,7 @@ tidy_regions = function(regions) {
 #' @export
 sim_sample_single_cell = function(graph, nrep = 1L, ncell = 100L, mu = 0, accel = 0) {
   on.exit(stats::runif(1L)) # proxy of parallel::nextRNGStream(.Random.seed)
-  vsink = igraphlite::Vsink(graph)  # slower than you think
+  vsink = igraphlite::Vsink(graph) # slower than you think
   parallel::mclapply(seq_len(nrep), \(i) {
     sampling_single_cell(graph, vsink, ncell, mu, accel)
   }) |>
@@ -109,7 +109,7 @@ sampling_single_cell = function(graph, vsink, ncell, mu, accel = 0) {
 #' @export
 sim_sample_biopsy = function(graph, population, nrep = 1L, nsam = 5L, ncell = 100L, mu = 0, accel = 0) {
   on.exit(stats::runif(1L)) # proxy of parallel::nextRNGStream(.Random.seed)
-  extant = population |> tumopp::filter_extant()
+  extant = tumopp::filter_extant(population)
   parallel::mclapply(seq_len(nrep), \(i) {
     sampling_biopsy(graph, extant, nsam = nsam, ncell = ncell, mu = mu, accel = accel)
   }) |>
@@ -120,7 +120,7 @@ sim_sample_biopsy = function(graph, population, nrep = 1L, nsam = 5L, ncell = 10
 sampling_biopsy = function(graph, extant, nsam, ncell, mu, accel = 0) {
   regions = sample_uniform_regions(extant, nsam = nsam, ncell = ncell)
   subgraph = subtree(graph, unlist(regions$id, use.names = FALSE), trim = TRUE)
-  if (accel > 0) warning("accel > 0 on a trimmed tree")
+  if (accel > 0) warning("accel > 0 on a trimmed tree", call. = FALSE)
   vaf = make_vaf(subgraph, regions$id, mu = mu, accel = accel)
   dista = colSums(vaf)
   summary_row(dista)

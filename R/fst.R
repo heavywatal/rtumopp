@@ -48,14 +48,14 @@ pairwise_fst = function(m, sample_sizes = NULL) {
   row_tri = row(m)[ltri]
   diag_m = diag(m, names = FALSE)
   if (is.null(sample_sizes)) {
-    within = 0.5 * (diag_m[col_tri] + diag_m[row_tri])
+    .within = 0.5 * (diag_m[col_tri] + diag_m[row_tri])
   } else {
     diag_w = diag(sample_sizes, names = FALSE)
     wm = diag_w * diag_m
-    within = (wm[col_tri] + wm[row_tri]) / (diag_w[col_tri] + diag_w[row_tri])
+    .within = (wm[col_tri] + wm[row_tri]) / (diag_w[col_tri] + diag_w[row_tri])
   }
   between = m[ltri]
-  m[ltri] = 1 - within / between
+  m[ltri] = 1 - .within / between
   stats::as.dist(m)
 }
 

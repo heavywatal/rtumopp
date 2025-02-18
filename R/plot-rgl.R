@@ -8,7 +8,7 @@
 #' @export
 plot_tumor3d = function(.tbl = NULL, limits = NULL) {
   if (!requireNamespace("rgl", quietly = TRUE)) {
-    stop("ERROR: rgl is not installed")
+    stop("ERROR: rgl is not installed", call. = FALSE)
   }
   on.exit({
     rgl::box3d()
@@ -17,11 +17,11 @@ plot_tumor3d = function(.tbl = NULL, limits = NULL) {
   if (nrow(.tbl) == 0L) {
     return(invisible(.tbl))
   }
-  col = purrr::pluck(.tbl, "col", .default = getOption("tumopp.default_color", "#666666"))
+  ..col = purrr::pluck(.tbl, "col", .default = getOption("tumopp.default_color", "#666666"))
   rgl::plot3d(
     .tbl$x, .tbl$y, .tbl$z,
     xlab = "", ylab = "", zlab = "", axes = FALSE,
-    type = "s", col = col, alpha = 1, radius = 1, aspect = TRUE,
+    type = "s", col = ..col, alpha = 1, radius = 1, aspect = TRUE,
     xlim = limits, ylim = limits, zlim = limits
   )
 }

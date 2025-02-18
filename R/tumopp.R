@@ -46,7 +46,7 @@ tumopp.default = function(
 sanitize_cache_root = function(root) {
   if (isTRUE(root)) {
     root = "~/.cache/tumopp"
-  } else if (length(root) != 1L || !is.character(root) || is.na(root) || nchar(root) == 0L) {
+  } else if (length(root) != 1L || !is.character(root) || is.na(root) || !nzchar(root)) {
     root = tempdir()
   }
   root
@@ -86,9 +86,9 @@ tumopp.data.frame = function(args, ..., graph = TRUE, mc.cores = getOption("mc.c
 #' @rdname tumopp
 #' @export
 make_args = function(alt, const = NULL, times = 1L, each = 1L) {
-  grid = rlang::exec(tidyr::crossing, !!!alt) |> filter_valid_LP()
-  idx = rep(seq_len(nrow(grid)), times = times, each = each)
-  dplyr::slice(grid, idx) |>
+  .grid = rlang::exec(tidyr::crossing, !!!alt) |> filter_valid_LP()
+  idx = rep(seq_len(nrow(.grid)), times = times, each = each)
+  dplyr::slice(.grid, idx) |>
     dplyr::mutate(!!!const)
 }
 
@@ -153,6 +153,6 @@ append_seed = function(args, seed = NULL) {
 }
 
 runif.int = function(n, min = -.Machine$integer.max, max = .Machine$integer.max) {
-  offset = min - 1
-  as.integer(sample.int(max - offset, n, replace = TRUE) + offset)
+  .offset = min - 1
+  as.integer(sample.int(max - .offset, n, replace = TRUE) + .offset)
 }

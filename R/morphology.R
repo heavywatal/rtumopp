@@ -8,8 +8,8 @@
 #' @export
 add_surface = function(population, coord, dimensions) {
   extant = filter_extant(population)
-  kernel = structuring_element(coord, dimensions)
-  col_surface = detect_surface(extant, kernel) |>
+  .kernel = structuring_element(coord, dimensions)
+  col_surface = detect_surface(extant, .kernel) |>
     dplyr::select("id", "surface")
   population |>
     dplyr::left_join(col_surface, by = "id")
@@ -57,16 +57,16 @@ filter_surface = function(x, kernel) {
 # Construct a structuring element (kernel)
 structuring_element = function(coord = c("moore", "neumann", "hex"), dimensions = 3L) {
   coord = match.arg(coord)
-  df = expand_xyz(c(-1L, 0L, 1L))
+  .df = expand_xyz(c(-1L, 0L, 1L))
   if (coord == "neumann") {
-    df = dplyr::filter(df, abs(.data$x) + abs(.data$y) + abs(.data$z) < 2)
+    .df = dplyr::filter(.df, abs(.data$x) + abs(.data$y) + abs(.data$z) < 2)
   } else if (coord == "hex") {
-    df = dplyr::filter(df, (trans_coord_hex(df) |> dist_euclidean()) < 1.1)
+    .df = dplyr::filter(.df, (trans_coord_hex(.df) |> dist_euclidean()) < 1.1)
   }
   if (dimensions < 3L) {
-    df = dplyr::filter(df, .data$z == 0L)
+    .df = dplyr::filter(.df, .data$z == 0L)
   }
-  as_cuboid(df)
+  as_cuboid(.df)
 }
 
 #' Binary expression of cell existence
@@ -89,13 +89,13 @@ as_cuboid = function(x, expand = 0L) {
   if (all(.tbl[["z"]] == 0L)) {
     expand = c(expand, expand, 0L)
   }
-  start = purrr::map_int(.tbl, min) - expand
-  .dim = purrr::map_int(.tbl, max) - start + 1L + expand
-  idx = purrr::map2(.tbl, start, \(x, y) x - y)
+  .start = purrr::map_int(.tbl, min) - expand
+  .dim = purrr::map_int(.tbl, max) - .start + 1L + expand
+  idx = purrr::map2(.tbl, .start, \(x, y) x - y)
   serial = 1L + idx[["x"]] + .dim[1L] * idx[["y"]] + .dim[1L] * .dim[2L] * idx[["z"]]
   res = array(integer(prod(.dim)), .dim)
   res[serial] = 1L
-  attr(res, "start") = start
+  attr(res, "start") = .start
   class(res) = c("cuboid", "array")
   res
 }
@@ -109,10 +109,10 @@ as.data.frame.cuboid = function(x, row.names = NULL, optional = FALSE, ...) {
     return(x)
   }
   .dim = dim(x)
-  start = attr(x, "start")
-  vx = seq.int(start[[1L]], length.out = .dim[[1L]])
-  vy = seq.int(start[[2L]], length.out = .dim[[2L]])
-  vz = seq.int(start[[3L]], length.out = .dim[[3L]])
+  .start = attr(x, "start")
+  vx = seq.int(.start[[1L]], length.out = .dim[[1L]])
+  vy = seq.int(.start[[2L]], length.out = .dim[[2L]])
+  vz = seq.int(.start[[3L]], length.out = .dim[[3L]])
   res = expand_xyz(vx, vy, vz)
   res[["state"]] = c(x)
   attr(res, "dimarray") = .dim

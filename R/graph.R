@@ -6,8 +6,8 @@
 #' @rdname graph
 #' @export
 make_igraph = function(population) {
-  el = as_symbolic_edgelist(population)
-  igraphlite::graph_from_data_frame(el)
+  .el = as_symbolic_edgelist(population)
+  igraphlite::graph_from_data_frame(.el)
 }
 
 as_symbolic_edgelist = function(population) {
