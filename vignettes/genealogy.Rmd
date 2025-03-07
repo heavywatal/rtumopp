@@ -7,11 +7,10 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
+```{r, setup-hidden}
+#| include: false
+knitr::opts_chunk$set(fig.alt = " ")
+knitr::opts_chunk$set(collapse = TRUE)
 ```
 
 The genealogy of sampled cells can be visualized with the code like this:
@@ -31,7 +30,8 @@ subgraph = tumopp::subtree(graph, purrr::list_c(regions$id))
 tbl_genealogy = subgraph |> augment_genealogy()
 
 p = gggenealogy(tbl_genealogy) +
-  theme_classic() + theme(
+  theme_classic() +
+  theme(
     axis.title.y = element_blank(), axis.text.y = element_blank(),
     axis.ticks.y = element_blank(), axis.line.y = element_blank()
   )

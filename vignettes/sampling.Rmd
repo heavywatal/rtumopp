@@ -7,26 +7,20 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-
-library(tumopp)
-set.seed(24601L)
-result = tumopp::tumopp("-N20000 -D3 -Chex -Lconst -k10 --seed=42")
-population = result$population[[1L]]
-graph = result$graph[[1L]]
+```{r, setup-hidden}
+#| include: false
+knitr::opts_chunk$set(fig.alt = " ")
+knitr::opts_chunk$set(collapse = TRUE)
 ```
 
 ## Workflow
 
 Perform simulation and extract population data:
 
-```{r prepare, eval = FALSE}
+```{r prepare}
+library(ggplot2)
 library(tumopp)
-library(dplyr)
+set.seed(24601L)
 result = tumopp::tumopp("-N20000 -D3 -Chex -Lconst -k10")
 population = result$population[[1L]]
 graph = result$graph[[1L]]
@@ -53,14 +47,14 @@ tumopp::dist_genealogy(subgraph, regions$id) |> tumopp::fst()
 
 Summarize and visualize VAF:
 
-```{r visualize, eval = FALSE}
+```{r visualize}
+#| eval: false
 vaf_tidy = vaf |>
   tumopp::filter_detectable(0.01) |>
   tumopp::sort_vaf() |>
   tumopp::longer_vaf() |>
   print()
 
-library(ggplot2)
 ggplot(vaf_tidy) +
   aes(sample, site) +
   geom_tile(aes(fill = frequency)) +

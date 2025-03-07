@@ -1,5 +1,6 @@
 test_that("edge_lengths works", {
-  result = tumopp("--seed=42 -N32 -k1e6")
+  set.seed(42L)
+  result = tumopp("-N32 -k1e6")
   population = result$population[[1L]]
   graph = make_igraph(population)
   exp_len = nrow(population) - 1L

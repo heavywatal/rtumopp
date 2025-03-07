@@ -7,13 +7,11 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.height = 6,
-  fig.width = 6
-)
+```{r, setup-hidden}
+#| include: false
+knitr::opts_chunk$set(fig.alt = " ")
+knitr::opts_chunk$set(collapse = TRUE)
+knitr::opts_chunk$set(fig.height = 6)
 library(ggplot2)
 theme_here = theme_bw(base_size = 12) +
   theme(panel.grid.minor = element_blank(),
@@ -24,7 +22,9 @@ theme_set(theme_here)
 
 ## Run simulation with benchmark information
 
-```{r data-raw, eval = FALSE}
+```{r prepare}
+#| message: false
+library(conflicted)
 library(tidyverse)
 library(tumopp)
 
@@ -35,8 +35,12 @@ library(tumopp)
   d = c(0, 0.2),
   m = c(0, 2)
 )
-args_tbl = make_args(alt = .alt, const = .const) |> print()
+args_tbl = tumopp::make_args(alt = .alt, const = .const) |> print()
+```
 
+```{r run }
+#| eval: false
+set.seed(24601L)
 results = tumopp::tumopp(args_tbl, graph = FALSE) |> print()
 
 unnested = results |>
@@ -62,6 +66,10 @@ df_benchmark = unnested |>
 # usethis::use_data(df_benchmark, internal = TRUE, overwrite = TRUE)
 ```
 
+```{r use-internal}
+#| include: false
+df_benchmark = tumopp:::df_benchmark # nolint: undesirable_operator_linter
+```
 
 ## Memory
 
@@ -73,7 +81,7 @@ df_benchmark = unnested |>
   when the population average of birth rate is decreased with local competition (`-Llinear`).
 
 ```{r memory}
-ggplot(tumopp:::df_benchmark) +
+ggplot(df_benchmark) +
   aes(size, memory) +
   geom_line(linewidth = 1, color = "#337ab7") +
   facet_grid(vars(local, path), vars(delta0, rho0), label = label_both) +
@@ -92,7 +100,7 @@ ggplot(tumopp:::df_benchmark) +
   than those of local competition (`-L`) and placement of daughter cells(`-P`).
 
 ```{r time}
-ggplot(tumopp:::df_benchmark) +
+ggplot(df_benchmark) +
   aes(size, utime + stime) +
   geom_line(linewidth = 1, color = "#337ab7") +
   facet_grid(vars(local, path), vars(delta0, rho0), label = label_both) +

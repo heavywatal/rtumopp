@@ -109,7 +109,7 @@ sampling_single_cell = function(graph, vsink, ncell, mu, accel = 0) {
 #' @export
 sim_sample_biopsy = function(graph, population, nrep = 1L, nsam = 5L, ncell = 100L, mu = 0, accel = 0) {
   on.exit(stats::runif(1L)) # proxy of parallel::nextRNGStream(.Random.seed)
-  extant = tumopp::filter_extant(population)
+  extant = filter_extant(population)
   parallel::mclapply(seq_len(nrep), \(i) {
     sampling_biopsy(graph, extant, nsam = nsam, ncell = ncell, mu = mu, accel = accel)
   }) |>

@@ -7,16 +7,15 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
+```{r, setup-hidden}
+#| include: false
+knitr::opts_chunk$set(fig.alt = " ")
+knitr::opts_chunk$set(collapse = TRUE)
 ```
 
 Following code extracts demographic history from population table, and draws the right panel of Fig. 5.
 
-```{r run, eval = TRUE}
+```{r run}
 library(ggplot2)
 library(tumopp)
 

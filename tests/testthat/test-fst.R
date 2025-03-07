@@ -1,5 +1,6 @@
 test_that("fst works", {
-  result = tumopp("--seed=42 -N256 -k1e6")
+  set.seed(42L)
+  result = tumopp("-N256 -k1e6")
   population = result$population[[1L]]
   extant = filter_extant(population)
   graph = make_igraph(population)

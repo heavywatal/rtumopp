@@ -7,12 +7,10 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include = FALSE}
-library(dplyr)
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
+```{r, setup-hidden}
+#| include: false
+knitr::opts_chunk$set(fig.alt = " ")
+knitr::opts_chunk$set(collapse = TRUE)
 ```
 
 ## Basic usage
@@ -24,7 +22,8 @@ See `?tumopp` for details.
 
 ```{r run}
 library(tumopp)
-result = tumopp("--seed=24601 -D3 -Cmoore -k10 -N1000")
+set.seed(24601L)
+result = tumopp::tumopp("-D3 -Cmoore -k10 -N1000")
 colnames(result)
 result$population[[1L]] |> dplyr::arrange(id)
 ```
@@ -45,10 +44,10 @@ for available parameters.
 )
 
 # Generate combinations of arguments
-args_table = make_args(alt = .alt, const = .const, each = 1L) |> print()
+args_table = tumopp::make_args(alt = .alt, const = .const, each = 1L) |> print()
 
 # Concurrent execution
-results = tumopp(args_table)
+results = tumopp::tumopp(args_table)
 results |>
   dplyr::select(!c(outdir, seed, where(is.list))) |>
   dplyr::select(where(\(x) dplyr::n_distinct(x) > 1L))

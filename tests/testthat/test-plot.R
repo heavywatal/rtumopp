@@ -1,5 +1,6 @@
 test_that("augment_genealogy() works", {
-  result = tumopp("--seed=42 -N16 -k1e6")
+  set.seed(42L)
+  result = tumopp("-N16 -k1e6")
   graph = result$graph[[1L]]
 
   genealogy = augment_genealogy(graph) |>
