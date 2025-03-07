@@ -37,6 +37,14 @@ test_that("tumopp runs", {
   expect_length(argslist, .n)
 })
 
+test_that("help and version can be displayed", {
+  tumopp_version() |>
+    expect_type("character") |>
+    expect_length(1L) |>
+    expect_match("^v?\\d+\\.\\d+|^[a-fA-F0-9]{5,40}")
+  expect_message(tumopp("--help"), "Usage")
+})
+
 test_that("sanitize_cache_dir works", {
   default = tempdir()
   expect_identical(sanitize_cache_dir(""), default)

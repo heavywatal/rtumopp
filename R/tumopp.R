@@ -38,6 +38,13 @@ tumopp.default = function(
   if (length(args) == 1L) {
     args = stringr::str_split_1(args, "\\s+")
   }
+  if ("--version" %in% args) {
+    return(system2(tumopp_path(), "--version", stdout = TRUE))
+  }
+  if (any(c("-h", "--help") %in% args)) {
+    msg = system2(tumopp_path(), args, stdout = TRUE)
+    return(invisible(message(paste(msg, collapse = "\n"))))
+  }
   args = append_seed(args)
   cache_dir = sanitize_cache_dir(cache)
   outdir = file.path(cache_dir, cache_name(args))
