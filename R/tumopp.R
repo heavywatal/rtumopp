@@ -25,31 +25,37 @@ tumopp = function(args, ...) UseMethod("tumopp")
 
 #' @param graph add graph column if TRUE
 #' @param cache A parent directory to cache results.
-#' `~/.cache/tumopp` for `TRUE`, `tempdir()` for any `FALSE`-like values.
+#' `TRUE` is equivalent to `getOption("tumopp.cache", "~/.cache/tumopp")`.
+#' [tempdir()] is used in other cases including the default (`NULL`),
+#' which is discarded at the end of an R session.
+#' Set `FALSE` to force `tumopp` to run and overwrite previous results if any.
 #' @rdname tumopp
 #' @export
 tumopp.default = function(
     args = character(0L), ...,
     graph = getOption("tumopp.graph", TRUE),
-    cache = getOption("tumopp.cache", character(0))) {
+    cache = NULL) {
   if (length(args) == 1L) {
     args = stringr::str_split_1(args, "\\s+")
   }
   args = append_seed(args)
-  cache_dir = file.path(sanitize_cache_root(cache), cache_name(args))
-  if (!dir.exists(cache_dir)) {
-    system2(tumopp_path(), c(args, "-o", cache_dir))
+  cache_dir = sanitize_cache_dir(cache)
+  outdir = file.path(cache_dir, cache_name(args))
+  if (isFALSE(cache) || !dir.exists(outdir)) {
+    ret = system2(tumopp_path(), c(args, "-o", outdir))
+    stopifnot(ret == 0L)
   }
-  .read_result(cache_dir, graph = graph)
+  .read_result(outdir, graph = graph)
 }
 
-sanitize_cache_root = function(root) {
-  if (isTRUE(root)) {
-    root = "~/.cache/tumopp"
-  } else if (length(root) != 1L || !is.character(root) || is.na(root) || !nzchar(root)) {
-    root = tempdir()
+sanitize_cache_dir = function(cache) {
+  if (isTRUE(cache)) {
+    cache = getOption("tumopp.cache", "~/.cache/tumopp")
+    dir.create(cache, showWarnings = FALSE, recursive = TRUE, mode = "0755")
+  } else if (length(cache) != 1L || !is.character(cache) || is.na(cache) || !nzchar(cache)) {
+    cache = tempdir()
   }
-  root
+  cache
 }
 
 cache_name = function(args) {

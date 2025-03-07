@@ -14,7 +14,7 @@ tumopp(args, ...)
   args = character(0L),
   ...,
   graph = getOption("tumopp.graph", TRUE),
-  cache = getOption("tumopp.cache", character(0))
+  cache = NULL
 )
 
 \method{tumopp}{list}(args, ..., graph = TRUE, mc.cores = getOption("mc.cores", 1L))
@@ -31,7 +31,10 @@ make_args(alt, const = NULL, times = 1L, each = 1L)
 \item{graph}{add graph column if TRUE}
 
 \item{cache}{A parent directory to cache results.
-\verb{~/.cache/tumopp} for \code{TRUE}, \code{tempdir()} for any \code{FALSE}-like values.}
+\code{TRUE} is equivalent to \code{getOption("tumopp.cache", "~/.cache/tumopp")}.
+\code{\link[=tempdir]{tempdir()}} is used in other cases including the default (\code{NULL}),
+which is discarded at the end of an R session.
+Set \code{FALSE} to force \code{tumopp} to run and overwrite previous results if any.}
 
 \item{mc.cores}{The number of cores to use for concurrent execution.}
 
