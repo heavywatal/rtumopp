@@ -24,8 +24,6 @@ theme_set(theme_here)
 
 ```{r prepare}
 #| message: false
-library(conflicted)
-library(tidyverse)
 library(tumopp)
 
 .const = list(D = 3, C = "hex", k = 10, N = 2 ** 17, benchmark = TRUE)
