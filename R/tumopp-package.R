@@ -1,7 +1,5 @@
 #' @useDynLib tumopp, .registration = TRUE
-#' @importFrom rlang :=
-#' @importFrom rlang %||%
-#' @importFrom rlang .data
+#' @importFrom rlang .data :=
 #' @aliases NULL tumopp-package
 #' @keywords internal
 "_PACKAGE"
