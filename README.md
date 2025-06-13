@@ -10,8 +10,8 @@ a tumor growth simulator in C++.
 ## Requirements
 
 - Unix-like OS (macOS, Linux, etc.)
-- C++17 compiler (clang++ >= Apple LLVM 12, g++ >= 8)
-- [CMake](https://cmake.org/) (>= 3.18.0)
+- C++17 compiler (clang++ >= Apple clang 11.0, g++ >= 9.1)
+- [CMake](https://cmake.org/) (>= 3.21.0)
 
 ## Installation
 
