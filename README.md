@@ -11,13 +11,13 @@ a tumor growth simulator in C++.
 
 - Unix-like OS (macOS, Linux, etc.)
 - C++17 compiler (clang++ >= Apple clang 11.0, g++ >= 9.1)
-- [CMake](https://cmake.org/) (>= 3.21.0)
+- [CMake](https://cmake.org/)
 
 ## Installation
 
 ```r
-install.packages("devtools")
-devtools::install_github("heavywatal/rtumopp")
+install.packages("pak")
+pak::pak("heavywatal/rtumopp")
 ```
 
 R packages are updated at random times.
@@ -25,8 +25,8 @@ Please try to check updates once in a while and use the latest versions.
 
 ```r
 update.packages()
-devtools::install_github("heavywatal/rigraphlite")
-devtools::install_github("heavywatal/rtumopp")
+pak::pak("heavywatal/rigraphlite")
+pak::pak("heavywatal/rtumopp")
 ```
 
 ## Basic usage

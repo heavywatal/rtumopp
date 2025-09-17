@@ -7,12 +7,10 @@ if ! cmake --version >/dev/null; then
   echo 'Otherwise, use an installer available at https://cmake.org/download/'
   exit 1
 fi
-if [ -z "$CXX" ]; then
-  CXX=$("${R_HOME}/bin/R" CMD config CXX)
-fi
 CXX=${CXX%% *}
 echo "CXX: $CXX"
 echo "PWD: $PWD"
+echo "R_LIBRARY_DIR: $R_LIBRARY_DIR"
 echo "R_PACKAGE_DIR: $R_PACKAGE_DIR"
 BUILD_DIR="${R_SESSION_TMPDIR}/${R_PACKAGE_NAME}-build"
 echo "BUILD_DIR: $BUILD_DIR"
