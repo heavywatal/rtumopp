@@ -11,7 +11,7 @@ Depends:
 Imports:
     dplyr (>= 1.1.4),
     ggplot2 (>= 3.5.2),
-    igraphlite (>= 0.10.16),
+    igraphlite (>= 1.0.0),
     jsonlite (>= 2.0.0),
     mmand (>= 1.6.3),
     purrr (>= 1.1.0),

@@ -85,7 +85,7 @@ distances_upstream = function(graph, vids = integer(0), weights = numeric(0L), t
   } else {
     igraphlite::Vsource(graph)
   }
-  res = igraphlite::distances(graph, vids, src, weights = weights, mode = 2L)
+  res = igraphlite::distances(graph, weights = weights, from = vids, to = src, mode = 2L)
   as.vector(res)
 }
 
@@ -148,7 +148,7 @@ sinks = function(graph, nodes) {
 
 mean_branch_length = function(graph, from = igraphlite::Vsink(graph), to = from) {
   # TODO: Avoid creating huge matrix
-  m = igraphlite::distances(graph, from, to, mode = 3L)
+  m = igraphlite::distances(graph, from = from, to = to, mode = 3L)
   # Exclude self-comparison only if "within"
   n = length(m)
   if (identical(from, to)) {
