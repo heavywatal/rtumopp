@@ -13,7 +13,7 @@ make_vaf = function(graph, samples, mu, accel = 0) {
   names(samples) = seq_along(samples)
   purrr::map(samples, \(bulk) {
     to = igraphlite::as_vids(graph, bulk)
-    ebet = igraphlite::edge_betweenness_subset(graph, from = src, to = to, directed = TRUE)
+    ebet = igraphlite::edge_betweenness(graph, from = src, to = to, directed = TRUE)
     freq = ebet / length(to)
     rep(freq, times = elengths)
   }) |> tibble::as_tibble()
