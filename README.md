@@ -20,6 +20,26 @@ install.packages("pak")
 pak::pak("heavywatal/rtumopp")
 ```
 
+The code above tries to find and use an pre-installed `tumopp` executable in your system.
+If it is too old or not found, a compatible version will be installed automatically.
+Manual installation by `brew install heavywatal/tap/tumopp` is therefore unnecessary,
+but may be useful to reduce the cost of repetitive installation of the R package.
+
+To ignore pre-installed binary and build a bleeding edge (`HEAD`) or some specific revision from source,
+set the environment variable `TUMOPP_GIT_TAG` before installation:
+```r
+Sys.setenv(TUMOPP_GIT_TAG = "HEAD")
+```
+
+The installation of `tumopp` can be checked with the following commands:
+```r
+tumopp::tumopp_path()
+tumopp::tumopp_version()
+sessioninfo::session_info("tumopp")
+```
+
+Please include these information when you report issues.
+
 R packages are updated at random times.
 Please try to check updates once in a while and use the latest versions.
 

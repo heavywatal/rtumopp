@@ -3,12 +3,27 @@
 \name{tumopp_path}
 \alias{tumopp_path}
 \alias{tumopp_version}
-\title{Get the path to the tumopp installation.}
+\title{Get information about the \code{tumopp} executable}
 \usage{
 tumopp_path()
 
 tumopp_version()
 }
+\value{
+\code{tumopp_path()} returns the path to the \code{tumopp} executable.
+}
 \description{
-Get the path to the tumopp installation.
+The simulator \code{tumopp} is a command-line tool written in C++.
+The executable is built and installed along with this R package
+unless the pre-installed one was found during the package installation.
+}
+\examples{
+\dontrun{
+tumopp_path()
+
+tumopp_version()
+}
+}
+\seealso{
+\code{\link[=tumopp]{tumopp()}} to run the simulator.
 }

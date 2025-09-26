@@ -39,9 +39,10 @@ test_that("tumopp runs", {
 
 test_that("help and version can be displayed", {
   tumopp_version() |>
+    expect_silent() |>
     expect_type("character") |>
     expect_length(1L) |>
-    expect_match("^v?\\d+\\.\\d+|^[a-fA-F0-9]{5,40}")
+    expect_match("^v?\\d+\\.\\d+([-.]\\d+)?(-\\d+)?(-g[a-fA-F0-9]{7,40})?(-dirty)?$")
   expect_message(tumopp("--help"), "Usage")
 })
 
