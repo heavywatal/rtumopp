@@ -32,9 +32,10 @@ tumopp = function(args, ...) UseMethod("tumopp")
 #' @rdname tumopp
 #' @export
 tumopp.default = function(
-    args = character(0L), ...,
-    graph = getOption("tumopp.graph", TRUE),
-    cache = NULL) {
+  args = character(0L), ...,
+  graph = getOption("tumopp.graph", TRUE),
+  cache = NULL
+) {
   if (length(args) == 1L) {
     args = stringr::str_split_1(args, "\\s+")
   }

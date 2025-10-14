@@ -44,9 +44,10 @@ read_boost_ini = function(file) {
 #' @rdname read
 #' @export
 read_results = function(
-    indirs = getwd(),
-    graph = getOption("tumopp.graph", TRUE),
-    mc.cores = getOption("mc.cores", 1L)) {
+  indirs = getwd(),
+  graph = getOption("tumopp.graph", TRUE),
+  mc.cores = getOption("mc.cores", 1L)
+) {
   parallel::mclapply(indirs, .read_result, mc.cores = mc.cores, graph = graph) |> purrr::list_rbind()
 }
 
