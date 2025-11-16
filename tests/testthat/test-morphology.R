@@ -84,55 +84,55 @@ test_that("structuring_element works", {
     expect_s3_class(c("cuboid", "array")) |>
     expect_type("integer") |>
     expect_length(27L) |>
-    expect_setequal(1L)
-  expect_identical(dim(se), c(x = 3L, y = 3L, z = 3L))
+    expect_setequal(1L) |>
+    expect_shape(dim = c(x = 3L, y = 3L, z = 3L))
   expect_identical(sum(se), 27L)
 
   se = structuring_element("neumann", 3L) |>
     expect_s3_class(c("cuboid", "array")) |>
     expect_type("integer") |>
     expect_length(27L) |>
-    expect_setequal(c(0L, 1L))
-  expect_identical(dim(se), c(x = 3L, y = 3L, z = 3L))
+    expect_setequal(c(0L, 1L)) |>
+    expect_shape(dim = c(x = 3L, y = 3L, z = 3L))
   expect_identical(sum(se), 7L)
 
   se = structuring_element("hex", 3L) |>
     expect_s3_class(c("cuboid", "array")) |>
     expect_type("integer") |>
     expect_length(27L) |>
-    expect_setequal(c(0L, 1L))
-  expect_identical(dim(se), c(x = 3L, y = 3L, z = 3L))
+    expect_setequal(c(0L, 1L)) |>
+    expect_shape(dim = c(x = 3L, y = 3L, z = 3L))
   expect_identical(sum(se), 13L)
 
   se = structuring_element("moore", 2L) |>
     expect_s3_class(c("cuboid", "array")) |>
     expect_type("integer") |>
     expect_length(9L) |>
-    expect_setequal(1L)
-  expect_identical(dim(se), c(x = 3L, y = 3L, z = 1L))
+    expect_setequal(1L) |>
+    expect_shape(dim = c(x = 3L, y = 3L, z = 1L))
   expect_identical(sum(se), 9L)
 
   se = structuring_element("neumann", 2L) |>
     expect_s3_class(c("cuboid", "array")) |>
     expect_type("integer") |>
     expect_length(9L) |>
-    expect_setequal(c(0L, 1L))
-  expect_identical(dim(se), c(x = 3L, y = 3L, z = 1L))
+    expect_setequal(c(0L, 1L)) |>
+    expect_shape(dim = c(x = 3L, y = 3L, z = 1L))
   expect_identical(sum(se), 5L)
 
   se = structuring_element("hex", 2L) |>
     expect_s3_class(c("cuboid", "array")) |>
     expect_type("integer") |>
     expect_length(9L) |>
-    expect_setequal(c(0L, 1L))
-  expect_identical(dim(se), c(x = 3L, y = 3L, z = 1L))
+    expect_setequal(c(0L, 1L)) |>
+    expect_shape(dim = c(x = 3L, y = 3L, z = 1L))
   expect_identical(sum(se), 7L)
 })
 
 test_that("cuboid class works", {
   grid = expand_xyz(seq_len(4L), seq_len(3L), seq_len(2L)) |>
-    expect_s3_class("data.frame")
-  expect_identical(dim(grid), c(24L, 3L))
+    expect_s3_class("data.frame") |>
+    expect_shape(dim = c(24L, 3L))
 
   cuboid = as_cuboid(grid) |>
     expect_s3_class(c("cuboid", "array")) |>
@@ -150,8 +150,8 @@ test_that("cuboid class works", {
 
   cuboid_df = expanded |>
     as.data.frame() |>
-    expect_s3_class("data.frame")
-  expect_identical(dim(cuboid_df), c(120L, 4L))
+    expect_s3_class("data.frame") |>
+    expect_shape(dim = c(120L, 4L))
   expect_identical(cuboid_df |> as.array(), expanded)
   expect_identical(cuboid_df |> as.data.frame(), cuboid_df)
   cuboid_df |>
@@ -162,8 +162,8 @@ test_that("cuboid class works", {
 
 test_that("cuboid class 2D works", {
   grid = expand_xyz(seq_len(4L), seq_len(3L), 0L) |>
-    expect_s3_class("data.frame")
-  expect_identical(dim(grid), c(12L, 3L))
+    expect_s3_class("data.frame") |>
+    expect_shape(dim = c(12L, 3L))
   cuboid = as_cuboid(grid) |>
     expect_s3_class(c("cuboid", "array")) |>
     expect_length(12L) |>
@@ -180,8 +180,8 @@ test_that("cuboid class 2D works", {
 
   cuboid_df = expanded |>
     as.data.frame() |>
-    expect_s3_class("data.frame")
-  expect_identical(dim(cuboid_df), c(30L, 4L))
+    expect_s3_class("data.frame") |>
+    expect_shape(dim = c(30L, 4L))
   expect_identical(cuboid_df |> as.array(), expanded)
   expect_identical(cuboid_df |> as.data.frame(), cuboid_df)
   cuboid_df |>
