@@ -1,12 +1,13 @@
+^LICENSE\.md$
 ^Meta$
+^build$
 ^codecov\.yml$
 ^doc$
 ^docs$
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^\.travis\.yml$
+^\.cache$
+^\.github$
 ^\.vscode$
 ^_pkgdown\.yml$
 ^pkgdown$
-^\.github$
-^LICENSE\.md$
