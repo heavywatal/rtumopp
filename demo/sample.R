@@ -11,9 +11,13 @@ subgraph = tumopp::subtree(graph, unlist(regions$id))
 extant |>
   dplyr::left_join(tumopp:::tidy_regions(regions), by = "id") |>
   tumopp::plot_lattice2d(size = 0.3) +
-  ggplot2::geom_point(data = function(x) {
-    dplyr::filter(x, !is.na(region))
-  }, size = 0.3, alpha = 0.4) +
+  ggplot2::geom_point(
+    data = \(x) {
+      dplyr::filter(x, !is.na(region))
+    },
+    size = 0.3,
+    alpha = 0.4
+  ) +
   ggplot2::theme(axis.title = ggplot2::element_blank())
 
 # #######1#########2#########3#########4#########5#########6#########7#########
@@ -34,14 +38,18 @@ mutated = tumopp:::mutate_clades(subgraph, segsites = 1000L)
 ggplot2::ggplot(.tidy) +
   ggplot2::aes(sample, site) +
   ggplot2::geom_tile(ggplot2::aes(fill = frequency)) +
-  ggplot2::scale_fill_distiller(palette = "Spectral", limit = c(0, 1), guide = FALSE) +
+  ggplot2::scale_fill_distiller(palette = "Spectral", limit = c(0, 1), guide = "none") +
   ggplot2::coord_cartesian(expand = FALSE)
 
 ncell = 100L
 testdf = tibble::tibble(mu = rep(c(1, 4, 16, 64), each = 200)) |>
-  dplyr::mutate(fst = wtl::mcmap_dbl(mu, \(x) tumopp::make_vaf(subgraph, regions$id, mu = x) |>
-    tumopp::dist_vaf(ncell) |>
-    tumopp::fst())) |>
+  dplyr::mutate(
+    fst = wtl::mcmap_dbl(mu, \(x) {
+      tumopp::make_vaf(subgraph, regions$id, mu = x) |>
+        tumopp::dist_vaf(ncell) |>
+        tumopp::fst()
+    })
+  ) |>
   print()
 
 # load_all()

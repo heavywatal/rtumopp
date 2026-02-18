@@ -14,19 +14,22 @@ result$population[[1]] |>
   tumopp::plot_lattice2d()
 
 if (result[["dimensions"]] > 2L) {
+  # https://github.com/dmurdoch/rgl/issues/488
+  options(rgl.useNULL = TRUE)
   rgl::close3d()
   rgl::open3d(windowRect = c(0, 0, 600, 600))
   result$population[[1]] |>
     tumopp:::add_node_property(result$graph[[1]], 6L) |>
     tumopp::add_col(palette = "turbo") |>
-    tumopp::filter_extant() |>
     tumopp::add_surface(result$coord, result$dimensions) |>
     dplyr::filter(surface) |>
     tumopp::plot_tumor3d()
   rgl::title3d("", "", "x", "y", "z")
+  widget = rgl::rglwidget(width = 600, height = 600, snapshot = FALSE)
+  htmlwidgets::saveWidget(widget, "rgl.html")
 
-  .outfile = tumopp::snapshot_surface(result$population[[1]])
+  .outfile = result$population[[1]] |>
+    tumopp::add_surface(result$coord, result$dimensions) |>
+    tumopp::snapshot_surface()
   system(sprintf("open %s", .outfile))
-
-  rgl::writeWebGL(".", "rgl.html", snapshot = FALSE, width = 600, height = 600)
 } # fi 3D

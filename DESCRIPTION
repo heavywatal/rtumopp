@@ -9,24 +9,25 @@ LazyData: true
 Depends:
     R (>= 4.4.0)
 Imports:
-    dplyr (>= 1.1.4),
-    ggplot2 (>= 3.5.2),
-    igraphlite (>= 1.0.0),
+    dplyr (>= 1.2.0),
+    ggplot2 (>= 4.0.2),
+    igraphlite (>= 1.0.1),
     jsonlite (>= 2.0.0),
     mmand (>= 1.6.3),
-    purrr (>= 1.1.0),
-    readr (>= 2.1.5),
-    rlang (>= 1.1.6),
-    stringr (>= 1.5.2),
-    tibble (>= 3.3.0),
-    tidyr (>= 1.3.1),
+    purrr (>= 1.2.1),
+    readr (>= 2.1.6),
+    rlang (>= 1.1.7),
+    stringr (>= 1.6.0),
+    tibble (>= 3.3.1),
+    tidyr (>= 1.3.2),
     scales (>= 1.4.0),
     withr (>= 3.0.2)
 Suggests:
     ClusterR,
     covr,
+    htmlwidgets,
     knitr,
-    rgl (>= 1.3.24),
+    rgl (>= 1.3.31),
     rmarkdown,
     testthat (>= 3.3.0)
 Remotes:
@@ -36,7 +37,7 @@ BugReports: https://github.com/heavywatal/rtumopp/issues
 RoxygenNote: 7.3.3
 Roxygen: list(markdown = TRUE)
 LinkingTo:
-    cpp11 (>= 0.5.2)
+    cpp11 (>= 0.5.3)
 SystemRequirements:
     CMake (>= 3.28.0), glpk, gmp, libxml2
 VignetteBuilder: knitr
