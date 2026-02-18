@@ -32,7 +32,13 @@ tumopp_version = function() {
   v_exe = tumopp("--version")
   v_pkg = utils::packageVersion("tumopp") |> as.character()
   if (extract_release(v_exe) != extract_release(v_pkg)) {
-    warning("C++ tumopp ", v_exe, " may be incompatible with R tumopp ", v_pkg, call. = FALSE)
+    warning(
+      "C++ tumopp ",
+      v_exe,
+      " may be incompatible with R tumopp ",
+      v_pkg,
+      call. = FALSE
+    )
   }
   v_exe
 }

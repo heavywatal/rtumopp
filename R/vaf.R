@@ -16,7 +16,8 @@ make_vaf = function(graph, samples, mu, accel = 0) {
     ebet = igraphlite::edge_betweenness(graph, from = src, to = to, directed = TRUE)
     freq = ebet / length(to)
     rep(freq, times = elengths)
-  }) |> tibble::as_tibble()
+  }) |>
+    tibble::as_tibble()
 }
 
 #' @details
@@ -67,9 +68,12 @@ sort_vaf = function(vaf, method = c("average", "ward.D2", "complete", "single"))
   rsums = Reduce(`+`, vaf > 0)
   w_nonzero = 10
   w_shared = ifelse(rsums < 2L, 0, 1000)
-  tbl_weighted = dplyr::mutate(vaf, dplyr::across(dplyr::everything(), \(.x) {
-    ifelse(.x > 0, w_nonzero, 0) + w_shared + .x
-  }))
+  tbl_weighted = dplyr::mutate(
+    vaf,
+    dplyr::across(dplyr::everything(), \(.x) {
+      ifelse(.x > 0, w_nonzero, 0) + w_shared + .x
+    })
+  )
   d_rows = stats::dist(tbl_weighted, method = "euclidean")
   order_rows = stats::hclust(d_rows, method = method)$order
   tbl_shared = dplyr::filter(tbl_weighted, rsums > 1L)

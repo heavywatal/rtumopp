@@ -19,7 +19,13 @@ histogram_freqspec = function(freqs) {
 #' @param limit for value range
 #' @rdname plot
 #' @export
-plot_lattice2d = function(.tbl, color = "z", alpha = 1, size = 1, limit = max_abs_xyz(.tbl)) {
+plot_lattice2d = function(
+  .tbl,
+  color = "z",
+  alpha = 1,
+  size = 1,
+  limit = max_abs_xyz(.tbl)
+) {
   size = size * 96 / (limit - 0.5)
   ggplot2::ggplot(.tbl) +
     ggplot2::aes(.data[["x"]], .data[["y"]]) +
@@ -40,8 +46,24 @@ plot_capture_rate = function(data, point = 1, alpha = 0.3, errorbar = TRUE) {
   # scales::viridis_pal()(5L) |> str_replace("FF$", "") |> tail(2L)
   p = ggplot2::ggplot(data) +
     ggplot2::aes(.data[["nsam"]], .data[["capture_rate"]]) +
-    ggplot2::annotate("rect", xmin = -Inf, xmax = Inf, ymin = 0.9, ymax = 1.0, fill = "#5DC863", alpha = 0.8) +
-    ggplot2::annotate("rect", xmin = -Inf, xmax = Inf, ymin = 0.8, ymax = 0.9, fill = "#FDE725", alpha = 0.8) +
+    ggplot2::annotate(
+      "rect",
+      xmin = -Inf,
+      xmax = Inf,
+      ymin = 0.9,
+      ymax = 1.0,
+      fill = "#5DC863",
+      alpha = 0.8
+    ) +
+    ggplot2::annotate(
+      "rect",
+      xmin = -Inf,
+      xmax = Inf,
+      ymin = 0.8,
+      ymax = 0.9,
+      fill = "#FDE725",
+      alpha = 0.8
+    ) +
     ggplot2::stat_summary(fun.y = mean, geom = "bar", fill = "#777777") +
     ggplot2::scale_y_continuous(expand = c(0, 0), breaks = c(0, 0.5, 0.8, 0.9, 1)) +
     ggplot2::coord_cartesian(ylim = c(0, 1))
@@ -69,7 +91,13 @@ mean_sd = function(x, mult = 1.96) {
 #' @param ... passed to [plot_lattice2d()]
 #' @rdname plot-section
 #' @export
-save_serial_section = function(.tbl, filename = "png/section_%03d.png", scale = 6, dpi = 72, ...) {
+save_serial_section = function(
+  .tbl,
+  filename = "png/section_%03d.png",
+  scale = 6,
+  dpi = 72,
+  ...
+) {
   .lim = max_abs_xyz(.tbl)
   tidyr::nest(.tbl, !"z") |>
     dplyr::arrange(.data$z) |>

@@ -32,7 +32,8 @@ tumopp = function(args, ...) UseMethod("tumopp")
 #' @rdname tumopp
 #' @export
 tumopp.default = function(
-  args = character(0L), ...,
+  args = character(0L),
+  ...,
   graph = getOption("tumopp.graph", TRUE),
   cache = NULL
 ) {
@@ -60,7 +61,9 @@ sanitize_cache_dir = function(cache) {
   if (isTRUE(cache)) {
     cache = getOption("tumopp.cache", "~/.cache/tumopp")
     dir.create(cache, showWarnings = FALSE, recursive = TRUE, mode = "0755")
-  } else if (length(cache) != 1L || !is.character(cache) || is.na(cache) || !nzchar(cache)) {
+  } else if (
+    length(cache) != 1L || !is.character(cache) || is.na(cache) || !nzchar(cache)
+  ) {
     cache = tempdir()
   }
   cache
@@ -88,7 +91,12 @@ tumopp.list = function(args, ..., graph = TRUE, mc.cores = getOption("mc.cores",
 
 #' @rdname tumopp
 #' @export
-tumopp.data.frame = function(args, ..., graph = TRUE, mc.cores = getOption("mc.cores", 1L)) {
+tumopp.data.frame = function(
+  args,
+  ...,
+  graph = TRUE,
+  mc.cores = getOption("mc.cores", 1L)
+) {
   tumopp(vectorize_args(args), ..., graph = graph, mc.cores = mc.cores)
 }
 

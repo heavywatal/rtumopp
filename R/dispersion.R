@@ -24,7 +24,8 @@ summary_row = function(x) {
 #' @rdname dispersion
 #' @export
 mutate_chisq = function(.data, ...) {
-  dplyr::mutate(.data,
+  dplyr::mutate(
+    .data,
     R = !!as.name("var") / !!as.name("mean"),
     chisq = !!as.name("R") * (!!as.name("nsam") - 1),
     ...

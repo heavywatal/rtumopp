@@ -17,12 +17,27 @@ plot_tumor3d = function(.tbl = NULL, limits = NULL) {
   if (nrow(.tbl) == 0L) {
     return(invisible(.tbl))
   }
-  ..col = purrr::pluck(.tbl, "col", .default = getOption("tumopp.default_color", "#666666"))
+  ..col = purrr::pluck(
+    .tbl,
+    "col",
+    .default = getOption("tumopp.default_color", "#666666")
+  )
   rgl::plot3d(
-    .tbl$x, .tbl$y, .tbl$z,
-    xlab = "", ylab = "", zlab = "", axes = FALSE,
-    type = "s", col = ..col, alpha = 1, radius = 1, aspect = TRUE,
-    xlim = limits, ylim = limits, zlim = limits
+    .tbl$x,
+    .tbl$y,
+    .tbl$z,
+    xlab = "",
+    ylab = "",
+    zlab = "",
+    axes = FALSE,
+    type = "s",
+    col = ..col,
+    alpha = 1,
+    radius = 1,
+    aspect = TRUE,
+    xlim = limits,
+    ylim = limits,
+    zlim = limits
   )
 }
 
@@ -48,7 +63,9 @@ snapshot_surface = function(.tbl, filename = tempfile("rgl_", fileext = ".png"),
 #' @export
 add_col = function(.tbl, column = "clade", palette = "turbo", ...) {
   .column = .tbl[[column]]
-  if (!is.factor(.column)) .column = as.factor(.column)
+  if (!is.factor(.column)) {
+    .column = as.factor(.column)
+  }
   .levels = levels(.column)
   n = length(.levels)
   .map = if (n > 1L) {

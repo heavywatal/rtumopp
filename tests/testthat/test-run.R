@@ -42,7 +42,9 @@ test_that("help and version can be displayed", {
     expect_silent() |>
     expect_type("character") |>
     expect_length(1L) |>
-    expect_match("^v?\\d+\\.\\d+([-.]\\d+)?(-\\d+)?(-g[a-fA-F0-9]{7,40})?(-dirty)?$")
+    expect_match(
+      "^v?\\d+\\.\\d+([-.]\\d+)?(-\\d+)?(-g[a-fA-F0-9]{7,40})?(-dirty)?$"
+    )
   expect_message(tumopp("--help"), "Usage")
 })
 

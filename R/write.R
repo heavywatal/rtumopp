@@ -10,7 +10,9 @@ write_results = function(results) {
 }
 
 .write_result = function(result, outdir = NULL, force = FALSE) {
-  if (is.null(outdir)) outdir = result$outdir
+  if (is.null(outdir)) {
+    outdir = result$outdir
+  }
   message("outdir: ", outdir)
   stopifnot(dir.create(outdir, mode = "0755") || force)
   cols = names(result)
@@ -18,9 +20,12 @@ write_results = function(results) {
   purrr::walk(dfs, \(.x) {
     if (.x %in% cols) {
       content = result[[.x]][[1L]]
-      if (.x %in% c("population", "snapshots") &&
-        result$coord == "hex" &&
-        !is.integer(content$x)) {
+      if (
+        .x %in%
+          c("population", "snapshots") &&
+          result$coord == "hex" &&
+          !is.integer(content$x)
+      ) {
         content = revert_coord_hex(content)
       }
       outfile = file.path(outdir, paste0(.x, ".tsv.gz"))
@@ -34,5 +39,12 @@ write_results = function(results) {
 }
 
 to_json = function(x, ...) {
-  jsonlite::toJSON(x, auto_unbox = TRUE, digits = I(15), pretty = 2L, always_decimal = TRUE, ...)
+  jsonlite::toJSON(
+    x,
+    auto_unbox = TRUE,
+    digits = I(15),
+    pretty = 2L,
+    always_decimal = TRUE,
+    ...
+  )
 }

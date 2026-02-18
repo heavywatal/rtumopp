@@ -16,7 +16,11 @@ max_abs_xyz = function(.tbl) {
 #' @rdname coord
 #' @export
 dist_euclidean = function(.tbl, point = c(x = 0, y = 0, z = 0)) {
-  sqrt((.tbl[["x"]] - point[["x"]])**2 + (.tbl[["y"]] - point[["y"]])**2 + (.tbl[["z"]] - point[["z"]])**2)
+  sqrt(
+    (.tbl[["x"]] - point[["x"]])**2 +
+      (.tbl[["y"]] - point[["y"]])**2 +
+      (.tbl[["z"]] - point[["z"]])**2
+  )
 }
 
 #' @details
@@ -27,16 +31,8 @@ dist_euclidean = function(.tbl, point = c(x = 0, y = 0, z = 0)) {
 #' @export
 transform_rotate = function(.tbl, theta, axis = c("z", "x", "y")) {
   axis = match.arg(axis)
-  name1 = switch(axis,
-    x = "y",
-    y = "z",
-    z = "x"
-  )
-  name2 = switch(axis,
-    x = "z",
-    y = "x",
-    z = "y"
-  )
+  name1 = switch(axis, x = "y", y = "z", z = "x")
+  name2 = switch(axis, x = "z", y = "x", z = "y")
   v1 = .tbl[[name1]]
   v2 = .tbl[[name2]]
   sin_theta = sin(theta)

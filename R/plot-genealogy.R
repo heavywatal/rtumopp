@@ -13,14 +13,19 @@ augment_genealogy = function(graph, lengths = numeric(0)) {
   root = vnames[igraphlite::is_source(graph)]
   res = igraphlite::augment(graph, layout = igraphlite::layout_reingold_tilford) |>
     dplyr::rename(
-      parent = "from", node = "to",
-      d = "y", x_parent = "xend", d_parent = "yend"
+      parent = "from",
+      node = "to",
+      d = "y",
+      x_parent = "xend",
+      d_parent = "yend"
     ) |>
-    dplyr::mutate(node_type = dplyr::case_when(
-      .data$node %in% tips ~ "tip",
-      .data$node %in% root ~ "root",
-      TRUE ~ "internal"
-    ))
+    dplyr::mutate(
+      node_type = dplyr::case_when(
+        .data$node %in% tips ~ "tip",
+        .data$node %in% root ~ "root",
+        TRUE ~ "internal"
+      )
+    )
   if (length(lengths) > 0) {
     udist = distances_upstream(graph, weights = lengths)
     named_dist = stats::setNames(udist, vnames)
@@ -40,7 +45,10 @@ augment_genealogy = function(graph, lengths = numeric(0)) {
 gggenealogy = function(data, mapping = ggplot2::aes(), ...) {
   ggplot2::ggplot(data) +
     utils::modifyList(ggplot2::aes(.data[["d"]], .data[["x"]]), mapping) +
-    ggplot2::geom_segment(ggplot2::aes(xend = .data[["d_parent"]], yend = .data[["x_parent"]]), ...)
+    ggplot2::geom_segment(
+      ggplot2::aes(xend = .data[["d_parent"]], yend = .data[["x_parent"]]),
+      ...
+    )
 }
 
 remove_tandem_ancestors = function(data) {

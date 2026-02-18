@@ -22,7 +22,9 @@ add_surface = function(population, coord, dimensions) {
 add_phi = function(population, coord, dimensions) {
   extant = filter_extant(population)
   cells = extant[c("x", "y", "z", "id")]
-  if (!is.integer(cells$x)) cells = revert_coord_hex(cells)
+  if (!is.integer(cells$x)) {
+    cells = revert_coord_hex(cells)
+  }
   kernel_df = structuring_element(coord, dimensions) |>
     as.data.frame() |>
     dplyr::filter(.data$state > 0L)
@@ -39,7 +41,9 @@ add_phi = function(population, coord, dimensions) {
 }
 
 detect_surface = function(.tbl, se) {
-  if (!is.integer(.tbl$x)) .tbl = revert_coord_hex(.tbl)
+  if (!is.integer(.tbl$x)) {
+    .tbl = revert_coord_hex(.tbl)
+  }
   product = as_cuboid(.tbl, expand = 1L) |>
     filter_surface(se) |>
     as.data.frame() |>

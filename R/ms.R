@@ -25,10 +25,14 @@ make_sample = function(graph, nsam = 0L, mu = NULL, segsites = NULL) {
 mutate_clades = function(graph, mu = NULL, segsites = NULL) {
   nodes = igraphlite::Vnames(graph)[!igraphlite::is_source(graph)]
   number = if (is.null(mu)) {
-    if (is.null(segsites)) stop("specify either mu or segsites", call. = FALSE)
+    if (is.null(segsites)) {
+      stop("specify either mu or segsites", call. = FALSE)
+    }
     stats::rmultinom(1L, segsites, rep_len(1L, length(nodes))) |> as.vector()
   } else if (mu > 0) {
-    if (!is.null(segsites)) stop("segsites is ignored if mu is given", call. = FALSE)
+    if (!is.null(segsites)) {
+      stop("segsites is ignored if mu is given", call. = FALSE)
+    }
     stats::rpois(length(nodes), mu)
   } else {
     rep_len(1L, length(nodes))

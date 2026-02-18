@@ -32,7 +32,13 @@ from_json = function(conf) {
 }
 
 read_boost_ini = function(file) {
-  readr::read_delim(file, "=", col_names = c("key", "val"), comment = "#", trim_ws = TRUE) |>
+  readr::read_delim(
+    file,
+    "=",
+    col_names = c("key", "val"),
+    comment = "#",
+    trim_ws = TRUE
+  ) |>
     dplyr::summarize(dplyr::across(dplyr::everything(), paste0, collapse = "\t")) |>
     paste(collapse = "\n") |>
     readr::read_tsv()
@@ -48,7 +54,8 @@ read_results = function(
   graph = getOption("tumopp.graph", TRUE),
   mc.cores = getOption("mc.cores", 1L)
 ) {
-  parallel::mclapply(indirs, .read_result, mc.cores = mc.cores, graph = graph) |> purrr::list_rbind()
+  parallel::mclapply(indirs, .read_result, mc.cores = mc.cores, graph = graph) |>
+    purrr::list_rbind()
 }
 
 .read_result = function(indir, graph) {
@@ -88,14 +95,18 @@ read_results = function(
 #' @rdname read
 #' @export
 read_tumopp = function(file) {
-  readr::read_tsv(file, col_types = readr::cols(
-    x = readr::col_integer(),
-    y = readr::col_integer(),
-    z = readr::col_integer(),
-    id = readr::col_integer(),
-    ancestor = readr::col_integer(),
-    birth = readr::col_double(),
-    death = readr::col_double(),
-    omega = readr::col_integer()
-  ), progress = FALSE)
+  readr::read_tsv(
+    file,
+    col_types = readr::cols(
+      x = readr::col_integer(),
+      y = readr::col_integer(),
+      z = readr::col_integer(),
+      id = readr::col_integer(),
+      ancestor = readr::col_integer(),
+      birth = readr::col_double(),
+      death = readr::col_double(),
+      omega = readr::col_integer()
+    ),
+    progress = FALSE
+  )
 }

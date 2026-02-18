@@ -17,5 +17,8 @@ test_that("make_vaf works", {
     expect_named(c("i", "j", "euclidean", "fst")) |>
     expect_shape(dim = c(as.integer(choose(nsam, 2L)), 4L)) |>
     expect_identical(pairwise_distances(graph, regions))
-  expect_type(internal_nodes(subgraph, unlist(regions$id), sensitivity = 0.10), "integer")
+  expect_type(
+    internal_nodes(subgraph, unlist(regions$id), sensitivity = 0.10),
+    "integer"
+  )
 })

@@ -72,20 +72,36 @@ internal_nodes = function(graph, nodes, sensitivity) {
 #' @param weights A numeric or logical. Edge attribute "weight" is used if TRUE.
 #' @rdname graph
 #' @export
-distances_from_origin = function(graph, nodes = sink_cells(graph), weights = numeric(0L), trim = FALSE) {
+distances_from_origin = function(
+  graph,
+  nodes = sink_cells(graph),
+  weights = numeric(0L),
+  trim = FALSE
+) {
   vids = igraphlite::as_vids(graph, nodes)
   distances_upstream(graph, vids, weights = weights, trim = trim)
 }
 
 #' @rdname graph
 #' @export
-distances_upstream = function(graph, vids = integer(0), weights = numeric(0L), trim = FALSE) {
+distances_upstream = function(
+  graph,
+  vids = integer(0),
+  weights = numeric(0L),
+  trim = FALSE
+) {
   src = if (trim) {
     common_ancestors(graph, vids)[1L]
   } else {
     igraphlite::Vsource(graph)
   }
-  res = igraphlite::distances(graph, weights = weights, from = vids, to = src, mode = 2L)
+  res = igraphlite::distances(
+    graph,
+    weights = weights,
+    from = vids,
+    to = src,
+    mode = 2L
+  )
   as.vector(res)
 }
 
