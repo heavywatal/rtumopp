@@ -27,7 +27,7 @@ tibble_dchisq(x, n)
 
 \item{...}{passed to \code{\link[dplyr:mutate]{dplyr::mutate()}}.}
 
-\item{n, lambda}{passed to \code{\link[stats:Poisson]{stats::rpois()}}.}
+\item{n, lambda}{passed to \code{\link[stats:rpois]{stats::rpois()}}.}
 
 \item{nrep}{number of replications.}
 }
@@ -37,7 +37,7 @@ Utilities for dispersion
 \code{stats_dispersion()} is a shortcut to call them both at once.
 }
 \details{
-\code{rpois_dispersion()} summarizes the results of \code{\link[stats:Poisson]{stats::rpois()}}.
+\code{rpois_dispersion()} summarizes the results of \code{\link[stats:rpois]{stats::rpois()}}.
 
 \code{tibble_dchisq()} generates a tibble.
 }

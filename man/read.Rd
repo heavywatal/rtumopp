@@ -23,7 +23,7 @@ read_tumopp(file)
 
 \item{graph}{add graph column if TRUE}
 
-\item{file}{passed as the first argument of \code{\link[readr:read_delim]{readr::read_tsv()}}}
+\item{file}{passed as the first argument of \code{\link[readr:read_tsv]{readr::read_tsv()}}}
 }
 \description{
 \code{read_confs} reads config files.
@@ -31,6 +31,6 @@ read_tumopp(file)
 \details{
 \code{read_results} reads configs and populations as a nested tibble.
 
-\code{read_tumopp} is an alias of \code{\link[readr:read_delim]{readr::read_tsv()}} with some options
+\code{read_tumopp} is an alias of \code{\link[readr:read_tsv]{readr::read_tsv()}} with some options
 to read result files: \code{population.tsv.gz} and \code{snapshots.tsv.gz}.
 }

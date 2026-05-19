@@ -31,7 +31,7 @@ add_col(.tbl, column = "clade", palette = "turbo", ...)
 \details{
 \code{plot_tumor3d} plots tumor in 3D with rgl.
 
-\code{snapshot_surface} is a shortcut of \code{\link[=plot_tumor3d]{plot_tumor3d()}} and \code{\link[rgl:snapshot]{rgl::snapshot3d()}}.
+\code{snapshot_surface} is a shortcut of \code{\link[=plot_tumor3d]{plot_tumor3d()}} and \code{\link[rgl:snapshot3d]{rgl::snapshot3d()}}.
 
 \code{add_col} adds a column for color in \code{\link[=plot_tumor3d]{plot_tumor3d()}}.
 }
