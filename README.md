@@ -1,8 +1,9 @@
 # R interface to tumopp
 
+<!-- badges: start -->
 [![R-CMD-check](https://github.com/heavywatal/rtumopp/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/heavywatal/rtumopp/actions/workflows/R-CMD-check.yaml)
-[![codecov](https://codecov.io/gh/heavywatal/rtumopp/graph/badge.svg?token=S8QayYTeJ0)](https://codecov.io/gh/heavywatal/rtumopp)
-[![CRAN Status Badge](https://www.r-pkg.org/badges/version/rtumopp)](https://cran.r-project.org/package=rtumopp)
+[![Codecov test coverage](https://codecov.io/gh/heavywatal/rtumopp/graph/badge.svg)](https://app.codecov.io/gh/heavywatal/rtumopp)
+<!-- badges: end -->
 
 This is an R interface to [tumopp](https://github.com/heavywatal/tumopp),
 a tumor growth simulator in C++.
