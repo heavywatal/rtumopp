@@ -1,6 +1,7 @@
 url: https://heavywatal.github.io/rtumopp
 template:
   bootstrap: 5
+llm-docs: false
 destination: docs
 reference:
 - title: "Run simulation"
