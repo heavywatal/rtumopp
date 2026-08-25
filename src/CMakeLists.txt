@@ -9,14 +9,15 @@ include(GNUInstallDirs)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 cmake_print_variables(CMAKE_CURRENT_SOURCE_DIR)
 
+set(repo_url "https://github.com/heavywatal/tumopp")
 if(DEFINED ENV{TUMOPP_GIT_TAG})
   FetchContent_Declare(tumopp
-    GIT_REPOSITORY https://github.com/heavywatal/tumopp.git
+    GIT_REPOSITORY ${repo_url}.git
     GIT_TAG "$ENV{TUMOPP_GIT_TAG}"
   )
 else()
   FetchContent_Declare(tumopp
-    URL https://github.com/heavywatal/tumopp/archive/refs/tags/v0.9.3.tar.gz
+    URL ${repo_url}/archive/refs/tags/v${PROJECT_VERSION}.tar.gz
     URL_HASH SHA256=c87b9d2c440b0c5c951016650b59b051261007f13b05715219ae3cc63da7991c
     FIND_PACKAGE_ARGS ${PROJECT_VERSION}
   )
