@@ -73,6 +73,8 @@ export(tumopp)
 export(tumopp_path)
 export(tumopp_version)
 export(write_results)
-importFrom(rlang,":=")
-importFrom(rlang,.data)
+importFrom(rlang,
+  ":=",
+  .data
+)
 useDynLib(tumopp, .registration = TRUE)
